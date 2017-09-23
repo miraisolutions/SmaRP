@@ -28,12 +28,16 @@ shinyServer(function(input, output) {
                          input$Salary,
                          input$SalaryGrowthRate,
                          input$P2purchase,
-                         input$TypePurchase)
+                         input$TypePurchase,
+                         today(),
+                         input$P3purchase,
+                         input$CurrentP3,
+                         input$returnP3)
 
   })
   
   output$table <- renderTable({
-    Road2Retirement()[, c("calendar", "DirectP2", "ReturnP2", "TotalP2")] %>%
+    Road2Retirement()[, c("calendar", "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "Total")] %>%
       mutate(calendar = as.Date(calendar))
     
   })
@@ -68,8 +72,7 @@ shinyServer(function(input, output) {
     gvisAreaChart(
       data = Road2Retirement(),
       xvar = "calendar",
-      yvar = c("ReturnP2", "DirectP2", "TotalP2"),
-      options = list(heigth = 800, width = 800)
+      yvar = c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3","Total")
     )
     
     

@@ -19,8 +19,8 @@ shinyUI(  fluidPage(
   sidebarLayout(
     sidebarPanel(
       selectInput("kanton", "Basic Info",
-        choices = Kanton.list ,
-        selected = "ZH"
+                  choices = Kanton.list ,
+                  selected = "ZH"
       ),
       selectInput("genre", label = NULL, 
                   choices = list("Male" = "M", "Female" = "F"), 
@@ -29,7 +29,9 @@ shinyUI(  fluidPage(
                   choices = tariffs.list, 
                   selected = "TA"),
       dateInput("birthdate", label = h5("Birthday"), value = "1980-12-31", format = "yyyy-mm-dd"),
+      #      HTML('<hr style="color: black;">'),
       hr(),
+      tags$div(class="header", checked=NA, tags$p("Pilar 2")),
       numericInput(
         "Salary", 
         label = h5("Current Annual Salary"), 
@@ -39,16 +41,17 @@ shinyUI(  fluidPage(
       numericInput("CurrentP2", label = h5("Current Pilar 2 amount"), value = 100000, step = 1000),
       numericInput("SalaryGrowthRate", label = h5("Expected salary growth rate"), value = 0.02, step = 0.001),
       numericInput("P2purchase", label = h5("Pilar 2 purchase"), value = 0, step = 500),
-      radioButtons("TypePurchase", label = NULL,
+      radioButtons("TypePurchase", label = NULL, inline = TRUE,
                    c("Single Purchase" = "SingleP2",
                      "Annual Purchase" = "AnnualP2")),
       hr(),
+      tags$div(class="header", checked=NA, tags$p("Pilar 3")),
       numericInput("CurrentP3", label = h5("Current Pilar 3 amount"), value = 50000, step = 1000),
-      numericInput("P2payment", label = h5("Annual Pilar 3 purchase"), value = 0, step = 500),
+      numericInput("P3purchase", label = h5("Annual Pilar 3 purchase"), value = 0, step = 500),
       numericInput("returnP3", label = h5("Expected Return Pilar 3"), value = 0, step = 500)
       
       
-       
+      
     ),
     
     # Show a plot of the generated distribution
@@ -58,7 +61,7 @@ shinyUI(  fluidPage(
                   tabPanel("Summary", verbatimTextOutput("summary")),
                   tabPanel("Table", htmlOutput("table"))
       )
-       
+      
     )
   )
 ))
