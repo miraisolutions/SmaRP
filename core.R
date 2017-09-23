@@ -105,9 +105,9 @@ buildContributionP2Path <- function(birthday,
 
 
 #' @examples
-calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000),
-                    t = c(0.284931, 1, 1, 1, 0),
-                    rate = 0.01)
+# calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000),
+#                     t = c(0.284931, 1, 1, 1, 0),
+#                     rate = 0.01)
 calcAnnuityAcumPath <- function(contributions, t, rate){
   res <- vector()
   res[1] <- contributions[1] * exp(rate * t[1])

@@ -32,11 +32,6 @@ shinyServer(function(input, output) {
 
   })
   
-  # output$table <- renderGvis({
-  #   gvisTable(Road2Retirement(), 
-  #             formats=list(Value="#,###"))
-  # })
-  
   output$table <- renderTable({
     Road2Retirement()[, c("calendar", "DirectP2", "ReturnP2", "TotalP2")] %>%
       mutate(calendar = as.Date(calendar))

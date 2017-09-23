@@ -9,6 +9,7 @@
 
 library(shiny)
 
+
 # UI
 shinyUI(  fluidPage(
   
@@ -17,13 +18,18 @@ shinyUI(  fluidPage(
   hr(),
   sidebarLayout(
     sidebarPanel(
-      selectInput("select", label = h5("Generic Info"), 
-                  choices = list("Zurich" = "ZH", "St.Gallen" = "SG", "Bern" = "BE"), 
-                  selected = "ZH"),
-      selectInput("select", label = NULL, 
+      selectInput("kanton", "Basic Info",
+        choices = Kanton.list ,
+        selected = "ZH"
+      ),
+      selectInput("genre", label = NULL, 
                   choices = list("Male" = "M", "Female" = "F"), 
                   selected = "M"),
-      dateInput("birthdate", label = NULL, value = "1980-12-31", format = "yyyy-mm-dd"),
+      selectInput("tariff", label = NULL, 
+                  choices = tariffs.list, 
+                  selected = "TA"),
+      dateInput("birthdate", label = h5("Birthday"), value = "1980-12-31", format = "yyyy-mm-dd"),
+      hr(),
       numericInput(
         "Salary", 
         label = h5("Current Annual Salary"), 
@@ -32,10 +38,15 @@ shinyUI(  fluidPage(
       ),
       numericInput("CurrentP2", label = h5("Current Pilar 2 amount"), value = 100000, step = 1000),
       numericInput("SalaryGrowthRate", label = h5("Expected salary growth rate"), value = 0.02, step = 0.001),
-      numericInput("P2purchase", label = h5("Pilar II purchase"), value = 0, step = 500),
+      numericInput("P2purchase", label = h5("Pilar 2 purchase"), value = 0, step = 500),
       radioButtons("TypePurchase", label = NULL,
                    c("Single Purchase" = "SingleP2",
-                     "Annual Purchase" = "AnnualP2"))
+                     "Annual Purchase" = "AnnualP2")),
+      hr(),
+      numericInput("CurrentP3", label = h5("Current Pilar 3 amount"), value = 50000, step = 1000),
+      numericInput("P2payment", label = h5("Annual Pilar 3 purchase"), value = 0, step = 500),
+      numericInput("returnP3", label = h5("Expected Return Pilar 3"), value = 0, step = 500)
+      
       
        
     ),

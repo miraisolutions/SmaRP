@@ -14,3 +14,10 @@ BVGcontriburionrates <<- data.frame(lowerbound = c(18, 25, 35, 45, 55),
                                     BVGcontriburionrates = c(0.012, 0.047, 0.062, 0.087, 0.102))
 
 
+# https://www.estv.admin.ch/estv/de/home/direkte-bundessteuer/quellensteuer/dienstleistungen/tarife-herunterladen.html
+tariffs.list <- list(
+  "A Tarif für alleinstehende Personen" = "TA",
+  "B Tarif für verheiratete Alleinverdiener" = "TB",
+  "C Tarif für verheiratete Doppelverdiener" = "TC")
+
+Kanton.list <- list("Zurich" = "ZH", "St.Gallen" = "SG", "Bern" = "BE")
