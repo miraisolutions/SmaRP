@@ -32,15 +32,18 @@ getRetirementCalendar <- function(birthday, givenday = today()){
 #' @importFrom lubridate today
 #' @importFrom magritrr '%>%' '%<>%' 
 #' @examples
-#' buildRoad2Retirement("1981-08-12", 0.02, 50000, 100000, 0.01, 2000, "AnnualP2") %>% print
+#' buildRoad2Retirement("1981-08-12", rate = 0.02, CurrentP2 = 50000, 100000, 0.01, 2000, "AnnualP2", P3purchase = 2400, CurrentP3 = 5000, returnP3 = 0.03) %>% print
 buildRoad2Retirement <- function(birthday,
-                                 rate = BVGMindestzinssatz,
+                                 rate = BVGMindestzinssatz,                            
                                  CurrentP2,
                                  Salary,
                                  SalaryGrowthRate,
                                  P2purchase,
                                  TypePurchase,
-                                 givenday = today()){
+                                 givenday = today(),
+                                 P3purchase,
+                                 CurrentP3,
+                                 returnP3) {
   RetirementPath.df <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today()))
   years2retirement <- calcAge(min(RetirementPath.df$calendar), max(RetirementPath.df$calendar))
   RetirementPath.df %<>% 
@@ -54,22 +57,19 @@ buildRoad2Retirement <- function(birthday,
       BVGDirect = BVGcontributions +c(CurrentP2, rep(0, nrow(RetirementPath.df)-1))
       t = c(as.vector(diff(calendar)/365), 0)
       TotalP2 = calcAnnuityAcumPath(BVGDirect, t, rate)
-      # cumt = years2retirement - cumsum(t)
-      # aletTotalP2 = cumsum(BVGDirect * exp(rate * cumt))
       ReturnP2 = TotalP2 - cumsum(BVGDirect)
       DirectP2 = cumsum(BVGDirect)
+      P3direct = buildContributionP3path(birthday,
+                                         P3purchase,
+                                         CurrentP3,
+                                         returnP3)$BVGContributionPath
+      TotalP3 = calcAnnuityAcumPath(P3direct, t, rate)
+      ReturnP3 = TotalP3 - cumsum(P3direct)
+      DirectP3 = cumsum(P3direct)
+      Total = TotalP2 + TotalP3
+      
     }) 
 }
-  # # TODO: use magrittr and single funtion
-  # RetirementPath.df$savings <- vector(length = nrow(RetirementPath.df))
-  # RetirementPath.df$savings[1] <- RetirementPath.df$BVGcontributions[1] * exp(rate * RetirementPath.df$t[1])
-  # for (i in 2:nrow(RetirementPath.df)){
-  #   RetirementPath.df$savings[i] <- RetirementPath.df$savings[i-1] * exp(rate * RetirementPath.df$t[i]) + RetirementPath.df$BVGcontributions[i]
-  # }
-  # return(RetirementPath.df[, c("calendar", "BVGcontributions", "savings")])
-  # TODO: unit test using closed formula
-#   
-# }
 
 
 #' @importFrom plyr mutate
@@ -92,7 +92,7 @@ buildContributionP2Path <- function(birthday,
   ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today()))
   ncp <- nrow(ContributionP2Path)
   nrise <- ncp - 2 #No rise current and last appraissal
-
+  
   ContributionP2Path %<>% within({
     ExpectedSalaryPath = cumprod(c(Salary, rep(1 + SalaryGrowthRate, nrise), 1))
     AgePath = sapply(calendar, calcAge, birthday = birthday) %>% as.integer
@@ -102,6 +102,26 @@ buildContributionP2Path <- function(birthday,
     mutate(BVGContributionPath = BVGpurchase + (ExpectedSalaryPath * BVGcontriburionrates))
   return(ContributionP2Path)
 }
+
+
+# birthday = "1981-08-12"
+# P3purchase = 3600
+# CurrentP3 = 10000
+# returnP3 = 0.05
+#' @importFrom plyr mutate
+#' @importFrom magritrr '%>%' '%<>%' 
+#' @examples
+#' buildContributionP3path(birthday, P3purchase, CurrentP3, returnP3) %>% print
+buildContributionP3path <- function(birthday, P3purchase, CurrentP3, returnP3){
+  ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today()))
+  ncp <- nrow(ContributionP3Path) 
+   ContributionP3Path %<>% within({
+    BVGpurchase = rep(P3purchase, ncp)
+    BVGContributionPath = BVGpurchase + c(CurrentP3, rep(0, ncp -1))
+  }) 
+  return(ContributionP3Path)
+}
+
 
 
 #' @examples
