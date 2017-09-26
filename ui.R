@@ -18,16 +18,20 @@ shinyUI(  fluidPage(
   hr(),
   sidebarLayout(
     sidebarPanel(
+      width = 3,
       selectInput("kanton", "Basic Info",
                   choices = Kanton.list ,
-                  selected = "ZH"
-      ),
-      selectInput("genre", label = NULL, 
+                  selected = "ZH"),
+      radioButtons("genre", label = NULL, inline = TRUE,
                   choices = list("Male" = "M", "Female" = "F"), 
                   selected = "M"),
       selectInput("tariff", label = NULL, 
                   choices = tariffs.list, 
                   selected = "TA"),
+      radioButtons("NKids", label = NULL, inline = TRUE,
+                   choices = Kids.list,
+                   selected = "0kid"),
+      
       dateInput("birthdate", label = h5("Birthday"), value = "1980-12-31", format = "yyyy-mm-dd"),
       #      HTML('<hr style="color: black;">'),
       hr(),
