@@ -21,23 +21,49 @@ source("external_inputs.R")
 shinyServer(function(input, output) {
    
   # calc P2 fund
-  Road2Retirement <- reactive({
-    buildRoad2Retirement(input$birthdate,
-                         BVGMindestzinssatz,
-                         input$CurrentP2,
-                         input$Salary,
-                         input$SalaryGrowthRate,
-                         input$P2purchase,
-                         input$TypePurchase,
-                         today(),
-                         input$P3purchase,
-                         input$CurrentP3,
-                         input$returnP3)
-
+  ContributionP2Path <- reactive({ 
+    buildContributionP2Path(birthday = input$birthdate,
+                            Salary = input$Salary,
+                            SalaryGrowthRate = input$SalaryGrowthRate,
+                            CurrentP2 = input$CurrentP2,
+                            P2purchase = input$P2purchase,
+                            TypePurchase = input$TypePurchase,
+                            rate = BVGMindestzinssatz,
+                            givenday = today())
   })
   
+  # calc P3 fund
+  ContributionP3path <- reactive({
+    buildContributionP3path(birthday = input$birthdate, 
+                            P3purchase = input$P3purchase, 
+                            CurrentP3 = input$CurrentP3, 
+                            returnP3 = input$returnP3)
+  })
+  
+  # calc Tax benefits
+  ContributionTaxpath <- reactive({
+    buildTaxBenefits(birthday = input$birthdate, 
+                     TypePurchase = input$TypePurchase,, 
+                     P2purchase = input$P2purchase, 
+                     P3purchase = input$P3purchase, 
+                     returnP3 = input$returnP3,
+                     Salary = input$Salary, 
+                     SalaryGrowthRate = input$SalaryGrowthRate,
+                     Kanton = input$kanton,
+                     Tariff = input$tariff, 
+                     NKids = input$NKids, 
+                     MaxContrTax = MaxContrTax)
+  })
+  
+  Road2Retirement <- reactive({
+    ContributionP2Path() %>%
+      merge(ContributionP3path()) %>%
+      merge(ContributionTaxpath()) %>%
+      mutate(Total = TotalP2 + TotalP3 + TotalTax)
+  }) 
+  
   output$table <- renderTable({
-    Road2Retirement()[, c("calendar", "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "Total")] %>%
+    Road2Retirement()[, c("calendar", "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")] %>%
       mutate(calendar = as.Date(calendar))
     
   })
@@ -49,48 +75,13 @@ shinyServer(function(input, output) {
   })
   
   
-  # output$plot1 <- renderPlotly({
-  #   
-  #   # ggplot(data, aes(x=Year, y=Value, fill=Sector)) +
-  #   #   geom_area(colour="black", size=.2, alpha=.4) +
-  #   #   scale_fill_brewer(palette="Greens", breaks=rev(levels(data$Sector)))
-  #   
-  #   p <- ggplot(Road2Retirement(), aes(calendar, BVGcontributions)) +
-  #     geom_area(colour="black", size=.2, alpha=.4) +
-  #     xlab("") +
-  #     ylab("")
-  #     
-  #   # + geom_area() 
-  #   # + xlab("")
-  #   # + ylab("")
-  #   p <- p + geom_point()
-  #   ggplotly(p)
-  # })
-  
   output$plot1 <- renderGvis({
-    
     gvisAreaChart(
       data = Road2Retirement(),
       xvar = "calendar",
-      yvar = c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3","Total")
-    )
-    
-    
-
-    # ggplot(data, aes(x=Year, y=Value, fill=Sector)) +
-    #   geom_area(colour="black", size=.2, alpha=.4) +
-    #   scale_fill_brewer(palette="Greens", breaks=rev(levels(data$Sector)))
-
-    # p <- ggplot(Road2Retirement(), aes(calendar, BVGcontributions)) +
-    #   geom_area(colour="black", size=.2, alpha=.4) +
-    #   xlab("") +
-    #   ylab("")
-    # 
-    # # + geom_area()
-    # # + xlab("")
-    # # + ylab("")
-    # p <- p + geom_point()
-    # ggplotly(p)
+      yvar = c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax", "Total"),
+      options=list(width = 1200, height = 500)
+    ) 
   })
   
   
