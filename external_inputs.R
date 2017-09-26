@@ -4,6 +4,9 @@
 # https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-64228.html
 BVGMindestzinssatz <<- 0.01
 
+# https://www.ch.ch/en/3rd-pillar/
+MaxContrTax <<- 6768  
+
 # CHF yield curves
 # https://www.six-swiss-exchange.com/services/yield_curves_en.html
 
@@ -21,3 +24,8 @@ tariffs.list <- list(
   "C Tarif für verheiratete Doppelverdiener" = "TC")
 
 Kanton.list <- list("Zurich" = "ZH", "St.Gallen" = "SG", "Bern" = "BE")
+
+Kids.list <- list("No Kids" = "0kid",
+                 "One Kid" = "1kid",
+                 "Two Kids" = "2kid",
+                  "Three + Kids" = "3Kid")
