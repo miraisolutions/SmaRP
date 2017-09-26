@@ -1,5 +1,5 @@
 
-## Example
+# # Example
 # birthday = "1981-08-12"
 # P3purchase = 4800
 # CurrentP3 = 10000
@@ -38,9 +38,6 @@
 #                          NKids,
 #                          MaxContrTax)) %>%
 #   mutate(Total = TotalP2 + TotalP3 + TotalTax)
-# 
-
-
 
 
 #' @examples
@@ -54,7 +51,7 @@ buildt <- function(birthday, givenday = today()){
 
 #' @importFrom lubridate today interval duration
 calcAge <- function(birthday, givenday = today()) {
-  age <- interval(start = birthday, end = givenday) / duration(num = 1, units = "year")
+  age <- lubridate:::interval(start = birthday, end = givenday) / duration(num = 1, units = "year")
   age
 }
 
@@ -67,7 +64,7 @@ getRetirementday <- function(birthday) {
 
 #' @importFrom lubridate today ymd years year month day
 #' @examples
-#' getRetirementPath("1981-08-12")
+#' getRetirementCalendar("1981-08-12")
 getRetirementCalendar <- function(birthday, givenday = today()){
   retirementday <- getRetirementday(birthday)
   age <- calcAge(birthday, givenday)

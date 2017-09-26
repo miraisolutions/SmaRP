@@ -12,6 +12,7 @@ library(lubridate)
 library(plyr)
 library(magrittr)
 library(googleVis)
+library(ggplot2)
 
 # source core methodology and global variables
 source("core.R")
@@ -62,6 +63,10 @@ shinyServer(function(input, output) {
       mutate(Total = TotalP2 + TotalP3 + TotalTax)
   }) 
   
+  FotoFinish <- reactive({
+    Road2Retirement()[,c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax")]  %>% tail(1)
+  })
+  
   output$table <- renderTable({
     Road2Retirement()[, c("calendar", "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")] %>%
       mutate(calendar = as.Date(calendar))
@@ -80,9 +85,19 @@ shinyServer(function(input, output) {
       data = Road2Retirement(),
       xvar = "calendar",
       yvar = c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax", "Total"),
-      options=list(width = 1200, height = 500)
+      options = list(width = 1200, height = 500)
     ) 
   })
+  
+  output$plot2 <- renderPlot({
+  ggplot(data = data.frame(Funds = colnames(FotoFinish()), 
+                           value = as.vector(t(FotoFinish()))), 
+         aes(x = "", 
+             y = value,
+             fill = Funds),
+         options = list(width = 1200, height = 50)) + 
+    geom_bar(stat="identity") + coord_flip()
+})
   
   
 }
