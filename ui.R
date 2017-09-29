@@ -8,7 +8,7 @@
 #
 
 library(shiny)
-
+source("external_inputs.R")
 
 # UI
 shinyUI(  fluidPage(

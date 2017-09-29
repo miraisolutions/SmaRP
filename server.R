@@ -16,7 +16,7 @@ library(ggplot2)
 
 # source core methodology and global variables
 source("core.R")
-source("external_inputs.R")
+
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -44,7 +44,7 @@ shinyServer(function(input, output) {
   # calc Tax benefits
   ContributionTaxpath <- reactive({
     buildTaxBenefits(birthday = input$birthdate, 
-                     TypePurchase = input$TypePurchase,, 
+                     TypePurchase = input$TypePurchase,
                      P2purchase = input$P2purchase, 
                      P3purchase = input$P3purchase, 
                      returnP3 = input$returnP3,
