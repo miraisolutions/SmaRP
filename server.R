@@ -64,7 +64,9 @@ shinyServer(function(input, output) {
   }) 
   
   FotoFinish <- reactive({
-    Road2Retirement()[,c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax")]  %>% tail(1)
+    Road2Retirement()[,c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax")]  %>% 
+      tail(1) %>%
+      prop.table()
   })
   
   output$table <- renderTable({
@@ -90,14 +92,12 @@ shinyServer(function(input, output) {
   })
   
   output$plot2 <- renderPlot({
-  ggplot(data = data.frame(Funds = colnames(FotoFinish()), 
-                           value = as.vector(t(FotoFinish()))), 
-         aes(x = "", 
-             y = value,
-             fill = Funds),
-         options = list(width = 1200, height = 50)) + 
-    geom_bar(stat="identity") + coord_flip()
-})
+    ggplot(data = data.frame(Funds = colnames(FotoFinish()), 
+                             value = as.vector(t(FotoFinish()))), 
+           aes(x = "", y = value, fill = Funds),
+           options = list(width = 1200, height = 50)) + 
+      geom_bar(stat="identity") + coord_flip()
+  })
   
   
 }

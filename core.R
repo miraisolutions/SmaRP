@@ -1,4 +1,4 @@
-
+# 
 # # Example
 # birthday = "1981-08-12"
 # P3purchase = 4800
@@ -11,18 +11,18 @@
 # TypePurchase = "AnnualP2"
 # ncp = length(getRetirementCalendar(birthday, givenday = today()))
 # Kanton = "BE"
-# Tariff = "TB" 
+# Tariff = "TB"
 # NKids = "0Kids"
 # 
 # 
-# buildRoad2Retirement <- buildContributionP2Path(birthday,
+# Road2Retirement <- buildContributionP2Path(birthday,
 #                                                 Salary,
 #                                                 SalaryGrowthRate,
 #                                                 CurrentP2,
 #                                                 P2purchase,
 #                                                 TypePurchase,
 #                                                 rate = BVGMindestzinssatz) %>%
-#   merge(buildContributionP3path(birthday, 
+#   merge(buildContributionP3path(birthday,
 #                                 P3purchase,
 #                                 CurrentP3,
 #                                 returnP3)) %>%
@@ -38,7 +38,12 @@
 #                          NKids,
 #                          MaxContrTax)) %>%
 #   mutate(Total = TotalP2 + TotalP3 + TotalTax)
-
+# 
+# 
+# 
+# FotoFinish <- Road2Retirement[,c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax")]  %>% 
+#   tail(1) %>%
+#   prop.table()
 
 #' @examples
 #' buildt("1981-08-12")
@@ -126,7 +131,7 @@ calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
 }
 
 #' @examples
-#' calcBVGpurchase(TypePurchase = "AnnualP", P2purchase = 2000, ncp = 25) %>% print
+#' calcBVGpurchase(TypePurchase = "AnnualP2", P2purchase = 2000, ncp = 25) %>% print
 calcBVGpurchase <- function(TypePurchase, P2purchase, ncp){
   if (TypePurchase == "AnnualP2") {
     BVGpurchase <- rep(P2purchase, ncp)
