@@ -94,7 +94,7 @@ buildContributionP2Path <- function(birthday,
                                     CurrentP2,
                                     P2purchase,
                                     TypePurchase,
-                                    rate = BVGMindestzinssatz,
+                                    rate = BVGparams$BVGMindestzinssatz,
                                     givenday = today()){
 
   # build BVG rates from global input
