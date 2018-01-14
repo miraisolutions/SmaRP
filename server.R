@@ -9,7 +9,7 @@
 
 library(shiny)
 library(lubridate)
-library(plyr)
+library(dplyr)
 library(magrittr)
 library(googleVis)
 library(ggplot2)
@@ -58,9 +58,10 @@ shinyServer(function(input, output) {
   
   Road2Retirement <- reactive({
     ContributionP2Path() %>%
-      merge(ContributionP3path()) %>%
-      merge(ContributionTaxpath()) %>%
-      mutate(Total = TotalP2 + TotalP3 + TotalTax)
+      left_join(ContributionP3path(), by = c("calendar", "t")) %>%
+      left_join(ContributionTaxpath(), by = c("calendar", "t")) %>%
+      mutate(Total = TotalP2 + TotalP3 + TotalTax,
+             calendar = as.Date(calendar, "%d-%m-%y"))
   }) 
   
   FotoFinish <- reactive({
@@ -70,9 +71,7 @@ shinyServer(function(input, output) {
   })
   
   output$table <- renderTable({
-    Road2Retirement()[, c("calendar", "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")] %>%
-      mutate(calendar = as.Date(calendar))
-    
+    Road2Retirement()[, c("calendar", "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")]    
   })
   
   
