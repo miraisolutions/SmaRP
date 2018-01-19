@@ -66,7 +66,8 @@ shinyServer(function(input, output) {
   FotoFinish <- reactive({
     Road2Retirement()[,c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax")]  %>% 
       tail(1) %>%
-      prop.table()
+      prop.table() %>%
+      select(which(sapply(., function(x) x > 0)))
   })
   
   output$table <- renderTable({
@@ -90,14 +91,28 @@ shinyServer(function(input, output) {
     ) 
   })
   
-  output$plot2 <- renderPlot({
-    ggplot(data = data.frame(Funds = colnames(FotoFinish()), 
-                             value = as.vector(t(FotoFinish()))), 
-           aes(x = "", y = value, fill = Funds),
-           options = list(width = 1200, height = 50)) + 
-      geom_bar(stat="identity") + coord_flip()
+  bar.data <- reactive({
+    data.frame(Funds = colnames(FotoFinish()),
+                        percentage = as.vector(t(FotoFinish()))) %>%
+    arrange(Funds) %>%
+    mutate(pos = cumsum(percentage) - (0.5 * percentage),
+           percentage = round(percentage * 100, digits = 1),
+           pos = round(pos * 100, digits = 1)) 
   })
   
+  
+  output$plot2 <- renderPlot({
+    ggplot() + 
+      geom_bar(aes(y = percentage, x = "", fill = Funds), 
+               data = bar.data(),
+               position = position_stack(reverse = TRUE),
+               stat="identity") +
+      geom_text(data = bar.data(),
+                aes(x = "", y = pos, label = paste0(percentage,"%")),
+                size = 4) +
+      coord_flip()
+     
+  })
   
 }
 )

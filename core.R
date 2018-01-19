@@ -1,8 +1,8 @@
-# 
-# Example
+# # 
+# # Example
 # birthday = "1981-08-12"
-# P3purchase = 4800
-# CurrentP3 = 10000
+# P3purchase = 0
+# CurrentP3 = 0
 # returnP3 = 0.05
 # CurrentP2 = 50000
 # Salary = 95000
@@ -43,7 +43,18 @@
 # 
 # FotoFinish <- Road2Retirement[,c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax")]  %>% 
 #   tail(1) %>%
-#   prop.table()
+#   prop.table() %>%
+#   select(which(sapply(., function(x) x > 0)))
+# 
+# bar.data <- data.frame(Funds = colnames(FotoFinish),
+#                       percentage = as.vector(t(FotoFinish))) %>%
+#   arrange(Funds) %>%
+#   mutate(pos = cumsum(percentage) - (0.5 * percentage),
+#          percentage = round(percentage * 100, digits = 1),
+#          pos = round(pos * 100, digits = 1)) 
+# 
+
+
 
 #' @examples
 #' buildt("1981-08-12")
