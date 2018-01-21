@@ -71,31 +71,18 @@ shinyServer(function(input, output) {
   }, digits = 0)
   
   
-
-#   output$summary <- renderPrint({
-#     summary(Road2Retirement())
-#   })
-  
   # T series plot ----
   TserieGraphData <- reactive({
-    Road2Retirement()[, c("calendar", "DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax", "Total")] %>%
-      mutate(cDirectP2 = DirectP2,
-             cDirectP3 = DirectP2 + DirectP3,
-             cDirectTax = cDirectP3 + DirectTax,
-             cReturnP2 = cDirectTax + ReturnP2,
-             cReturnP3 = cReturnP2 + ReturnP3,
-             cTotal = cReturnP3 + ReturnTax) %>%
-      select(starts_with("c")) %>%
-      .[ ,!as.logical(duplicated(as.list(.), fromLast = FALSE))] # filter out first duplicated column
+    Road2Retirement()[, c("calendar", "DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax")] %>%
+    .[, colSums(. != 0, na.rm = TRUE) > 0]
   })
-
 
   output$plot1 <- renderGvis({
     gvisAreaChart(
       data = TserieGraphData(),
       xvar = "calendar",
       yvar = colnames(TserieGraphData()[,-1]),
-      options = list(width = 1200, height = 500)
+      options = list(width = 1200, height = 500, isStacked = TRUE)
     ) 
   })
   
