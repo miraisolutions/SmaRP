@@ -56,6 +56,7 @@ shinyServer(function(input, output) {
                      MaxContrTax = MaxContrTax)
   })
   
+  # build main df
   Road2Retirement <- reactive({
     ContributionP2Path() %>%
       left_join(ContributionP3path(), by = c("calendar", "t")) %>%
@@ -63,13 +64,7 @@ shinyServer(function(input, output) {
       mutate(Total = TotalP2 + TotalP3 + TotalTax)             
   }) 
   
-  FotoFinish <- reactive({
-    Road2Retirement()[,c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax")]  %>% 
-      tail(1) %>%
-      prop.table() %>%
-      select(which(sapply(., function(x) x > 0)))
-  })
-  
+  # Table ----
   output$table <- renderTable({
     Road2Retirement()[, c("calendar", "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")] %>%
       mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-"))
@@ -77,37 +72,57 @@ shinyServer(function(input, output) {
   
   
 
-  output$summary <- renderPrint({
-    summary(Road2Retirement())
+#   output$summary <- renderPrint({
+#     summary(Road2Retirement())
+#   })
+  
+  # T series plot ----
+  TserieGraphData <- reactive({
+    Road2Retirement()[, c("calendar", "DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax", "Total")] %>%
+      mutate(cDirectP2 = DirectP2,
+             cDirectP3 = DirectP2 + DirectP3,
+             cDirectTax = cDirectP3 + DirectTax,
+             cReturnP2 = cDirectTax + ReturnP2,
+             cReturnP3 = cReturnP2 + ReturnP3,
+             cTotal = cReturnP3 + ReturnTax) %>%
+      select(starts_with("c")) %>%
+      .[ ,!as.logical(duplicated(as.list(.), fromLast = FALSE))] # filter out first duplicated column
   })
-  
-  
+
+
   output$plot1 <- renderGvis({
     gvisAreaChart(
-      data = Road2Retirement(),
+      data = TserieGraphData(),
       xvar = "calendar",
-      yvar = c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax", "Total"),
+      yvar = colnames(TserieGraphData()[,-1]),
       options = list(width = 1200, height = 500)
     ) 
   })
   
-  bar.data <- reactive({
-    data.frame(Funds = colnames(FotoFinish()),
-                        percentage = as.vector(t(FotoFinish()))) %>%
-    arrange(Funds) %>%
-    mutate(pos = cumsum(percentage) - (0.5 * percentage),
-           percentage = round(percentage * 100, digits = 1),
-           pos = round(pos * 100, digits = 1)) 
+  # bar plot -----
+  FotoFinish <- reactive({
+    Road2Retirement()[,c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax")]  %>% 
+      tail(1) %>%
+      prop.table() %>%
+      select(which(sapply(., function(x) x > 0)))
   })
-  
-  
+
+  BarGraphData <- reactive({
+    data.frame(Funds = colnames(FotoFinish()),
+               percentage = as.vector(t(FotoFinish()))) %>%
+      arrange(Funds) %>%
+      mutate(pos = cumsum(percentage) - (0.5 * percentage),
+             percentage = round(percentage * 100, digits = 1),
+             pos = round(pos * 100, digits = 1)) 
+  })
+
   output$plot2 <- renderPlot({
     ggplot() + 
       geom_bar(aes(y = percentage, x = "", fill = Funds), 
-               data = bar.data(),
+               data = BarGraphData(),
                position = position_stack(reverse = TRUE),
                stat="identity") +
-      geom_text(data = bar.data(),
+      geom_text(data = BarGraphData(),
                 aes(x = "", y = pos, label = paste0(percentage,"%")),
                 size = 4) +
       coord_flip()

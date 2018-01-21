@@ -1,58 +1,70 @@
-# # 
-# # Example
-# birthday = "1981-08-12"
-# P3purchase = 0
-# CurrentP3 = 0
-# returnP3 = 0.05
-# CurrentP2 = 50000
-# Salary = 95000
-# SalaryGrowthRate = 0.01
-# P2purchase = 2000
-# TypePurchase = "AnnualP2"
-# ncp = length(getRetirementCalendar(birthday, givenday = today()))
-# Kanton = "BE"
-# Tariff = "TB"
-# NKids = "0Kids"
 # 
-# 
-# Road2Retirement <- buildContributionP2Path(birthday,
-#                                                 Salary,
-#                                                 SalaryGrowthRate,
-#                                                 CurrentP2,
-#                                                 P2purchase,
-#                                                 TypePurchase,
-#                                                 rate = BVGMindestzinssatz) %>%
-#   left_join(buildContributionP3path(birthday,
-#                                 P3purchase,
-#                                 CurrentP3,
-#                                 returnP3), by = c("calendar", "t")) %>%
-#   left_join(buildTaxBenefits(birthday,
-#                          TypePurchase,
-#                          P2purchase,
-#                          P3purchase,
-#                          returnP3,
-#                          Salary,
-#                          SalaryGrowthRate,
-#                          Kanton,
-#                          Tariff,
-#                          NKids,
-#                          MaxContrTax), by = c("calendar", "t")) %>%
-#   mutate(Total = TotalP2 + TotalP3 + TotalTax)
-# 
-# 
-# 
-# FotoFinish <- Road2Retirement[,c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax")]  %>% 
-#   tail(1) %>%
-#   prop.table() %>%
-#   select(which(sapply(., function(x) x > 0)))
-# 
-# bar.data <- data.frame(Funds = colnames(FotoFinish),
-#                       percentage = as.vector(t(FotoFinish))) %>%
-#   arrange(Funds) %>%
-#   mutate(pos = cumsum(percentage) - (0.5 * percentage),
-#          percentage = round(percentage * 100, digits = 1),
-#          pos = round(pos * 100, digits = 1)) 
-# 
+# Example
+birthday = "1981-08-12"
+P3purchase = 0
+CurrentP3 = 0
+returnP3 = 0.05
+CurrentP2 = 50000
+Salary = 95000
+SalaryGrowthRate = 0.01
+P2purchase = 2000
+TypePurchase = "AnnualP2"
+ncp = length(getRetirementCalendar(birthday, givenday = today()))
+Kanton = "BE"
+Tariff = "TB"
+NKids = "0Kids"
+
+
+Road2Retirement <- buildContributionP2Path(birthday,
+                                                Salary,
+                                                SalaryGrowthRate,
+                                                CurrentP2,
+                                                P2purchase,
+                                                TypePurchase,
+                                                rate = BVGMindestzinssatz) %>%
+  left_join(buildContributionP3path(birthday,
+                                P3purchase,
+                                CurrentP3,
+                                returnP3), by = c("calendar", "t")) %>%
+  left_join(buildTaxBenefits(birthday,
+                         TypePurchase,
+                         P2purchase,
+                         P3purchase,
+                         returnP3,
+                         Salary,
+                         SalaryGrowthRate,
+                         Kanton,
+                         Tariff,
+                         NKids,
+                         MaxContrTax), by = c("calendar", "t")) %>%
+  mutate(Total = TotalP2 + TotalP3 + TotalTax)
+
+
+
+FotoFinish <- Road2Retirement[,c("DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax")]  %>% 
+  tail(1) %>%
+  prop.table() %>%
+  select(which(sapply(., function(x) x > 0)))
+
+# order of columns aligned with FotoFinish and BarGraphData
+TserieGraphData <- Road2Retirement[, c("calendar", "DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax", "Total")] %>%
+  mutate(cDirectP2 = DirectP2,
+         cDirectP3 = DirectP2 + DirectP3,
+         cDirectTax = cDirectP3 + DirectTax,
+         cReturnP2 = cDirectTax + ReturnP2,
+         cReturnP3 = cReturnP2 + ReturnP3,
+         cTotal = cReturnP3 + ReturnTax) %>%
+  select(starts_with("c")) %>%
+  .[ ,!as.logical(duplicated(as.list(.), fromLast = FALSE))] # filter out first duplicated column
+
+
+BarGraphData <- data.frame(Funds = colnames(FotoFinish),
+                           percentage = as.vector(t(FotoFinish))) %>%
+  arrange(Funds) %>%
+  mutate(pos = cumsum(percentage) - (0.5 * percentage),
+         percentage = round(percentage * 100, digits = 1),
+         pos = round(pos * 100, digits = 1)) 
+
 
 
 
