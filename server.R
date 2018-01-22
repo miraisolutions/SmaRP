@@ -91,30 +91,47 @@ shinyServer(function(input, output) {
     Road2Retirement()[,c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax")]  %>% 
       tail(1) %>%
       prop.table() %>%
-      select(which(sapply(., function(x) x > 0)))
+      select_if(function(x) x != 0)
   })
 
+  
   BarGraphData <- reactive({
-    data.frame(Funds = colnames(FotoFinish()),
-               percentage = as.vector(t(FotoFinish()))) %>%
-      arrange(Funds) %>%
-      mutate(pos = cumsum(percentage) - (0.5 * percentage),
-             percentage = round(percentage * 100, digits = 1),
-             pos = round(pos * 100, digits = 1)) 
+    cbind(FotoFinish(), FotoFinish()) %>%
+    set_colnames(c(colnames(FotoFinish()), paste0(colnames(FotoFinish()), ".annotation"))) %>%
+    mutate(contribution = "") %>%
+    .[, order(colnames(.))]
   })
-
-  output$plot2 <- renderPlot({
-    ggplot() + 
-      geom_bar(aes(y = percentage, x = "", fill = Funds), 
-               data = BarGraphData(),
-               position = position_stack(reverse = TRUE),
-               stat="identity") +
-      geom_text(data = BarGraphData(),
-                aes(x = "", y = pos, label = paste0(percentage,"%")),
-                size = 4) +
-      coord_flip()
-     
+  
+  output$plot2 <- renderGvis({
+    gvisBarChart(data = BarGraphData(),
+                 xvar = "contribution",
+                 yvar= colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
+                 options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]")
+    )
   })
+  
+  
+#   BarGraphData <- reactive({
+#     data.frame(Funds = colnames(FotoFinish()),
+#                percentage = as.vector(t(FotoFinish()))) %>%
+#       arrange(Funds) %>%
+#       mutate(pos = cumsum(percentage) - (0.5 * percentage),
+#              percentage = round(percentage * 100, digits = 1),
+#              pos = round(pos * 100, digits = 1)) 
+#   })
+# 
+#   output$plot2 <- renderPlot({
+#     ggplot() + 
+#       geom_bar(aes(y = percentage, x = "", fill = Funds), 
+#                data = BarGraphData(),
+#                position = position_stack(reverse = TRUE),
+#                stat="identity") +
+#       geom_text(data = BarGraphData(),
+#                 aes(x = "", y = pos, label = paste0(percentage,"%")),
+#                 size = 4) +
+#       coord_flip()
+#      
+#   })
   
 }
 )

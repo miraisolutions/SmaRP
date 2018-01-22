@@ -56,7 +56,7 @@ shinyUI(  fluidPage(
     mainPanel(
       tabsetPanel(type = "tabs",
                   tabPanel("Plot", htmlOutput("plot1"),
-                           plotOutput("plot2")),
+                           htmlOutput("plot2")),
                   tabPanel("Table", htmlOutput("table"))
       )
       

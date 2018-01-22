@@ -44,7 +44,20 @@
 # FotoFinish <- Road2Retirement[,c("DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax")]  %>% 
 #   tail(1) %>%
 #   prop.table() %>%
-#   select(which(sapply(., function(x) x > 0)))
+#   select_if(function(x) x != 0) 
+# 
+# BarGraphData <- cbind(FotoFinish, FotoFinish) %>%
+#   set_colnames(c(colnames(FotoFinish), paste0(colnames(FotoFinish), ".annotation"))) %>%
+#   mutate(contribution = "") %>%
+#   .[,order(colnames(.))]
+
+
+# ## Stacked bar chart
+# Bar2 <- gvisBarChart(BarGraphData, xvar = "contribution",
+#                      yvar= colnames(BarGraphData)[!grepl("contribution", colnames(BarGraphData))],
+#                      options=list(isStacked=TRUE, vAxes="[{minValue:0}]"))
+# plot(Bar2)
+
 # 
 # # order of columns aligned with FotoFinish and BarGraphData
 # TserieGraphData <- Road2Retirement[, c("calendar", "DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax")] %>%
