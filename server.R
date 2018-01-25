@@ -12,7 +12,6 @@ library(lubridate)
 library(dplyr)
 library(magrittr)
 library(googleVis)
-library(ggplot2)
 
 # source core methodology and global variables
 source("core.R")
@@ -82,7 +81,7 @@ shinyServer(function(input, output) {
       data = TserieGraphData(),
       xvar = "calendar",
       yvar = colnames(TserieGraphData()[,-1]),
-      options = list(width = 1200, height = 500, isStacked = TRUE)
+      options = list(width = 1200, height = 500, isStacked = TRUE, legend = "bottom")
     ) 
   })
   
@@ -106,7 +105,7 @@ shinyServer(function(input, output) {
     gvisBarChart(data = BarGraphData(),
                  xvar = "contribution",
                  yvar= colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
-                 options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]")
+                 options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
     )
   })
   
