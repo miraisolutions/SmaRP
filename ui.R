@@ -23,8 +23,8 @@ shinyUI(  fluidPage(
                   choices = Kanton.list ,
                   selected = "ZH"),
       radioButtons("genre", label = NULL, inline = TRUE,
-                  choices = list("Male" = "M", "Female" = "F"), 
-                  selected = "M"),
+                   choices = list("Male" = "M", "Female" = "F"), 
+                   selected = "M"),
       selectInput("tariff", label = NULL, 
                   choices = tariffs.list, 
                   selected = "TA"),
@@ -42,7 +42,7 @@ shinyUI(  fluidPage(
       numericInput("P2purchase", label = h5("Pilar 2 purchase"), value = 0, step = 500, min = 0),
       radioButtons("TypePurchase", label = NULL, inline = TRUE,
                    choices = Purchase.list),
-       hr(),
+      hr(),
       tags$div(class="header", checked=NA, tags$p("Pilar 3")),
       numericInput("CurrentP3", label = h5("Current Pilar 3 amount"), value = 50000, step = 1000, min = 0),
       numericInput("P3purchase", label = h5("Annual Pilar 3 purchase"), value = 0, step = 500, min = 0),
@@ -52,14 +52,24 @@ shinyUI(  fluidPage(
       
     ),
     
-    # Show a plot of the generated distribution
+    # Show results
     mainPanel(
-      tabsetPanel(type = "tabs",
-                  tabPanel("Plot", htmlOutput("plot1"),
-                           htmlOutput("plot2")),
-                  tabPanel("Table", htmlOutput("table"))
+      tabsetPanel(
+        type = "tabs",
+        tabPanel("Plot", 
+                 verbatimTextOutput("text1"),
+                 htmlOutput("plot1"),
+                 htmlOutput("plot2"),
+                 tags$head(tags$style("#text1{color: blue;
+                                      font-size: 20px;
+                                      font-style: bold;
+                                      text-align: center;
+                                      }"))
+        ),
+        tabPanel("Table", 
+                 htmlOutput("table")
+        )
+                 )
+        )
       )
-      
-    )
-  )
-))
+  ))

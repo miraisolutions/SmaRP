@@ -12,6 +12,7 @@ library(lubridate)
 library(dplyr)
 library(magrittr)
 library(googleVis)
+# library(ggplot2)
 
 # source core methodology and global variables
 source("core.R")
@@ -19,7 +20,7 @@ source("core.R")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-   
+  
   # calc P2 fund
   ContributionP2Path <- reactive({ 
     buildContributionP2Path(birthday = input$birthdate,
@@ -73,9 +74,9 @@ shinyServer(function(input, output) {
   # T series plot ----
   TserieGraphData <- reactive({
     Road2Retirement()[, c("calendar", "DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax")] %>%
-    .[, colSums(. != 0, na.rm = TRUE) > 0]
+      .[, colSums(. != 0, na.rm = TRUE) > 0]
   })
-
+  
   output$plot1 <- renderGvis({
     gvisAreaChart(
       data = TserieGraphData(),
@@ -92,13 +93,13 @@ shinyServer(function(input, output) {
       prop.table() %>%
       select_if(function(x) x != 0)
   })
-
+  
   
   BarGraphData <- reactive({
     cbind(FotoFinish(), FotoFinish()) %>%
-    set_colnames(c(colnames(FotoFinish()), paste0(colnames(FotoFinish()), ".annotation"))) %>%
-    mutate(contribution = "") %>%
-    .[, order(colnames(.))]
+      set_colnames(c(colnames(FotoFinish()), paste0(colnames(FotoFinish()), ".annotation"))) %>%
+      mutate(contribution = "") %>%
+      .[, order(colnames(.))]
   })
   
   output$plot2 <- renderGvis({
@@ -107,30 +108,43 @@ shinyServer(function(input, output) {
                  yvar= colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
                  options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
     )
+    
+  })
+  
+  retirementdate <- reactive({
+    getRetirementday(input$birthdate)
+  })  
+  
+  retirementfund <- reactive({
+    Road2Retirement()[, "Total"] %>% tail(1) %>% as.integer
   })
   
   
-#   BarGraphData <- reactive({
-#     data.frame(Funds = colnames(FotoFinish()),
-#                percentage = as.vector(t(FotoFinish()))) %>%
-#       arrange(Funds) %>%
-#       mutate(pos = cumsum(percentage) - (0.5 * percentage),
-#              percentage = round(percentage * 100, digits = 1),
-#              pos = round(pos * 100, digits = 1)) 
-#   })
-# 
-#   output$plot2 <- renderPlot({
-#     ggplot() + 
-#       geom_bar(aes(y = percentage, x = "", fill = Funds), 
-#                data = BarGraphData(),
-#                position = position_stack(reverse = TRUE),
-#                stat="identity") +
-#       geom_text(data = BarGraphData(),
-#                 aes(x = "", y = pos, label = paste0(percentage,"%")),
-#                 size = 4) +
-#       coord_flip()
-#      
-#   })
+  output$text1 <- renderText({
+    paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), "CHF", sep = " ")
+  })
+  
+  #   BarGraphData <- reactive({
+  #     data.frame(Funds = colnames(FotoFinish()),
+  #                percentage = as.vector(t(FotoFinish()))) %>%
+  #       arrange(Funds) %>%
+  #       mutate(pos = cumsum(percentage) - (0.5 * percentage),
+  #              percentage = round(percentage * 100, digits = 1),
+  #              pos = round(pos * 100, digits = 1)) 
+  #   })
+  # 
+  #   output$plot2 <- renderPlot({
+  #     ggplot() + 
+  #       geom_bar(aes(y = percentage, x = "", fill = Funds), 
+  #                data = BarGraphData(),
+  #                position = position_stack(reverse = TRUE),
+  #                stat="identity") +
+  #       geom_text(data = BarGraphData(),
+  #                 aes(x = "", y = pos, label = paste0(percentage,"%")),
+  #                 size = 4) +
+  #       coord_flip()
+  #      
+  #   })
   
 }
 )
