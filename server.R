@@ -111,6 +111,7 @@ shinyServer(function(input, output) {
     
   })
   
+  
   retirementdate <- reactive({
     getRetirementday(input$birthdate)
   })  
@@ -120,8 +121,15 @@ shinyServer(function(input, output) {
   })
   
   
-  output$text1 <- renderText({
+  output$Totals <- renderText({
     paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), "CHF", sep = " ")
+  })
+  
+  output$disclaimer <- renderText({
+    paste("Disclaimer:",
+          "The results of this calculations do not have any legal value.",
+          "To check the details of the calculations, parameters and assumptions, please, download the report.",
+          sep="\n")
   })
   
   #   BarGraphData <- reactive({
