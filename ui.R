@@ -82,7 +82,10 @@ shinyUI(
                    htmlOutput("table")
           ) # end tab Table
           
-        ) # end tabsetPanel
+        ), # end tabsetPanel
+        
+        #Add button to download report
+        downloadButton("report", "Generate report")
         
       ) # end mainPanel
       
