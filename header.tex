@@ -1,0 +1,38 @@
+%\usepackage{etoolbox}
+\usepackage{tikz}
+\usepackage{fancyhdr}
+
+
+%set up page style
+\pagestyle{plain}
+\fancypagestyle{plain}{
+\fancyhf{}
+\fancyhead[R]{ \hrulefill{} \includegraphics[width=4cm]{data/mirai.pdf}}
+\fancyfoot[L]{\copyright 2018 Mirai Solutions GmbH}
+\fancyfoot[R]{\thepage}
+\renewcommand*{\headrulewidth}{0pt}
+\renewcommand*{\footrulewidth}{0.4pt}
+}
+\pagestyle{plain}
+
+% % set page margins
+%\setlength{\headheight}{3cm} 
+
+% Support for multi-column output
+\newcommand{\columnsbegin}{\begin{columns}}
+\newcommand{\columnsend}{\end{columns}}
+\newcommand{\solutionsbegin}{\begin{solutions}}
+\newcommand{\solutionsend}{\end{solutions}}
+
+% Decreasing space between commands and output in knitr chunks
+% See http://stackoverflow.com/questions/34866163/decreasing-space-between-commands-and-output-in-knitr-chunks
+\makeatletter
+\preto{\@verbatim}{\topsep=0pt \partopsep=0pt}
+\makeatother
+
+% Define Mirai blue
+\definecolor{mirai}{rgb}{0.243,0.565,0.804}
+
+% Define colors
+\hypersetup{colorlinks,citecolor=mirai,filecolor=mirai,linkcolor=mirai,urlcolor=mirai}
+

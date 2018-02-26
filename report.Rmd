@@ -1,9 +1,13 @@
 ---
 title: "Dynamic Report"
 date: \today
-output: pdf_document
-params:
-  n: NA
+output: 
+    pdf_document:
+      latex_engine: xelatex
+      includes:
+        in_header: header.tex
+# params:
+#   n: NA
 ---
 
 ```{r setup, include=FALSE}
@@ -29,3 +33,59 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Dummy
+
+more dummy text to get to the next page
+
+## Dummy
+
+more dummy text to get to the next page
+
+## Dummy
+
+more dummy text to get to the next page
+
+## Dummy
+
+more dummy text to get to the next page
+
+## Dummy
+
+more dummy text to get to the next page
+
+## Dummy
+
+more dummy text to get to the next page
+
+## Dummy
+
+more dummy text to get to the next page
+
+## Dummy
+
+more dummy text to get to the next page
+
+## Dummy
+
+more dummy text to get to the next page
+
+## Dummy
+
+more dummy text to get to the next page
+
+## Dummy
+
+more dummy text to get to the next page
+
+## Dummy
+
+more dummy text to get to the next page
+
+## Dummy
+
+more dummy text to get to the next page
+
+## Dummy
+
+more dummy text to get to the next page
