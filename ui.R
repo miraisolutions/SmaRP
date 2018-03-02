@@ -10,6 +10,9 @@ source("external_inputs.R")
 # UI
 shinyUI( 
   fluidPage(
+    tags$head(
+      tags$style(HTML("hr {border-top: 1px solid #000000;}"))
+    ),
     
     titlePanel("Swiss Retirement Calculator"),
     a(href="http://www.mirai-solutions.com", "mirai-solutions.com"),
@@ -17,10 +20,28 @@ shinyUI(
     sidebarLayout(
       sidebarPanel(
         width = 3,
+        dateInput("Birthdate", label = h5("Birthday"), value = "1980-12-31", format = "yyyy-mm-dd"),
+        numericInput("RetirementAge", label = h5("Desired Retirement Age"), value = 65, step = 1, min = 55, max = 70),
+        hr(),
+        tags$h4("Private Pension Fund"),
+        numericInput("CurrentP3", label = h5("Current amount"), value = 50000, step = 1000, min = 0),
+        numericInput("P3purchase", label = h5("Annual contribution"), value = 0, step = 500, min = 0),
+        numericInput("returnP3", label = h5("Expected Return"), value = BVGMindestzinssatz, step = 0.001, min = 0),
+        hr(),
+        
         tabsetPanel(
-          type = "pills",
-          tabPanel("Swiss case",
+          id = "case",
+          type = "tabs",
+          tabPanel(title = "General case", 
+                   value = "General",
+                   tags$h4("Tax Benefits"),
+                   numericInput("TaxRelief", label = h5("Maximum Tax Relief"), value = 10000, step = 100, min = 0),
+                   numericInput("TaxRate", label = h5("Marginal Tax Rate"), value = 0.1, step = 0.01, min = 0)
                    
+          ), # end General tabPanel
+          
+          tabPanel(title = "Swiss case",
+                   value = "Swiss",
                    selectInput("kanton", "Basic Info",
                                choices = Kanton.list ,
                                selected = "ZH"),
@@ -34,28 +55,16 @@ shinyUI(
                                 choices = Kids.list,
                                 selected = "0kid"),
                    
-                   dateInput("birthdate", label = h5("Birthday"), value = "1980-12-31", format = "yyyy-mm-dd"),
-                   #      HTML('<hr style="color: black;">'),
                    hr(),
-                   tags$div(class="header", checked=NA, tags$p("Pilar 2")),
+                   tags$h4("Occupational Pension Fund (BVG)"),
                    numericInput("Salary", label = h5("Current Annual Salary"), value = 100000, step = 1000, min = 0),
-                   numericInput("CurrentP2", label = h5("Current Pilar 2 amount"), value = 100000, step = 1000, min = 0),
                    numericInput("SalaryGrowthRate", label = h5("Expected salary growth rate"), value = 0.02, step = 0.001, min = 0),
-                   numericInput("P2purchase", label = h5("Pilar 2 purchase"), value = 0, step = 500, min = 0),
+                   numericInput("CurrentP2", label = h5("Current BVG amount"), value = 100000, step = 1000, min = 0),
+                   numericInput("P2purchase", label = h5("Voluntary purchases"), value = 0, step = 500, min = 0),
                    radioButtons("TypePurchase", label = NULL, inline = TRUE,
-                                choices = Purchase.list),
-                   hr(),
-                   tags$div(class="header", checked=NA, tags$p("Pilar 3")),
-                   numericInput("CurrentP3", label = h5("Current Pilar 3 amount"), value = 50000, step = 1000, min = 0),
-                   numericInput("P3purchase", label = h5("Annual Pilar 3 purchase"), value = 0, step = 500, min = 0),
-                   numericInput("returnP3", label = h5("Expected Return Pilar 3"), value = BVGMindestzinssatz, step = 0.001, min = 0)
+                                choices = Purchase.list)
                    
-                   
-          ), #  end Swiss tabPanel
-            tabPanel("General case", 
-                     numericInput("Salary", label = h5("Current Annual Salary"), value = 100000, step = 1000, min = 0)      
-          
-            ) # end General tabPanel
+          ) #  end Swiss tabPanel
           
         ) # end tabsetPanel
         
@@ -64,9 +73,9 @@ shinyUI(
       # Show results
       mainPanel(
         tabsetPanel(
-          type = "tabs",
+          type = "pills",
           tabPanel("Plot", 
-                   hr(),
+#                   hr(),
                    verbatimTextOutput("Totals"),
                    htmlOutput("plot1"),
                    htmlOutput("plot2"),
