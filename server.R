@@ -23,10 +23,10 @@ shinyServer(function(input, output) {
   
   # calc P2 fund
   ContributionP2Path <- reactive({ 
-    buildContributionP2Path(birthday = input$birthdate,
-                            Salary = input$Salary,
+    buildContributionP2Path(birthday = input$Birthdate,
+                            Salary = ifelse(input$case == "General", 0, input$Salary),
                             SalaryGrowthRate = input$SalaryGrowthRate,
-                            CurrentP2 = input$CurrentP2,
+                            CurrentP2 = ifelse(input$case == "General", 0, input$CurrentP2),
                             P2purchase = input$P2purchase,
                             TypePurchase = input$TypePurchase,
                             rate = BVGMindestzinssatz,
@@ -35,7 +35,7 @@ shinyServer(function(input, output) {
   
   # calc P3 fund
   ContributionP3path <- reactive({
-    buildContributionP3path(birthday = input$birthdate, 
+    buildContributionP3path(birthday = input$Birthdate, 
                             P3purchase = input$P3purchase, 
                             CurrentP3 = input$CurrentP3, 
                             returnP3 = input$returnP3)
@@ -43,12 +43,13 @@ shinyServer(function(input, output) {
   
   # calc Tax benefits
   ContributionTaxpath <- reactive({
-    buildTaxBenefits(birthday = input$birthdate, 
+    buildTaxBenefits(birthday = input$Birthdate, 
                      TypePurchase = input$TypePurchase,
                      P2purchase = input$P2purchase, 
                      P3purchase = input$P3purchase, 
                      returnP3 = input$returnP3,
-                     Salary = input$Salary, 
+#                     Salary = ifelse(input$case == "General", input$G_Salary, input$S_Salary),
+                     Salary = input$Salary,
                      SalaryGrowthRate = input$SalaryGrowthRate,
                      Kanton = input$kanton,
                      Tariff = input$tariff, 
@@ -113,7 +114,7 @@ shinyServer(function(input, output) {
   
   
   retirementdate <- reactive({
-    getRetirementday(input$birthdate)
+    getRetirementday(input$Birthdate)
   })  
   
   retirementfund <- reactive({
@@ -137,6 +138,7 @@ shinyServer(function(input, output) {
   
   #output report
   output$report<- downloadHandler(
+<<<<<<< HEAD
     filename = "report.pdf",
     content = function(file){
       output <- rmarkdown::render(
@@ -147,6 +149,31 @@ shinyServer(function(input, output) {
       file.copy(output,file)
     }
   )# end of downloadHandler
+=======
+      filename = "report.pdf",
+      content = function(file) {
+        # Copy the report file to a temporary directory before processing it, in
+        # case we don't have write permissions to the current working dir (which
+        # can happen when deployed).
+        tempReport <- file.path(tempdir(), "report.Rmd")
+        file.copy("report.Rmd", tempReport, overwrite = TRUE)
+        tempheader <- file.path(tempdir(), "header.txt")
+        file.copy("header.tex", tempReport, overwrite = TRUE)
+        templogo <- file.path(tempdir(), "mirai.pdf")
+        file.copy("mirai.pdf", templogo, overwrite = TRUE)
+        
+        # Set up parameters to pass to Rmd document
+        params <- list()
+        
+        # Knit the document, passing in the `params` list, and eval it in a
+        # child of the global environment (this isolates the code in the document
+        # from the code in this app).
+        rmarkdown::render(tempReport, output_file = file,
+                          output_format = "pdf_document",
+                          params = params,
+                          envir = new.env(parent = globalenv()))
+                          }) # end of downloadHandler
+>>>>>>> 1a80eafd7308a672fbca5b5e432db75b5a38d2cd
   
   #   BarGraphData <- reactive({
   #     data.frame(Funds = colnames(FotoFinish()),
