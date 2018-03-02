@@ -12,6 +12,7 @@ library(lubridate)
 library(dplyr)
 library(magrittr)
 library(googleVis)
+library(rmarkdown)
 # library(ggplot2)
 
 # source core methodology and global variables
@@ -48,7 +49,7 @@ shinyServer(function(input, output) {
                      P2purchase = input$P2purchase, 
                      P3purchase = input$P3purchase, 
                      returnP3 = input$returnP3,
-#                     Salary = ifelse(input$case == "General", input$G_Salary, input$S_Salary),
+                     #                     Salary = ifelse(input$case == "General", input$G_Salary, input$S_Salary),
                      Salary = input$Salary,
                      SalaryGrowthRate = input$SalaryGrowthRate,
                      Kanton = input$kanton,
@@ -138,11 +139,11 @@ shinyServer(function(input, output) {
   
   #output report
   output$report<- downloadHandler(
-    filename = "report.pdf",
-    content = function(file){
+    filename <- "report.pdf",
+    content <- function(file){
       output <- rmarkdown::render(
         input = "report.Rmd",
-        output_format="pdf_document",
+        output_format = "pdf_document",
         params = params
       )
       file.copy(output,file)
