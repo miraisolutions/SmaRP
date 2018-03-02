@@ -132,13 +132,17 @@ shinyServer(function(input, output) {
           sep="\n")
   })
   
+  #params list to be passed to the output
+  params <- list(Salary = isolate(input$Salary))
+  
+  #output report
   output$report<- downloadHandler(
     filename = "report.pdf",
     content = function(file){
       output <- rmarkdown::render(
         input = "report.Rmd",
         output_format="pdf_document",
-        params = list()
+        params = params
       )
       file.copy(output,file)
     }
