@@ -140,6 +140,10 @@ shinyServer(function(input, output) {
         # can happen when deployed).
         tempReport <- file.path(tempdir(), "report.Rmd")
         file.copy("report.Rmd", tempReport, overwrite = TRUE)
+        tempheader <- file.path(tempdir(), "header.txt")
+        file.copy("header.tex", tempReport, overwrite = TRUE)
+        templogo <- file.path(tempdir(), "mirai.pdf")
+        file.copy("mirai.pdf", templogo, overwrite = TRUE)
         
         # Set up parameters to pass to Rmd document
         params <- list()
@@ -148,6 +152,7 @@ shinyServer(function(input, output) {
         # child of the global environment (this isolates the code in the document
         # from the code in this app).
         rmarkdown::render(tempReport, output_file = file,
+                          output_format = "pdf_document",
                           params = params,
                           envir = new.env(parent = globalenv()))
                           }) # end of downloadHandler

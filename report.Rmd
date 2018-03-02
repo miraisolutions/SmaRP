@@ -3,11 +3,13 @@ title: "Dynamic Report"
 date: \today
 output: 
     pdf_document:
-      latex_engine: xelatex
+#      citation_package: natbib
+#      fig_caption: true
+      latex_engine: pdflatex
       includes:
         in_header: header.tex
-# params:
-#   n: NA
+params:
+     n: NA
 ---
 
 ```{r setup, include=FALSE}

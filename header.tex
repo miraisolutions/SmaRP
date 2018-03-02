@@ -1,5 +1,5 @@
-%\usepackage{etoolbox}
-\usepackage{tikz}
+\usepackage{etoolbox}
+%\usepackage{tikz}
 \usepackage{fancyhdr}
 
 
@@ -7,16 +7,15 @@
 \pagestyle{plain}
 \fancypagestyle{plain}{
 \fancyhf{}
-\fancyhead[R]{ \hrulefill{} \includegraphics[width=4cm]{data/mirai.pdf}}
+\fancyhead[R]{ \includegraphics[width=4cm]{mirai.pdf}}
 \fancyfoot[L]{\copyright 2018 Mirai Solutions GmbH}
 \fancyfoot[R]{\thepage}
 \renewcommand*{\headrulewidth}{0pt}
-\renewcommand*{\footrulewidth}{0.4pt}
+%\renewcommand*{\footrulewidth}{0.4pt}
 }
 \pagestyle{plain}
 
-% % set page margins
-%\setlength{\headheight}{3cm} 
+
 
 % Support for multi-column output
 \newcommand{\columnsbegin}{\begin{columns}}
