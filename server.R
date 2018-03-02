@@ -133,29 +133,16 @@ shinyServer(function(input, output) {
   })
   
   output$report<- downloadHandler(
-      filename = "report.pdf",
-      content = function(file) {
-        # Copy the report file to a temporary directory before processing it, in
-        # case we don't have write permissions to the current working dir (which
-        # can happen when deployed).
-        tempReport <- file.path(tempdir(), "report.Rmd")
-        file.copy("report.Rmd", tempReport, overwrite = TRUE)
-        tempheader <- file.path(tempdir(), "header.txt")
-        file.copy("header.tex", tempReport, overwrite = TRUE)
-        templogo <- file.path(tempdir(), "mirai.pdf")
-        file.copy("mirai.pdf", templogo, overwrite = TRUE)
-        
-        # Set up parameters to pass to Rmd document
-        params <- list()
-        
-        # Knit the document, passing in the `params` list, and eval it in a
-        # child of the global environment (this isolates the code in the document
-        # from the code in this app).
-        rmarkdown::render(tempReport, output_file = file,
-                          output_format = "pdf_document",
-                          params = params,
-                          envir = new.env(parent = globalenv()))
-                          }) # end of downloadHandler
+    filename = "report.pdf",
+    content = function(file){
+      output <- rmarkdown::render(
+        input = "report.Rmd",
+        output_format="pdf_document",
+        params = list()
+      )
+      file.copy(output,file)
+    }
+  )# end of downloadHandler
   
   #   BarGraphData <- reactive({
   #     data.frame(Funds = colnames(FotoFinish()),

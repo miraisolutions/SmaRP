@@ -5,7 +5,8 @@ output:
     pdf_document:
 #      citation_package: natbib
 #      fig_caption: true
-      latex_engine: pdflatex
+#      keep_tex: true
+      latex_engine: xelatex
       includes:
         in_header: header.tex
 params:
