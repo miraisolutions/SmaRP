@@ -313,6 +313,12 @@ downloadPLZ <- function(refresh){
 }
 
 
+# returnPLZKanton ---------------------------------------------------------------
+returnPLZKanton <- function(plz){
+  Kanton <- PLZGemeinden$Kanton[PLZGemeinden$PLZ==plz]
+  return(Kanton)
+}
+
 
 
 

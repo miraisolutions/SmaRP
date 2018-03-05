@@ -52,7 +52,7 @@ shinyServer(function(input, output) {
                      #                     Salary = ifelse(input$case == "General", input$G_Salary, input$S_Salary),
                      Salary = input$Salary,
                      SalaryGrowthRate = input$SalaryGrowthRate,
-                     Kanton = input$kanton,
+                     Kanton = returnPLZKanton(input$postalcode),
                      Tariff = input$tariff, 
                      NKids = input$NKids, 
                      MaxContrTax = MaxContrTax)

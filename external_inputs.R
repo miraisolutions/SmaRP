@@ -57,7 +57,7 @@ PLZGemeinden <- XLConnect::readWorksheetFromFile(file = fileName, sheet = "PLZ6"
                 rename(PLZ =PLZ4) %>%
                 rename(GDENAME =GDENAMK) %>%
                 rename(Kanton =KTKZ)  
-  
+PLZ.list <- setNames(PLZGemeinden$PLZ, PLZGemeinden$PLZ)
   
   
 
