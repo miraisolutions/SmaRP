@@ -11,17 +11,68 @@ output:
         in_header: header.tex
 params:
       Salary: NA
+      birthday: NA
+      Road2Retirement: NA
+      SalaryGrowthRate: NA
+      CurrentP2: NA
+      P2purchase: NA
+      TypePurchase: NA
+      rate: NA
+      P3purchase: NA
+      CurrentP3: NA
+      returnP3: NA
+      postalcode: NA
+      Kanton: NA
+      Tariff: NA
+      NKids: NA
+      MaxContrTax: NA
+      retirementdate: NA
+      BarGraphData: NA
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(googleVis)
+library(plotly)
 ```
+
 
 ## R Markdown
 
 ```{r}
 params$Salary
+params$birthday
+params$Road2Retirement
+params$SalaryGrowthRate
+params$CurrentP2
+params$P2purchase
+params$TypePurchase
+params$rate
+params$P3purchase
+params$CurrentP3
+params$returnP3
+params$postalcode
+params$Kanton
+params$Tariff
+params$NKids
+params$MaxContrTax
+params$retirementdate
+disclaimer <- paste("Disclaimer:",
+      "The results of this calculations do not have any legal value.",
+      "To check the details of the calculations, parameters and assumptions, please, download the report.",sep="\n")
+params$BarGraphData
+
+
+plot2 <-gvisBarChart(data = params$BarGraphData,
+             xvar = "contribution",
+             yvar= colnames(params$BarGraphData)[!grepl("contribution", colnames(params$BarGraphData))],
+             options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
+    )
+
+
 ```
+
+<!-- \includegraphics[width=2in]{data/plot2.png} -->
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
@@ -53,46 +104,4 @@ more dummy text to get to the next page
 
 more dummy text to get to the next page
 
-## Dummy
 
-more dummy text to get to the next page
-
-## Dummy
-
-more dummy text to get to the next page
-
-## Dummy
-
-more dummy text to get to the next page
-
-## Dummy
-
-more dummy text to get to the next page
-
-## Dummy
-
-more dummy text to get to the next page
-
-## Dummy
-
-more dummy text to get to the next page
-
-## Dummy
-
-more dummy text to get to the next page
-
-## Dummy
-
-more dummy text to get to the next page
-
-## Dummy
-
-more dummy text to get to the next page
-
-## Dummy
-
-more dummy text to get to the next page
-
-## Dummy
-
-more dummy text to get to the next page

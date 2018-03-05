@@ -110,7 +110,6 @@ shinyServer(function(input, output) {
                  yvar= colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
                  options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
     )
-    
   })
   
   
@@ -135,7 +134,25 @@ shinyServer(function(input, output) {
   })
   
   #params list to be passed to the output
-  params <- list(Salary = isolate(input$Salary))
+  params <- list(Salary = isolate(input$Salary),
+                 birthday = isolate(input$Birthdate),
+                 Road2Retirement = isolate(Road2Retirement()),
+                 SalaryGrowthRate = isolate(input$SalaryGrowthRate),
+                 CurrentP2 = ifelse(isolate(input$case) == "General", 0, isolate(input$CurrentP2)),
+                 P2purchase = isolate(input$P2purchase),
+                 TypePurchase = isolate(input$TypePurchase),
+                 rate = isolate(BVGMindestzinssatz),
+                 P3purchase = isolate(input$P3purchase), 
+                 CurrentP3 = isolate(input$CurrentP3), 
+                 returnP3 = isolate(input$returnP3),
+                 postalcode = isolate(input$postalcode),
+                 Kanton = isolate(returnPLZKanton(input$postalcode)),
+                 Tariff = isolate(input$tariff), 
+                 NKids = isolate(input$NKids), 
+                 MaxContrTax = isolate(MaxContrTax),
+                 retirementdate = isolate(input$Birthdate),
+                 BarGraphData = isolate(BarGraphData())
+                 )
   
   #output report
   output$report<- downloadHandler(
