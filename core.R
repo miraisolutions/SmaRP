@@ -294,6 +294,24 @@ getTaxRate <- function(Salary, Kanton, Tariff, NKids){
 }
 
 
+# downloadPLZ -------------------------------------------------------------
+#' @examples
+# downloadPLZ(refresh=TRUE)
+downloadPLZ <- function(refresh){
+  if(refresh){
+    URL <- "https://www.bfs.admin.ch/bfsstatic/dam/assets/4242620/master"
+    fileName <- "data/CorrespondancePostleitzahlGemeinde.xlsx"
+    tryCatch( {download.file(URL,destfile=fileName,mode="wb")},
+              error =function(e) {currentDateTime <- "update not possible, try again later"},
+              warning = function(w) {currentDateTime <- "update not possible, try again later"}
+    )
+    currentDateTime <- Sys.time()
+    return(currentDateTime)
+  }
+}
+
+
+
 # fv(0.02, 30, pv = -50000, pmt = -4800, type = 0)
 
 # t = c(0.56, 1, 1, 1, 1)

@@ -13,6 +13,7 @@ library(dplyr)
 library(magrittr)
 library(googleVis)
 library(rmarkdown)
+library(RCurl)
 # library(ggplot2)
 
 # source core methodology and global variables
@@ -149,6 +150,15 @@ shinyServer(function(input, output) {
       file.copy(output,file)
     }
   )# end of downloadHandler
+  
+  #Refresh plz-gemeinde correspondance
+  # when the value of input$refreshButton becomes out of date 
+  # (i.e., when the button is pressed)
+  refreshText <- eventReactive(input$refreshButton, {downloadPLZ(refresh = TRUE)})
+  
+  output$refreshText<-renderText({
+    paste(as.character(refreshText()))
+  })
   
   #   BarGraphData <- reactive({
   #     data.frame(Funds = colnames(FotoFinish()),
