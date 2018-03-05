@@ -1,3 +1,6 @@
+library(XLConnect)
+library(dplyr)
+
 # Global variables
 
 # https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
@@ -46,3 +49,20 @@ Kids.list <- list("No Kids" = "0kid",
 
 Purchase.list <- list("Single Purchase" = "SingleP2",
                       "Annual Purchase" = "AnnualP2")
+
+#List of PLZ and corresponding Gemeinden; source https://www.bfs.admin.ch/bfs/it/home/basi-statistiche/elenco-ufficiale-comuni-svizzera/tabella-corrispondenza-rea.html
+fileName <- "data/CorrespondancePostleitzahlGemeinde.xlsx"
+PLZGemeinden <- XLConnect::readWorksheetFromFile(file = fileName, sheet = "PLZ4") %>%
+                select(c(PLZ4, GDENR, GDENAMK)) %>%
+                rename(PLZ =PLZ4) %>%
+                rename(GDENAME =GDENAMK)  
+  
+  
+  
+
+
+
+
+
+
+

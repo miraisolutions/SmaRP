@@ -13,7 +13,6 @@ library(dplyr)
 library(magrittr)
 library(googleVis)
 library(rmarkdown)
-library(RCurl)
 # library(ggplot2)
 
 # source core methodology and global variables

@@ -301,14 +301,18 @@ downloadPLZ <- function(refresh){
   if(refresh){
     URL <- "https://www.bfs.admin.ch/bfsstatic/dam/assets/4242620/master"
     fileName <- "data/CorrespondancePostleitzahlGemeinde.xlsx"
-    tryCatch( {download.file(URL,destfile=fileName,mode="wb")},
-              error =function(e) {currentDateTime <- "update not possible, try again later"},
-              warning = function(w) {currentDateTime <- "update not possible, try again later"}
+    currentDateTime <- tryCatch( {download.file(URL,destfile=fileName,mode="wb")},
+              error =function(e) {message <- "update not possible, try again later"
+              return(message)},
+              warning = function(w) {message <- "update not possible, try again later"
+              return(message)},
+              finally = {return(Sys.time())}
     )
-    currentDateTime <- Sys.time()
     return(currentDateTime)
   }
 }
+
+
 
 
 
