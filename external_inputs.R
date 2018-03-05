@@ -52,10 +52,11 @@ Purchase.list <- list("Single Purchase" = "SingleP2",
 
 #List of PLZ and corresponding Gemeinden; source https://www.bfs.admin.ch/bfs/it/home/basi-statistiche/elenco-ufficiale-comuni-svizzera/tabella-corrispondenza-rea.html
 fileName <- "data/CorrespondancePostleitzahlGemeinde.xlsx"
-PLZGemeinden <- XLConnect::readWorksheetFromFile(file = fileName, sheet = "PLZ4") %>%
-                select(c(PLZ4, GDENR, GDENAMK)) %>%
+PLZGemeinden <- XLConnect::readWorksheetFromFile(file = fileName, sheet = "PLZ6") %>%
+                select(c(PLZ4, KTKZ, GDENR, GDENAMK)) %>%
                 rename(PLZ =PLZ4) %>%
-                rename(GDENAME =GDENAMK)  
+                rename(GDENAME =GDENAMK) %>%
+                rename(Kanton =KTKZ)  
   
   
   
