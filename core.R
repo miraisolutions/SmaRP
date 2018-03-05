@@ -297,16 +297,27 @@ getTaxRate <- function(Salary, Kanton, Tariff, NKids){
 # downloadPLZ -------------------------------------------------------------
 #' @examples
 # downloadPLZ(refresh=TRUE)
-downloadPLZ <- function(refresh){
+downloadInputs <- function(refresh){
   if(refresh){
-    URL <- "https://www.bfs.admin.ch/bfsstatic/dam/assets/4242620/master"
+    URL_plz <- "https://www.bfs.admin.ch/bfsstatic/dam/assets/4242620/master"
     fileName <- "data/CorrespondancePostleitzahlGemeinde.xlsx"
-    currentDateTime <- tryCatch( {download.file(URL,destfile=fileName,mode="wb")},
+    currentDateTime <- tryCatch( {download.file(URL_plz,destfile=fileName,mode="wb")},
               error =function(e) {message <- "update not possible, try again later"
               return(message)},
               warning = function(w) {message <- "update not possible, try again later"
               return(message)},
               finally = {return(Sys.time())}
+    )
+    URL_taxrate <-"https://www.estv.admin.ch/dam/estv/it/dokumente/bundessteuer/quellensteuer/schweiz/tar2018txt.zip.download.zip/tar2018txt.zip"
+    repositoryName <- "data/raw1"
+    zipfileName <- paste0(repositoryName, "/raw1.zip")
+    currentDateTime <- tryCatch( {download.file(URL_taxrate,destfile=zipfileName)},
+                                 error =function(e) {message <- "update not possible, try again later"
+                                 return(message)},
+                                 warning = function(w) {message <- "update not possible, try again later"
+                                 return(message)},
+                                 finally = {unzip(zipfileName, exdir=paste0(repositoryName, "/raw1"), overwrite=TRUE)
+                                   return(Sys.time())}
     )
     return(currentDateTime)
   }

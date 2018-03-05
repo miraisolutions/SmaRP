@@ -61,7 +61,6 @@ shinyUI(
                    radioButtons("NKids", label = NULL, inline = TRUE,
                                 choices = Kids.list,
                                 selected = "0kid"),
-                   
                    hr(),
                    tags$h4("Occupational Pension Fund (BVG)"),
                    numericInput("Salary", label = h5("Current Annual Salary"), value = 100000, step = 1000, min = 0),
