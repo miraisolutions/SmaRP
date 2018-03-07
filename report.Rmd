@@ -32,8 +32,9 @@ params:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(googleVis)
-library(plotly)
+#library(googleVis)
+library(reshape)
+library(ggplot2)
 ```
 
 
@@ -60,17 +61,29 @@ params$retirementdate
 disclaimer <- paste("Disclaimer:",
       "The results of this calculations do not have any legal value.",
       "To check the details of the calculations, parameters and assumptions, please, download the report.",sep="\n")
-params$BarGraphData
-
-
-plot2 <-gvisBarChart(data = params$BarGraphData,
-             xvar = "contribution",
-             yvar= colnames(params$BarGraphData)[!grepl("contribution", colnames(params$BarGraphData))],
-             options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
-    )
-
+BarGraphData <- as.data.frame( params$BarGraphData)
+BarGraphData
+yvar= c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax", "contribution")
+yvar
+usedyvar<- colnames(BarGraphData)[colnames(BarGraphData) %in% yvar]
+usedyvar
+# plot2 <- gvisBarChart( data = params$BarGraphData,
+#              xvar = "contribution",
+#              yvar= colnames(params$BarGraphData)[!grepl("contribution", colnames(params$BarGraphData))],
+#              options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none"),
+#              system("wkhtmltoimage -n --enable-javascript --javascript-delay 2000 data/plot2.html data/plot2.png ")
+#     )
+bardata <- BarGraphData %>% select(usedyvar)
+bardata
+bardata <- bardata %>%  melt( id ="contribution") %>% select(c(variable, value))
+bardata
+g <- ggplot(bardata, aes(x=1, y=value, fill=variable)) + geom_bar(stat="identity",
+            position = position_fill(reverse = TRUE))
+g + coord_flip() + labs(x="", y="percentage %", fill="contribution")
 
 ```
+
+
 
 <!-- \includegraphics[width=2in]{data/plot2.png} -->
 

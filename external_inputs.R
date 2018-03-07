@@ -54,7 +54,7 @@ Purchase.list <- list("Single Purchase" = "SingleP2",
 fileName <- "data/CorrespondancePostleitzahlGemeinde.xlsx"
 PLZGemeinden <- XLConnect::readWorksheetFromFile(file = fileName, sheet = "PLZ6") %>%
                 select(c(PLZ4, KTKZ, GDENR, GDENAMK)) %>%
-                rename(PLZ =PLZ4) %>%
+                rename(PLZ = PLZ4) %>%
                 rename(GDENAME =GDENAMK) %>%
                 rename(Kanton =KTKZ)  
 PLZ.list <- setNames(PLZGemeinden$PLZ, PLZGemeinden$PLZ)

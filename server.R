@@ -13,7 +13,7 @@ library(dplyr)
 library(magrittr)
 library(googleVis)
 library(rmarkdown)
-# library(ggplot2)
+#library(ggplot2)
 
 # source core methodology and global variables
 source("core.R")
@@ -160,12 +160,14 @@ shinyServer(function(input, output) {
     content <- function(file){
       output <- rmarkdown::render(
         input = "report.Rmd",
+        output_file = filename,
         output_format = "pdf_document",
         params = params
       )
       file.copy(output,file)
     }
   )# end of downloadHandler
+  
   
   #Refresh plz-gemeinde correspondance
   # when the value of input$refreshButton becomes out of date 

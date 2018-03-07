@@ -1,4 +1,4 @@
-# # 
+# #
 # # Example
 # birthday = "1981-08-12"
 # P3purchase = 0
@@ -41,10 +41,10 @@
 # 
 # 
 # 
-# FotoFinish <- Road2Retirement[,c("DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax")]  %>% 
+# FotoFinish <- Road2Retirement[,c("DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax")]  %>%
 #   tail(1) %>%
 #   prop.table() %>%
-#   select_if(function(x) x != 0) 
+#   select_if(function(x) x != 0)
 # 
 # BarGraphData <- cbind(FotoFinish, FotoFinish) %>%
 #   set_colnames(c(colnames(FotoFinish), paste0(colnames(FotoFinish), ".annotation"))) %>%
@@ -58,18 +58,18 @@
 #                      options=list(isStacked=TRUE, vAxes="[{minValue:0}]"))
 # plot(Bar2)
 
-# 
+#
 # # order of columns aligned with FotoFinish and BarGraphData
 # TserieGraphData <- Road2Retirement[, c("calendar", "DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax")] %>%
 #   .[, colSums(. != 0, na.rm = TRUE) > 0]
-# 
+#
 # BarGraphData <- data.frame(Funds = colnames(FotoFinish),
 #                            percentage = as.vector(t(FotoFinish))) %>%
 #   arrange(Funds) %>%
 #   mutate(pos = cumsum(percentage) - (0.5 * percentage),
 #          percentage = round(percentage * 100, digits = 1),
-#          pos = round(pos * 100, digits = 1)) 
-# 
+#          pos = round(pos * 100, digits = 1))
+#
 
 
 
