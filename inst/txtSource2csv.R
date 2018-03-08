@@ -2,11 +2,14 @@
 require(magrittr)
 require(dplyr)
 
-unzip("data/raw/raw.zip", exdir = "data/raw")
+path2rawData <-"data/raw1"
+rawData <- "/raw1.zip"
+
+unzip(paste0(path2rawData, rawData), exdir = path2rawData)
 
 collectedData <- data.frame()
 
-taxRecordTxtFiles <- file.path("data/raw", list.files("data/raw")) %>%
+taxRecordTxtFiles <- file.path(path2rawData, list.files(path2rawData)) %>%
   grep(pattern = "\\.txt$", value = TRUE)
 for (taxFile in taxRecordTxtFiles) {
   rawData <- read.fwf(
