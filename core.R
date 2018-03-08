@@ -316,7 +316,7 @@ downloadInputs <- function(refresh){
                                  return(message)},
                                  warning = function(w) {message <- "update not possible, try again later"
                                  return(message)},
-                                 finally = {unzip(zipfileName, exdir=paste0(repositoryName, "/raw1"), overwrite=TRUE)
+                                 finally = { #unzip(zipfileName, exdir=repositoryName, overwrite=TRUE)
                                    return(Sys.time())}
     )
     return(currentDateTime)
