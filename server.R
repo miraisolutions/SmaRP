@@ -151,7 +151,8 @@ shinyServer(function(input, output) {
                  NKids = isolate(input$NKids), 
                  MaxContrTax = isolate(MaxContrTax),
                  retirementdate = isolate(input$Birthdate),
-                 BarGraphData = isolate(BarGraphData())
+                 BarGraphData = isolate(BarGraphData()),
+                 TserieGraphData = isolate(TserieGraphData())
                  )
   
   #output report

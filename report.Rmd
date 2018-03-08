@@ -28,6 +28,7 @@ params:
       MaxContrTax: NA
       retirementdate: NA
       BarGraphData: NA
+      TserieGraphData: NA
 ---
 
 ```{r setup, include=FALSE}
@@ -35,86 +36,177 @@ knitr::opts_chunk$set(echo = TRUE)
 #library(googleVis)
 library(reshape)
 library(ggplot2)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+library(pander)
 ```
 
 
-## R Markdown
+# SmarP calculation
 
-```{r}
+
+Disclaimer: The results of this calculations do not have any legal value.
+
+## Theory
+
+Here goes some theory on how we compute the results
+
+## Inputs
+
+Given the Inputs:
+
+* Salary
+
+```{r, echo = FALSE}
 params$Salary
+```
+
+* Birthdate
+
+```{r, echo = FALSE}
 params$birthday
-params$Road2Retirement
+```
+
+* Salary Growth Rate
+```{r, echo = FALSE}
 params$SalaryGrowthRate
+```
+
+* CurrentPillar II
+
+```{r, echo = FALSE}
 params$CurrentP2
+```
+
+* Amount of Pillar II purchase
+
+```{r, echo = FALSE}
 params$P2purchase
+```
+
+* Type of Pillar II purchase
+
+```{r, echo = FALSE}
 params$TypePurchase
+```
+
+* (Tax?) Rate
+
+```{r, echo = FALSE}
 params$rate
+```
+
+* Amount of Pillar III purchase
+
+```{r, echo = FALSE}
 params$P3purchase
+```
+
+* Current Pillar III
+
+```{r, echo = FALSE}
 params$CurrentP3
+```
+
+* Pillar III return
+
+```{r, echo = FALSE}
 params$returnP3
+```
+
+* Postal Code of residence
+
+```{r, echo = FALSE}
 params$postalcode
+```
+
+* Kanton of residence
+
+```{r, echo = FALSE}
 params$Kanton
+```
+
+* Tariff
+
+```{r, echo = FALSE}
 params$Tariff
+```
+
+* Number of Kids
+
+```{r, echo = FALSE}
 params$NKids
+```
+
+* Maximum of Tax contribution
+
+```{r, echo = FALSE}
 params$MaxContrTax
+```
+
+* Desired Retirement Date
+
+```{r, echo = FALSE}
 params$retirementdate
-disclaimer <- paste("Disclaimer:",
-      "The results of this calculations do not have any legal value.",
-      "To check the details of the calculations, parameters and assumptions, please, download the report.",sep="\n")
-BarGraphData <- as.data.frame( params$BarGraphData)
-BarGraphData
-yvar= c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax", "contribution")
-yvar
-usedyvar<- colnames(BarGraphData)[colnames(BarGraphData) %in% yvar]
-usedyvar
+```
+
+
+## Output
+
+BarPlot
+
+```{r, echo = FALSE}
 # plot2 <- gvisBarChart( data = params$BarGraphData,
 #              xvar = "contribution",
 #              yvar= colnames(params$BarGraphData)[!grepl("contribution", colnames(params$BarGraphData))],
 #              options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none"),
 #              system("wkhtmltoimage -n --enable-javascript --javascript-delay 2000 data/plot2.html data/plot2.png ")
 #     )
-bardata <- BarGraphData %>% select(usedyvar)
-bardata
+BarGraphData <- as.data.frame( params$BarGraphData)
+yvar= c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax")
+usedyvar<- colnames(BarGraphData)[colnames(BarGraphData) %in% yvar]
+bardata <- BarGraphData %>% select(c(usedyvar, "contribution"))
 bardata <- bardata %>%  melt( id ="contribution") %>% select(c(variable, value))
-bardata
-g <- ggplot(bardata, aes(x=1, y=value, fill=variable)) + geom_bar(stat="identity",
-            position = position_fill(reverse = TRUE))
-g + coord_flip() + labs(x="", y="percentage %", fill="contribution")
-
+bar <- ggplot(bardata, aes(x=1, y=value, fill=variable)) + geom_bar(stat="identity",
+            position = position_fill(reverse = TRUE)) + coord_flip() + labs(x="", y="percentage %", fill="contribution")
 ```
 
-
-
-<!-- \includegraphics[width=2in]{data/plot2.png} -->
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+plot(bar)
 ```
 
-## Including Plots
+Timeseries Plot
 
-You can also embed plots, for example:
+```{r, echo = FALSE}
+# plot1 <- gvisAreaChart(
+#       data = TserieGraphData(),
+#       xvar = "calendar",
+#       yvar = colnames(TserieGraphData()[,-1]),
+#       options = list(width = 1200, height = 500, isStacked = TRUE, legend = "bottom")
+#     )
+Tserie <- params$TserieGraphData
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+for(i in 2:length(usedyvar)){
+  Tserie[usedyvar[i]] <- Tserie[usedyvar[i]] + Tserie[usedyvar[i-1]]
+}
+Tserie <- Tserie %>%
+          melt( id ="calendar")
+
+p <- ggplot(Tserie, aes(x=calendar, y=value, col=variable)) + geom_area(aes(fill=variable)) + xlab("years")
+```
+```{r}
+plot(p)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Tabular Results
 
-## Dummy
+<!-- ```{r} -->
+<!-- kable(params$Road2Retirement,  format = "latex", booktabs = TRUE, caption = "Time progress of Retirement Pension Fund")  %>% -->
+<!--           kable_styling(latex_options = "scale_down") -->
+<!-- ``` -->
 
-more dummy text to get to the next page
-
-## Dummy
-
-more dummy text to get to the next page
-
-## Dummy
-
-more dummy text to get to the next page
-
-
+```{r, echo = FALSE}
+set.caption('Road2Retirement')
+pander(params$Road2Retirement)
+```
