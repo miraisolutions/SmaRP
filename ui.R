@@ -19,7 +19,7 @@ shinyUI(
     hr(),
     sidebarLayout(
       sidebarPanel(
-        width = 3,
+        width = 4,
         dateInput("Birthdate", label = h5("Birthday"), value = "1980-12-31", format = "yyyy-mm-dd"),
         numericInput("RetirementAge", label = h5("Desired Retirement Age"), value = 65, step = 1, min = 55, max = 70),
         hr(),
@@ -49,9 +49,6 @@ shinyUI(
                    selectInput("postalcode", "Postal Code",
                                choices = PLZ.list,
                                selected = "8001"),
-                   actionButton("refreshButton", "refresh tax rate"),
-                   #p("Refresh tax rate information"),
-                   verbatimTextOutput("refreshText"),
                    radioButtons("genre", label = NULL, inline = TRUE,
                                 choices = list("Male" = "M", "Female" = "F"), 
                                 selected = "M"),
@@ -68,7 +65,11 @@ shinyUI(
                    numericInput("CurrentP2", label = h5("Current BVG amount"), value = 100000, step = 1000, min = 0),
                    numericInput("P2purchase", label = h5("Voluntary purchases"), value = 0, step = 500, min = 0),
                    radioButtons("TypePurchase", label = NULL, inline = TRUE,
-                                choices = Purchase.list)
+                                choices = Purchase.list),
+                   hr(),
+                   actionButton("refreshButton", "refresh calculation parameters"),
+                   #p("Refresh tax rate information"),
+                   verbatimTextOutput("refreshText")
                    
           ) #  end Swiss tabPanel
           
