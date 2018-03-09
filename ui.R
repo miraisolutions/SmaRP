@@ -65,6 +65,11 @@ shinyUI(
                                choices = Rate_group.list, 
                                selected = "A"),
                    hr(),
+                   wellPanel(
+                     checkboxInput("provideTaxRate", "Direct Tax Rate (optional)", FALSE),
+                     uiOutput("conditionalInput")
+                   ),
+                   hr(),
                    tags$h4("Occupational Pension Fund (BVG)"),
                    numericInput("Salary", label = h5("Current Annual Salary"), value = 100000, step = 1000, min = 0),
                    numericInput("SalaryGrowthRate", label = h5("Expected salary growth rate"), value = 0.02, step = 0.001, min = 0),

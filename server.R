@@ -183,6 +183,11 @@ shinyServer(function(input, output) {
     paste(as.character(refreshText()))
   })
   
+  output$conditionalInput <- renderUI({
+    if(input$provideTaxRate){
+      numericInput("TaxRate", label = h5("Direct Tax Rate (optional)"), value = 1, step = 0.1, min = 0)
+    }
+  })
   
   #   BarGraphData <- reactive({
   #     data.frame(Funds = colnames(FotoFinish()),
