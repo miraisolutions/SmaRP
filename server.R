@@ -83,6 +83,7 @@ shinyServer(function(input, output) {
   
   output$plot1 <- renderGvis({
     gvisAreaChart(
+      chartid = "plot1",
       data = TserieGraphData(),
       xvar = "calendar",
       yvar = colnames(TserieGraphData()[,-1]),
@@ -107,10 +108,12 @@ shinyServer(function(input, output) {
   })
   
   output$plot2 <- renderGvis({
-    gvisBarChart(data = BarGraphData(),
-                 xvar = "contribution",
-                 yvar= colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
-                 options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
+    gvisBarChart(
+      chartid = "plot2",
+      data = BarGraphData(),
+      xvar = "contribution",
+      yvar= colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
+      options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
     )
   })
   
@@ -157,7 +160,7 @@ shinyServer(function(input, output) {
                  retirementdate = isolate(input$Birthdate),
                  BarGraphData = isolate(BarGraphData()),
                  TserieGraphData = isolate(TserieGraphData())
-                 )
+  )
   
   #output report
   output$report<- downloadHandler(
