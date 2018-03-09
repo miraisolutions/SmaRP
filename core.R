@@ -296,7 +296,6 @@ getTaxRate <- function(Salary, Kanton, Tariff, NKids){
 }
 
 
-# getTaxRate_new ----------------------------------------------------------
 
 #' @examples
 # getTaxRate_new(150000, "BE","TB","1", "N", "A")
@@ -305,24 +304,57 @@ getTaxRate <- function(Salary, Kanton, Tariff, NKids){
 # Questions:
 # how is TaxRate connected to tax_rate_calc ? They are definitely not the same thing
 # How are Tariff and RateGroup related? T31 assigned to Gabriel. For now two inputs
-getTaxRate_new <- function(Salary, Kanton, Tariff, NKids, ChurchTax, RateGroup){  
+
+Salary = 123456
+Kanton = returnPLZKanton(8400)
+NKids = 1
+ChurchTax = "N"
+RateGroup = "A"
+
+
+getTaxRate_new <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton){  
   # TODO: Implement function given tables available in global env
-  TaxRate = 0.05
-  calcData <- tax_rate_calc("data/df_tax_rates.rds")
-  TaxRateDF <- calcData %>%
-    filter(canton == Kanton &
+  
+  # Step 1: Kantonssteuer & Gemeindesteuer
+  # filter tax group
+  TaxRateDF <- tax_rates_Kanton %>%
+    filter(canton == returnPLZKanton(PLZ) &
              rate_group == RateGroup &
              n_kids == NKids &
-             churchtax == ChurchTax) 
+             churchtax == ChurchTax)
+  # get income argument
+  monthly_salary <- Salary / 12
   salary_bins <- sort(unique(TaxRateDF$income))
-  nearest_salary <- salary_bins[findInterval(Salary, salary_bins)]
+  nearest_salary <- salary_bins[findInterval(monthly_salary, salary_bins)]
+  # calc tax rate
   TaxRate <- TaxRateDF %>%
     filter(income == nearest_salary) %>%
-    select(tax_rate_calc)
-  return(TaxRate)
+    transmute(tax_rate = (tax_rate_calc * returnSteuerfuss(PLZ)) / income)
+  
+  # Step 2: Bundessteuer
+  
+  
+  return(TaxRate[1,1])
 }
 
-# downloadPLZ -------------------------------------------------------------
+rate_group = "A"
+n_kids = 2
+income = 123456
+guessBundessteuer <- function(rate_group, n_kids, income, BundessteuerSingle){
+  if(rate_group == "A") {
+    
+    BundessteuerSingle
+    
+    
+  } else {
+    
+    
+  }
+  
+  return(avgRate)
+}
+
+# downloadPLZ 
 #' @examples
 # downloadPLZ(refresh=TRUE)
 downloadInputs <- function(refresh){
@@ -330,13 +362,13 @@ downloadInputs <- function(refresh){
     URL_plz <- "https://www.bfs.admin.ch/bfsstatic/dam/assets/4242620/master"
     fileName <- "data/CorrespondancePostleitzahlGemeinde.xlsx"
     currentDateTime <- tryCatch( {download.file(URL_plz,destfile=fileName,mode="wb")},
-              error =function(e) {message <- "update not possible, try again later"
+              error = function(e) {message <- "update not possible, try again later"
               return(message)},
               warning = function(w) {message <- "update not possible, try again later"
               return(message)},
               finally = {return(Sys.time())}
     )
-    URL_taxrate <-"https://www.estv.admin.ch/dam/estv/it/dokumente/bundessteuer/quellensteuer/schweiz/tar2018txt.zip.download.zip/tar2018txt.zip"
+    URL_taxrate <- "https://www.estv.admin.ch/dam/estv/it/dokumente/bundessteuer/quellensteuer/schweiz/tar2018txt.zip.download.zip/tar2018txt.zip"
     repositoryName <- "data/raw1"
     zipfileName <- paste0(repositoryName, "/raw1.zip")
     currentDateTime <- tryCatch( {download.file(URL_taxrate,destfile=zipfileName)},
@@ -352,13 +384,15 @@ downloadInputs <- function(refresh){
 }
 
 
-# returnPLZKanton ---------------------------------------------------------------
 returnPLZKanton <- function(plz){
-  Kanton <- PLZGemeinden$Kanton[PLZGemeinden$PLZ==plz]
+  Kanton <- PLZGemeinden$Kanton[PLZGemeinden$PLZ == plz]
   return(Kanton)
 }
 
-
+returnSteuerfuss <- function(plz){
+  Steuerfuss <- PLZGemeinden$Steuerfuss[PLZGemeinden$PLZ==plz]
+  return(Steuerfuss)
+}
 
 
 # fv(0.02, 30, pv = -50000, pmt = -4800, type = 0)

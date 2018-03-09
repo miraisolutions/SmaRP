@@ -137,4 +137,12 @@ calcData <- calcData %>%
 saveRDS(calcData, "data/df_tax_rates.rds")
 # write.table(calcData, "data/canton_tax_rates.csv", sep = ",", row.names = FALSE, quote = FALSE)
 
+# Subset only relevant tax rates 
+calcData <- calcData %>%
+  filter(rate_group %in% c("A", "B", "C") & n_kids < 6)
+saveRDS(calcData, "data/df_tax_rates_used.rds")
+
+
+
+  
 
