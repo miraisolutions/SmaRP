@@ -204,6 +204,8 @@ buildTaxBenefits <- function(birthday,
                              Kanton,
                              Tariff,
                              NKids,
+                             churchtax,
+                             rate_group,
                              MaxContrTax,
                              givenday = today()){
   TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today()))
@@ -255,8 +257,8 @@ calcAnnuityAcumPath <- function(contributions, t, rate){
 
 
 #' @examples
-# getTaxRate(150000, "BE","TB","1kid")
-# sapply(seq(from = 90000, to = 125000, 5000), getTaxRate, Kanton = "ZH", Tariff = "TA", NKids = "1kid")
+# getTaxRate(150000, "BE","TB","1")
+# sapply(seq(from = 90000, to = 125000, 5000), getTaxRate, Kanton = "ZH", Tariff = "TA", NKids = "1")
 getTaxRate <- function(Salary, Kanton, Tariff, NKids){  
   # TODO: Implement function given tables available in global env
   TaxRate = 0.05
@@ -278,15 +280,15 @@ getTaxRate <- function(Salary, Kanton, Tariff, NKids){
     TaxRate = TaxRate * 1.5
   } 
   
-  if (NKids == "1kid") {
+  if (NKids == "1") {
     TaxRate = TaxRate * 0.95
   } 
   
-  if (NKids == "2kid") {
+  if (NKids == "2") {
     TaxRate = TaxRate * 0.90
   } 
   
-  if (NKids == "3kid") {
+  if (NKids >= "3") {
     TaxRate = TaxRate * 0.85
   } 
   

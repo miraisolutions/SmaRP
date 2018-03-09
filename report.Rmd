@@ -25,6 +25,8 @@ params:
       Kanton: NA
       Tariff: NA
       NKids: NA
+      churchtax: NA
+      rate_group: NA
       MaxContrTax: NA
       retirementdate: NA
       BarGraphData: NA
@@ -137,6 +139,16 @@ params$Tariff
 
 ```{r, echo = FALSE}
 params$NKids
+```
+
+* Church Affiliation
+```{r, echo = FALSE}
+params$churchtax
+```
+
+* Rate Group
+```{r, echo = FALSE}
+params$rate_group
 ```
 
 * Maximum of Tax contribution

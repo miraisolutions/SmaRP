@@ -42,10 +42,17 @@ tariffs.list <- list(
 
 Kanton.list <- list("Zurich" = "ZH", "St.Gallen" = "SG", "Bern" = "BE")
 
-Kids.list <- list("No Kids" = "0kid",
-                 "One Kid" = "1kid",
-                 "Two Kids" = "2kid",
-                  "Three + Kids" = "3Kid")
+Kids.list <- list("No Kids" = "0",
+                 "One Kid" = "1",
+                 "Two Kids" = "2",
+                  "Three or More Kids" = "3")
+
+Rate_group.list <- list("A" = "A",
+                        "B" = "B",
+                        "C" = "C",
+                        "D" = "D",
+                        "E" = "E",
+                        "H" = "H")
 
 Purchase.list <- list("Single Purchase" = "SingleP2",
                       "Annual Purchase" = "AnnualP2")

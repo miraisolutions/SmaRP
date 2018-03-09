@@ -54,7 +54,9 @@ shinyServer(function(input, output) {
                      SalaryGrowthRate = input$SalaryGrowthRate,
                      Kanton = returnPLZKanton(input$postalcode),
                      Tariff = input$tariff, 
-                     NKids = input$NKids, 
+                     NKids = input$NKids,
+                     churchtax = input$churchtax,
+                     rate_group = input$rate_group,
                      MaxContrTax = MaxContrTax)
   })
   
@@ -149,6 +151,8 @@ shinyServer(function(input, output) {
                  Kanton = isolate(returnPLZKanton(input$postalcode)),
                  Tariff = isolate(input$tariff), 
                  NKids = isolate(input$NKids), 
+                 churchtax = isolate(input$churchtax),
+                 rate_group = isolate(input$rate_group),
                  MaxContrTax = isolate(MaxContrTax),
                  retirementdate = isolate(input$Birthdate),
                  BarGraphData = isolate(BarGraphData()),
