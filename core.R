@@ -296,6 +296,32 @@ getTaxRate <- function(Salary, Kanton, Tariff, NKids){
 }
 
 
+# getTaxRate_new ----------------------------------------------------------
+
+#' @examples
+# getTaxRate_new(150000, "BE","TB","1", "N", "A")
+# sapply(seq(from = 90000, to = 125000, 5000), getTaxRate, Kanton = "ZH", Tariff = "TA", NKids = "1", ChurchTax = "N", RateGroup="A")
+# will substitute getTaxRate at some point
+# Questions:
+# how is TaxRate connected to tax_rate_calc ? They are definitely not the same thing
+# How are Tariff and RateGroup related? T31 assigned to Gabriel. For now two inputs
+getTaxRate_new <- function(Salary, Kanton, Tariff, NKids, ChurchTax, RateGroup){  
+  # TODO: Implement function given tables available in global env
+  TaxRate = 0.05
+  calcData <- tax_rate_calc("data/df_tax_rates.rds")
+  TaxRateDF <- calcData %>%
+    filter(canton == Kanton &
+             rate_group == RateGroup &
+             n_kids == NKids &
+             churchtax == ChurchTax) 
+  salary_bins <- sort(unique(TaxRateDF$income))
+  nearest_salary <- salary_bins[findInterval(Salary, salary_bins)]
+  TaxRate <- TaxRateDF %>%
+    filter(income == nearest_salary) %>%
+    select(tax_rate_calc)
+  return(TaxRate)
+}
+
 # downloadPLZ -------------------------------------------------------------
 #' @examples
 # downloadPLZ(refresh=TRUE)
