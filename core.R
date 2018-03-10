@@ -312,11 +312,42 @@ ChurchTax = "N"
 RateGroup = "A"
 
 
-getTaxRate_new <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton){  
-  # TODO: Implement function given tables available in global env
-  
+# FlagMarried = 1
+# FlagDI = 0
+# getRateGroup(FlagMarried, FlagDI)
+getRateGroup <- function(FlagMarried, FlagDI) {
+  # Tarifgruppe
+  # See Quellensteuer doc, section 4.2
+  if(FlagMarried == 0) {
+    RateGroup <- "A"  
+  } else {
+    if(FlagDI == 0) {
+      RateGroup <- "B"
+    } else {
+      RateGroup <- "c"
+    }
+  }
+  return(RateGroup)
+}
+
+# getTaxRate_new(123456, PLZ = 8400, NKids = 1, ChurchTax = "N", RateGroup = "A", tax_rates_Kanton, BundessteueTabelle)
+getTaxRate_new <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton, BundessteueTabelle){  
+
   # Step 1: Kantonssteuer & Gemeindesteuer
-  # filter tax group
+  TaxRateKG <- calcKantonsGemeindesteuerAvgRate(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton)
+  
+  # Step 2: Bundessteuer
+  TaxRateB <- calcBundessteuerAvgRate(RateGroup, NKids, Salary, BundessteueTabelle)
+  
+  # Total tax
+  TaxRate <- TaxRateKG + TaxRateB
+  
+  return(TaxRate)
+}
+
+# calcKantonsGemeindesteuerAvgRate(123456, PLZ = 8400, NKids = 1, ChurchTax = "N", RateGroup = "A", tax_rates_Kanton)
+calcKantonsGemeindesteuerAvgRate <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton) {
+  
   TaxRateDF <- tax_rates_Kanton %>%
     filter(canton == returnPLZKanton(PLZ) &
              rate_group == RateGroup &
@@ -331,27 +362,31 @@ getTaxRate_new <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_K
     filter(income == nearest_salary) %>%
     transmute(tax_rate = (tax_rate_calc * returnSteuerfuss(PLZ)) / income)
   
-  # Step 2: Bundessteuer
-  
-  
   return(TaxRate[1,1])
 }
 
-rate_group = "A"
-n_kids = 2
-income = 123456
-guessBundessteuer <- function(rate_group, n_kids, income, BundessteuerSingle){
-  if(rate_group == "A") {
-    
-    BundessteuerSingle
-    
-    
+
+# calcBundessteuerAvgRate(rate_group = "C", n_kids = 4, income = 123456, BundessteueTabelle)
+calcBundessteuerAvgRate <- function(rate_group, n_kids, income, BundessteueTabelle){
+  
+  Income_bins <- sort(unique(BundessteueTabelle$I))
+  nearest_salary <- Income_bins[findInterval(income, Income_bins)]
+  Bundessteuer <- BundessteueTabelle %>%
+    filter(I == nearest_salary)
+  
+  if(n_kids > 0) {
+    TaxRate <- Bundessteuer %>%
+      transmute(tax_rate = pmax(taxAmountMarried - (251 * n_kids), 0) / income)
+    TaxRate <- TaxRate$tax_rate
   } else {
-    
-    
+    if(rate_group == "A") {
+      TaxRate <- Bundessteuer$avgRateSingle
+    } else {
+      TaxRate <- Bundessteuer$avgRateMarried
+    }
   }
   
-  return(avgRate)
+  return(TaxRate)
 }
 
 # downloadPLZ 
