@@ -1,5 +1,5 @@
 # #
-# # Example
+# Example
 # birthday = "1981-08-12"
 # P3purchase = 0
 # CurrentP3 = 0
@@ -10,36 +10,41 @@
 # P2purchase = 2000
 # TypePurchase = "AnnualP2"
 # ncp = length(getRetirementCalendar(birthday, givenday = today()))
-# Kanton = "BE"
-# Tariff = "TB"
-# NKids = "0Kids"
+# NKids = 5
+# postalcode = 8400
+# churchtax = "N"
+# rate_group = "B"
+# 
 # 
 # 
 # Road2Retirement <- buildContributionP2Path(birthday,
-#                                                 Salary,
-#                                                 SalaryGrowthRate,
-#                                                 CurrentP2,
-#                                                 P2purchase,
-#                                                 TypePurchase,
-#                                                 rate = BVGMindestzinssatz) %>%
+#                                            Salary,
+#                                            SalaryGrowthRate,
+#                                            CurrentP2,
+#                                            P2purchase,
+#                                            TypePurchase,
+#                                            rate = BVGMindestzinssatz) %>%
 #   left_join(buildContributionP3path(birthday,
-#                                 P3purchase,
-#                                 CurrentP3,
-#                                 returnP3), by = c("calendar", "t")) %>%
+#                                     P3purchase,
+#                                     CurrentP3,
+#                                     returnP3), by = c("calendar", "t")) %>%
 #   left_join(buildTaxBenefits(birthday,
-#                          TypePurchase,
-#                          P2purchase,
-#                          P3purchase,
-#                          returnP3,
-#                          Salary,
-#                          SalaryGrowthRate,
-#                          Kanton,
-#                          Tariff,
-#                          NKids,
-#                          MaxContrTax), by = c("calendar", "t")) %>%
+#                              TypePurchase,
+#                              P2purchase,
+#                              P3purchase,
+#                              returnP3,
+#                              Salary,
+#                              SalaryGrowthRate,
+#                              postalcode, 
+#                              NKids, 
+#                              churchtax,
+#                              rate_group,
+#                              MaxContrTax,
+#                              tax_rates_Kanton,
+#                              BundessteueTabelle),
+#             by = c("calendar", "t")) %>%
 #   mutate(Total = TotalP2 + TotalP3 + TotalTax)
-# 
-# 
+
 # 
 # FotoFinish <- Road2Retirement[,c("DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax")]  %>%
 #   tail(1) %>%
@@ -193,7 +198,7 @@ buildContributionP3path <- function(birthday,
 
 #' @importFrom dplyr select
 #' @examples
-# buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3, Salary, SalaryGrowthRate, Kanton, Tariff, NKids, MaxContrTax, givenday = today())
+# buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3, Salary, SalaryGrowthRate, postalcode, NKids, churchtax, rate_group, MaxContrTax, tax_rates_Kanton, BundessteueTabelle, givenday = today())
 buildTaxBenefits <- function(birthday,
                              TypePurchase,
                              P2purchase,
@@ -201,13 +206,14 @@ buildTaxBenefits <- function(birthday,
                              returnP3,
                              Salary,
                              SalaryGrowthRate,
-                             Kanton,
-                             Tariff,
+                             postalcode,
                              NKids,
                              churchtax,
                              rate_group,
                              MaxContrTax,
-                             givenday = today()){
+                             tax_rates_Kanton, 
+                             BundessteueTabelle,
+                             givenday = today()) {
   TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today()))
   ncp <- nrow(TaxBenefitsPath) 
   TaxBenefitsPath %<>% within({
@@ -215,7 +221,9 @@ buildTaxBenefits <- function(birthday,
     P3purchase = rep(P3purchase, ncp)
     TotalContr = BVGpurchase + P3purchase
     ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
-    TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, Kanton, Tariff, NKids)
+    
+    TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, postalcode, NKids, churchtax, rate_group, tax_rates_Kanton, BundessteueTabelle)
+#    TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, Kanton, Tariff, NKids)
     TaxBenefits = calcTaxBenefit(TotalContr, TaxRatePath, MaxContrTax)
     t = buildt(birthday)
     TotalTax = calcAnnuityAcumPath(TaxBenefits, t, returnP3)
@@ -256,82 +264,8 @@ calcAnnuityAcumPath <- function(contributions, t, rate){
 }
 
 
-#' @examples
-# getTaxRate(150000, "BE","TB","1")
-# sapply(seq(from = 90000, to = 125000, 5000), getTaxRate, Kanton = "ZH", Tariff = "TA", NKids = "1")
-getTaxRate <- function(Salary, Kanton, Tariff, NKids){  
-  # TODO: Implement function given tables available in global env
-  TaxRate = 0.05
-  if (Kanton == "ZH") {
-    TaxRate = 0.1
-  } else {
-    TaxRate = 0.2
-  }
-  
-  if (Tariff == "TA") {
-    TaxRate = TaxRate + 0.1
-  } 
-  
-  if (Salary < 100000) {
-    TaxRate = TaxRate * 0.7
-  } 
-  
-  if (Salary > 120000) {
-    TaxRate = TaxRate * 1.5
-  } 
-  
-  if (NKids == "1") {
-    TaxRate = TaxRate * 0.95
-  } 
-  
-  if (NKids == "2") {
-    TaxRate = TaxRate * 0.90
-  } 
-  
-  if (NKids >= "3") {
-    TaxRate = TaxRate * 0.85
-  } 
-  
-  return(TaxRate)
-}
-
-
-
-#' @examples
-# getTaxRate_new(150000, "BE","TB","1", "N", "A")
-# sapply(seq(from = 90000, to = 125000, 5000), getTaxRate, Kanton = "ZH", Tariff = "TA", NKids = "1", ChurchTax = "N", RateGroup="A")
-# will substitute getTaxRate at some point
-# Questions:
-# how is TaxRate connected to tax_rate_calc ? They are definitely not the same thing
-# How are Tariff and RateGroup related? T31 assigned to Gabriel. For now two inputs
-
-Salary = 123456
-Kanton = returnPLZKanton(8400)
-NKids = 1
-ChurchTax = "N"
-RateGroup = "A"
-
-
-# FlagMarried = 1
-# FlagDI = 0
-# getRateGroup(FlagMarried, FlagDI)
-getRateGroup <- function(FlagMarried, FlagDI) {
-  # Tarifgruppe
-  # See Quellensteuer doc, section 4.2
-  if(FlagMarried == 0) {
-    RateGroup <- "A"  
-  } else {
-    if(FlagDI == 0) {
-      RateGroup <- "B"
-    } else {
-      RateGroup <- "c"
-    }
-  }
-  return(RateGroup)
-}
-
 # getTaxRate_new(123456, PLZ = 8400, NKids = 1, ChurchTax = "N", RateGroup = "A", tax_rates_Kanton, BundessteueTabelle)
-getTaxRate_new <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton, BundessteueTabelle){  
+getTaxRate <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton, BundessteueTabelle){  
 
   # Step 1: Kantonssteuer & Gemeindesteuer
   TaxRateKG <- calcKantonsGemeindesteuerAvgRate(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton)
@@ -420,12 +354,13 @@ downloadInputs <- function(refresh){
 
 
 returnPLZKanton <- function(plz){
-  Kanton <- PLZGemeinden$Kanton[PLZGemeinden$PLZ == plz]
+  
+  Kanton <- PLZGemeinden$Kanton[PLZGemeinden$PLZ == as.numeric(plz)]
   return(Kanton)
 }
 
 returnSteuerfuss <- function(plz){
-  Steuerfuss <- PLZGemeinden$Steuerfuss[PLZGemeinden$PLZ==plz]
+  Steuerfuss <- PLZGemeinden$Steuerfuss[PLZGemeinden$PLZ == as.numeric(plz)]
   return(Steuerfuss)
 }
 

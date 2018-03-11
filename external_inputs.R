@@ -34,24 +34,21 @@ BVGcontriburionrates <<- data.frame(lowerbound = c(18, 25, 35, 45, 55),
 
 
 # https://www.estv.admin.ch/estv/de/home/direkte-bundessteuer/quellensteuer/dienstleistungen/tarife-herunterladen.html
-tariffs.list <- list(
-  "A Tarif f?r alleinstehende Personen" = "TA",
-  "B Tarif f?r verheiratete Alleinverdiener" = "TB",
-  "C Tarif f?r verheiratete Doppelverdiener" = "TC")
+# tariffs.list <- list(
+#   "A Tarif f?r alleinstehende Personen" = "TA",
+#   "B Tarif f?r verheiratete Alleinverdiener" = "TB",
+#   "C Tarif f?r verheiratete Doppelverdiener" = "TC")
 
-Kanton.list <- list("Zurich" = "ZH", "St.Gallen" = "SG", "Bern" = "BE")
+# Kanton.list <- list("Zurich" = "ZH", "St.Gallen" = "SG", "Bern" = "BE")
 
-Kids.list <- list("No Kids" = "0",
-                 "One Kid" = "1",
-                 "Two Kids" = "2",
-                  "Three or More Kids" = "3")
+# Kids.list <- list("No Kids" = "0",
+#                  "One Kid" = "1",
+#                  "Two Kids" = "2",
+#                   "Three or More Kids" = "3")
 
-Rate_group.list <- list("A" = "A",
-                        "B" = "B",
-                        "C" = "C",
-                        "D" = "D",
-                        "E" = "E",
-                        "H" = "H")
+Rate_group.list <- list("Single" = "A",
+                        "Married" = "B",
+                        "Married Double Income" = "C")
 
 Purchase.list <- list("Single Purchase" = "SingleP2",
                       "Annual Purchase" = "AnnualP2")

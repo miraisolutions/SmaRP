@@ -42,28 +42,19 @@ shinyUI(
           
           tabPanel(title = "Swiss case",
                    value = "Swiss",
-                   #selectInput("kanton", "Basic Info",
-                   #           choices = Kanton.list ,
-                   #           selected = "ZH"),
-                   tags$h4("Basic Info"),
-                   selectInput("postalcode", "Postal Code",
+                   selectInput("postalcode", label = h5("Postal Code"),
                                choices = PLZ.list,
                                selected = "8001"),
                    radioButtons("genre", label = NULL, inline = TRUE,
                                 choices = list("Male" = "M", "Female" = "F"), 
                                 selected = "M"),
-                   selectInput("NKids", label = "Number of Kids",
-                               choices = Kids.list,
-                               selected = "No Kids"),
-                   radioButtons("churchtax", label = "Church affiliation", inline = TRUE,
+                   radioButtons("rate_group", label = NULL, inline = TRUE, 
+                                choices = Rate_group.list, 
+                                selected = "A"),
+                   numericInput("NKids", label = h5("Number of Kids"), value = 0, min = 0, max = 5),
+                   radioButtons("churchtax", label = h5("Church affiliation"), inline = TRUE,
                                 choices = list("Y" = "Y", "N" = "N"), 
                                 selected = "N"),
-                   selectInput("tariff", label = NULL, 
-                               choices = tariffs.list, 
-                               selected = "TA"),
-                   selectInput("rate_group", label = "Rate Group", 
-                               choices = Rate_group.list, 
-                               selected = "A"),
                    hr(),
                    wellPanel(
                      checkboxInput("provideTaxRate", "Direct Tax Rate (optional)", FALSE),
@@ -117,15 +108,15 @@ shinyUI(
                    htmlOutput("table")
           ) # end tab Table
           
-                   ), # end tabsetPanel
+        ), # end tabsetPanel
         
         #Add button to download report
         downloadButton("report", "Generate report")
         
-                   ) # end mainPanel
+      ) # end mainPanel
       
-        ) # end sidebarLayout
+    ) # end sidebarLayout
     
-      ) # end fluidPage
+  ) # end fluidPage
   
-    ) # end UI
+) # end UI

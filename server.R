@@ -49,17 +49,18 @@ shinyServer(function(input, output) {
                      P2purchase = input$P2purchase, 
                      P3purchase = input$P3purchase, 
                      returnP3 = input$returnP3,
-                     #                     Salary = ifelse(input$case == "General", input$G_Salary, input$S_Salary),
                      Salary = input$Salary,
                      SalaryGrowthRate = input$SalaryGrowthRate,
-                     Kanton = returnPLZKanton(input$postalcode),
-                     Tariff = input$tariff, 
+                     postalcode = input$postalcode,
                      NKids = input$NKids,
                      churchtax = input$churchtax,
                      rate_group = input$rate_group,
-                     MaxContrTax = MaxContrTax)
+                     MaxContrTax = MaxContrTax,
+                     tax_rates_Kanton = tax_rates_Kanton,
+                     BundessteueTabelle = BundessteueTabelle)
   })
   
+
   # build main df
   Road2Retirement <- reactive({
     ContributionP2Path() %>%
@@ -152,7 +153,6 @@ shinyServer(function(input, output) {
                  returnP3 = isolate(input$returnP3),
                  postalcode = isolate(input$postalcode),
                  Kanton = isolate(returnPLZKanton(input$postalcode)),
-                 Tariff = isolate(input$tariff), 
                  NKids = isolate(input$NKids), 
                  churchtax = isolate(input$churchtax),
                  rate_group = isolate(input$rate_group),
