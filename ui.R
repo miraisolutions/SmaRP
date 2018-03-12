@@ -52,6 +52,7 @@ shinyUI(
                                 choices = Rate_group.list, 
                                 selected = "A"),
                    numericInput("NKids", label = h5("Number of Kids"), value = 0, min = 0, max = 5),
+                   tags$p("* If more then 5 Kids, treated as if 5"),
                    radioButtons("churchtax", label = h5("Church affiliation"), inline = TRUE,
                                 choices = list("Y" = "Y", "N" = "N"), 
                                 selected = "N"),

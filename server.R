@@ -20,7 +20,7 @@ source("core.R")
 
 
 # Define server logic required to draw a histogram
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
   
   # calc P2 fund
   ContributionP2Path <- reactive({ 
@@ -52,7 +52,7 @@ shinyServer(function(input, output) {
                      Salary = input$Salary,
                      SalaryGrowthRate = input$SalaryGrowthRate,
                      postalcode = input$postalcode,
-                     NKids = input$NKids,
+                     NKids = ifelse(isolate(input$NKids) >5, 5, isolate(input$NKids)),
                      churchtax = input$churchtax,
                      rate_group = input$rate_group,
                      MaxContrTax = MaxContrTax,
@@ -153,7 +153,7 @@ shinyServer(function(input, output) {
                  returnP3 = isolate(input$returnP3),
                  postalcode = isolate(input$postalcode),
                  Kanton = isolate(returnPLZKanton(input$postalcode)),
-                 NKids = isolate(input$NKids), 
+                 NKids = ifelse(isolate(input$NKids) >5, 5, isolate(input$NKids)), 
                  churchtax = isolate(input$churchtax),
                  rate_group = isolate(input$rate_group),
                  MaxContrTax = isolate(MaxContrTax),
