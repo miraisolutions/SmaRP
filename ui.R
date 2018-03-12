@@ -35,7 +35,7 @@ shinyUI(
                  
                  tabsetPanel(
                    id = "case",
-                   type = "tabs",
+                   type = "pills",
                    tabPanel(title = "General case", 
                             value = "General",
                             tags$h4("Tax Benefits"),
