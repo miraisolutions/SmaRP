@@ -87,21 +87,7 @@ shinyUI(
                    #                   hr(),
                    verbatimTextOutput("Totals"),
                    htmlOutput("plot1"),
-                   htmlOutput("plot2"),
-                   verbatimTextOutput("disclaimer"),
-                   tags$head(tags$style("#Totals{
-                                        font-family:Helvetica;
-                                        color: blue;
-                                        font-size: 20px;
-                                        font-style: bold;
-                                        text-align: center;
-                                        }"),
-                             tags$style("#disclaimer{
-                                        font-family:Helvetica;
-                                        color: grey;
-                                        font-size: 12px;
-                                        text-align: left;
-                                        }"))
+                   htmlOutput("plot2")
           ), # end tab Plot
           
           tabPanel("Table", 
@@ -109,6 +95,22 @@ shinyUI(
           ) # end tab Table
           
         ), # end tabsetPanel
+        
+        #Disclaimer
+        verbatimTextOutput("disclaimer"),
+        tags$head(tags$style("#Totals{
+                             font-family:Helvetica;
+                             color: blue;
+                             font-size: 20px;
+                             font-style: bold;
+                             text-align: center;
+                             }"),
+                             tags$style("#disclaimer{
+                                        font-family:Helvetica;
+                                        color: grey;
+                                        font-size: 12px;
+                                        text-align: left;
+                                        }")),
         
         #Add button to download report
         downloadButton("report", "Generate report")
