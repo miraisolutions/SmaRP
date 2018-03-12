@@ -1,4 +1,6 @@
 library(shiny)
+library(shinyBS)
+#library(shinydashboard)
 source("external_inputs.R")
 
 # UI
@@ -8,7 +10,7 @@ shinyUI(
       tags$head(
         tags$style(HTML("hr {border-top: 1px solid #000000;}"))
       ),
-      
+      img(src='mirai.pdf', align = "right", height = 100, width = 250),
       titlePanel("SmaRP: Smart Retirement Planning"),
       a(href="http://www.mirai-solutions.com", "mirai-solutions.com"),
       hr()
@@ -25,7 +27,9 @@ shinyUI(
                  numericInput("RetirementAge", label = h5("Desired Retirement Age"), value = 65, step = 1, min = 55, max = 70),
                  hr(),
                  tags$h4("Private Pension Fund"),
+                 #infoBoxOutput("ibox",width = 0.5),
                  numericInput("CurrentP3", label = h5("Current amount"), value = 50000, step = 1000, min = 0),
+                 bsTooltip("CurrentP3", "This explaind CurrentP3", placement = "right", options = list(container = "body")),
                  numericInput("P3purchase", label = h5("Annual contribution"), value = 0, step = 500, min = 0),
                  numericInput("returnP3", label = h5("Expected Return"), value = BVGMindestzinssatz, step = 0.001, min = 0)    
                ), #end of Personal Input tabPanel

@@ -13,6 +13,8 @@ library(dplyr)
 library(magrittr)
 library(googleVis)
 library(rmarkdown)
+library(shinyBS)
+#library(shinydashboard)
 #library(ggplot2)
 
 # source core methodology and global variables
@@ -88,7 +90,7 @@ shinyServer(function(input, output, session) {
       data = TserieGraphData(),
       xvar = "calendar",
       yvar = colnames(TserieGraphData()[,-1]),
-      options = list(width = 1200, height = 500, isStacked = TRUE, legend = "bottom")
+      options = list(width = 700, height = 400, isStacked = TRUE, legend = "bottom")
     ) 
   })
   
@@ -114,7 +116,7 @@ shinyServer(function(input, output, session) {
       data = BarGraphData(),
       xvar = "contribution",
       yvar= colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
-      options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
+      options = list(width = 600, height = 200, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
     )
   })
   
@@ -191,6 +193,15 @@ shinyServer(function(input, output, session) {
       numericInput("TaxRate", label = h5("Direct Tax Rate (optional)"), value = 1, step = 0.1, min = 0)
     }
   })
+  
+  
+  # output$ibox <- renderInfoBox({
+  #   infoBox(
+  #     "i",
+  #     "Here some text",
+  #     icon = icon("info")
+  #   )
+  # })
   
   #   BarGraphData <- reactive({
   #     data.frame(Funds = colnames(FotoFinish()),
