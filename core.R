@@ -9,7 +9,8 @@
 # SalaryGrowthRate = 0.01
 # P2purchase = 2000
 # TypePurchase = "AnnualP2"
-# ncp = length(getRetirementCalendar(birthday, givenday = today()))
+# RetirementAge = 65
+# ncp = length(getRetirementCalendar(birthday, givenday = today(), RetirementAge))
 # NKids = 5
 # postalcode = 8400
 # churchtax = "N"
@@ -81,11 +82,11 @@
 #' @examples
 #' buildt("1981-08-12")
 buildt <- function(birthday, givenday = today()){
-  calendar = getRetirementCalendar(birthday, givenday = today())
+  calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge)
   t = c(as.vector(diff(calendar)/365), 0)
   return(t)
 }
-  
+
 
 #' @importFrom lubridate today interval duration
 calcAge <- function(birthday, givenday = today()) {
@@ -95,16 +96,16 @@ calcAge <- function(birthday, givenday = today()) {
 
 #' @importFrom lubridate ymd years
 #' getRetirementday("1981-08-12")
-getRetirementday <- function(birthday) {
-  retirementday <- ymd(birthday) + years(65)
+getRetirementday <- function(birthday, RetirementAge = 65) {
+  retirementday <- ymd(birthday) + years(RetirementAge)
   retirementday
 }
 
 #' @importFrom lubridate today ymd years year month day
 #' @examples
 #' getRetirementCalendar("1981-08-12")
-getRetirementCalendar <- function(birthday, givenday = today()){
-  retirementday <- getRetirementday(birthday)
+getRetirementCalendar <- function(birthday, givenday = today(), RetirementAge){
+  retirementday <- getRetirementday(birthday, RetirementAge)
   age <- calcAge(birthday, givenday)
   refyeardiff <- year(givenday) - year(birthday)                   
   if (refyeardiff <= age) {
@@ -128,8 +129,9 @@ buildContributionP2Path <- function(birthday,
                                     P2purchase,
                                     TypePurchase,
                                     rate = BVGparams$BVGMindestzinssatz,
-                                    givenday = today()){
-
+                                    givenday = today(),
+                                    RetirementAge){
+  
   # build BVG rates from global input
   BVGRatesPath <- data.frame(years = seq(BVGcontriburionrates$lowerbound[1], BVGcontriburionrates$upperbound[nrow(BVGcontriburionrates)]),
                              BVGcontriburionrates = rep(BVGcontriburionrates$BVGcontriburionrates, 
@@ -137,7 +139,7 @@ buildContributionP2Path <- function(birthday,
   )
   
   # calc contributions P2 Path
-  ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today())) %>%
+  ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge)) %>%
     mutate(AgePath = sapply(calendar, calcAge, birthday = birthday) %>% as.integer) %>%
     left_join(BVGRatesPath, by = c("AgePath" = "years"))
   
@@ -148,19 +150,19 @@ buildContributionP2Path <- function(birthday,
     BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
     BVGContributions = BVGpurchase + (ExpectedSalaryPath * BVGcontriburionrates)
     BVGDirect = BVGContributions +c(CurrentP2, rep(0, ncp -1))
-    t = buildt(birthday)
+    t = buildt(birthday, RetirementAge)
     TotalP2 = calcAnnuityAcumPath(BVGDirect, t, rate)
     ReturnP2 = TotalP2 - cumsum(BVGDirect)
     DirectP2 = cumsum(BVGDirect)
-   })
+  })
   return(ContributionP2Path)
 }
 
 #' @examples
 #' calcExpectedSalaryPath(90000, 0.02, 20) %>% print
 calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
- nrise <- ncp - 2 #No rise current and last appraissal  
- res <- cumprod(c(Salary, rep(1 + SalaryGrowthRate, nrise), 1))
+  nrise <- ncp - 2 #No rise current and last appraissal  
+  res <- cumprod(c(Salary, rep(1 + SalaryGrowthRate, nrise), 1))
 }
 
 #' @examples
@@ -182,10 +184,11 @@ buildContributionP3path <- function(birthday,
                                     P3purchase,
                                     CurrentP3,
                                     returnP3,
-                                    givenday = today()){
-  ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today()))
+                                    givenday = today(),
+                                    RetirementAge){
+  ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge))
   ncp <- nrow(ContributionP3Path) 
-   ContributionP3Path %<>% within({
+  ContributionP3Path %<>% within({
     P3purchase = rep(P3purchase, ncp)
     P3ContributionPath = P3purchase + c(CurrentP3, rep(0, ncp -1))
     t = buildt(birthday)
@@ -213,8 +216,9 @@ buildTaxBenefits <- function(birthday,
                              MaxContrTax,
                              tax_rates_Kanton, 
                              BundessteueTabelle,
-                             givenday = today()) {
-  TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today()))
+                             givenday = today(),
+                             RetirementAge) {
+  TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge))
   ncp <- nrow(TaxBenefitsPath) 
   TaxBenefitsPath %<>% within({
     BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
@@ -223,7 +227,7 @@ buildTaxBenefits <- function(birthday,
     ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
     
     TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, postalcode, NKids, churchtax, rate_group, tax_rates_Kanton, BundessteueTabelle)
-#    TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, Kanton, Tariff, NKids)
+    #    TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, Kanton, Tariff, NKids)
     TaxBenefits = calcTaxBenefit(TotalContr, TaxRatePath, MaxContrTax)
     t = buildt(birthday)
     TotalTax = calcAnnuityAcumPath(TaxBenefits, t, returnP3)
@@ -266,7 +270,7 @@ calcAnnuityAcumPath <- function(contributions, t, rate){
 
 # getTaxRate_new(123456, PLZ = 8400, NKids = 1, ChurchTax = "N", RateGroup = "A", tax_rates_Kanton, BundessteueTabelle)
 getTaxRate <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton, BundessteueTabelle){  
-
+  
   # Step 1: Kantonssteuer & Gemeindesteuer
   TaxRateKG <- calcKantonsGemeindesteuerAvgRate(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton)
   
@@ -331,11 +335,11 @@ downloadInputs <- function(refresh){
     URL_plz <- "https://www.bfs.admin.ch/bfsstatic/dam/assets/4242620/master"
     fileName <- "data/CorrespondancePostleitzahlGemeinde.xlsx"
     currentDateTime <- tryCatch( {download.file(URL_plz,destfile=fileName,mode="wb")},
-              error = function(e) {message <- "update not possible, try again later"
-              return(message)},
-              warning = function(w) {message <- "update not possible, try again later"
-              return(message)},
-              finally = {return(Sys.time())}
+                                 error = function(e) {message <- "update not possible, try again later"
+                                 return(message)},
+                                 warning = function(w) {message <- "update not possible, try again later"
+                                 return(message)},
+                                 finally = {return(Sys.time())}
     )
     URL_taxrate <- "https://www.estv.admin.ch/dam/estv/it/dokumente/bundessteuer/quellensteuer/schweiz/tar2018txt.zip.download.zip/tar2018txt.zip"
     repositoryName <- "data/raw1"
@@ -374,16 +378,16 @@ returnSteuerfuss <- function(plz){
 
 
 
-  # savings <- vector()
-  # savings[1] <- RetirementPath.df$contributions[1] * exp(rate * RetirementPath.df$t[1])
-  # lapply(2:nrow(RetirementPath.df), function(i) {
-  #     savings[i] <- savings[i-1] * exp(rate * RetirementPath.df$t[i]) + RetirementPath.df$contributions[i]
-  #   return(savings)
-  # })
-  
+# savings <- vector()
+# savings[1] <- RetirementPath.df$contributions[1] * exp(rate * RetirementPath.df$t[1])
+# lapply(2:nrow(RetirementPath.df), function(i) {
+#     savings[i] <- savings[i-1] * exp(rate * RetirementPath.df$t[i]) + RetirementPath.df$contributions[i]
+#   return(savings)
+# })
 
-  
-  
+
+
+
 
 # # Solution using base
 # diff_in_days = difftime(calendar[5], calendar[4], units = "days") 

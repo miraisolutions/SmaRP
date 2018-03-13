@@ -33,7 +33,9 @@ shinyServer(function(input, output, session) {
                             P2purchase = input$P2purchase,
                             TypePurchase = input$TypePurchase,
                             rate = BVGMindestzinssatz,
-                            givenday = today())
+                            givenday = today(),
+                            RetirementAge = input$RetirementAge
+                            )
   })
   
   # calc P3 fund
@@ -41,7 +43,9 @@ shinyServer(function(input, output, session) {
     buildContributionP3path(birthday = input$Birthdate, 
                             P3purchase = input$P3purchase, 
                             CurrentP3 = input$CurrentP3, 
-                            returnP3 = input$returnP3)
+                            returnP3 = input$returnP3,
+                            RetirementAge = input$RetirementAge
+    )
   })
   
   # calc Tax benefits
@@ -59,7 +63,9 @@ shinyServer(function(input, output, session) {
                      rate_group = input$rate_group,
                      MaxContrTax = MaxContrTax,
                      tax_rates_Kanton = tax_rates_Kanton,
-                     BundessteueTabelle = BundessteueTabelle)
+                     BundessteueTabelle = BundessteueTabelle,
+                     RetirementAge = input$RetirementAge
+                     )
   })
   
 
