@@ -42,6 +42,7 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 library(pander)
+library(webshot)
 ```
 
 
@@ -169,47 +170,51 @@ params$retirementdate
 BarPlot
 
 ```{r, echo = FALSE}
-# plot2 <- gvisBarChart( data = params$BarGraphData,
-#              xvar = "contribution",
-#              yvar= colnames(params$BarGraphData)[!grepl("contribution", colnames(params$BarGraphData))],
-#              options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none"),
-#              system("wkhtmltoimage -n --enable-javascript --javascript-delay 2000 data/plot2.html data/plot2.png ")
-#     )
-BarGraphData <- as.data.frame( params$BarGraphData)
-yvar= c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax")
-usedyvar<- colnames(BarGraphData)[colnames(BarGraphData) %in% yvar]
-bardata <- BarGraphData %>% select(c(usedyvar, "contribution"))
-bardata <- bardata %>%  melt( id ="contribution") %>% select(c(variable, value))
-bar <- ggplot(bardata, aes(x=1, y=value, fill=variable)) + geom_bar(stat="identity",
-            position = position_fill(reverse = TRUE)) + coord_flip() + labs(x="", y="percentage %", fill="contribution")
+plot2 <- gvisBarChart( data = params$BarGraphData,
+             xvar = "contribution",
+             yvar= colnames(params$BarGraphData)[!grepl("contribution", colnames(params$BarGraphData))],
+             options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
+    )
+
+webshot::webshot(plot(plot2), file = "plot2.png", delay = 2)
 ```
 
-```{r}
-plot(bar)
-```
+
+<!-- ```{r, echo=FALSE} -->
+<!-- BarGraphData <- as.data.frame( params$BarGraphData) -->
+<!-- yvar= c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax") -->
+<!-- usedyvar<- colnames(BarGraphData)[colnames(BarGraphData) %in% yvar] -->
+<!-- bardata <- BarGraphData %>% select(c(usedyvar, "contribution")) -->
+<!-- bardata <- bardata %>%  melt( id ="contribution") %>% select(c(variable, value)) -->
+<!-- bar <- ggplot(bardata, aes(x=1, y=value, fill=variable)) + geom_bar(stat="identity", -->
+<!--             position = position_fill(reverse = TRUE)) + coord_flip() + labs(x="", y="percentage %", fill="contribution") -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- plot(bar) -->
+<!-- ``` -->
 
 Timeseries Plot
 
 ```{r, echo = FALSE}
-# plot1 <- gvisAreaChart(
-#       data = TserieGraphData(),
-#       xvar = "calendar",
-#       yvar = colnames(TserieGraphData()[,-1]),
-#       options = list(width = 1200, height = 500, isStacked = TRUE, legend = "bottom")
-#     )
-Tserie <- params$TserieGraphData
-
-for(i in 2:length(usedyvar)){
-  Tserie[usedyvar[i]] <- Tserie[usedyvar[i]] + Tserie[usedyvar[i-1]]
-}
-Tserie <- Tserie %>%
-          melt( id ="calendar")
-
-p <- ggplot(Tserie, aes(x=calendar, y=value, col=variable)) + geom_area(aes(fill=variable)) + xlab("years")
+ plot1 <- gvisAreaChart(
+       data = TserieGraphData(),
+       xvar = "calendar",
+       yvar = colnames(TserieGraphData()[,-1]),
+       options = list(width = 1200, height = 500, isStacked = TRUE, legend = "bottom")
+     )
+webshot::webshot(plot(plot1), file = "plot1.png", delay = 2, zoom =2)
+# Tserie <- params$TserieGraphData
+# 
+# for(i in 2:length(usedyvar)){
+#   Tserie[usedyvar[i]] <- Tserie[usedyvar[i]] + Tserie[usedyvar[i-1]]
+# }
+# Tserie <- Tserie %>%
+#           melt( id ="calendar")
+# 
+# p <- ggplot(Tserie, aes(x=calendar, y=value, col=variable)) + geom_area(aes(fill=variable)) + xlab("years")
 ```
-```{r}
-plot(p)
-```
+
 
 Tabular Results
 

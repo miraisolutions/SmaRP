@@ -172,8 +172,11 @@ shinyServer(function(input, output, session) {
         input = "report.Rmd",
         output_file = filename,
         output_format = "pdf_document",
+#        output_format = "html_document",
         params = params
       )
+ #     outputpdf <- webshot::webshot(output, file = "report.pdf")
+#      file.copy(outputpdf,file)
       file.copy(output,file)
     }
   )# end of downloadHandler

@@ -1,0 +1,48 @@
+body {
+  background-color: #fff;
+}
+
+hr {border-top: 1px solid #000000;}
+
+h5 {
+  font-family:Arial;
+  font-size: 12px;
+  color:black;
+}
+
+h4 {
+  font-family:Arial;
+  font-size: 14px;
+  color:#008cc3;
+}
+
+#disclaimer{
+  font-family:Arial;
+  color: grey;
+  font-size: 12px;
+  text-align: left;
+}
+
+#Totals{
+  font-family:Arial;
+  color: #008cc3;
+  font-size: 18px;
+  text-align: center;
+}
+                                  
+h2 {
+  font-family:Arial;
+  color: #008cc3;
+  font-size: 25px;
+  text-align: left;
+  margin-left: 20px;
+}
+
+a {
+  font-family:Arial;
+  font-size: 12px;
+  color:#008cc3;
+  text-align: left;
+  margin-left: 20px;
+}
+

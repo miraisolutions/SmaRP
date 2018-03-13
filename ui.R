@@ -6,10 +6,11 @@ source("external_inputs.R")
 # UI
 shinyUI( 
   fluidPage(
+    theme = "style.css",
     fluidRow(
-      tags$head(
-        tags$style(HTML("hr {border-top: 1px solid #000000;}"))
-      ),
+      # tags$head(
+      #   tags$style(HTML("hr {border-top: 1px solid #000000;}"))
+      # ),
       img(src='mirai.pdf', align = "right", height = 100, width = 250),
       titlePanel("SmaRP: Smart Retirement Planning"),
       a(href="http://www.mirai-solutions.com", "mirai-solutions.com"),
@@ -102,19 +103,19 @@ shinyUI(
              
              #Disclaimer
              verbatimTextOutput("disclaimer"),
-             tags$head(tags$style("#Totals{
-                                  font-family:Helvetica;
-                                  color: blue;
-                                  font-size: 20px;
-                                  font-style: bold;
-                                  text-align: center;
-                                  }"),
-                       tags$style("#disclaimer{
-                                  font-family:Helvetica;
-                                  color: grey;
-                                  font-size: 12px;
-                                  text-align: left;
-                                  }")),
+             # tags$head(tags$style("#Totals{
+             #                      font-family:Helvetica;
+             #                      color: blue;
+             #                      font-size: 20px;
+             #                      font-style: bold;
+             #                      text-align: center;
+             #                      }"),
+             #           tags$style("#disclaimer{
+             #                      font-family:Helvetica;
+             #                      color: grey;
+             #                      font-size: 12px;
+             #                      text-align: left;
+             #                      }")),
              
              #Add button to download report
              downloadButton("report", "Generate report")
