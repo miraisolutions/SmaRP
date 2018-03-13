@@ -116,7 +116,7 @@ shinyServer(function(input, output, session) {
       data = BarGraphData(),
       xvar = "contribution",
       yvar= colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
-      options = list(width = 600, height = 200, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
+      options = list(width = 500, height = 130, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
     )
   })
   
@@ -191,13 +191,17 @@ shinyServer(function(input, output, session) {
     paste(as.character(refreshText()))
   })
   
-  output$conditionalInput <- renderUI({
-    if(input$provideTaxRate){
-      numericInput("TaxRate", label = h5("Direct Tax Rate (optional)"), value = 1, step = 0.1, min = 0)
+  output$conditionalInputGen <- renderUI({
+    if(input$provideTaxRateSwiss){
+      numericInput("TaxRateSwiss", label = h5("Direct Tax Rate (optional)"), value = 1, step = 0.1, min = 0)
     }
   })
   
-  
+  output$conditionalInputSwiss <- renderUI({
+    if(input$provideTaxRateGen){
+      numericInput("TaxRateGen", label = h5("Direct Tax Rate (optional)"), value = 1, step = 0.1, min = 0)
+    }
+  })
   # output$ibox <- renderInfoBox({
   #   infoBox(
   #     "i",
