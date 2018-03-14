@@ -24,11 +24,13 @@
 #                                            CurrentP2,
 #                                            P2purchase,
 #                                            TypePurchase,
-#                                            rate = BVGMindestzinssatz) %>%
+#                                            rate = BVGMindestzinssatz,
+#                                            RetirementAge= RetirementAge) %>%
 #   left_join(buildContributionP3path(birthday,
 #                                     P3purchase,
 #                                     CurrentP3,
-#                                     returnP3), by = c("calendar", "t")) %>%
+#                                     returnP3,
+#                                     RetirementAge= RetirementAge), by = c("calendar", "t")) %>%
 #   left_join(buildTaxBenefits(birthday,
 #                              TypePurchase,
 #                              P2purchase,
@@ -36,13 +38,14 @@
 #                              returnP3,
 #                              Salary,
 #                              SalaryGrowthRate,
-#                              postalcode, 
-#                              NKids, 
+#                              postalcode,
+#                              NKids,
 #                              churchtax,
 #                              rate_group,
 #                              MaxContrTax,
 #                              tax_rates_Kanton,
-#                              BundessteueTabelle),
+#                              BundessteueTabelle,
+#                              RetirementAge= RetirementAge),
 #             by = c("calendar", "t")) %>%
 #   mutate(Total = TotalP2 + TotalP3 + TotalTax)
 
@@ -366,6 +369,33 @@ returnPLZKanton <- function(plz){
 returnSteuerfuss <- function(plz){
   Steuerfuss <- PLZGemeinden$Steuerfuss[PLZGemeinden$PLZ == as.numeric(plz)]
   return(Steuerfuss)
+}
+
+
+
+# Convert to Monetary data type  -----------------------------------------------------------------
+# printCurrency 
+#' @examples
+# printCurrency(123123.334)
+printCurrency <- function(value, currency.sym="", digits=2, sep=",", decimal=".") {
+  paste(
+    currency.sym,
+    formatC(value, format = "f", big.mark = sep, digits=digits, decimal.mark=decimal),
+    sep=""
+  )
+}
+
+
+# Make atable -------------------------------------------------------------
+# makeTable 
+#' @examples
+# makeTable(Road2Retirement)
+makeTable <- function(Road2Retirement){
+  moncols <- c( "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")
+  TableMonetary <- Road2Retirement[, c("calendar", moncols)] %>%
+    mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-"))
+  TableMonetary[, moncols] <- sapply(TableMonetary[, moncols], printCurrency)
+  return(TableMonetary)
 }
 
 
