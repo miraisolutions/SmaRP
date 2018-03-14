@@ -139,7 +139,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$Totals <- renderText({
-    paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), "CHF", sep = " ")
+    paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), input$currency, sep = " ")
   })
   
   # Disclaimer ----
