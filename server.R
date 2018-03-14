@@ -126,7 +126,7 @@ shinyServer(function(input, output, session) {
     )
   })
   
-  
+  # Totals ----
   retirementdate <- reactive({
     getRetirementday(input$Birthdate)
   })  
@@ -135,11 +135,11 @@ shinyServer(function(input, output, session) {
     Road2Retirement()[, "Total"] %>% tail(1) %>% as.integer
   })
   
-  
   output$Totals <- renderText({
     paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), "CHF", sep = " ")
   })
   
+  # Disclaimer ----
   output$disclaimer <- renderText({
     paste("Disclaimer:",
           "The results of this calculations do not have any legal value.",
@@ -147,6 +147,7 @@ shinyServer(function(input, output, session) {
           sep="\n")
   })
   
+  # Output Report ----
   #params list to be passed to the output
   params <- list(Salary = isolate(input$Salary),
                  birthday = isolate(input$Birthdate),
@@ -187,7 +188,7 @@ shinyServer(function(input, output, session) {
     }
   )# end of downloadHandler
   
-  
+  # refresh inputs ----
   #Refresh plz-gemeinde correspondance
   # when the value of input$refreshButton becomes out of date 
   # (i.e., when the button is pressed)
@@ -197,6 +198,7 @@ shinyServer(function(input, output, session) {
     paste(as.character(refreshText()))
   })
   
+  # Conditional TaxRate input ----
   output$conditionalInputSwiss <- renderUI({
     if(input$provideTaxRateSwiss){
       numericInput("TaxRateSwiss", label = h5("Direct Tax Rate (optional)"), value = 1, step = 0.1, min = 0)
