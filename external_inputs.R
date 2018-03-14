@@ -26,6 +26,11 @@ MaxContrTax <<- 6768
 # https://www.six-swiss-exchange.com/services/yield_curves_en.html
 
 
+#Currencies
+currencies.list <- list("US" ="US",
+                        "EUR" = "EUR",
+                        "CHF" = "CHF")
+
 # https://www.swissstaffing-bvg.ch/en/employers/contribution_rates.php
 # https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-62487.html
 BVGcontriburionrates <<- data.frame(lowerbound = c(18, 25, 35, 45, 55),

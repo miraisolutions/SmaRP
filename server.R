@@ -82,7 +82,8 @@ shinyServer(function(input, output, session) {
   output$table <- renderTable({
     # Road2Retirement()[, c("calendar", "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")] %>%
     #   mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-")) 
-    makeTable(Road2Retirement = Road2Retirement())
+    makeTable(Road2Retirement = Road2Retirement(),
+              currency = paste0( input$currency, " "))
   }, digits = 0)
   
   

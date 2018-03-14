@@ -67,6 +67,8 @@ shinyUI(
                             fluidRow( numericInput("TaxRate", label = h5("Marginal Tax Rate"), value = 0.1, step = 0.01, min = 0),
                             bsTooltip("TaxRate", "This explaind TaxRate", placement = "right", options = list(container = "body")),
                             style = "margin-left: 30px;"),
+                            fluidRow( selectInput("currency", label ="Currency", selected = "CHF", choices = currencies.list)
+                              , style = "margin-left: 30px;"),
                             hr(),
                             wellPanel(
                               checkboxInput("provideTaxRateGen", "Direct Tax Rate (optional)", FALSE),
