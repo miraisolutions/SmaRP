@@ -56,4 +56,11 @@ small {
   color:#737373;  
 }
 
+.tabbable > .nav > li > a[data-value='Personal'] {background-color: white;  color:#008cc3; border-bottom: 1.1px solid #D7DBDD}
+.tabbable > .nav > li[class=active]    > a[data-value='Personal'] {background-color: #008cc3;   color:white; border-bottom: 1px solid #D7DBDD}
 
+.tabbable > .nav > li > a[data-value='Residence'] {background-color: white;  color:#008cc3; border-bottom: 1.1px solid #D7DBDD}
+.tabbable > .nav > li[class=active]    > a[data-value='Residence'] {background-color: #008cc3;   color:white; border-bottom: 1px solid #D7DBDD}
+
+.tabbable > .nav > li > a                  {background-color: white;  color:#008cc3}
+.tabbable > .nav > li[class=active]    > a {background-color: #008cc3;   color:white}

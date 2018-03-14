@@ -197,13 +197,13 @@ shinyServer(function(input, output, session) {
     paste(as.character(refreshText()))
   })
   
-  output$conditionalInputGen <- renderUI({
+  output$conditionalInputSwiss <- renderUI({
     if(input$provideTaxRateSwiss){
       numericInput("TaxRateSwiss", label = h5("Direct Tax Rate (optional)"), value = 1, step = 0.1, min = 0)
     }
   })
   
-  output$conditionalInputSwiss <- renderUI({
+  output$conditionalInputGen <- renderUI({
     if(input$provideTaxRateGen){
       numericInput("TaxRateGen", label = h5("Direct Tax Rate (optional)"), value = 1, step = 0.1, min = 0)
     }
