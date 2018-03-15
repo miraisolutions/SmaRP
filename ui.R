@@ -3,6 +3,7 @@ library(shinyBS)
 #library(shinydashboard)
 source("external_inputs.R")
 
+
 # UI
 shinyUI( 
   fluidPage(
@@ -75,6 +76,7 @@ shinyUI(
                    ), # end General tabPanel
                    tabPanel(title = "Swiss case",
                             value = "Swiss",
+                            conditionalPanel(condition= 'input.provideTaxRateSwiss==""',
                             fluidRow(tags$h4("Parameters for Tax Rate ecaluation"),style = "margin-left: 20px;"),
                             fluidRow(column( 6, selectInput("postalcode", label = h5("Postal Code"),
                                         choices = PLZ.list,
@@ -82,17 +84,18 @@ shinyUI(
                                      column( 6, numericInput("NKids", label = h5("Number of Children"), value = 0, min = 0, max = 5),
                                              bsTooltip("NKids", "5 maximum number of children treated separatedly, for simplicity.", placement = "right", options = list(container = "body"))),
                                         style = "margin-left: 20px;"),
+                            #tags$small("* If more then 5 Kids, treated as if 5"),
                             fluidRow(radioButtons("genre", label = NULL, inline = TRUE,
                                          choices = list("Male" = "M", "Female" = "F"), 
                                          selected = "M"), style = "margin-left: 30px;"),
                             fluidRow(radioButtons("rate_group", label = NULL, inline = TRUE, 
                                          choices = Rate_group.list, 
                                          selected = "A"),style = "margin-left: 30px;"),
-                            #tags$small("* If more then 5 Kids, treated as if 5"),
                             #br(),
                             fluidRow(radioButtons("churchtax", label = h5("Church affiliation"), inline = TRUE,
                                          choices = list("Y" = "Y", "N" = "N"), 
-                                         selected = "N"),style = "margin-left: 30px;"),
+                                         selected = "N"),style = "margin-left: 30px;")
+                            ), # end conditional panel
                             hr(),
                               wellPanel(
                               checkboxInput("provideTaxRateSwiss", "Direct Tax Rate (optional)", FALSE),

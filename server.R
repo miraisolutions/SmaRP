@@ -13,8 +13,8 @@ library(dplyr)
 library(magrittr)
 library(googleVis)
 library(rmarkdown)
-library(shinyBS)
-#library(shinydashboard)
+library(shinyBS) # needed for the info windows
+#library(shinyjs) #needed for hiding inputs 
 #library(ggplot2)
 
 # source core methodology and global variables
@@ -219,8 +219,16 @@ shinyServer(function(input, output, session) {
     if(input$provideTaxRateSwiss){
       numericInput("TaxRateSwiss", label = h5("Direct Tax Rate (optional)"), value = 1, step = 0.1, min = 0)
     }
+    #shinyjs::hide("genre")
   })
   
+  # observeEvent(input$provideTaxRateSwiss, {
+  #   removeUI(
+  #     selector = "div:has(> #genre)"
+  #   )
+  # })
+  
+  # Conditional Retirement age input ----
   output$conditionalRetirementAge <- renderUI({
     if(input$provideRetirementAge){
       numericInput("RetirementAge", label = h5("Desired Retirement Age"), value = 65, step = 1, min = 55, max = 70)
