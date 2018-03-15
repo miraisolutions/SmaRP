@@ -182,7 +182,9 @@ shinyServer(function(input, output, session) {
                  MaxContrTax = isolate(MaxContrTax),
                  retirementdate = isolate(input$Birthdate),
                  BarGraphData = isolate(BarGraphData()),
-                 TserieGraphData = isolate(TserieGraphData())
+                 TserieGraphData = isolate(TserieGraphData()),
+                 RetirementAge = ifelse(isolate(input$provideRetirementAge),isolate(input$RetirementAge), ifelse(isolate(input$genre)=="M", MRetirementAge,FRetirementAge)),
+                 TaxRate =  isolate(taxRateValue())
   )
   
   #output report

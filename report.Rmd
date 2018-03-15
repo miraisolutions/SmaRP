@@ -23,7 +23,6 @@ params:
       returnP3: NA
       postalcode: NA
       Kanton: NA
-      Tariff: NA
       NKids: NA
       churchtax: NA
       rate_group: NA
@@ -31,6 +30,8 @@ params:
       retirementdate: NA
       BarGraphData: NA
       TserieGraphData: NA
+      RetirementAge: NA
+      TaxRate: NA
 ---
 
 ```{r setup, include=FALSE}
@@ -129,12 +130,6 @@ params$postalcode
 params$Kanton
 ```
 
-* Tariff
-
-```{r, echo = FALSE}
-params$Tariff
-```
-
 * Number of Kids
 
 ```{r, echo = FALSE}
@@ -163,6 +158,21 @@ params$MaxContrTax
 params$retirementdate
 ```
 
+* Retirement Age
+
+```{r, echo=FALSE}
+params$RetirementAge
+```
+
+* TaxRate
+
+```{r, echo=FALSE}
+if(is.null(params$TaxRate)){
+  print("calculated")
+} else {
+  params$TaxRate
+}
+```
 
 ## Output
 
