@@ -15,7 +15,7 @@
 # postalcode = 8400
 # churchtax = "N"
 # rate_group = "B"
-# 
+# TaxRate = NULL
 # 
 # 
 # Road2Retirement <- buildContributionP2Path(birthday,
@@ -45,7 +45,8 @@
 #                              MaxContrTax,
 #                              tax_rates_Kanton,
 #                              BundessteueTabelle,
-#                              RetirementAge= RetirementAge),
+#                              RetirementAge= RetirementAge,
+#                              TaxRate = TaxRate),
 #             by = c("calendar", "t")) %>%
 #   mutate(Total = TotalP2 + TotalP3 + TotalTax)
 
@@ -225,7 +226,8 @@ buildTaxBenefits <- function(birthday,
                              tax_rates_Kanton, 
                              BundessteueTabelle,
                              givenday = today(),
-                             RetirementAge
+                             RetirementAge,
+                             TaxRate = NULL
                              ) {
   #RetirementAge <-65
   TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge))
@@ -236,8 +238,12 @@ buildTaxBenefits <- function(birthday,
     TotalContr = BVGpurchase + P3purchase
     ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
     
-    TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, postalcode, NKids, churchtax, rate_group, tax_rates_Kanton, BundessteueTabelle)
-    #    TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, Kanton, Tariff, NKids)
+    if(is.null(TaxRate)){
+      TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, postalcode, NKids, churchtax, rate_group, tax_rates_Kanton, BundessteueTabelle)
+      #    TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, Kanton, Tariff, NKids)
+    } else {
+      TaxRatePath = rep(TaxRate, length(ExpectedSalaryPath))
+    }
     TaxBenefits = calcTaxBenefit(TotalContr, TaxRatePath, MaxContrTax)
     t = buildt(birthday, RetirementAge)
     TotalTax = calcAnnuityAcumPath(TaxBenefits, t, returnP3)

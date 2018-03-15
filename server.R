@@ -24,7 +24,7 @@ source("core.R")
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
   
-  # calc P2 fund
+  # calc P2 fund ----
   ContributionP2Path <- reactive({ 
     buildContributionP2Path(birthday = input$Birthdate,
                             Salary = ifelse(input$case == "General", 0, input$Salary),
@@ -38,7 +38,7 @@ shinyServer(function(input, output, session) {
                             )
   })
   
-  # calc P3 fund
+  # calc P3 fund ----
   ContributionP3path <- reactive({
     buildContributionP3path(birthday = input$Birthdate, 
                             P3purchase = input$P3purchase, 
@@ -48,7 +48,7 @@ shinyServer(function(input, output, session) {
     )
   })
   
-  # calc Tax benefits
+  # calc Tax benefits ----
   ContributionTaxpath <- reactive({
     buildTaxBenefits(birthday = input$Birthdate, 
                      TypePurchase = input$TypePurchase,
@@ -64,12 +64,23 @@ shinyServer(function(input, output, session) {
                      MaxContrTax = MaxContrTax,
                      tax_rates_Kanton = tax_rates_Kanton,
                      BundessteueTabelle = BundessteueTabelle,
-                     RetirementAge = ifelse(input$provideRetirementAge,input$RetirementAge, ifelse(input$genre=="M", MRetirementAge,FRetirementAge))
+                     RetirementAge = ifelse(input$provideRetirementAge,input$RetirementAge, ifelse(input$genre=="M", MRetirementAge,FRetirementAge)),
+                     TaxRate = taxRateValue()
                      )
   })
   
+  # TaxRate ----
+  taxRateValue <- reactive({
+    if(input$case == "General"){
+      input$TaxRate
+    } else if(input$case == "Swiss" & input$provideTaxRateSwiss){
+      input$TaxRateSwiss
+    } else{
+      NULL
+    }
+  })
 
-  # build main df
+  # build main df ----
   Road2Retirement <- reactive({
     ContributionP2Path() %>%
       left_join(ContributionP3path(), by = c("calendar", "t")) %>%
