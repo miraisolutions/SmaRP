@@ -35,8 +35,11 @@ shinyUI(
                  br(),
                  fluidRow( dateInput("Birthdate", label = h5("Birthday"), value = "1980-12-31", format = "yyyy-mm-dd"),
                            style = "margin-left: 30px;"),
-                 fluidRow(numericInput("RetirementAge", label = h5("Desired Retirement Age"), value = 65, step = 1, min = 55, max = 70),
-                          style = "margin-left: 30px;"),
+                 wellPanel(
+                   checkboxInput("provideRetirementAge", "Desired Retirement Age (optional)", FALSE),
+                   uiOutput("conditionalRetirementAge"),
+                   style = "margin-left: 20px;margin-right: 20px;"
+                 ),
                  hr(),
                  fluidRow( tags$h4("Private Pension Fund"), style = "margin-left: 30px;"),
                  #infoBoxOutput("ibox",width = 0.5),
@@ -68,13 +71,7 @@ shinyUI(
                             bsTooltip("TaxRate", "This explaind TaxRate", placement = "right", options = list(container = "body")),
                             style = "margin-left: 30px;"),
                             fluidRow( selectInput("currency", label ="Currency", selected = "CHF", choices = currencies.list)
-                              , style = "margin-left: 30px;"),
-                            hr(),
-                            wellPanel(
-                              checkboxInput("provideTaxRateGen", "Direct Tax Rate (optional)", FALSE),
-                              uiOutput("conditionalInputGen"), 
-                              style = "margin-left: 20px;margin-right: 20px;"
-                            )
+                              , style = "margin-left: 30px;")
                    ), # end General tabPanel
                    tabPanel(title = "Swiss case",
                             value = "Swiss",

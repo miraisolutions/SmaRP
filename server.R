@@ -34,7 +34,7 @@ shinyServer(function(input, output, session) {
                             TypePurchase = input$TypePurchase,
                             rate = BVGMindestzinssatz,
                             givenday = today(),
-                            RetirementAge = input$RetirementAge
+                            RetirementAge = ifelse(input$provideRetirementAge,input$RetirementAge, ifelse(input$genre=="M", MRetirementAge,FRetirementAge))
                             )
   })
   
@@ -44,7 +44,7 @@ shinyServer(function(input, output, session) {
                             P3purchase = input$P3purchase, 
                             CurrentP3 = input$CurrentP3, 
                             returnP3 = input$returnP3,
-                            RetirementAge = input$RetirementAge
+                            RetirementAge = ifelse(input$provideRetirementAge,input$RetirementAge, ifelse(input$genre=="M", MRetirementAge,FRetirementAge))
     )
   })
   
@@ -64,7 +64,7 @@ shinyServer(function(input, output, session) {
                      MaxContrTax = MaxContrTax,
                      tax_rates_Kanton = tax_rates_Kanton,
                      BundessteueTabelle = BundessteueTabelle,
-                     RetirementAge = input$RetirementAge
+                     RetirementAge = ifelse(input$provideRetirementAge,input$RetirementAge, ifelse(input$genre=="M", MRetirementAge,FRetirementAge))
                      )
   })
   
@@ -208,11 +208,12 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  output$conditionalInputGen <- renderUI({
-    if(input$provideTaxRateGen){
-      numericInput("TaxRateGen", label = h5("Direct Tax Rate (optional)"), value = 1, step = 0.1, min = 0)
+  output$conditionalRetirementAge <- renderUI({
+    if(input$provideRetirementAge){
+      numericInput("RetirementAge", label = h5("Desired Retirement Age"), value = 65, step = 1, min = 55, max = 70)
     }
   })
+  
   # output$ibox <- renderInfoBox({
   #   infoBox(
   #     "i",
