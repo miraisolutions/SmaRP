@@ -185,21 +185,21 @@ plot2 <- gvisBarChart( data = params$BarGraphData,
              options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
     )
 
-webshot::webshot(plot(plot2), file = "plot2.png", delay = 5)
-```
-
-
-Timeseries Plot
-
-```{r, echo = FALSE}
  plot1 <- gvisAreaChart(
        data = TserieGraphData(),
        xvar = "calendar",
        yvar = colnames(TserieGraphData()[,-1]),
        options = list(width = 1200, height = 500, isStacked = TRUE, legend = "bottom")
      )
-
 ```
+
+```{r, echo = FALSE}
+webshot::webshot(plot(plot2), file = "plot2.png", delay = 5)
+```
+
+
+Timeseries Plot
+
 ```{r}
 webshot::webshot(plot(plot1), file = "plot1.png", delay = 5)
 ```
