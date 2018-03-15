@@ -85,9 +85,10 @@ shinyUI(
                                              bsTooltip("NKids", "5 maximum number of children treated separatedly, for simplicity.", placement = "right", options = list(container = "body"))),
                                         style = "margin-left: 20px;"),
                             #tags$small("* If more then 5 Kids, treated as if 5"),
+                            conditionalPanel(condition= 'input.provideRetirementAge==""',
                             fluidRow(radioButtons("genre", label = NULL, inline = TRUE,
                                          choices = list("Male" = "M", "Female" = "F"), 
-                                         selected = "M"), style = "margin-left: 30px;"),
+                                         selected = "M"), style = "margin-left: 30px;")), # end conditional panel
                             fluidRow(radioButtons("rate_group", label = NULL, inline = TRUE, 
                                          choices = Rate_group.list, 
                                          selected = "A"),style = "margin-left: 30px;"),
