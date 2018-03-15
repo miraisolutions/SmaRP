@@ -84,7 +84,7 @@
 
 #' @examples
 #' buildt("1981-08-12")
-buildt <- function(birthday, givenday = today()){
+buildt <- function(birthday, givenday = today(), RetirementAge = 65){
   calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge)
   t = c(as.vector(diff(calendar)/365), 0)
   return(t)
@@ -107,7 +107,7 @@ getRetirementday <- function(birthday, RetirementAge = 65) {
 #' @importFrom lubridate today ymd years year month day
 #' @examples
 #' getRetirementCalendar("1981-08-12")
-getRetirementCalendar <- function(birthday, givenday = today(), RetirementAge){
+getRetirementCalendar <- function(birthday, givenday = today(), RetirementAge = 65){
   retirementday <- getRetirementday(birthday, RetirementAge)
   age <- calcAge(birthday, givenday)
   refyeardiff <- year(givenday) - year(birthday)                   
@@ -133,8 +133,10 @@ buildContributionP2Path <- function(birthday,
                                     TypePurchase,
                                     rate = BVGparams$BVGMindestzinssatz,
                                     givenday = today(),
-                                    RetirementAge){
+                                    RetirementAge
+                                    ){
   
+  #RetirementAge <- 65
   # build BVG rates from global input
   BVGRatesPath <- data.frame(years = seq(BVGcontriburionrates$lowerbound[1], BVGcontriburionrates$upperbound[nrow(BVGcontriburionrates)]),
                              BVGcontriburionrates = rep(BVGcontriburionrates$BVGcontriburionrates, 
@@ -188,13 +190,16 @@ buildContributionP3path <- function(birthday,
                                     CurrentP3,
                                     returnP3,
                                     givenday = today(),
-                                    RetirementAge){
+                                    RetirementAge
+                                    ){
+  
+  #RetirementAge <- 65
   ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge))
   ncp <- nrow(ContributionP3Path) 
   ContributionP3Path %<>% within({
     P3purchase = rep(P3purchase, ncp)
     P3ContributionPath = P3purchase + c(CurrentP3, rep(0, ncp -1))
-    t = buildt(birthday)
+    t = buildt(birthday, RetirementAge)
     TotalP3 = calcAnnuityAcumPath(P3ContributionPath, t, returnP3)
     ReturnP3 = TotalP3 - cumsum(P3ContributionPath)
     DirectP3 = cumsum(P3ContributionPath)
@@ -220,7 +225,9 @@ buildTaxBenefits <- function(birthday,
                              tax_rates_Kanton, 
                              BundessteueTabelle,
                              givenday = today(),
-                             RetirementAge) {
+                             RetirementAge
+                             ) {
+  #RetirementAge <-65
   TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge))
   ncp <- nrow(TaxBenefitsPath) 
   TaxBenefitsPath %<>% within({
@@ -232,7 +239,7 @@ buildTaxBenefits <- function(birthday,
     TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, postalcode, NKids, churchtax, rate_group, tax_rates_Kanton, BundessteueTabelle)
     #    TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, Kanton, Tariff, NKids)
     TaxBenefits = calcTaxBenefit(TotalContr, TaxRatePath, MaxContrTax)
-    t = buildt(birthday)
+    t = buildt(birthday, RetirementAge)
     TotalTax = calcAnnuityAcumPath(TaxBenefits, t, returnP3)
     ReturnTax = TotalTax - cumsum(TaxBenefits)
     DirectTax = cumsum(TaxBenefits)
