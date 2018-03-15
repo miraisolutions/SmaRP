@@ -2,6 +2,10 @@ library(dplyr)
 
 # Global variables
 
+#Gender Bases Retirement age
+MRetirementAge <- 65 #67 because of bug T44
+FRetirementAge <- 65
+
 # https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
 # https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-62487.html
 MaxAHV <- 2350 * 12
