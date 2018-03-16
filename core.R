@@ -412,6 +412,24 @@ makeTable <- function(Road2Retirement, currency){
 }
 
 
+# Utility functions for validity checks -----------------------------------
+
+isnotAvailable <- function(inputValue){
+  if(inputValue =="" | is.na(inputValue) |is.null(inputValue) ){
+    TRUE
+  } else {
+    FALSE
+  }
+}
+
+isnotAvailableReturnNULL <- function(inputValue){
+  if(isnotAvailable(inputValue) ){
+    0
+  } else {
+    inputValue
+  }
+}
+
 # fv(0.02, 30, pv = -50000, pmt = -4800, type = 0)
 
 # t = c(0.56, 1, 1, 1, 1)
