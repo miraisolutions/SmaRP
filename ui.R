@@ -1,5 +1,6 @@
 library(shiny)
 library(shinyBS)
+library(shinythemes)
 #library(shinydashboard)
 source("external_inputs.R")
 
@@ -7,6 +8,7 @@ source("external_inputs.R")
 # UI
 shinyUI( 
   fluidPage(
+    #themeSelector(),
     theme = "style.css",
     fluidRow(
       # tags$head(

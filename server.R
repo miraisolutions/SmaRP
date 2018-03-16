@@ -24,9 +24,19 @@ source("core.R")
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
   
+  # validate inputs and delay calculation ----
+  Birthdate <- reactive({
+    validate(
+      need(input$Birthdate, 'Birthdate is a mandatory input')
+    )
+    input$Birthdate
+    })
+  
+  #Birthdate <- Birthdate_input %>% debounce(1000)
+  
   # calc P2 fund ----
   ContributionP2Path <- reactive({ 
-    buildContributionP2Path(birthday = input$Birthdate,
+    buildContributionP2Path(birthday = Birthdate(),
                             Salary = ifelse(input$case == "General", 0, input$Salary),
                             SalaryGrowthRate = input$SalaryGrowthRate,
                             CurrentP2 = ifelse(input$case == "General", 0, input$CurrentP2),
@@ -40,7 +50,7 @@ shinyServer(function(input, output, session) {
   
   # calc P3 fund ----
   ContributionP3path <- reactive({
-    buildContributionP3path(birthday = input$Birthdate, 
+    buildContributionP3path(birthday = Birthdate(), 
                             P3purchase = input$P3purchase, 
                             CurrentP3 = input$CurrentP3, 
                             returnP3 = input$returnP3,
@@ -50,7 +60,7 @@ shinyServer(function(input, output, session) {
   
   # calc Tax benefits ----
   ContributionTaxpath <- reactive({
-    buildTaxBenefits(birthday = input$Birthdate, 
+    buildTaxBenefits(birthday = Birthdate(), 
                      TypePurchase = input$TypePurchase,
                      P2purchase = input$P2purchase, 
                      P3purchase = input$P3purchase, 
@@ -142,7 +152,7 @@ shinyServer(function(input, output, session) {
   
   # Totals ----
   retirementdate <- reactive({
-    getRetirementday(input$Birthdate)
+    getRetirementday(Birthdate())
   })  
   
   retirementfund <- reactive({
@@ -164,7 +174,7 @@ shinyServer(function(input, output, session) {
   # Output Report ----
   #params list to be passed to the output
   params <- list(Salary = isolate(input$Salary),
-                 birthday = isolate(input$Birthdate),
+                 birthday = isolate(Birthdate()),
                  Road2Retirement = isolate(Road2Retirement()),
                  SalaryGrowthRate = isolate(input$SalaryGrowthRate),
                  CurrentP2 = ifelse(isolate(input$case) == "General", 0, isolate(input$CurrentP2)),
@@ -180,7 +190,7 @@ shinyServer(function(input, output, session) {
                  churchtax = isolate(input$churchtax),
                  rate_group = isolate(input$rate_group),
                  MaxContrTax = isolate(MaxContrTax),
-                 retirementdate = isolate(input$Birthdate),
+                 retirementdate = isolate(Birthdate()),
                  BarGraphData = isolate(BarGraphData()),
                  TserieGraphData = isolate(TserieGraphData()),
                  RetirementAge = ifelse(isolate(input$provideRetirementAge),isolate(input$RetirementAge), ifelse(isolate(input$genre)=="M", MRetirementAge,FRetirementAge)),
