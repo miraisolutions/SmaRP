@@ -35,11 +35,10 @@ currencies.list <- list("US" ="US",
                         "EUR" = "EUR",
                         "CHF" = "CHF")
 
-# https://www.swissstaffing-bvg.ch/en/employers/contribution_rates.php
-# https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-62487.html
+# https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
 BVGcontriburionrates <<- data.frame(lowerbound = c(18, 25, 35, 45, 55),
                                     upperbound = c(24, 34, 44, 54, 65),
-                                    BVGcontriburionrates = c(0.00, 0.07, 0.010, 0.011, 0.13))
+                                    BVGcontriburionrates = c(0.00, 0.07, 0.010, 0.015, 0.18))
 
 
 # https://www.estv.admin.ch/estv/de/home/direkte-bundessteuer/quellensteuer/dienstleistungen/tarife-herunterladen.html
