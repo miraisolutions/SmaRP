@@ -69,8 +69,18 @@ shinyServer(function(input, output, session) {
       )
       input$P3purchase
     }})
+  
+  returnP3_notzero <- reactive({isnotAvailableReturnZero(input$returnP3)})
+  returnP3 <- reactive({
+    if (input$case == "General") {
+      validate(
+        need_not_zero(returnP3_notzero(), "Pillar III Return")
+      )
+      returnP3_notzero()
+    }
+  })
 
-  TaxRelief <- reactive({ isnotAvailableReturnZero(input$TaxRelief) }) 
+  TaxRelief <- reactive({isnotAvailableReturnZero(input$TaxRelief) }) 
   
   currency <- reactive(
     if(input$case == "General"){
@@ -199,7 +209,7 @@ shinyServer(function(input, output, session) {
     buildContributionP3path(birthday = Birthdate(), 
                             P3purchase = P3purchase(), 
                             CurrentP3 = CurrentP3(), 
-                            returnP3 = input$returnP3,
+                            returnP3 = returnP3(),
                             RetirementAge = RetirementAge()
     )
   })
@@ -210,7 +220,7 @@ shinyServer(function(input, output, session) {
                      TypePurchase = TypePurchase(),
                      P2purchase = P2purchase(), 
                      P3purchase = P3purchase(), 
-                     returnP3 = input$returnP3,
+                     returnP3 = returnP3(),
                      Salary = Salary(),
                      SalaryGrowthRate = SalaryGrowthRate(),
                      postalcode = postalcode(),
@@ -318,7 +328,7 @@ shinyServer(function(input, output, session) {
                  rate = isolate(BVGMindestzinssatz),
                  P3purchase = isolate(P3purchase()), 
                  CurrentP3 = isolate(CurrentP3()), 
-                 returnP3 = isolate(input$returnP3),
+                 returnP3 = isolate(returnP3()),
                  postalcode = isolate(postalcode()),
                  Kanton = isolate(returnPLZKanton(postalcode())),
                  NKids = ifelse(isolate(input$NKids) >5, 5, isolate(input$NKids)), 
