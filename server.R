@@ -80,7 +80,14 @@ shinyServer(function(input, output, session) {
     }
   })
 
-  TaxRelief <- reactive({isnotAvailableReturnZero(input$TaxRelief) }) 
+  TaxRelief <- reactive({ 
+    if(input$case == "General"){
+      isnotAvailableReturnZero(input$TaxRelief)
+    }
+    else{
+      MaxContrTax
+    }
+    }) 
   
   currency <- reactive(
     if(input$case == "General"){
@@ -190,6 +197,7 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  
   # calc P2 fund ----
   ContributionP2Path <- reactive({ 
     buildContributionP2Path(birthday = Birthdate(),
@@ -227,7 +235,7 @@ shinyServer(function(input, output, session) {
                      NKids = ifelse(isolate(input$NKids) >5, 5, isolate(input$NKids)),
                      churchtax = churchtax(),
                      rate_group = rate_group(),
-                     MaxContrTax = MaxContrTax,
+                     MaxContrTax = TaxRelief(),
                      tax_rates_Kanton = tax_rates_Kanton,
                      BundessteueTabelle = BundessteueTabelle,
                      RetirementAge = RetirementAge(),
@@ -334,7 +342,7 @@ shinyServer(function(input, output, session) {
                  NKids = ifelse(isolate(input$NKids) >5, 5, isolate(input$NKids)), 
                  churchtax = isolate(churchtax()),
                  rate_group = isolate(rate_group()),
-                 MaxContrTax = isolate(MaxContrTax),
+                 MaxContrTax = isolate(TaxRelief()),
                  retirementdate = isolate(Birthdate()),
                  BarGraphData = isolate(BarGraphData()),
                  TserieGraphData = isolate(TserieGraphData()),
