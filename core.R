@@ -1,5 +1,5 @@
-# #
-# Example
+# # #
+# # Example
 # birthday = "1981-08-12"
 # P3purchase = 0
 # CurrentP3 = 0
@@ -49,19 +49,19 @@
 #                              TaxRate = TaxRate),
 #             by = c("calendar", "t")) %>%
 #   mutate(Total = TotalP2 + TotalP3 + TotalTax)
-
-#
+# 
+# 
 # FotoFinish <- Road2Retirement[,c("DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax")]  %>%
 #   tail(1) %>%
 #   prop.table() %>%
 #   select_if(function(x) x != 0)
-#
+# 
 # BarGraphData <- cbind(FotoFinish, FotoFinish) %>%
 #   set_colnames(c(colnames(FotoFinish), paste0(colnames(FotoFinish), ".annotation"))) %>%
 #   mutate(contribution = "") %>%
 #   .[,order(colnames(.))]
-
-
+# 
+# 
 # ## Stacked bar chart
 # Bar2 <- gvisBarChart(BarGraphData, xvar = "contribution",
 #                      yvar= colnames(BarGraphData)[!grepl("contribution", colnames(BarGraphData))],
@@ -135,17 +135,17 @@ buildContributionP2Path <- function(birthday,
                                     rate = BVGparams$BVGMindestzinssatz,
                                     givenday = today(),
                                     RetirementAge
-                                    ){
+){
   
   #RetirementAge <- 65
   # build BVG rates from global input
   BVGRatesPath <- data.frame(years = seq(BVGcontriburionrates$lowerbound[1], BVGcontriburionrates$upperbound[nrow(BVGcontriburionrates)]),
                              BVGcontriburionrates = rep(BVGcontriburionrates$BVGcontriburionrates, 
                                                         times = BVGcontriburionrates$upperbound - BVGcontriburionrates$lowerbound + 1)
-  )
+  )%>% filter(years <= RetirementAge)
   
   # calc contributions P2 Path
-  ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge)) %>%
+  ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge = RetirementAge )) %>%
     mutate(AgePath = sapply(calendar, calcAge, birthday = birthday) %>% as.integer) %>%
     left_join(BVGRatesPath, by = c("AgePath" = "years"))
   
@@ -156,7 +156,7 @@ buildContributionP2Path <- function(birthday,
     BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
     BVGContributions = BVGpurchase + (ExpectedSalaryPath * BVGcontriburionrates)
     BVGDirect = BVGContributions +c(CurrentP2, rep(0, ncp -1))
-    t = buildt(birthday, RetirementAge)
+    t = buildt(birthday, RetirementAge = RetirementAge )
     TotalP2 = calcAnnuityAcumPath(BVGDirect, t, rate)
     ReturnP2 = TotalP2 - cumsum(BVGDirect)
     DirectP2 = cumsum(BVGDirect)
@@ -192,15 +192,15 @@ buildContributionP3path <- function(birthday,
                                     returnP3,
                                     givenday = today(),
                                     RetirementAge
-                                    ){
+){
   
   #RetirementAge <- 65
-  ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge))
+  ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge = RetirementAge ))
   ncp <- nrow(ContributionP3Path) 
   ContributionP3Path %<>% within({
     P3purchase = rep(P3purchase, ncp)
     P3ContributionPath = P3purchase + c(CurrentP3, rep(0, ncp -1))
-    t = buildt(birthday, RetirementAge)
+    t = buildt(birthday, RetirementAge = RetirementAge )
     TotalP3 = calcAnnuityAcumPath(P3ContributionPath, t, returnP3)
     ReturnP3 = TotalP3 - cumsum(P3ContributionPath)
     DirectP3 = cumsum(P3ContributionPath)
@@ -228,9 +228,9 @@ buildTaxBenefits <- function(birthday,
                              givenday = today(),
                              RetirementAge,
                              TaxRate = NULL
-                             ) {
+) {
   #RetirementAge <-65
-  TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge))
+  TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge = RetirementAge ))
   ncp <- nrow(TaxBenefitsPath) 
   TaxBenefitsPath %<>% within({
     BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
@@ -245,7 +245,7 @@ buildTaxBenefits <- function(birthday,
       TaxRatePath = rep(TaxRate, length(ExpectedSalaryPath))
     }
     TaxBenefits = calcTaxBenefit(TotalContr, TaxRatePath, MaxContrTax)
-    t = buildt(birthday, RetirementAge)
+    t = buildt(birthday, RetirementAge = RetirementAge )
     TotalTax = calcAnnuityAcumPath(TaxBenefits, t, returnP3)
     ReturnTax = TotalTax - cumsum(TaxBenefits)
     DirectTax = cumsum(TaxBenefits)
@@ -310,7 +310,11 @@ calcKantonsGemeindesteuerAvgRate <- function(Salary, PLZ, NKids, ChurchTax, Rate
   # get income argument
   monthly_salary <- Salary / 12
   salary_bins <- sort(unique(TaxRateDF$income))
-  nearest_salary <- salary_bins[findInterval(monthly_salary, salary_bins)]
+  if(monthly_salary !=0){
+    nearest_salary <- salary_bins[findInterval(monthly_salary, salary_bins)]
+  } else {
+    nearest_salary <- salary_bins[1]
+  }
   # calc tax rate
   TaxRate <- TaxRateDF %>%
     filter(income == nearest_salary) %>%
@@ -324,7 +328,11 @@ calcKantonsGemeindesteuerAvgRate <- function(Salary, PLZ, NKids, ChurchTax, Rate
 calcBundessteuerAvgRate <- function(rate_group, n_kids, income, BundessteueTabelle){
   
   Income_bins <- sort(unique(BundessteueTabelle$I))
-  nearest_salary <- Income_bins[findInterval(income, Income_bins)]
+  if(income !=0){
+    nearest_salary <- Income_bins[findInterval(income, Income_bins)]
+  } else {
+    nearest_salary <- Income_bins[1]
+  }
   Bundessteuer <- BundessteueTabelle %>%
     filter(I == nearest_salary)
   
@@ -338,6 +346,9 @@ calcBundessteuerAvgRate <- function(rate_group, n_kids, income, BundessteueTabel
     } else {
       TaxRate <- Bundessteuer$avgRateMarried
     }
+  }
+  if(is.na(TaxRate)){
+    TaxRate = 0
   }
   
   return(TaxRate)

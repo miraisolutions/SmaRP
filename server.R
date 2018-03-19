@@ -147,11 +147,17 @@ shinyServer(function(input, output, session) {
     }
   }))
   
-  Salary <- reactive({ if(input$case == "Swiss"){
-    isnotAvailableReturnZero(input$Salary)}
-    else if (input$case == "General") {
-      0}
-    })
+  Salary <- reactive({ 
+    isnotAvailableReturnZero(input$Salary)})
+    
+    # if(input$case == "Swiss"){
+    # validate(
+    #   need(input$Salary, "Please provide a non zero Salary")
+    # )
+    # input$Salary}
+    # else if (input$case == "General") {
+    #   0}
+
   
   SalaryGrowthRate <- reactive({ if(input$case == "Swiss"){
       isnotAvailableReturnZero(input$SalaryGrowthRate)}
@@ -229,7 +235,7 @@ shinyServer(function(input, output, session) {
                      P2purchase = P2purchase(), 
                      P3purchase = P3purchase(), 
                      returnP3 = returnP3(),
-                     Salary = Salary(),
+                     Salary = ifelse(input$case == "General", 0, Salary()),
                      SalaryGrowthRate = SalaryGrowthRate(),
                      postalcode = postalcode(),
                      NKids = ifelse(isolate(input$NKids) >5, 5, isolate(input$NKids)),
