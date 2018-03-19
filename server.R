@@ -255,7 +255,7 @@ shinyServer(function(input, output, session) {
   
   # Totals ----
   retirementdate <- reactive({
-    getRetirementday(Birthdate())
+    getRetirementday(Birthdate(), RetirementAge() )
   })  
   
   retirementfund <- reactive({
