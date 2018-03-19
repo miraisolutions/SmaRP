@@ -49,11 +49,28 @@ shinyServer(function(input, output, session) {
     }
     })
   
-  CurrentP3 <- reactive({ isnotAvailableReturnNULL(input$CurrentP3) })
+  CurrentP3_notZero <- reactive({ 
+    isnotAvailableReturnZero(input$CurrentP3)})
+  CurrentP3 <-reactive({
+    if (input$case == "General") {
+      validate(
+        need_not_zero(CurrentP3_notZero(), "Pillar III value")
+      )
+      CurrentP3_notZero()
+    }
+  })
+
   
-  P3purchase<- reactive({ isnotAvailableReturnNULL(input$P3purchase) })
-  
-  TaxRelief <- reactive({ isnotAvailableReturnNULL(input$TaxRelief) }) 
+  P3purchase<- reactive({ if(input$case == "Swiss"){
+    isnotAvailableReturnZero(input$P3purchase)}
+    else if (input$case == "General") {
+      validate(
+        need(input$P3purchase, "Please provide a valid for Pillar III purchase")
+      )
+      input$P3purchase
+    }})
+
+  TaxRelief <- reactive({ isnotAvailableReturnZero(input$TaxRelief) }) 
   
   currency <- reactive(
     if(input$case == "General"){
@@ -77,7 +94,7 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  NKids <- reactive({  isnotAvailableReturnNULL(input$NKids)  })
+  NKids <- reactive({  isnotAvailableReturnZero(input$NKids)  })
   
   genre <- reactive({
     if(input$case == "Swiss" & isnotAvailable(input$provideRetirementAge)){
@@ -111,16 +128,31 @@ shinyServer(function(input, output, session) {
     } else {
       "N"
     }
-    
   }))
   
-  Salary <- reactive({ isnotAvailableReturnNULL(input$Salary) })
+  Salary <- reactive({ if(input$case == "Swiss"){
+    isnotAvailableReturnZero(input$Salary)}
+    else if (input$case == "General") {
+      0}
+    })
   
-  SalaryGrowthRate <- reactive({ isnotAvailableReturnNULL(input$SalaryGrowthRate)  })
+  SalaryGrowthRate <- reactive({ if(input$case == "Swiss"){
+      isnotAvailableReturnZero(input$SalaryGrowthRate)}
+      else if (input$case == "General"){
+        0}
+      })
   
-  CurrentP2 <- reactive({ isnotAvailableReturnNULL(input$CurrentP2) })
+  CurrentP2 <- reactive({ if(input$case == "Swiss"){
+    isnotAvailableReturnZero(input$CurrentP2)}
+    else if (input$case == "General"){
+      0}
+  })
 
-  P2purchase <- reactive({ isnotAvailableReturnNULL(input$P2purchase) })
+  P2purchase <- reactive({ if(input$case == "Swiss"){
+    isnotAvailableReturnZero(input$P2purchase)}
+    else if (input$case == "General"){
+      0}
+  })
   
   TypePurchase <- reactive({
     if(input$case =="Swiss"){
@@ -137,7 +169,7 @@ shinyServer(function(input, output, session) {
   # TaxRate ----
   taxRateValue <- reactive({
     if(input$case == "General"){
-      isnotAvailableReturnNULL(input$TaxRate)
+      isnotAvailableReturnZero(input$TaxRate)
     } else if(input$case == "Swiss" & input$provideTaxRateSwiss){
       validate(
         need(input$TaxRateSwiss, "Please provided the Tax Rate")

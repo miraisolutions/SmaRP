@@ -50,12 +50,12 @@
 #             by = c("calendar", "t")) %>%
 #   mutate(Total = TotalP2 + TotalP3 + TotalTax)
 
-# 
+#
 # FotoFinish <- Road2Retirement[,c("DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax")]  %>%
 #   tail(1) %>%
 #   prop.table() %>%
 #   select_if(function(x) x != 0)
-# 
+#
 # BarGraphData <- cbind(FotoFinish, FotoFinish) %>%
 #   set_colnames(c(colnames(FotoFinish), paste0(colnames(FotoFinish), ".annotation"))) %>%
 #   mutate(contribution = "") %>%
@@ -422,11 +422,19 @@ isnotAvailable <- function(inputValue){
   }
 }
 
-isnotAvailableReturnNULL <- function(inputValue){
+isnotAvailableReturnZero <- function(inputValue){
   if(isnotAvailable(inputValue) ){
     0
   } else {
     inputValue
+  }
+}
+
+need_not_zero <- function(input, inputname) {
+  if (input == 0 | input == "" | is.null(input)) {
+    paste0("Please provide a non zero value for ",inputname)
+  } else {
+    NULL
   }
 }
 
