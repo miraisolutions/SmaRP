@@ -47,17 +47,17 @@ shinyUI(
                  fluidRow( tags$h4("Private Pension Fund"), style = "margin-left: 30px;"),
                  #infoBoxOutput("ibox",width = 0.5),
                  fluidRow(
-                 numericInput("CurrentP3", label = h5("Current assets"), value = 50000, step = 1000, min = 0),
-                 bsTooltip("CurrentP3", "Please, enter the current retirement assets in your Private Pension Fund", placement = "right", options = list(container = "body")),
-                 style = "margin-left: 30px;"),
+                   numericInput("CurrentP3", label = h5("Current assets"), value = 50000, step = 1000, min = 0),
+                   bsTooltip("CurrentP3", "Please, enter the current retirement assets in your Private Pension Fund", placement = "right", options = list(container = "body")),
+                   style = "margin-left: 30px;"),
                  fluidRow(
-                 column( 6, numericInput("P3purchase", label = h5("Annual contribution"), value = 0, step = 500, min = 0),
-                 bsTooltip("P3purchase", "Please, enter your annual contributions into your Private Pension Fund. Note that SmaRP assumes that the same contributions repeats every year until the retirement.",
-                           placement = "right", options = list(container = "body"))),
-                 column( 6, numericInput("returnP3", label = h5("Expected Return"), value = BVGMindestzinssatz, step = 0.001, min = 0, max = 0.25),
-                 bsTooltip("returnP3", "Annual expected return. Note that the return keeps constant", placement = "right", options = list(container = "body"))),
-                 style = "margin-left: 20px;")
-                ), #end of Personal Input tabPanel
+                   column( 6, numericInput("P3purchase", label = h5("Annual contribution"), value = 0, step = 500, min = 0),
+                           bsTooltip("P3purchase", "Please, enter your annual contributions into your Private Pension Fund. Note that SmaRP assumes that the same contributions repeats every year until the retirement.",
+                                     placement = "right", options = list(container = "body"))),
+                   column( 6, numericInput("returnP3", label = h5("Expected Return"), value = BVGMindestzinssatz, step = 0.001, min = 0, max = 0.25),
+                           bsTooltip("returnP3", "Annual expected return. Note that the return keeps constant", placement = "right", options = list(container = "body"))),
+                   style = "margin-left: 20px;")
+               ), #end of Personal Input tabPanel
                tabPanel(
                  title = "Particular cases", 
                  value = "Residence",
@@ -69,40 +69,40 @@ shinyUI(
                             value = "General",
                             fluidRow( tags$h4("Tax Benefits"),style = "margin-left: 20px;"),
                             fluidRow( numericInput("TaxRelief", label = h5("Maximum Tax Relief"), value = 10000, step = 100, min = 0),
-                            bsTooltip("TaxRelief", "Please, enter here the maximum amount of you can deduct from your taxable income via voluntary contributions to retirement funds.", placement = "right", options = list(container = "body")),
-                            style = "margin-left: 30px;"),
+                                      bsTooltip("TaxRelief", "Please, enter here the maximum amount of you can deduct from your taxable income via voluntary contributions to retirement funds.", placement = "right", options = list(container = "body")),
+                                      style = "margin-left: 30px;"),
                             fluidRow( numericInput("TaxRate", label = h5("Marginal Tax Rate"), value = 0.1, step = 0.01, min = 0, max = 0.9),
-                            bsTooltip("TaxRate", "Please enter here your marginal tax rate.", placement = "right", options = list(container = "body")),
-                            style = "margin-left: 30px;"),
+                                      bsTooltip("TaxRate", "Please enter here your marginal tax rate.", placement = "right", options = list(container = "body")),
+                                      style = "margin-left: 30px;"),
                             fluidRow( selectInput("currency", label = h5("Currency"), selected = "CHF", choices = currencies.list)
-                              , style = "margin-left: 30px;")#,
+                                      , style = "margin-left: 30px;")#,
                             #fluidRow( selectInput("Inputcase", id == "Inputcase", label = NULL, selected = "General", choices = list("General"="General"), width = NULL))
                    ), # end General tabPanel
                    tabPanel(title = "Swiss case",
                             value = "Swiss",
                             conditionalPanel(condition= 'input.provideTaxRateSwiss==""',
-        #                    fluidRow(tags$h4("Parameters for Tax Rate ecaluation"),style = "margin-left: 20px;"),
-                            fluidRow(column( 6, selectInput("postalcode", label = h5("Postal Code"),
-                                        choices = PLZ.list,
-                                        selected = "8001")),
-                                     column( 6, numericInput("NKids", label = h5("Number of Children"), value = 0, min = 0, max = 9),
-                                             bsTooltip("NKids", "Assumption, for more than 5 kids, an additional kid is tax neutral.", placement = "right", options = list(container = "body"))),
-                                        style = "margin-left: 20px;"),
-                            #tags$small("* If more then 5 Kids, treated as if 5"),
-                            conditionalPanel(condition= 'input.provideRetirementAge==""',
-                            fluidRow(radioButtons("genre", label = NULL, inline = TRUE,
-                                         choices = list("Male" = "M", "Female" = "F"), 
-                                         selected = "M"), style = "margin-left: 30px;")), # end conditional panel
-                            fluidRow(radioButtons("rate_group", label = NULL, inline = TRUE, 
-                                         choices = Rate_group.list, 
-                                         selected = "A"),style = "margin-left: 30px;"),
-                            #br(),
-                            fluidRow(radioButtons("churchtax", label = h5("Church affiliation"), inline = TRUE,
-                                         choices = list("Y" = "Y", "N" = "N"), 
-                                         selected = "N"),style = "margin-left: 30px;")
+                                             #                    fluidRow(tags$h4("Parameters for Tax Rate ecaluation"),style = "margin-left: 20px;"),
+                                             fluidRow(column( 6, selectInput("postalcode", label = h5("Postal Code"),
+                                                                             choices = PLZ.list,
+                                                                             selected = "8001")),
+                                                      column( 6, numericInput("NKids", label = h5("Number of Children"), value = 0, min = 0, max = 9),
+                                                              bsTooltip("NKids", "Assumption, for more than 5 kids, an additional kid is tax neutral.", placement = "right", options = list(container = "body"))),
+                                                      style = "margin-left: 20px;"),
+                                             #tags$small("* If more then 5 Kids, treated as if 5"),
+                                             conditionalPanel(condition= 'input.provideRetirementAge==""',
+                                                              fluidRow(radioButtons("genre", label = NULL, inline = TRUE,
+                                                                                    choices = list("Male" = "M", "Female" = "F"), 
+                                                                                    selected = "M"), style = "margin-left: 30px;")), # end conditional panel
+                                             fluidRow(radioButtons("rate_group", label = NULL, inline = TRUE, 
+                                                                   choices = Rate_group.list, 
+                                                                   selected = "A"),style = "margin-left: 30px;"), 
+                                             #br(),
+                                             fluidRow(radioButtons("churchtax", label = h5("Church affiliation"), inline = TRUE,
+                                                                   choices = list("Y" = "Y", "N" = "N"), 
+                                                                   selected = "N"),style = "margin-left: 30px;")
                             ), # end conditional panel
                             hr(),
-                              wellPanel(
+                            wellPanel(
                               checkboxInput("provideTaxRateSwiss", "Direct Tax Rate (optional)", FALSE),
                               uiOutput("conditionalInputSwiss"),
                               style = "margin-left: 20px;margin-right: 20px;"
@@ -111,25 +111,26 @@ shinyUI(
                             fluidRow(tags$h4("Occupational Pension Fund (BVG)"),style = "margin-left: 20px;"),
                             fluidRow(
                               column( 6,numericInput("Salary", label = h5("Current Annual Salary"), value = 100000, step = 1000, min = 0)),
-                              column( 6,numericInput("SalaryGrowthRate", label = h5("Expected salary growth rate"), value = 0.02, step = 0.001, min = 0),
-                                      bsTooltip("SalaryGrowthRate", "This explaind SalaryGrowthRate", placement = "right", options = list(container = "body"))),
-                            style = "margin-left: 20px;"),
+                              column( 6,numericInput("SalaryGrowthRate", label = h5("Expected salary growth rate"), value = 0.02, step = 0.001, min = 0, max = 0.1),
+                                      bsTooltip("SalaryGrowthRate", "Annual expected salary growth rate. Note that the return keeps constant during the full career", placement = "right", options = list(container = "body"))),
+                              style = "margin-left: 20px;"),
                             fluidRow(
-                              column( 6, numericInput("CurrentP2", label = h5("Current BVG amount"), value = 100000, step = 1000, min = 0),
-                                    bsTooltip("CurrentP2", "This explaind CurrentP2", placement = "right", options = list(container = "body"))),
+                              column( 6, numericInput("CurrentP2", label = h5("Current BVG assets"), value = 100000, step = 1000, min = 0),
+                                      bsTooltip("CurrentP2", "Please, enter the current retirement assets in your Occupational Pension Fund", placement = "right", options = list(container = "body"))),
                               column( 6, numericInput("P2purchase", label = h5("Voluntary purchases"), value = 0, step = 500, min = 0),
-                                    bsTooltip("P2purchase", "Please, enter here the voluntary purchases in annual basis", placement = "right", options = list(container = "body"))),
+                                      bsTooltip("P2purchase", "Please, enter here the voluntary purchases in annual basis", placement = "right", options = list(container = "body"))),
                               style = "margin-left: 20px;"),
                             br(),
                             fluidRow(
-                            radioButtons("TypePurchase", label = NULL, inline = TRUE,  choices = Purchase.list),
-                            bsTooltip("TypePurchase", "This explaind TypePurchase", placement = "right", options = list(container = "body")),
-                            style = "margin-left: 35px;"),
+                              radioButtons("TypePurchase", label = NULL, inline = TRUE,  choices = Purchase.list),
+                              bsTooltip("TypePurchase", "Single: one-off purchase; Annual: constant annual purchase. ", placement = "right", options = list(container = "body")),
+                              style = "margin-left: 35px;"),
                             hr(),
                             fluidRow( actionButton("refreshButton", "refresh calculation parameters"),
-                            #p("Refresh tax rate information"),
-                            verbatimTextOutput("refreshText"),
-                            style = "margin-left: 30px;")
+                                      #p("Refresh tax rate information"),
+                                      verbatimTextOutput("refreshText"),
+                                      style = "margin-left: 30px;"),
+                            br()
                    ) #  end Swiss tabPanel
                  ) # end of tabsetPanel
                ) # end of tab panel
@@ -153,8 +154,8 @@ shinyUI(
              ), # end tabsetPanel
              
              fluidRow(align="left", 
-             #Disclaimer
-             verbatimTextOutput("disclaimer")),
+                      #Disclaimer
+                      verbatimTextOutput("disclaimer")),
              # tags$head(tags$style("#Totals{
              #                      font-family:Helvetica;
              #                      color: blue;
@@ -169,8 +170,8 @@ shinyUI(
              #                      text-align: left;
              #                      }")),
              fluidRow(align="left", 
-             #Add button to download report
-             downloadButton("report", "Generate report"))
+                      #Add button to download report
+                      downloadButton("report", "Generate report"))
       ) #end second column/main panel
     ) #end of FluidRow
   ) # end of fluidPage
