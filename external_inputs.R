@@ -31,7 +31,7 @@ MaxContrTax <<- 6768
 
 
 #Currencies
-currencies.list <- list("US" ="US",
+currencies.list <- list("USD" ="USD",
                         "EUR" = "EUR",
                         "CHF" = "CHF")
 
