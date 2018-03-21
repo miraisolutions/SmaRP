@@ -20,6 +20,7 @@ library(shinyBS) # needed for the info windows
 # source core methodology and global variables
 source("core.R")
 
+options(shiny.sanitize.errors = TRUE)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
@@ -62,7 +63,12 @@ shinyServer(function(input, output, session) {
         need_not_zero(CurrentP3_notZero(), "Pillar III value")
       )
       CurrentP3_notZero()
-    } else {
+    } else if (   Inputcase() == "Swiss" & P3purchase()==0 & Salary() == 0 &  CurrentP2() == 0 & P2purchase()==0){
+      validate(
+        need_not_zero(CurrentP3_notZero(), "either Salary, Pillar II or Pillar III value")
+      )
+      CurrentP3_notZero()
+    }    else {
       CurrentP3_notZero()
     }
   })
@@ -74,6 +80,11 @@ shinyServer(function(input, output, session) {
     if (Inputcase() == "General") {
       validate(
         need_not_zero(returnP3_notzero(), "Pillar III Return")
+      )
+      returnP3_notzero()
+    } else if (   Inputcase() == "Swiss" & CurrentP3() == 0 & P3purchase()==0 & Salary() == 0 &  CurrentP2() == 0 & P2purchase()==0){
+      validate(
+        need_not_zero(returnP3_notzero(), "either Salary, Pillar II or Pillar III value")
       )
       returnP3_notzero()
     } else{
@@ -196,6 +207,17 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  
+  # output$safeError <- renderText({
+  #   if(Inputcase() == "General" & CurrentP3() == 0 & P3purchase()==0 & returnP3() == 0){
+  #     print(" Provide Private Pension Fund inputs")
+  #   }  else if (Inputcase() == "Swiss" & CurrentP3() == 0 & P3purchase()==0 & returnP3() == 0 & Salary() == 0 &  CurrentP2() == 0 & P2purchase()==0){
+  #     print(" Provide at least one of Salary, Pillar II or Pillar III inputs")
+  #   } else{
+  #     print("")
+  #   }
+  # })
+  # 
   
   # TaxRate ----
   taxRateValue <- reactive({
