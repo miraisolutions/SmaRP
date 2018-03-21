@@ -3,7 +3,7 @@ library(dplyr)
 # Global variables
 
 #Gender Bases Retirement age
-MRetirementAge <- 65 #67 because of bug T44
+MRetirementAge <- 67
 FRetirementAge <- 65
 
 # https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
@@ -37,7 +37,7 @@ currencies.list <- list("US" ="US",
 
 # https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
 BVGcontriburionrates <<- data.frame(lowerbound = c(18, 25, 35, 45, 55),
-                                    upperbound = c(24, 34, 44, 54, 65),
+                                    upperbound = c(24, 34, 44, 54, 70),
                                     BVGcontriburionrates = c(0.00, 0.07, 0.010, 0.015, 0.18))
 
 

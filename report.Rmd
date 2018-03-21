@@ -32,6 +32,7 @@ params:
       TserieGraphData: NA
       RetirementAge: NA
       TaxRate: NA
+      case: NA
 ---
 
 ```{r setup, include=FALSE}
@@ -56,6 +57,12 @@ Disclaimer: The results of this calculations do not have any legal value.
 Here goes some theory on how we compute the results
 
 ## Inputs
+
+Case:
+
+```{r, echo =FALSE}
+params$case
+```
 
 Given the Inputs:
 
@@ -94,7 +101,7 @@ params$P2purchase
 params$TypePurchase
 ```
 
-* (Tax?) Rate
+* BVGMindestzinssatz Rate
 
 ```{r, echo = FALSE}
 params$rate

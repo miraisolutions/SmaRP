@@ -74,7 +74,8 @@ shinyUI(
                             bsTooltip("TaxRate", "This explaind TaxRate", placement = "right", options = list(container = "body")),
                             style = "margin-left: 30px;"),
                             fluidRow( selectInput("currency", label ="Currency", selected = "CHF", choices = currencies.list)
-                              , style = "margin-left: 30px;")
+                              , style = "margin-left: 30px;")#,
+                            #fluidRow( selectInput("Inputcase", id == "Inputcase", label = NULL, selected = "General", choices = list("General"="General"), width = NULL))
                    ), # end General tabPanel
                    tabPanel(title = "Swiss case",
                             value = "Swiss",
