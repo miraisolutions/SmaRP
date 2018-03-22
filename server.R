@@ -25,11 +25,21 @@ options(shiny.sanitize.errors = TRUE)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
   
-  Inputcase <- reactive({
-    input$case
+  # Determine whether or not the user is a manager.
+  isAdmin <- reactive({
+    if (user() == "admin"){
+      return(TRUE)
+    } else{
+      return(FALSE)
+    }
   })
 
   # validate inputs and set defaults ----
+  
+  Inputcase <- reactive({
+    input$case
+  })
+  
   Birthdate <- reactive({
     validate(
       need(input$Birthdate, 'Birthdate is a mandatory input')
@@ -349,7 +359,8 @@ shinyServer(function(input, output, session) {
   })
   
   output$Totals <- renderText({
-    paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), currency(), sep = " ")
+    paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), currency(),
+          sep = " ")
   })
           # "Salary", Salary(), "\n",
           # "Birthdate", Birthdate(),"\n",
@@ -440,6 +451,21 @@ shinyServer(function(input, output, session) {
   output$conditionalInputSwiss <- renderUI({
     if(input$provideTaxRateSwiss){
       numericInput("TaxRateSwiss", label = h5("Direct Tax Rate (optional)"), value = 1, step = 0.1, min = 0)
+    }
+    #shinyjs::hide("genre")
+  })
+  
+  # Conditional refreshButton input ----
+  output$conditionalrefreshButton <- renderUI({
+    if(input$login){
+      actionButton("refreshButton", "refresh calculation parameters")
+    }
+    #shinyjs::hide("genre")
+  })
+  
+  output$conditionalrefreshText <- renderUI({
+    if(input$login){
+      verbatimTextOutput("refreshText")
     }
     #shinyjs::hide("genre")
   })

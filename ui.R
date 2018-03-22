@@ -126,10 +126,15 @@ shinyUI(
                               bsTooltip("TypePurchase", "Single: one-off purchase; Annual: constant annual purchase. ", placement = "right", options = list(container = "body")),
                               style = "margin-left: 35px;"),
                             hr(),
-                            fluidRow( actionButton("refreshButton", "refresh calculation parameters"),
-                                      #p("Refresh tax rate information"),
-                                      verbatimTextOutput("refreshText"),
-                                      style = "margin-left: 30px;"),
+                            fluidRow( 
+                              wellPanel(
+                                checkboxInput("login", "login as an admin", FALSE),
+                                uiOutput("conditionalrefreshButton"),
+                                uiOutput("conditionalrefreshText"),
+                                style = "margin-left: 20px;margin-right: 20px;"
+                              )
+                              #,style = "margin-left: 30px;"
+                              ),
                             br()
                    ) #  end Swiss tabPanel
                  ) # end of tabsetPanel
