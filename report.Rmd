@@ -37,9 +37,7 @@ params:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-#library(googleVis)
-library(reshape)
-library(ggplot2)
+library(googleVis)
 library(dplyr)
 library(knitr)
 library(kableExtra)
