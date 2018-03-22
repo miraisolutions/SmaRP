@@ -20,7 +20,7 @@ library(shinyBS) # needed for the info windows
 # source core methodology and global variables
 source("core.R")
 
-options(shiny.sanitize.errors = TRUE)
+# options(shiny.sanitize.errors = TRUE)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
@@ -33,7 +33,7 @@ shinyServer(function(input, output, session) {
       return(FALSE)
     }
   })
-
+  
   # validate inputs and set defaults ----
   
   Inputcase <- reactive({
@@ -45,24 +45,24 @@ shinyServer(function(input, output, session) {
       need(input$Birthdate, 'Birthdate is a mandatory input')
     )
     input$Birthdate
-    })
+  })
   
   RetirementAge <- reactive({
     if(input$provideRetirementAge){
       validate(
         need(input$RetirementAge, 'Please provide the desired retirement age')
-        )
+      )
       input$RetirementAge
     } else if(Inputcase() == "General"){
       65
-     } else {
+    } else {
       if (genre()=="M"){
         MRetirementAge
       } else {
         FRetirementAge
       }
     }
-    })
+  })
   
   CurrentP3_notZero <- reactive({ 
     isnotAvailableReturnZero(input$CurrentP3)})
@@ -82,7 +82,7 @@ shinyServer(function(input, output, session) {
       CurrentP3_notZero()
     }
   })
-
+  
   P3purchase <- reactive({isnotAvailableReturnZero(input$P3purchase)})
   
   returnP3_notzero <- reactive({isnotAvailableReturnZero(input$returnP3)})
@@ -101,7 +101,7 @@ shinyServer(function(input, output, session) {
       returnP3_notzero()
     }
   })
-
+  
   TaxRelief <- reactive({ 
     if(Inputcase() == "General"){
       isnotAvailableReturnZero(input$TaxRelief)
@@ -109,7 +109,7 @@ shinyServer(function(input, output, session) {
     else{
       MaxContrTax
     }
-    }) 
+  }) 
   
   currency <- reactive(
     if(Inputcase() == "General"){
@@ -129,7 +129,7 @@ shinyServer(function(input, output, session) {
       )
       input$postalcode
     }else{
-     8001 
+      8001 
     }
   })
   
@@ -179,27 +179,27 @@ shinyServer(function(input, output, session) {
   Salary <- reactive({ 
     #isnotAvailableReturnZero(input$Salary)})
     if(Inputcase() == "Swiss"){
-    validate(
-      need(input$Salary, "Please provide a non zero Salary")
-    )
-    input$Salary}
+      validate(
+        need(input$Salary, "Please provide a non zero Salary")
+      )
+      input$Salary}
     else if (Inputcase() == "General") {
       0}
   })
-
+  
   
   SalaryGrowthRate <- reactive({ if(Inputcase() == "Swiss"){
-      isnotAvailableReturnZero(input$SalaryGrowthRate)}
-      else if (Inputcase() == "General"){
-        0}
-      })
+    isnotAvailableReturnZero(input$SalaryGrowthRate)}
+    else if (Inputcase() == "General"){
+      0}
+  })
   
   CurrentP2 <- reactive({ if(Inputcase() == "Swiss"){
     isnotAvailableReturnZero(input$CurrentP2)}
     else if (Inputcase() == "General"){
       0}
   })
-
+  
   P2purchase <- reactive({ if(Inputcase() == "Swiss"){
     isnotAvailableReturnZero(input$P2purchase)}
     else if (Inputcase() == "General"){
@@ -255,7 +255,7 @@ shinyServer(function(input, output, session) {
                             rate = BVGMindestzinssatz,
                             givenday = today(),
                             RetirementAge = RetirementAge()
-                            )
+    )
   })
   
   # calc P3 fund ----
@@ -286,9 +286,9 @@ shinyServer(function(input, output, session) {
                      BundessteueTabelle = BundessteueTabelle,
                      RetirementAge = RetirementAge(),
                      TaxRate = taxRateValue()
-                     )
+    )
   })
-
+  
   # build main df ----
   Road2Retirement <- reactive({
     ContributionP2Path() %>%
@@ -362,26 +362,26 @@ shinyServer(function(input, output, session) {
     paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), currency(),
           sep = " ")
   })
-          # "Salary", Salary(), "\n",
-          # "Birthdate", Birthdate(),"\n",
-          # "SalaryGrowthRate", SalaryGrowthRate(),"\n",
-          # "CurrentP2", CurrentP2(),"\n",
-          # "P2purchase", P2purchase(),"\n",
-          # "TypePurchase", TypePurchase(),"\n",
-          # "P3purchase", P3purchase(), "\n",
-          # "CurrentP3", CurrentP3(), "\n",
-          # "returnP3", returnP3(),"\n",
-          # "postalcode", postalcode(),"\n",
-          # "NKids", NKids(), "\n",
-          # "churchtax", churchtax(),"\n",
-          # "rate_group", rate_group(),"\n",
-          # "TaxRelief", TaxRelief(),"\n",
-          # "retirementdate", retirementdate(),"\n",
-          # "RetirementAge", RetirementAge(),"\n",
-          # "taxRateValue", taxRateValue(),"\n",
-          # "Inputcase", Inputcase(), "\n",
-          # #"Road2Retirement", Road2Retirement(),
-          
+  # "Salary", Salary(), "\n",
+  # "Birthdate", Birthdate(),"\n",
+  # "SalaryGrowthRate", SalaryGrowthRate(),"\n",
+  # "CurrentP2", CurrentP2(),"\n",
+  # "P2purchase", P2purchase(),"\n",
+  # "TypePurchase", TypePurchase(),"\n",
+  # "P3purchase", P3purchase(), "\n",
+  # "CurrentP3", CurrentP3(), "\n",
+  # "returnP3", returnP3(),"\n",
+  # "postalcode", postalcode(),"\n",
+  # "NKids", NKids(), "\n",
+  # "churchtax", churchtax(),"\n",
+  # "rate_group", rate_group(),"\n",
+  # "TaxRelief", TaxRelief(),"\n",
+  # "retirementdate", retirementdate(),"\n",
+  # "RetirementAge", RetirementAge(),"\n",
+  # "taxRateValue", taxRateValue(),"\n",
+  # "Inputcase", Inputcase(), "\n",
+  # #"Road2Retirement", Road2Retirement(),
+  
   
   # Disclaimer ----
   output$disclaimer <- renderText({
@@ -392,47 +392,47 @@ shinyServer(function(input, output, session) {
   })
   
   # Output Report ----
-
+  
   
   #params list to be passed to the output
-  params <- list(Salary = isolate(Salary()),
-                 birthday = isolate(Birthdate()),
-                 Road2Retirement = isolate(Road2Retirement()),
-                 SalaryGrowthRate = isolate(SalaryGrowthRate()),
-                 CurrentP2 = isolate(CurrentP2()),
-                 P2purchase = isolate(P2purchase()),
-                 TypePurchase = isolate(TypePurchase()),
-                 rate = isolate(BVGMindestzinssatz),
-                 P3purchase = isolate(P3purchase()), 
-                 CurrentP3 = isolate(CurrentP3()), 
-                 returnP3 = isolate(returnP3()),
-                 postalcode = isolate(postalcode()),
-                 Kanton = isolate(returnPLZKanton(postalcode())),
-                 NKids = isolate(NKids()), #ifelse(isolate(input$NKids) >5, 5, isolate(input$NKids)), 
-                 churchtax = isolate(churchtax()),
-                 rate_group = isolate(rate_group()),
-                 MaxContrTax = isolate(TaxRelief()),
-                 retirementdate = isolate(retirementdate()),
-                 BarGraphData = isolate(BarGraphData()),
-                 TserieGraphData = isolate(TserieGraphData()),
-                 RetirementAge = isolate(RetirementAge()),
-                 TaxRate =  isolate(taxRateValue()),
-                 case = isolate(Inputcase())
+  params <- reactive(list(Salary = (Salary()),
+                          birthday = (Birthdate()),
+                          Road2Retirement = (Road2Retirement()),
+                          SalaryGrowthRate = (SalaryGrowthRate()),
+                          CurrentP2 = (CurrentP2()),
+                          P2purchase = (P2purchase()),
+                          TypePurchase = (TypePurchase()),
+                          rate = (BVGMindestzinssatz),
+                          P3purchase = (P3purchase()), 
+                          CurrentP3 = (CurrentP3()), 
+                          returnP3 = (returnP3()),
+                          postalcode = (postalcode()),
+                          Kanton = (returnPLZKanton(postalcode())),
+                          NKids = (NKids()), #ifelse((input$NKids) >5, 5, (input$NKids)), 
+                          churchtax = (churchtax()),
+                          rate_group = (rate_group()),
+                          MaxContrTax = (TaxRelief()),
+                          retirementdate = (retirementdate()),
+                          BarGraphData = (BarGraphData()),
+                          TserieGraphData = (TserieGraphData()),
+                          RetirementAge = (RetirementAge()),
+                          TaxRate =  (taxRateValue()),
+                          case = (Inputcase()))
   )
   
   #output report
-  output$report<- downloadHandler(
-    filename <- "report.pdf",
-    content <- function(file){
+  output$report <- downloadHandler(
+    filename = "report.pdf",
+    content = function(file){
       output <- rmarkdown::render(
         input = "report.Rmd",
-        output_file = filename,
+        output_file = "report.pdf",
         output_format = "pdf_document",
-#        output_format = "html_document",
-        params = params
+        #        output_format = "html_document",
+        params = params()
       )
- #     outputpdf <- webshot::webshot(output, file = "report.pdf")
-#      file.copy(outputpdf,file)
+      #     outputpdf <- webshot::webshot(output, file = "report.pdf")
+      #      file.copy(outputpdf,file)
       file.copy(output,file)
     }
   )# end of downloadHandler
