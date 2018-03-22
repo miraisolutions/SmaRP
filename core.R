@@ -16,6 +16,7 @@
 # churchtax = "N"
 # rate_group = "B"
 # TaxRate = NULL
+# rate = BVGparams$BVGMindestzinssatz
 # 
 # 
 # Road2Retirement <- buildContributionP2Path(birthday,
@@ -147,14 +148,14 @@ buildContributionP2Path <- function(birthday,
   # calc contributions P2 Path
   ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge = RetirementAge )) %>%
     mutate(AgePath = sapply(calendar, calcAge, birthday = birthday) %>% as.integer) %>%
-    left_join(BVGRatesPath, by = c("AgePath" = "years"))
+    left_join(BVGRatesPath, by = c("AgePath" = "years")) %>% mutate(BVGcontriburionrates = if_else(is.na(BVGcontriburionrates), 0, BVGcontriburionrates))
   
   ncp <- nrow(ContributionP2Path)
   
   ContributionP2Path %<>% within({
     ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
     BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
-    BVGContributions = BVGpurchase + (ExpectedSalaryPath * BVGcontriburionrates)
+    BVGContributions = if_else(is.na(BVGpurchase + (ExpectedSalaryPath * BVGcontriburionrates)), 0, BVGpurchase + (ExpectedSalaryPath * BVGcontriburionrates))
     BVGDirect = BVGContributions +c(CurrentP2, rep(0, ncp -1))
     t = buildt(birthday, RetirementAge = RetirementAge )
     TotalP2 = calcAnnuityAcumPath(BVGDirect, t, rate)
