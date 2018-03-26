@@ -148,7 +148,8 @@ buildContributionP2Path <- function(birthday,
   # calc contributions P2 Path
   ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today(), RetirementAge = RetirementAge )) %>%
     mutate(AgePath = sapply(calendar, calcAge, birthday = birthday) %>% as.integer) %>%
-    left_join(BVGRatesPath, by = c("AgePath" = "years")) %>% mutate(BVGcontriburionrates = if_else(is.na(BVGcontriburionrates), 0, BVGcontriburionrates))
+    left_join(BVGRatesPath, by = c("AgePath" = "years")) %>% 
+    mutate(BVGcontriburionrates = if_else(is.na(BVGcontriburionrates), 0, BVGcontriburionrates))
   
   ncp <- nrow(ContributionP2Path)
   

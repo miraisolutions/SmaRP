@@ -3,8 +3,8 @@ library(dplyr)
 # Global variables
 
 #Gender Bases Retirement age
-MRetirementAge <- 67
-FRetirementAge <- 65
+MRetirementAge <- 65
+FRetirementAge <- 64
 
 # https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
 # https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-62487.html
