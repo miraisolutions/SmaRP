@@ -325,7 +325,8 @@ shinyServer(function(input, output, session) {
   
   # T series plot ----
   TserieGraphData <- reactive({
-    Road2Retirement()[, c("calendar", "DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax")] %>%
+    Road2Retirement() %>% mutate(TotTax = DirectTax +ReturnTax) %>%
+      select(calendar, DirectP2, DirectP3,  ReturnP2, ReturnP3, TotTax) %>%
       .[, colSums(. != 0, na.rm = TRUE) > 0]
   })
   
@@ -341,7 +342,8 @@ shinyServer(function(input, output, session) {
   
   # bar plot -----
   FotoFinish <- reactive({
-    Road2Retirement()[,c("DirectP2", "ReturnP2", "DirectP3", "ReturnP3", "DirectTax", "ReturnTax")]  %>% 
+    Road2Retirement() %>% mutate(TotTax = DirectTax +ReturnTax) %>%
+      select(DirectP2, ReturnP2, DirectP3,ReturnP3, TotTax) %>%
       tail(1) %>%
       prop.table() %>%
       select_if(function(x) x != 0)
