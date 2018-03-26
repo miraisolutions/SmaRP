@@ -109,7 +109,8 @@ shinyUI(
                             hr(),
                             fluidRow(tags$h4("Occupational Pension Fund (BVG)"),style = "margin-left: 20px;"),
                             fluidRow(
-                              column( 6,numericInput("Salary", label = h5("Current Annual Salary"), value = 100000, step = 1000, min = 0)),
+                              column( 6,numericInput("Salary", label = h5("Current Annual Salary"), value = 100000, step = 1000, min = 0),
+                                      bsTooltip("Salary", IB$Salary, placement = "right", options = list(container = "body"))),
                               column( 6,numericInput("SalaryGrowthRate", label = h5("Expected salary growth rate"), value = 0.02, step = 0.001, min = 0, max = 0.1),
                                       bsTooltip("SalaryGrowthRate", IB$SalaryGrowthRate, placement = "right", options = list(container = "body"))),
                               style = "margin-left: 20px;"),
