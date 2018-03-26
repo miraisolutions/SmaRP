@@ -13,6 +13,6 @@ IB <- list(CurrentP3 = "Please, enter the current retirement assets in your Priv
            Salary = "Please, enter your gross salary. In case of married-double income, enter the aggregated amount.",
            SalaryGrowthRate = "Annual expected salary growth rate. Note that the return keeps constant during the full career.",
            TypePurchase = "Single: one-off purchase; Annual: constant annual purchase.",
-           rate_group = "If Married wit Double Income, please enter as inputs aggregated values."
-           
+           rate_group = "If Married wit Double Income, please enter as inputs aggregated values.",
+           P2interestRate = "Interest Rate on the Occupational Pension Fund return. If not provided, the minimum by low is used."
 ) 

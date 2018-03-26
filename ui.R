@@ -121,14 +121,16 @@ shinyUI(
                             fluidRow(
                               column( 6, numericInput("CurrentP2", label = h5("Current BVG assets"), value = 100000, step = 1000, min = 0),
                                       bsTooltip("CurrentP2", IB$CurrentP2, placement = "right", options = list(container = "body"))),
+                              column( 6, numericInput("P2interestRate", label = h5("Interest Rate (optional)"), value = BVGparams$BVGMindestzinssatz, step = 0.01, min = BVGparams$BVGMindestzinssatz),
+                                      bsTooltip("P2interestRate", IB$P2interestRate, placement = "right", options = list(container = "body"))),
+                              style = "margin-left: 20px;"),
+                            #br(),
+                            fluidRow(
                               column( 6, numericInput("P2purchase", label = h5("Voluntary purchases"), value = 0, step = 500, min = 0),
                                       bsTooltip("P2purchase", IB$P2purchase, placement = "right", options = list(container = "body"))),
+                              column( 6, radioButtons("TypePurchase", label = NULL, inline = FALSE,  choices = Purchase.list),
+                                      bsTooltip("TypePurchase", IB$TypePurchase, placement = "right", options = list(container = "body")), style = "margin-top: 20px;"),
                               style = "margin-left: 20px;"),
-                            br(),
-                            fluidRow(
-                              radioButtons("TypePurchase", label = NULL, inline = TRUE,  choices = Purchase.list),
-                              bsTooltip("TypePurchase", IB$TypePurchase, placement = "right", options = list(container = "body")),
-                              style = "margin-left: 35px;"),
                             hr(),
                             fluidRow( 
                               wellPanel(

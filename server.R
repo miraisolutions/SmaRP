@@ -204,6 +204,17 @@ shinyServer(function(input, output, session) {
       0}
   })
   
+  P2interestRate <- reactive({if (Inputcase()=="Swiss"){
+    if (isnotAvailable(input$P2interestRate)){
+      BVGparams$BVGMindestzinssatz
+    } else {
+      input$P2interestRate
+    }
+  } else{
+    0
+  }
+  })
+  
   P2purchase <- reactive({ if(Inputcase() == "Swiss"){
     isnotAvailableReturnZero(input$P2purchase)}
     else if (Inputcase() == "General"){
@@ -256,7 +267,7 @@ shinyServer(function(input, output, session) {
                             CurrentP2 = CurrentP2(), #ifelse(input$case == "General", 0, CurrentP2()),
                             P2purchase = P2purchase(),
                             TypePurchase = TypePurchase(),
-                            rate = BVGMindestzinssatz,
+                            rate = P2interestRate(),
                             givenday = today(),
                             RetirementAge = RetirementAge()
     )
@@ -308,7 +319,7 @@ shinyServer(function(input, output, session) {
     #   mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-")) 
     makeTable(Road2Retirement = Road2Retirement()
               #,currency = paste0( currency(), " ")
-              )
+    )
   }, digits = 0)
   
   
@@ -366,7 +377,7 @@ shinyServer(function(input, output, session) {
   lastSalary <- reactive({
     Road2Retirement()[, "ExpectedSalaryPath"] %>% tail(1) %>% as.integer
   })
-
+  
   percentageLastSalary <- reactive({
     if (lastSalary() != 0){
       numTimes <- retirementfund() / lastSalary() 
@@ -378,7 +389,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$Totals <- renderText({
-    paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), percentageLastSalary(), #currency(),
+    paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), percentageLastSalary(), P2interestRate(), #currency(),
           sep = " ")
   })
   # "Salary", Salary(), "\n",
@@ -414,29 +425,29 @@ shinyServer(function(input, output, session) {
   
   
   #params list to be passed to the output
-  params <- reactive(list(Salary = (Salary()),
-                          birthday = (Birthdate()),
-                          Road2Retirement = (Road2Retirement()),
-                          SalaryGrowthRate = (SalaryGrowthRate()),
-                          CurrentP2 = (CurrentP2()),
-                          P2purchase = (P2purchase()),
-                          TypePurchase = (TypePurchase()),
-                          rate = (BVGMindestzinssatz),
-                          P3purchase = (P3purchase()), 
-                          CurrentP3 = (CurrentP3()), 
-                          returnP3 = (returnP3()),
-                          postalcode = (postalcode()),
-                          Kanton = (returnPLZKanton(postalcode())),
-                          NKids = (NKids()), #ifelse((input$NKids) >5, 5, (input$NKids)), 
-                          churchtax = (churchtax()),
-                          rate_group = (rate_group()),
-                          MaxContrTax = (TaxRelief()),
-                          retirementdate = (retirementdate()),
-                          BarGraphData = (BarGraphData()),
-                          TserieGraphData = (TserieGraphData()),
-                          RetirementAge = (RetirementAge()),
-                          TaxRate =  (taxRateValue()),
-                          case = (Inputcase()))
+  params <- reactive(list(Salary = Salary(),
+                          birthday = Birthdate(),
+                          Road2Retirement = Road2Retirement(),
+                          SalaryGrowthRate = SalaryGrowthRate(),
+                          CurrentP2 = CurrentP2(),
+                          P2purchase = P2purchase(),
+                          TypePurchase = TypePurchase(),
+                          rate = P2interestRate(),
+                          P3purchase = P3purchase(), 
+                          CurrentP3 = CurrentP3(), 
+                          returnP3 = returnP3(),
+                          postalcode = postalcode(),
+                          Kanton = returnPLZKanton(postalcode()),
+                          NKids = NKids(), #ifelse((input$NKids) >5, 5, (input$NKids)), 
+                          churchtax = churchtax(),
+                          rate_group = rate_group(),
+                          MaxContrTax = TaxRelief(),
+                          retirementdate = retirementdate(),
+                          BarGraphData = BarGraphData(),
+                          TserieGraphData = TserieGraphData(),
+                          RetirementAge = RetirementAge(),
+                          TaxRate =  taxRateValue(),
+                          case = Inputcase())
   )
   
   #output report
