@@ -90,15 +90,19 @@ shinyUI(
                                              conditionalPanel(condition= 'input.provideRetirementAge==""',
                                                               fluidRow(radioButtons("genre", label = NULL, inline = TRUE,
                                                                                     choices = list("Male" = "M", "Female" = "F"), 
-                                                                                    selected = "M"), style = "margin-left: 30px;")
+                                                                                    selected = "M"),
+                                                                       style = "margin-left: 30px;")
                                                               ), # end conditional panel
                                              fluidRow(radioButtons("rate_group", label = NULL, inline = TRUE, 
                                                                    choices = Rate_group.list, 
-                                                                   selected = "A"),style = "margin-left: 30px;"), 
+                                                                   selected = "A"),
+                                                      bsTooltip("rate_group", IB$rate_group, placement = "right", options = list(container = "body")),
+                                                      style = "margin-left: 30px;"), 
                                              #br(),
                                              fluidRow(radioButtons("churchtax", label = h5("Church affiliation"), inline = TRUE,
                                                                    choices = list("Y" = "Y", "N" = "N"), 
-                                                                   selected = "N"),style = "margin-left: 30px;")
+                                                                   selected = "N"),
+                                                      style = "margin-left: 30px;")
                             ), # end conditional panel
                             hr(),
                             wellPanel(

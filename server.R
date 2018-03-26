@@ -107,7 +107,11 @@ shinyServer(function(input, output, session) {
       isnotAvailableReturnZero(input$TaxRelief)
     }
     else{
-      MaxContrTax
+      if (input$rate_group == "C"){
+        2* MaxContrTax
+      }else{
+        MaxContrTax
+      }
     }
   }) 
   
