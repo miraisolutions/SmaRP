@@ -359,8 +359,22 @@ shinyServer(function(input, output, session) {
     Road2Retirement()[, "Total"] %>% tail(1) %>% as.integer
   })
   
+  lastSalary <- reactive({
+    Road2Retirement()[, "ExpectedSalaryPath"] %>% tail(1) %>% as.integer
+  })
+
+  percentageLastSalary <- reactive({
+    if (lastSalary() != 0){
+      numTimes <- retirementfund() / lastSalary() 
+      numTimes %<>% formatC( format = "f",  digits=2)
+      paste0("which is ", numTimes, " times your last salary")
+    } else {
+      ""
+    }
+  })
+  
   output$Totals <- renderText({
-    paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), #currency(),
+    paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), percentageLastSalary(), #currency(),
           sep = " ")
   })
   # "Salary", Salary(), "\n",

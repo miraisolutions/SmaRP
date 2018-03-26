@@ -403,9 +403,9 @@ returnSteuerfuss <- function(plz){
 # printCurrency 
 #' @examples
 # printCurrency(123123.334)
-printCurrency <- function(value, currency.sym, digits=2, sep=",", decimal=".") {
+printCurrency <- function(value,  digits=2, sep=",", decimal=".") { #currency.sym ="",
   paste(
-    currency.sym,
+    #currency.sym,
     formatC(value, format = "f", big.mark = sep, digits=digits, decimal.mark=decimal),
     sep=""
   )
@@ -416,11 +416,11 @@ printCurrency <- function(value, currency.sym, digits=2, sep=",", decimal=".") {
 # makeTable 
 #' @examples
 # makeTable(Road2Retirement)
-makeTable <- function(Road2Retirement, currency){
+makeTable <- function(Road2Retirement){ #, currency=""
   moncols <- c( "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")
   TableMonetary <- Road2Retirement[, c("calendar", moncols)] %>%
     mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-"))
-  TableMonetary[, moncols] <- sapply(TableMonetary[, moncols], printCurrency, currency)
+  TableMonetary[, moncols] <- sapply(TableMonetary[, moncols], printCurrency) #, currency
   return(TableMonetary)
 }
 
