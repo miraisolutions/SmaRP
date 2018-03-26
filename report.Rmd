@@ -254,11 +254,11 @@ Contribution Rates under Pilar II defined in BVG law$^2$ (art.16)
 
 $Mandatory Contributions(t) = Pensionable salary(t) * Contribution Rate(t)$
 
-$r^3 = 1%$
+$r^3 = 1\%$
 
 $Pillar II = \sum_{t0}^T(Mandatory Contributions + Voluntary Contributions) * \exp^{r*(T-t)}$
 
-1 - AHV salary: 2350 month, 28200 year. 
+1 - AHV salary: 2350 month, 28200 year.
 2 - 831.40. Bundesgesetz über die berufliche Alters-, Hinterlassenen- und Invalidenvorsorge (Art.16)
 3 - Minimum interest rate on the retirement assets as of. 01.01.2017
 
@@ -268,7 +268,7 @@ $Pilar III =  \sum_{t0}^T(Voluntary Contributions *   \exp{r*(T-t)}$
 
 # Tax benefits
 
-$Tax = \sum_{t0}^TT(Voluntary contributions P2 + Voluntary contributions P3) *  Taxrate(t) *  \exp^{r*(T-t)}$
+$Tax = \sum_{t0}^TT(Voluntary contributions P2 + Voluntary contributions P3) *  Taxrate(t) *\exp^{r*(T-t)}$
 Taxrate(t): Marginal tax rate based on the following criteria:
 Salary$^4$, Tarif (based on civil status and family structure), number of kids under 18, church denomination flag and residence (from the postal code gets retrieved municipality and kanton).
 

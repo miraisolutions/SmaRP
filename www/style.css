@@ -36,9 +36,20 @@ h4 {
 h2 {
   font-family:Arial;
   color: #008cc3;
-  font-size: 25px;
+  font-size: 30px;
   text-align: left;
   margin-left: 20px;
+  margin-top: 30px;
+  font-weight: bold;
+}
+
+h3 {
+  font-family:Arial;
+  color: #008cc3;
+  font-size: 20px;
+  text-align: left;
+  margin-left: 20px;
+  margin-top: 10px;
   font-weight: bold;
 }
 
@@ -48,6 +59,7 @@ a {
   color:#008cc3;
   text-align: left;
   margin-left: 20px;
+  font-weight: normal;
 }
 
 small {
@@ -57,10 +69,24 @@ small {
 }
 
 .tabbable > .nav > li > a[data-value='Personal'] {background-color: white;  color:#008cc3; border-bottom: 1.1px solid #D7DBDD}
-.tabbable > .nav > li[class=active]    > a[data-value='Personal'] {background-color: #008cc3;   color:white; border-bottom: 1px solid #D7DBDD}
+.tabbable > .nav > li[class=active]    > a[data-value='Personal'] {background-color:#008cc3;   color:white; border-bottom: 1px solid #D7DBDD}
 
 .tabbable > .nav > li > a[data-value='Residence'] {background-color: white;  color:#008cc3; border-bottom: 1.1px solid #D7DBDD}
-.tabbable > .nav > li[class=active]    > a[data-value='Residence'] {background-color: #008cc3;   color:white; border-bottom: 1px solid #D7DBDD}
+.tabbable > .nav > li[class=active]    > a[data-value='Residence'] {background-color:#008cc3;   color:white; border-bottom: 1px solid #D7DBDD}
+
+.tabbable > .nav > li > a[data-value='Swiss'] {background-color: white;  color:#008cc3}
+.tabbable > .nav > li[class=active]    > a[data-value='Swiss'] {background-color:#FF9966;   color:white}
+
+.tabbable > .nav > li > a[data-value='General'] {background-color: white;  color:#008cc3}
+.tabbable > .nav > li[class=active]    > a[data-value='General'] {background-color: #FF9966;   color:white}
+
+.tabbable > .nav > li > a[data-value='Table'] {background-color: white;  color:#008cc3}
+.tabbable > .nav > li[class=active]    > a[data-value='Table'] {background-color:#FF9966;   color:white}
+
+.tabbable > .nav > li > a[data-value='Plot'] {background-color: white;  color:#008cc3}
+.tabbable > .nav > li[class=active]    > a[data-value='Plot'] {background-color: #FF9966;   color:white}
 
 .tabbable > .nav > li > a                  {background-color: white;  color:#008cc3}
 .tabbable > .nav > li[class=active]    > a {background-color: #008cc3;   color:white}
+
+

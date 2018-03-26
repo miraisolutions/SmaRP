@@ -6,6 +6,9 @@ source("external_inputs.R")
 source("helper_texts.R")
 
 
+# #FF9966 Mirai Orange
+# #008cc3 Mirai blue
+
 # UI
 shinyUI( 
   fluidPage(
@@ -18,11 +21,13 @@ shinyUI(
       titlePanel(
         fluidRow(
           column(7,
-                 fluidRow(h2("SmaRP: Smart Retirement Planning")),
-                 fluidRow(a(href="http://www.mirai-solutions.com", "mirai-solutions.com"))
+                 fluidRow(h2("SmaRP:")),
+                 fluidRow(h3("Smart Retirement Planning"))
           ), # end of first column
           column(4, 
-                 img(src='mirai.pdf', align = "right", height = 100, width = 300)), # end of second column
+                 fluidRow(img(src='mirai.pdf', align = "right", height = 100, width = 300)),
+                 fluidRow(a(href="http://www.mirai-solutions.com", "mirai-solutions.com"),align="right",style = "margin-right: 10px;" )
+                 ), # end of second column
           column(1) # empty column to have the logo no too much to the right
         ) #end of fluid row
       ), # end of title panel
@@ -150,7 +155,8 @@ shinyUI(
       column(8, 
              tabsetPanel(
                type = "pills",
-               tabPanel("Plot", 
+               tabPanel(title = "Plot", 
+                        value = "Plot", 
                         #                   hr(),
                         fluidRow(align="center", verbatimTextOutput("Totals")),
                         fluidRow(align="center", htmlOutput("plot1")),
@@ -158,7 +164,8 @@ shinyUI(
                         #fluidRow(align="center", textOutput('safeError'))
                ), # end tab Plot
                
-               tabPanel("Table", 
+               tabPanel(title = "Table", 
+                        value = "Table", 
                         htmlOutput("table")
                ) # end tab Table
                

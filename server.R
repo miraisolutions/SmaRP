@@ -336,7 +336,7 @@ shinyServer(function(input, output, session) {
       data = TserieGraphData(),
       xvar = "calendar",
       yvar = colnames(TserieGraphData()[,-1]),
-      options = list(width = 700, height = 400, isStacked = TRUE, legend = "bottom")
+      options = list(width = 800, height = 400, isStacked = TRUE, legend = "bottom")
     ) 
   })
   
@@ -363,7 +363,7 @@ shinyServer(function(input, output, session) {
       data = BarGraphData(),
       xvar = "contribution",
       yvar= colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
-      options = list(width = 500, height = 130, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
+      options = list(width = 600, height = 130, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
     )
   })
   
@@ -391,7 +391,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$Totals <- renderText({
-    paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), percentageLastSalary(), P2interestRate(), #currency(),
+    paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), percentageLastSalary(),#currency(),
           sep = " ")
   })
   # "Salary", Salary(), "\n",
