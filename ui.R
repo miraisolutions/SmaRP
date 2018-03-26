@@ -73,9 +73,9 @@ shinyUI(
                                       style = "margin-left: 30px;"),
                             fluidRow( numericInput("TaxRate", label = h5("Marginal Tax Rate"), value = 0.1, step = 0.01, min = 0, max = 0.9),
                                       bsTooltip("TaxRate", IB$TaxRate, placement = "right", options = list(container = "body")),
-                                      style = "margin-left: 30px;"),
-                            fluidRow( selectInput("currency", label = h5("Currency"), selected = "CHF", choices = currencies.list)
-                                      , style = "margin-left: 30px;")
+                                      style = "margin-left: 30px;")
+                            #,fluidRow( selectInput("currency", label = h5("Currency"), selected = "CHF", choices = currencies.list)
+                            #          , style = "margin-left: 30px;")
                    ), # end General tabPanel
                    tabPanel(title = "Swiss case",
                             value = "Swiss",

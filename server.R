@@ -111,16 +111,16 @@ shinyServer(function(input, output, session) {
     }
   }) 
   
-  currency <- reactive(
-    if(Inputcase() == "General"){
-      validate(
-        need(input$currency, "Please provide a valid currency")
-      )
-      input$currency
-    } else{
-      "CHF"
-    }
-  )
+  # currency <- reactive(
+  #   if(Inputcase() == "General"){
+  #     validate(
+  #       need(input$currency, "Please provide a valid currency")
+  #     )
+  #     input$currency
+  #   } else{
+  #     "CHF"
+  #   }
+  # )
   
   postalcode <- reactive({
     if(Inputcase() == "Swiss" & isnotAvailable(input$provideTaxRateSwiss)){
@@ -302,8 +302,9 @@ shinyServer(function(input, output, session) {
   output$table <- renderTable({
     # Road2Retirement()[, c("calendar", "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")] %>%
     #   mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-")) 
-    makeTable(Road2Retirement = Road2Retirement(),
-              currency = paste0( currency(), " "))
+    makeTable(Road2Retirement = Road2Retirement()
+              #,currency = paste0( currency(), " ")
+              )
   }, digits = 0)
   
   
@@ -359,7 +360,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$Totals <- renderText({
-    paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), currency(),
+    paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), #currency(),
           sep = " ")
   })
   # "Salary", Salary(), "\n",
