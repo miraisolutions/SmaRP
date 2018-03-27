@@ -14,6 +14,8 @@ source("helper_texts.R")
 # UI
 shinyUI( 
   fluidPage(
+    # add "title" tag within the head of the html page
+    titlePanel(title = NULL, windowTitle = "SmaRP: Smart Retirement Planning"),
     #themeSelector(),
     theme = "style.css",
     fluidRow(
