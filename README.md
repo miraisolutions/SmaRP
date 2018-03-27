@@ -16,6 +16,28 @@ The app is structured as follow:
 docker build -f Dockerfile -t mirai/smarp:latest .
 ```
 
+### Push Docker image to the Google Container Registry
+
+- Tag your image by running the following Docker command:
+
+```
+docker tag <image-id> eu.gcr.io/mirai-sbb/smarp:latest
+```
+
+- Then, push the image to Container Registry:
+
+```
+gcloud docker -- push eu.gcr.io/mirai-sbb/smarp:latest
+```
+
+### Pull Docker image from the Google Container Registry
+
+To pull from the Google Container Registry, run the following command:
+
+```
+gcloud docker -- pull eu.gcr.io/mirai-sbb/smarp:latest
+```
+
 ### Run Docker container (locally)
 
 ```
