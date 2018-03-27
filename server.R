@@ -398,7 +398,9 @@ shinyServer(function(input, output, session) {
   })
   
   output$Totals <- renderText({
-    paste("Total retirement fund as of", retirementdate(), "is", retirementfund(), percentageLastSalary(),#currency(),
+    paste("Total retirement fund as of", retirementdate(), "is",
+          formatC(retirementfund(), big.mark="'"), percentageLastSalary(),
+          #currency(),
           sep = " ")
   })
   # "Salary", Salary(), "\n",
@@ -425,9 +427,9 @@ shinyServer(function(input, output, session) {
   # Disclaimer ----
   output$disclaimer <- renderText({
     paste("Disclaimer:",
-          "The results of this calculations do not have any legal value.",
-          "To check the details of the calculations, parameters and assumptions, please, download the report.",
-          sep="\n")
+          "The results of these calculations do not have any legal value.",
+          "To check the details of the calculations, parameters and assumptions, please download the report.",
+          sep = "\n")
   })
   
   # Output Report ----
