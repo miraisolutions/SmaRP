@@ -325,9 +325,12 @@ shinyServer(function(input, output, session) {
   
   # T series plot ----
   TserieGraphData <- reactive({
-    Road2Retirement() %>% mutate(TotTax = DirectTax +ReturnTax) %>%
-      select(calendar, DirectP2, DirectP3,  ReturnP2, ReturnP3, TotTax) %>%
-      .[, colSums(. != 0, na.rm = TRUE) > 0]
+    Road2Retirement() %>% 
+      mutate(Tax = DirectTax + ReturnTax) %>%
+      mutate(P2 = DirectP2 + ReturnP2) %>%
+      mutate(P3 = DirectP3 + ReturnP3) %>%
+      select(calendar, P2, P3, Tax) #%>%
+      #.[, colSums(. != 0, na.rm = TRUE) > 0]
   })
   
   output$plot1 <- renderGvis({
@@ -336,14 +339,17 @@ shinyServer(function(input, output, session) {
       data = TserieGraphData(),
       xvar = "calendar",
       yvar = colnames(TserieGraphData()[,-1]),
-      options = list(width = 800, height = 400, isStacked = TRUE, legend = "bottom")
+      options = list(width = 800, height = 400, isStacked = TRUE, legend = "bottom", colors="['#008cc3', '#FF9966', '#13991c']")
     ) 
   })
   
   # bar plot -----
   FotoFinish <- reactive({
-    Road2Retirement() %>% mutate(TotTax = DirectTax +ReturnTax) %>%
-      select(DirectP2, ReturnP2, DirectP3,ReturnP3, TotTax) %>%
+    Road2Retirement() %>% 
+      mutate(Tax = DirectTax + ReturnTax) %>%
+      mutate(P2 = DirectP2 + ReturnP2) %>%
+      mutate(P3 = DirectP3 + ReturnP3) %>%
+      select(P2, P3, Tax) %>%
       tail(1) %>%
       prop.table() %>%
       select_if(function(x) x != 0)
@@ -363,7 +369,8 @@ shinyServer(function(input, output, session) {
       data = BarGraphData(),
       xvar = "contribution",
       yvar= colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
-      options = list(width = 600, height = 130, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
+      options = list(width = 600, height = 130, isStacked = TRUE, vAxes = "[{minValue:0}]", 
+                     legend = "none", colors="['#008cc3', '#FF9966', '#13991c']", opacity = 0.3)
     )
   })
   

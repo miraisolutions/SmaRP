@@ -165,7 +165,7 @@ shinyUI(
                         #                   hr(),
                         fluidRow(align="center", verbatimTextOutput("Totals")),
                         fluidRow(align="center", htmlOutput("plot1")),
-                        fluidRow(align="center", htmlOutput("plot2"))#,
+                        fluidRow(align="center", htmlOutput("plot2"), style = "margin-left: 60px;")#,
                         #fluidRow(align="center", textOutput('safeError'))
                ), # end tab Plot
                
