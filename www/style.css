@@ -2,6 +2,14 @@ body {
   background-color: #fff;
 }
 
+#head1 {
+  background-color: #009edb;
+  background-image: url("illu-header-data.png");
+  background-repeat: repeat-x;
+  background-position: center center;
+  background-size: cover;
+}
+
 hr {border-top: 1px solid #000000;}
 
 h5 {
@@ -35,21 +43,21 @@ h4 {
                                   
 h2 {
   font-family:Arial;
-  color: #008cc3;
+  color: #ea8b5b;
   font-size: 30px;
   text-align: left;
-  margin-left: 20px;
-  margin-top: 30px;
+  margin-left: 40px;
+  margin-top: 10px;
   font-weight: bold;
 }
 
 h3 {
   font-family:Arial;
-  color: #008cc3;
-  font-size: 20px;
+  color: #000000;
+  font-size: 18px;
   text-align: left;
-  margin-left: 20px;
-  margin-top: 10px;
+  margin-left: 40px;
+  margin-top: 0;
   font-weight: bold;
 }
 

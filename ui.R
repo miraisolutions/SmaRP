@@ -8,6 +8,8 @@ source("helper_texts.R")
 
 # #FF9966 Mirai Orange
 # #008cc3 Mirai blue
+# #189bce background header
+# #ea8b5b title orange
 
 # UI
 shinyUI( 
@@ -18,20 +20,23 @@ shinyUI(
       # tags$head(
       #   tags$style(HTML("hr {border-top: 1px solid #000000;}"))
       # ),
-      titlePanel(
+      fluidRow(img(src='mirai.png', align = "right",  height = "10%", width = "10%"), style = "margin-top: 10px;margin-right: 30px;margin-bottom: 10px;"),
+      #titlePanel(
         fluidRow(
+          id="head1",
           column(7,
                  fluidRow(h2("SmaRP:")),
                  fluidRow(h3("Smart Retirement Planning"))
           ), # end of first column
-          column(4, 
-                 fluidRow(img(src='mirai.pdf', align = "right", height = 100, width = 300)),
-                 fluidRow(a(href="http://www.mirai-solutions.com", "mirai-solutions.com"),align="right",style = "margin-right: 10px;" )
-                 ), # end of second column
-          column(1) # empty column to have the logo no too much to the right
+          # column(4, 
+          #        fluidRow(img(src='mirai.png', align = "right",  height = "70%", width = "70%"), style = "margin-top: 20px;")#, height = 100, width = 300
+          #        #fluidRow(a(href="http://www.mirai-solutions.com", "mirai-solutions.com"),align="right",style = "margin-right: 10px;" )
+          #        ), # end of second column
+          # column(1) # empty column to have the logo no too much to the right
+          style = "margin: 10px;" 
         ) #end of fluid row
-      ), # end of title panel
-      hr()
+      #)#, # end of title panel
+      #hr()
     ), #end of FluidRow
     fluidRow(
       column(4,
@@ -191,6 +196,8 @@ shinyUI(
                       #Add button to download report
                       downloadButton("report", "Generate report"))
       ) #end second column/main panel
-    ) #end of FluidRow
+    ), #end of FluidRow
+    hr(),
+    fluidRow(a(href="http://www.mirai-solutions.com", "mirai-solutions.com"),align="right",style = "margin-right: 10px; margin-bottom: 10px;" )
   ) # end of fluidPage
 ) #end of shinyUI
