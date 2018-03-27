@@ -268,7 +268,7 @@ shinyServer(function(input, output, session) {
                             P2purchase = P2purchase(),
                             TypePurchase = TypePurchase(),
                             rate = P2interestRate(),
-                            givenday = today(),
+                            givenday = today("UTC"),
                             RetirementAge = RetirementAge()
     )
   })
