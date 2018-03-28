@@ -26,7 +26,11 @@ shinyUI(
       #titlePanel(
         fluidRow(
           id="head1",
-          column(7,
+          column(1, 
+                 fluidRow(),
+                 fluidRow(img(src='SmaRPStiker.png',  height = "110%", width = "110%"), style="margin:10px;")
+                 ),
+          column(6,
                  fluidRow(h2("SmaRP:")),
                  fluidRow(h3("Smart Retirement Planning"))
           ), # end of first column
