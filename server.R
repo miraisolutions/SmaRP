@@ -326,10 +326,10 @@ shinyServer(function(input, output, session) {
   # T series plot ----
   TserieGraphData <- reactive({
       Road2Retirement() %>% 
-      mutate(Tax = DirectTax + ReturnTax) %>%
-      mutate(P2 = DirectP2 + ReturnP2) %>%
-      mutate(P3 = DirectP3 + ReturnP3) %>%
-      select(calendar, P2, P3, Tax) %>%
+      mutate(TaxBenefits = DirectTax + ReturnTax) %>%
+      mutate(OccupationalPension = DirectP2 + ReturnP2) %>%
+      mutate(PrivatePension = DirectP3 + ReturnP3) %>%
+      select(calendar, OccupationalPension, PrivatePension, TaxBenefits) %>%
       .[,colSums(. != 0, na.rm = TRUE) > 0]
   })
   
@@ -346,10 +346,10 @@ shinyServer(function(input, output, session) {
   # bar plot -----
   FotoFinish <- reactive({
     Road2Retirement() %>% 
-      mutate(Tax = DirectTax + ReturnTax) %>%
-      mutate(P2 = DirectP2 + ReturnP2) %>%
-      mutate(P3 = DirectP3 + ReturnP3) %>%
-      select(P2, P3, Tax) %>%
+      mutate(TaxBenefits = DirectTax + ReturnTax) %>%
+      mutate(OccupationalPension = DirectP2 + ReturnP2) %>%
+      mutate(PrivatePension = DirectP3 + ReturnP3) %>%
+      select(OccupationalPension, PrivatePension, TaxBenefits) %>%
       tail(1) %>%
       prop.table() %>%
       select_if(function(x) x != 0)
