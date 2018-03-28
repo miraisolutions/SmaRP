@@ -47,6 +47,8 @@ library(pander)
 
 SmaRP has been designed and developed by [Mirai Solutions GmbH](www.mirai-solutions.com) to support users in an educated decision-making process towards their retirement.
 
+The SmaRP code is available on [GitHub](https://github.com/miraisolutions/swissretire.git).
+
 # Assumptions and limitations
 
 * SmarP is originally based on the Swiss retirement system. Most of the functionalities are general, but the basic configuration and parameters are specifics of Switzerland.
