@@ -200,6 +200,10 @@ shinyUI(
       ) #end second column/main panel
     ), #end of FluidRow
     hr(),
-    fluidRow(a(href="http://www.mirai-solutions.com", "mirai-solutions.com"),align="right",style = "margin-right: 10px; margin-bottom: 10px;" )
+    fluidRow(
+      column(9, a(href="https://github.com/miraisolutions/swissretire.git",icon("github-square", "fa-2x"))),
+      column(3, a(href="http://www.mirai-solutions.com", img(src='mirai.png', align = "right",  height = "20%", width = "40%")), align="right" )
+      ,style = " margin-bottom: 10px;" 
+      )
   ) # end of fluidPage
 ) #end of shinyUI
