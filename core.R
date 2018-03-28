@@ -412,7 +412,7 @@ printCurrency <- function(value,  digits=2, sep=",", decimal=".") { #currency.sy
 }
 
 
-# Make atable -------------------------------------------------------------
+# Make table -------------------------------------------------------------
 # makeTable 
 #' @examples
 # makeTable(Road2Retirement)
