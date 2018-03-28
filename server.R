@@ -297,7 +297,7 @@ shinyServer(function(input, output, session) {
                      churchtax = churchtax(),
                      rate_group = rate_group(),
                      MaxContrTax = TaxRelief(),
-                     tax_rates_Kanton = tax_rates_Kanton,
+                     tax_rates_Kanton = tax_rates_Kanton_list,
                      BundessteueTabelle = BundessteueTabelle,
                      RetirementAge = RetirementAge(),
                      TaxRate = taxRateValue()

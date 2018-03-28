@@ -74,7 +74,16 @@ Purchase.list <- list("Single Purchase" = "SingleP2",
 PLZGemeinden <- readRDS("data/PLZGemeinden.rds")
 PLZ.list <- setNames(PLZGemeinden$PLZ, PLZGemeinden$PLZ)
 
-tax_rates_Kanton <- readRDS("data/df_tax_rates_used.rds")
+# kantons <- unique(PLZGemeinden$Kanton)
+# tax_rates_Kanton_list <- list()
+# for (k in kantons){
+#   tax_rates_Kanton_list[[k]]<-  tax_rates_Kanton[tax_rates_Kanton$canton==k,]
+# }
+# saveRDS(tax_rates_Kanton_list, "data/tax_rates_Kanton_list.rds")
+# 
+# tax_rates_Kanton <- readRDS("data/df_tax_rates_used.rds")
+
+tax_rates_Kanton_list <- readRDS("data/tax_rates_Kanton_list.rds")
 
 BundessteueTabelle <- data.frame(I = seq(0, 895900, 100)) %>%
   mutate(mgRateSingle = ifelse(I <= 17800, 0,

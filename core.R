@@ -44,7 +44,7 @@
 #                              churchtax,
 #                              rate_group,
 #                              MaxContrTax,
-#                              tax_rates_Kanton,
+#                              tax_rates_Kanton_list,
 #                              BundessteueTabelle,
 #                              RetirementAge= RetirementAge,
 #                              TaxRate = TaxRate),
@@ -216,7 +216,7 @@ buildContributionP3path <- function(birthday,
 
 #' @importFrom dplyr select
 #' @examples
-# buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3, Salary, SalaryGrowthRate, postalcode, NKids, churchtax, rate_group, MaxContrTax, tax_rates_Kanton, BundessteueTabelle, givenday = today("UTC"))
+# buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3, Salary, SalaryGrowthRate, postalcode, NKids, churchtax, rate_group, MaxContrTax, tax_rates_Kanton_list, BundessteueTabelle, givenday = today("UTC"))
 buildTaxBenefits <- function(birthday,
                              TypePurchase,
                              P2purchase,
@@ -229,7 +229,7 @@ buildTaxBenefits <- function(birthday,
                              churchtax,
                              rate_group,
                              MaxContrTax,
-                             tax_rates_Kanton, 
+                             tax_rates_Kanton_list, 
                              BundessteueTabelle,
                              givenday = today("UTC"),
                              RetirementAge,
@@ -245,7 +245,7 @@ buildTaxBenefits <- function(birthday,
     ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
     
     if(is.null(TaxRate)){
-      TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, postalcode, NKids, churchtax, rate_group, tax_rates_Kanton, BundessteueTabelle)
+      TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, postalcode, NKids, churchtax, rate_group, tax_rates_Kanton_list, BundessteueTabelle)
       #    TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, Kanton, Tariff, NKids)
     } else {
       TaxRatePath = rep(TaxRate, length(ExpectedSalaryPath))
@@ -291,10 +291,10 @@ calcAnnuityAcumPath <- function(contributions, t, rate){
 
 
 # getTaxRate_new(123456, PLZ = 8400, NKids = 1, ChurchTax = "N", RateGroup = "A", tax_rates_Kanton, BundessteueTabelle)
-getTaxRate <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton, BundessteueTabelle){  
+getTaxRate <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton_list, BundessteueTabelle){  
   
   # Step 1: Kantonssteuer & Gemeindesteuer
-  TaxRateKG <- calcKantonsGemeindesteuerAvgRate(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton)
+  TaxRateKG <- calcKantonsGemeindesteuerAvgRate(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton_list)
   
   # Step 2: Bundessteuer
   TaxRateB <- calcBundessteuerAvgRate(RateGroup, NKids, Salary, BundessteueTabelle)
@@ -306,11 +306,15 @@ getTaxRate <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanto
 }
 
 # calcKantonsGemeindesteuerAvgRate(123456, PLZ = 8400, NKids = 1, ChurchTax = "N", RateGroup = "A", tax_rates_Kanton)
-calcKantonsGemeindesteuerAvgRate <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton) {
+calcKantonsGemeindesteuerAvgRate <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton_list) {
   
-  TaxRateDF <- tax_rates_Kanton %>%
-    filter(canton == returnPLZKanton(PLZ) &
-             rate_group == RateGroup &
+  # TaxRateDF <- tax_rates_Kanton %>%
+  #   filter(canton == returnPLZKanton(PLZ) &
+  #            rate_group == RateGroup &
+  #            n_kids == NKids &
+  #            churchtax == ChurchTax)
+  TaxRateDF <- tax_rates_Kanton_list[[returnPLZKanton(PLZ)]] %>%
+    filter(  rate_group == RateGroup &
              n_kids == NKids &
              churchtax == ChurchTax)
   # get income argument
