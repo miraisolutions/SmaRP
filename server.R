@@ -325,12 +325,12 @@ shinyServer(function(input, output, session) {
   
   # T series plot ----
   TserieGraphData <- reactive({
-    Road2Retirement() %>% 
+      Road2Retirement() %>% 
       mutate(Tax = DirectTax + ReturnTax) %>%
       mutate(P2 = DirectP2 + ReturnP2) %>%
       mutate(P3 = DirectP3 + ReturnP3) %>%
-      select(calendar, P2, P3, Tax) #%>%
-      #.[, colSums(. != 0, na.rm = TRUE) > 0]
+      select(calendar, P2, P3, Tax) %>%
+      .[,colSums(. != 0, na.rm = TRUE) > 0]
   })
   
   output$plot1 <- renderGvis({
@@ -338,8 +338,8 @@ shinyServer(function(input, output, session) {
       chartid = "plot1",
       data = TserieGraphData(),
       xvar = "calendar",
-      yvar = colnames(TserieGraphData()[,-1]),
-      options = list(width = 800, height = 400, isStacked = TRUE, legend = "bottom", colors="['#008cc3', '#FF9966', '#13991c']")
+      yvar = colnames(TserieGraphData())[which(colnames(TserieGraphData())!="calendar")],
+      options = list(width = 800, height = 400, isStacked = ifelse(length(colnames(TserieGraphData()))>2, TRUE, FALSE), legend = "bottom", colors="['#008cc3', '#FF9966', '#13991c']")
     ) 
   })
   

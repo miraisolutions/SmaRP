@@ -52,10 +52,14 @@
 #   mutate(Total = TotalP2 + TotalP3 + TotalTax)
 # 
 # 
-# FotoFinish <- Road2Retirement[,c("DirectP2", "DirectP3",  "DirectTax", "ReturnP2", "ReturnP3", "ReturnTax")]  %>%
-#   tail(1) %>%
-#   prop.table() %>%
-#   select_if(function(x) x != 0)
+# FotoFinish <- Road2Retirement %>%
+#           mutate(Tax = DirectTax + ReturnTax) %>%
+#           mutate(P2 = DirectP2 + ReturnP2) %>%
+#           mutate(P3 = DirectP3 + ReturnP3) %>%
+#           select(P2, P3, Tax) %>%
+#           tail(1) %>%
+#           prop.table() #%>%
+#           #select_if(function(x) x != 0)
 # 
 # BarGraphData <- cbind(FotoFinish, FotoFinish) %>%
 #   set_colnames(c(colnames(FotoFinish), paste0(colnames(FotoFinish), ".annotation"))) %>%
