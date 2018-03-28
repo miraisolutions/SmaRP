@@ -339,7 +339,7 @@ shinyServer(function(input, output, session) {
       data = TserieGraphData(),
       xvar = "calendar",
       yvar = colnames(TserieGraphData())[which(colnames(TserieGraphData())!="calendar")],
-      options = list(width = 800, height = 400, isStacked = ifelse(length(colnames(TserieGraphData()))>2, TRUE, FALSE), legend = "bottom", colors="['#008cc3', '#FF9966', '#13991c']")
+      options = list(width = 800, height = 400, isStacked = TRUE, legend = "bottom", colors="['#008cc3', '#FF9966', '#13991c']")
     ) 
   })
   

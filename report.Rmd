@@ -195,18 +195,22 @@ if(is.null(params$TaxRate)){
 BarPlot
 
 ```{r, echo = FALSE}
-plot2 <- gvisBarChart( data = params$BarGraphData,
-             xvar = "contribution",
-             yvar= colnames(params$BarGraphData)[!grepl("contribution", colnames(params$BarGraphData))],
-             options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", legend = "none")
+plot2 <-  gvisBarChart(
+      chartid = "plot2",
+      data = params$BarGraphData,
+      xvar = "contribution",
+      yvar= colnames(params$BarGraphData)[!grepl("contribution", colnames(params$BarGraphData))],
+      options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", 
+                     legend = "none", colors="['#008cc3', '#FF9966', '#13991c']", opacity = 0.3)
     )
 
- plot1 <- gvisAreaChart(
-       data = TserieGraphData(),
-       xvar = "calendar",
-       yvar = colnames(TserieGraphData()[,-1]),
-       options = list(width = 1200, height = 500, isStacked = TRUE, legend = "bottom")
-     )
+ plot1 <-   gvisAreaChart(
+      chartid = "plot1",
+      data = params$TserieGraphData,
+      xvar = "calendar",
+      yvar = colnames(params$TserieGraphData)[which(colnames(params$TserieGraphData)!="calendar")],
+      options = list(wwidth = 1200, height = 500, isStacked = TRUE, legend = "bottom", colors="['#008cc3', '#FF9966', '#13991c']")
+    ) 
 ```
 
 ```{r, echo = FALSE}
