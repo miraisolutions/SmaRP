@@ -2,7 +2,7 @@
 PLZGemeinden <- readRDS("inst/application/data/PLZGemeinden.rds")
 kantons <- unique(PLZGemeinden$Kanton)
 
-#Federal tabelle
+# Federal tabelle -----
 BundessteueTabelle <- data.frame(I = seq(0, 1000000, 100)) %>%
   mutate(mgRateSingle = ifelse(I <= 17800, 0,
                                ifelse(I > 17800 & I <= 31600, 0.77, 
@@ -37,5 +37,61 @@ for (k in kantons){
    tax_rates_Kanton_list[[k]]<-  BundessteueTabelle
 }
 saveRDS(tax_rates_Kanton_list, "inst/application/data/tax_rates_Kanton_list.rds")
+
+require(pdftools)
+require(magrittr)
+require(dplyr)
+options(stringsAsFactors = FALSE)
+
+
+# SG ----
+
+# >> Kanton ----
+URL_SG_KantonTaxRates <- "https://www.steuern.sg.ch/home/sachthemen/eservices/steuerfuesse_im_kanton/_jcr_content/Par/downloadlist/DownloadListPar/download.ocFile/Stg%2010-(Splitting-)%20gerundet_f%C3%BCr_Internet%20V2.pdf"
+
+download.file(URL_SG_KantonTaxRates, "inst//application//data//taxdata//SG_KantonTaxRates.pdf", mode="wb")
+
+
+.tmpstep <- function(x) {
+  res <- sapply(strsplit(x, "\\s+")[1:50], "[", c(1, 3, 5)) %>%
+    t() %>% 
+    as.data.frame() %>%
+    magrittr::set_colnames(c("I", "mgRateSingle", "mgRateMarried"))
+  return(res)
+}
+
+SG_KantonTaxRates <- pdftools::pdf_text("inst//application//data//taxdata//SG_KantonTaxRates.pdf") %>%
+  strsplit("\n") %>%
+  lapply(function(x) {
+    x[!grepl("[a-z]", x)] %>%
+      trimws("left") %>%
+      .tmpstep()
+  }) %>% 
+  .[-1] %>%
+  dplyr::bind_rows() %>%
+  dplyr::mutate(I = gsub("'", "", I) %>% as.numeric(),
+                mgRateSingle = gsub("%", "", mgRateSingle) %>% as.numeric(),
+                mgRateMarried = gsub("%", "", mgRateMarried) %>% as.numeric())
+
+tailSG <- tail(SG_KantonTaxRates, 1)
+
+SG <- data.frame(I = seq(0, 1E6, 100)) %>%
+  dplyr::left_join(SG_KantonTaxRates, by = "I") %>%
+  dplyr::mutate(mgRateSingle = ifelse(I > tailSG$I, tailSG$mgRateSingle, mgRateSingle),
+                mgRateMarried = ifelse(I > tailSG$I, tailSG$mgRateMarried, mgRateMarried),
+                mgRateSingle = ifelse(is.na(mgRateSingle), 0 , mgRateSingle),
+                mgRateMarried = ifelse(is.na(mgRateMarried), 0 , mgRateMarried),
+                taxAmountSingle = cumsum(mgRateSingle),
+                taxAmountMarried = cumsum(mgRateMarried))
+
+tail(SG)
+
+# >> Gemeinde ----
+
+URL_SG_GemeindeTaxRates <- "https://www.steuern.sg.ch/home/sachthemen/eservices/steuerfuesse_im_kanton/_jcr_content/Par/downloadlist_0/DownloadListPar/download_1920277742.ocFile/Steuerf%C3%BCsse%202017.pdf"
+download.file(URL_SG_GemeindeTaxRates, "inst//application//data//taxdata//SG_KantonTaxRates.pdf", mode="wb")
+
+SG_GemeindeTaxRates <- pdftools::pdf_text("inst//application//data//taxdata//SG_GemeindeTaxRates.pdf") %>%
+  strsplit("\n")
 
 
