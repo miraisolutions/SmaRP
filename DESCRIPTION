@@ -1,0 +1,22 @@
+Package: SmaRP
+Title: SmaRP: Smart Retirement Planning
+Version: 0.0.0.9000
+Authors@R: person("Francesca", "Vitalini", email = "francesca.vitalini@mirai-solutions.com", role = c("aut", "cre"))
+Description: Shiny App to calculate total pension fund.
+Depends: R (>= 3.4.3)
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Imports:
+    dplyr,
+    googleVis,
+    kableExtra,
+    lubridate,
+    magrittr,
+    pander,
+    rmarkdown,
+    shiny,
+    shinyBS,
+    shinythemes,
+    webshot
