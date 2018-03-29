@@ -208,7 +208,7 @@ shinyServer(function(input, output, session) {
     if (isnotAvailable(input$P2interestRate)){
       BVGparams$BVGMindestzinssatz
     } else {
-      input$P2interestRate
+      input$P2interestRate/100
     }
   } else{
     0

@@ -137,7 +137,7 @@ shinyUI(
                             fluidRow(
                               column( 6, numericInput("CurrentP2", label = h5("Current BVG assets"), value = 100000, step = 1000, min = 0),
                                       bsTooltip("CurrentP2", IB$CurrentP2, placement = "right", options = list(container = "body"))),
-                              column( 6, numericInput("P2interestRate", label = h5("Interest Rate (optional)"), value = BVGparams$BVGMindestzinssatz, step = 0.01, min = BVGparams$BVGMindestzinssatz),
+                              column( 6, numericInput("P2interestRate", label = h5("Interest Rate % (optional)"), value = 100*BVGparams$BVGMindestzinssatz, step = 1, min = 100*BVGparams$BVGMindestzinssatz, max = 100),
                                       bsTooltip("P2interestRate", IB$P2interestRate, placement = "right", options = list(container = "body"))),
                               style = "margin-left: 20px;"),
                             #br(),
