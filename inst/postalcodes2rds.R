@@ -11,8 +11,6 @@ PLZGemeinden <- XLConnect::readWorksheetFromFile(file = fileName, sheet = "PLZ6"
   dplyr::select(c(PLZ4, KTKZ, GDENR, GDENAMK)) %>%
   dplyr::rename("PLZ" = "PLZ4", "GDENAME" = "GDENAMK", "Kanton" = "KTKZ")
 
-#saveRDS(PLZGemeinden, "data/PLZGemeinden.rds")
-
 # Define dummy table with Steuernfuesse per Kanton ------------------------------
 
 # Assumptions:
@@ -67,4 +65,4 @@ GemeindeFactorTabelle[GemeindeFactorTabelle$Kanton=="JU", Factorcols] <- c(2.85,
 
 PLZGemeinden %<>% left_join(GemeindeFactorTabelle)
 
-saveRDS(PLZGemeinden, "data/PLZGemeinden.rds")
+saveRDS(PLZGemeinden, "inst/application/data/PLZGemeinden.rds")
