@@ -1,0 +1,35 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['pull', 'eu.gcr.io/mirai-sbb/smarp:latest']
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+            'build',
+            '--cache-from',
+            'eu.gcr.io/mirai-sbb/smarp:latest',
+            '-t', 'eu.gcr.io/mirai-sbb/smarp:latest',
+            '-t', 'eu.gcr.io/mirai-sbb/smarp:$REVISION_ID',
+            '.'
+        ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "eu.gcr.io/mirai-sbb/smarp:latest"]
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - set
+  - image
+  - deployment
+  - smarp
+  - smarp=eu.gcr.io/mirai-sbb/smarp:latest
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-b'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - annotate
+  - --overwrite
+  - deployment
+  - smarp
+  - DEPLOY_SHA=$SHORT_SHA
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-b'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+images: ['eu.gcr.io/mirai-sbb/smarp:latest']
