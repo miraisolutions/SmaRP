@@ -1,0 +1,158 @@
+# Case specific information
+
+The Swiss case has been selected.
+
+The Swiss social security system is based on a three-pillar regime. 
+
+The first Pillar is a state- run pay-as-you-earn system with minimum benefits. It is law and salary dependent only and it is not expliciedly considered in SmaRP.
+
+The Pillar II is a compulsory, tax-deductible company occupational pension insurance fund. Voluntary additional Pillar II buy-ins are regulated, but allow for benefits improvement at retirement age while reducing the tax burden during the working career. 
+
+The voluntary contribution (Pillar III) is a privately-run, tax-deductible insurance fund. The private pension fund is modelled as an asset of a given amount ("Current assets"), to which contributions can be added annually (Annual contribution). The annual expected return of such asset is given as an input and assumed constant until the retirement date.
+
+Since the tax benefits are always a key factor of a smart retirement project, SmaRP takes them into consideration and are implemented as an additional Fund.
+The taxation is  municipality-dependent. It can either be provided as an input or inferred from the user provided inputs.
+If inferred, it is computed as two parts: the federal tax that is the same for all kantons, and kantonal tax that depends on the kanton. 
+The kantonal tax  is further modulated at municipality level via a factor. 
+An ulterior contribution to the kantonal tax is given by the optional affiliation to a church.
+
+The retirement age can either be explicitedly provided as an input, or can be inferred from the genere.
+
+## Swiss-case specific assumptions and limitations
+
+If Married Double Income, SmaRP assumes that all the inputs correspond to the aggregated amounts. 
+
+In certain kantons there is a different church tax based on the type of church the user belongs to (Evangelische Kirche and Roeman-katolische Kirche). SmaRP does not make such distinction and always assumes the highest of the values.
+Moreover, when the church-tax depends on the kantonal tax rate (in stead of being a fixed factor), an approximation is made and treated as the maximum possible factor (relevant for kantons: VS, BS, BL).
+
+In SmaRP only taxes on the income are considered and not on those on the assets. This has an inpact for kantons FR and BL.
+
+# Sources
+
+[BVG law](https://www.admin.ch/opc/de/classified-compilation/19820152/index.html)
+https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
+
+[AHV](https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-62487.html)
+https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-62487.html
+
+[Mindestzinssatz](https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-64228.html)
+https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-64228.html
+
+[Swiss Tax System](https://www.estv.admin.ch/estv/de/home/allgemein/steuerinformationen/dienstleistungen/publikationen-und-formulare-bestellen.html)
+https://www.estv.admin.ch/estv/de/home/allgemein/steuerinformationen/dienstleistungen/publikationen-und-formulare-bestellen.html
+
+# Parameters
+
+The date of birth provided as input is `r params$birthday`.
+
+With a retirement age of `r params$RetirementAge`, the retirement year is `r params$retirementdate`.
+
+The current salary is `r params$Salary`, with a growth rate of `r params$SalaryGrowthRate`, which is assumed constant until retirement.
+
+The occupational pension fund (Pillar II) has a current amount of `r params$CurrentP2` monetary units.
+
+The contribution to the Pillar II is of `r params$P2purchase` monetary units, and is purchased as a `r params$TypePurchase`.
+
+The interest rate of of the Pillar II is given by `r params$rate`, which is always higher than the minimum required by law.
+
+The private pension fund (Pillar III) has a current amount of `r params$CurrentP3` monetary units.
+
+The annual contribution to the Pillar III is of `r params$P3purchase` monetary units, with an expected return of `r params$returnP3`.
+
+The maximum amount of deductable from the taxable income via voluntary contributions to retirement funds is given by law and equal to `r params$MaxContrTax`.
+
+```{r, echo=FALSE}
+if(is.null(params$TaxRate)){
+  taxrate<- "calculated"
+} else {
+  taxrate<- paste0("is provided as input and has value", params$TaxRate)
+}
+```
+The tax rate is `r taxrate`.
+
+The postal code of residence `r params$postalcode` is used to infer the kanton of residence `r params$Kanton` and necessary for the tax rate computation.
+`r params$rate_group`
+
+<!-- ```{r, echo = FALSE} -->
+<!-- Rate_group.list <- list("A" = "Single", -->
+<!--                         "B" = "Married", -->
+<!--                         "C" = "Married Double Income") -->
+<!-- maritalStatus <-"A" #Rate_group.list[[params$rate_group]] -->
+<!-- ``` -->
+
+<!-- The user's marital status is `r maritalStatus`, with  `r params$NKids`  children. This information has an inpact on the total tax benefits. -->
+
+```{r, echo = FALSE}
+if (params$churchtax == "N"){
+  churchaffiliation <- "No"
+} else {
+  churchaffiliation <- "a"
+}
+```
+
+The user's declares to have `r churchaffiliation` church affiliation. This information has an inpact on the total tax benefits.
+
+
+#  Methodology
+
+## Pillar II
+
+The savings process for retirement benefits starts on January 1 following the year in which the person turns 24.
+
+$Pensionable salary(t) = max(Salary(t) - ⅞ AHV salary, 30 * AHV salary)$ [^1]
+
+Contribution Rates under Pilar II are defined by law[^2] (art.16)
+
+25-34 | 35-44 | 45-54 | 55-64/65
+7%    | 10%   | 15%   | 18%
+
+$Mandatory Contributions(t) = Pensionable salary(t) * Contribution Rate(t)$
+
+$r = 1\%$[^3]
+
+$Pillar II = \sum_{t0}^T(Mandatory Contributions + Voluntary Contributions) * \exp^{r*(T-t)}$
+
+[^1]: AHV salary: 2350 month, 28200 year.
+[^2]: 831.40. Bundesgesetz über die berufliche Alters-, Hinterlassenen- und Invalidenvorsorge (Art.16)
+[^3]: Minimum interest rate on the retirement assets as of. 01.01.2017
+
+## Private pension fund
+
+The private pension fund (```PillarIII```) at year ```t``` is calculated as:
+
+$PilarIII (t)=  \sum_{t=t_0}^TVoluntaryContributions * e^{r(T-t)}$
+
+where ```VoluntaryContributions``` is provided as input,  ```r``` is the interest rate applied to the private pension fund, $t_0$ is today, and ```T``` is the retirement age. 
+
+## Tax Benefit
+
+The tax benefit (```TaxBenefit```) at year ```t```, if the marginal tax rate is provided as an input (```TaxRate```), is calculated as:
+
+$TaxBenefit = \sum_{t_0}^TVoluntaryContributions *  TaxRate * e^{r(T-t)}$
+
+where ```VoluntaryContributions``` is provided as input, $t_0$ is today, and ```T``` is the retirement age. 
+
+If the tax rate is not provided as an input, the tax benefits are computed as:
+
+$TaxBenefit = TaxPaid(Salary) - TaxPaid(TaxableIncome)$[^4]
+
+The ```TaxPaid``` is a function that calculates the amount of taxes to pay given a certain income. The tax benefit is the difference between the taxes due for the salary and those due once all deductions are considered (taxable income).
+
+In SmaRP the taxable Income (```TaxableIncome```) at time ```t``` is computed as:
+
+$TaxableIncome(t) = max(Salary(t) - min(TotalContr, MaxContrTax),0)$
+
+where ```Salary(t)``` is the salary at year ```t```, ```TotalContr``` is the sum of the Pillar II and Pillar III purchases and ```MaxContrTax``` is the maximum deductable amount allowed by law.
+
+[^4]:  Important: The taxable income does not correspond to the net or gross salary. Social insurance contributions and a wide range of other deductions are substracted from the gross salary. The amount remaining is the taxable income, the base to calculate your tax bill.
+
+### The TaxPaid function
+
+The ```TaxPaid``` function is the sum of the federal and kantonal taxes.
+
+The Federal tax at year ```t``` is computed as:
+
+$FederalTax(t) = \sum_{t_0}^T(Income(t) *  FederalTaxRate) - 251*Nkids$
+
+where ```Income(t)``` is the income at time ```t```, ```Nkids``` is the number of kids under 18 and ```FederalTaxRate``` is a factor based on the civil status and family structure. 
+

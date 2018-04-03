@@ -458,7 +458,13 @@ shinyServer(function(input, output, session) {
                           TserieGraphData = TserieGraphData(),
                           RetirementAge = RetirementAge(),
                           TaxRate =  taxRateValue(),
-                          case = Inputcase())
+                          case = Inputcase(),
+                          retirementfund = retirementfund(), 
+                          percentageLastSalary = percentageLastSalary()#,
+                          # tax_rates_Kanton_list = tax_rates_Kanton_list,
+                          # BundessteueTabelle = BundessteueTabelle,
+                          # PLZGemeinden = PLZGemeinden
+                          )
   )
   
   #output report

@@ -1,0 +1,54 @@
+# Case specific information
+
+The General case has been selected.
+
+This choice indicates that the expected pension system is based only on a state-run pay-as-you-earn system (Pillar I) and a private pension fund (Pillar III). 
+
+This is representative of most European Pension Systems.
+
+The pay-as-you-earn system is law and salary dependent only and it is not expliciedly considered in SmaRP.
+
+The private pension fund is modelled as an asset of a given amount ("Current assets"), to which contributions can be added annually (Annual contribution). The annual expected return of such asset is given as an input and assumed constant until the retirement date.
+
+The tax relief given by the private pension fund is calculated as the minimum between the current asset and the maximum tax relief allowed by law, which the user can specify as an input.
+
+The tax rate is expected as an input.
+
+## General-case specific assumptions and limitations
+
+The General case is a generalization of the Swiss case, for which SmaRP was originally developed. 
+
+Here it is assumed that the full pension fund which is not part of the state-run pay-as-you-earn system can be modelled as a private pension fund.
+
+# Parameters
+
+The date of birth provided as input is `r params$birthday`.
+
+With a retirement age of `r params$RetirementAge`, the retirement year is `r params$retirementdate`.
+
+The private pension fund has a current amount of `r params$CurrentP3` monetary units.
+
+The annual contribution to the private pension fund is of `r params$P3purchase` monetary units, with an expected return of `r params$returnP3`.
+
+The maximum amount of deductable from the taxable income via voluntary contributions to retirement funds is `r params$MaxContrTax`.
+
+The tax rate used to calculate the tax benefits is `r params$TaxRate`.
+
+# Methodology
+
+## Private pension fund
+
+The private pension fund (```PillarIII```) at year ```t``` is calculated as:
+
+$PilarIII (t)=  \sum_{t=t_0}^TVoluntaryContributions * e^{r(T-t)}$
+
+where ```VoluntaryContributions``` is provided as input,  ```r``` is the interest rate applied to the private pension fund, $t_0$ is today, and ```T``` is the retirement age. 
+
+## Tax Benefit
+
+The tax benefit (```TaxBenefit```) at year ```t``` is calculated as:
+
+$TaxBenefit = \sum_{t_0}^TVoluntaryContributions *  TaxRate * e^{r(T-t)}$
+
+where ```VoluntaryContributions``` is provided as input, ```Taxrate``` is the marginal tax rate given as input, $t_0$ is today, and ```T``` is the retirement age. 
+
