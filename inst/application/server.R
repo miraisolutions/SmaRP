@@ -284,7 +284,7 @@ shinyServer(function(input, output, session) {
   
   # calc Tax benefits ----
   ContributionTaxpath <- reactive({
-    buildTaxBenefits(birthday = Birthdate(), 
+    buildTaxBenefits(birthday = Birthdate(),
                      TypePurchase = TypePurchase(),
                      P2purchase = P2purchase(), 
                      P3purchase = P3purchase(), 
@@ -298,9 +298,10 @@ shinyServer(function(input, output, session) {
                      MaxContrTax = TaxRelief(),
                      tax_rates_Kanton = tax_rates_Kanton_list,
                      BundessteueTabelle = BundessteueTabelle,
+                     givenday = today("UTC"),
                      RetirementAge = RetirementAge(),
-                     TaxRate = taxRateValue()
-    )
+                     TaxRate = taxRateValue(),
+                     PLZGemeinden=PLZGemeinden)
   })
   
   # build main df ----
@@ -325,7 +326,7 @@ shinyServer(function(input, output, session) {
   # T series plot ----
   TserieGraphData <- reactive({
       Road2Retirement() %>% 
-      mutate(TaxBenefits = DirectTax + ReturnTax) %>%
+      mutate(TaxBenefits = TotalTax) %>%
       mutate(OccupationalPension = DirectP2 + ReturnP2) %>%
       mutate(PrivatePension = DirectP3 + ReturnP3) %>%
       select(calendar, OccupationalPension, PrivatePension, TaxBenefits) %>%
@@ -345,7 +346,7 @@ shinyServer(function(input, output, session) {
   # bar plot -----
   FotoFinish <- reactive({
     Road2Retirement() %>% 
-      mutate(TaxBenefits = DirectTax + ReturnTax) %>%
+      mutate(TaxBenefits = TotalTax) %>%
       mutate(OccupationalPension = DirectP2 + ReturnP2) %>%
       mutate(PrivatePension = DirectP3 + ReturnP3) %>%
       select(OccupationalPension, PrivatePension, TaxBenefits) %>%

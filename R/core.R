@@ -1,5 +1,8 @@
-# # #
-# # Example
+# # # #
+# # # Example
+# library(lubridate)
+# library(dplyr)
+# source(system.file("application", "global.R", package = "SmaRP"))
 # birthday = "1981-08-12"
 # P3purchase = 0
 # CurrentP3 = 0
@@ -46,12 +49,14 @@
 #                              MaxContrTax,
 #                              tax_rates_Kanton_list,
 #                              BundessteueTabelle,
-#                              RetirementAge= RetirementAge,
-#                              TaxRate = TaxRate),
+#                              givenday = today("UTC"),
+#                              RetirementAge,
+#                              TaxRate = TaxRate,
+#                              PLZGemeinden),
 #             by = c("calendar", "t")) %>%
 #   mutate(Total = TotalP2 + TotalP3 + TotalTax)
-# 
-# 
+# # 
+# # 
 # FotoFinish <- Road2Retirement %>%
 #           mutate(Tax = DirectTax + ReturnTax) %>%
 #           mutate(P2 = DirectP2 + ReturnP2) %>%
@@ -217,68 +222,6 @@ buildContributionP3path <- function(birthday,
   return(ContributionP3Path)
 }
 
-
-#' @name buildTaxBenefits
-#' @importFrom dplyr select
-#' @example buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3, Salary, SalaryGrowthRate, postalcode, NKids, churchtax, rate_group, MaxContrTax, tax_rates_Kanton_list, BundessteueTabelle, givenday = today("UTC"))
-#' @export
-buildTaxBenefits <- function(birthday,
-                             TypePurchase,
-                             P2purchase,
-                             P3purchase,
-                             returnP3,
-                             Salary,
-                             SalaryGrowthRate,
-                             postalcode,
-                             NKids,
-                             churchtax,
-                             rate_group,
-                             MaxContrTax,
-                             tax_rates_Kanton_list, 
-                             BundessteueTabelle,
-                             givenday = today("UTC"),
-                             RetirementAge,
-                             TaxRate = NULL
-) {
-  TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge = RetirementAge ))
-  ncp <- nrow(TaxBenefitsPath) 
-  TaxBenefitsPath %<>% within({
-    BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
-    P3purchase = rep(P3purchase, ncp)
-    TotalContr = BVGpurchase + P3purchase
-    ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
-    
-    if(is.null(TaxRate)){
-      TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, postalcode, NKids, churchtax, rate_group, tax_rates_Kanton_list, BundessteueTabelle)
-      #    TaxRatePath = sapply(ExpectedSalaryPath, getTaxRate, Kanton, Tariff, NKids)
-    } else {
-      TaxRatePath = rep(TaxRate, length(ExpectedSalaryPath))
-    }
-    TaxBenefits = calcTaxBenefit(TotalContr, TaxRatePath, MaxContrTax)
-    t = buildt(birthday, RetirementAge = RetirementAge )
-    TotalTax = calcAnnuityAcumPath(TaxBenefits, t, returnP3)
-    ReturnTax = TotalTax - cumsum(TaxBenefits)
-    DirectTax = cumsum(TaxBenefits)
-  }) %>%
-    select(-c(ExpectedSalaryPath, P3purchase, BVGpurchase))
-  return(TaxBenefitsPath)
-}
-
-
-#' @name calcTaxBenefit
-#' @example calcTaxBenefit(rep(6500,10), rep(0.1, 10), 6000)
-#' @export
-calcTaxBenefit <- function(TotalContr, TaxRatePath, MaxContrTax) {
-  TaxBenefits <- vector()
-  TaxBenefits[1] <- TotalContr[1] * TaxRatePath[1]
-  for (i in 2:length(TaxRatePath)) {
-    TaxBenefits[i] <- min((TotalContr[i] + TaxBenefits[i-1]), MaxContrTax) * TaxRatePath[i]
-  }
-  return(TaxBenefits)
-}
-
-
-
 #' @name calcAnnuityAcumPath
 #' @example calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000), t = c(0.284931, 1, 1, 1, 0), rate = 0.01)
 #' @export
@@ -291,84 +234,6 @@ calcAnnuityAcumPath <- function(contributions, t, rate){
   res
 }
 
-#' @name getTaxRate
-#' @example getTaxRate_new(123456, PLZ = 8400, NKids = 1, ChurchTax = "N", RateGroup = "A", tax_rates_Kanton, BundessteueTabelle)
-#' @export
-getTaxRate <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton_list, BundessteueTabelle){  
-  
-  # Step 1: Kantonssteuer & Gemeindesteuer
-  TaxRateKG <- calcKantonsGemeindesteuerAvgRate(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton_list)
-  
-  # Step 2: Bundessteuer
-  TaxRateB <- calcBundessteuerAvgRate(RateGroup, NKids, Salary, BundessteueTabelle)
-  
-  # Total tax
-  TaxRate <- TaxRateKG + TaxRateB
-  
-  return(TaxRate)
-}
-
-#' @name calcKantonsGemeindesteuerAvgRate
-#' @example calcKantonsGemeindesteuerAvgRate(123456, PLZ = 8400, NKids = 1, ChurchTax = "N", RateGroup = "A", tax_rates_Kanton)
-#' @export
-calcKantonsGemeindesteuerAvgRate <- function(Salary, PLZ, NKids, ChurchTax, RateGroup, tax_rates_Kanton_list) {
-  
-  # TaxRateDF <- tax_rates_Kanton %>%
-  #   filter(canton == returnPLZKanton(PLZ) &
-  #            rate_group == RateGroup &
-  #            n_kids == NKids &
-  #            churchtax == ChurchTax)
-  TaxRateDF <- tax_rates_Kanton_list[[returnPLZKanton(PLZ)]] %>%
-    filter(  rate_group == RateGroup &
-             n_kids == NKids &
-             churchtax == ChurchTax)
-  # get income argument
-  monthly_salary <- Salary / 12
-  salary_bins <- sort(unique(TaxRateDF$income))
-  if(monthly_salary !=0){
-    nearest_salary <- salary_bins[findInterval(monthly_salary, salary_bins)]
-  } else {
-    nearest_salary <- salary_bins[1]
-  }
-  # calc tax rate
-  TaxRate <- TaxRateDF %>%
-    filter(income == nearest_salary) %>%
-    transmute(tax_rate = (tax_rate_calc * returnSteuerfuss(PLZ)) / income)
-  
-  return(TaxRate[1,1])
-}
-
-#' @name calcBundessteuerAvgRate
-#' @example calcBundessteuerAvgRate(rate_group = "C", n_kids = 4, income = 123456, BundessteueTabelle)
-#' @export
-calcBundessteuerAvgRate <- function(rate_group, n_kids, income, BundessteueTabelle){
-  
-  Income_bins <- sort(unique(BundessteueTabelle$I))
-  if(income !=0){
-    nearest_salary <- Income_bins[findInterval(income, Income_bins)]
-  } else {
-    nearest_salary <- Income_bins[1]
-  }
-  Bundessteuer <- BundessteueTabelle %>%
-    filter(I == nearest_salary)
-  
-  if(n_kids > 0) {
-    TaxRate <- Bundessteuer %>%
-      transmute(tax_rate = pmax(taxAmountMarried - (251 * n_kids), 0) / income)
-    TaxRate <- TaxRate$tax_rate
-  } else {
-    if(rate_group == "A") {
-      TaxRate <- Bundessteuer$avgRateSingle
-    } else {
-      TaxRate <- Bundessteuer$avgRateMarried
-    }
-  }
-  if(is.na(TaxRate)){
-    TaxRate = 0
-  }
-  
-  return(TaxRate)
-}
 
 #' @name downloadPLZ
 #' @example downloadPLZ(refresh=TRUE) 

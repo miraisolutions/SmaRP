@@ -54,7 +54,7 @@ buildTaxBenefits <- function(birthday,
     P3purchase = rep(P3purchase, ncp)
     TotalContr = BVGpurchase + P3purchase
     ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
-    TaxableIncome = ExpectedSalaryPath - min(TotalContr, MaxContrTax)
+    TaxableIncome = pmax(ExpectedSalaryPath - pmin(TotalContr, MaxContrTax),0)
     if(!is.null(TaxRate)){
       TaxBenefits = calcTaxBenefitGeneral(TotalContr =TotalContr, TaxRatePath = rep(TaxRate, length(ExpectedSalaryPath)), MaxContrTax=MaxContrTax)
     } else {
@@ -100,7 +100,7 @@ getTaxAmount <- function(Income, postalcode, NKids, churchtax, rate_group, tax_r
   kanton<- returnPLZKanton(postalcode)
   FactorKanton <- PLZGemeinden[PLZGemeinden$PLZ==postalcode, "FactorKanton"]
   FactorGemeinde <- PLZGemeinden[PLZGemeinden$PLZ==postalcode, "FactorGemeinde"]
-  FactorKirche <- PLZGemeinden[PLZGemeinden$PLZ==postalcode, "FactorKirche"]
+  FactorKirche <- ifelse(churchtax=="N", 0, PLZGemeinden[PLZGemeinden$PLZ==postalcode, "FactorKirche"])
   EinfacherSteuer <- lookupTaxRate(Income, tax_rates_Kanton_list[[kanton]], rate_group)
   TaxAmountKanton <- EinfacherSteuer* FactorKanton
   TaxAmountGemeinde <- EinfacherSteuer * FactorGemeinde

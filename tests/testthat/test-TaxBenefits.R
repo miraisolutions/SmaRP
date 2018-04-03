@@ -1,3 +1,5 @@
+library(lubridate)
+source(system.file("application", "global.R", package = "SmaRP")) 
 #test functions for TaxBenefits
 
 Salary=100000 
@@ -13,7 +15,6 @@ RetirementAge = 65
 ncp = length(getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge))
 NKids = 5
 postalcode = 8400
-#tax_rates_Kanton_list <- readRDS("data/tax_rates_Kanton_list.rds")
 kanton <- returnPLZKanton(postalcode)
 Tabelle=tax_rates_Kanton_list[[kanton]]
 churchtax = "N"

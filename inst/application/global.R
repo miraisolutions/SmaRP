@@ -61,9 +61,12 @@ Rate_group.list <- list("Single" = "A",
 Purchase.list <- list("Single Purchase" = "SingleP2",
                       "Annual Purchase" = "AnnualP2")
 
-PLZGemeinden <- readRDS("data/PLZGemeinden.rds")
+#PLZGemeinden <- readRDS("data/PLZGemeinden.rds")
+PLZGemeinden <- readRDS(system.file("application", "data", "PLZGemeinden.rds", package = "SmaRP"))
 PLZ.list <- setNames(PLZGemeinden$PLZ, PLZGemeinden$PLZ)
 
-tax_rates_Kanton_list <- readRDS("data/tax_rates_Kanton_list_old.rds")
+#tax_rates_Kanton_list <- readRDS("data/tax_rates_Kanton_list_old.rds")
+tax_rates_Kanton_list <- readRDS(system.file("application", "data", "tax_rates_Kanton_list.rds", package = "SmaRP"))
 
-BundessteueTabelle <- readRDS("data/BundessteueTabelle.rds")
+#BundessteueTabelle <- readRDS("data/BundessteueTabelle.rds")
+BundessteueTabelle <-  readRDS(system.file("application", "data", "BundessteueTabelle.rds", package = "SmaRP"))

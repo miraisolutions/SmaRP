@@ -101,7 +101,8 @@ BundessteueTabelle <- data.frame(I = seq(0, 1000000, 100)) %>%
                                                                                                                     ifelse(I > 145000 & I <= 895800, 13, 11.5)))))))))))))),
          taxAmountMarried = cumsum(mgRateMarried))
 
-saveRDS(tax_rates_Kanton_list, "inst/application/data/BundessteueTabelle.rds")
+#saveRDS(BundessteueTabelle, "/Users/fvitalini/Desktop/Mirai/R-scripts/SwissRetirement/SmaRP/inst/application/data/BundessteueTabelle.rds")
+saveRDS(BundessteueTabelle, "inst/application/data/BundessteueTabelle.rds")
 tax_rates_Kanton_list <- list()
 for (k in kantons){
    tax_rates_Kanton_list[[k]]<-  BundessteueTabelle
@@ -116,7 +117,7 @@ saveRDS(tax_rates_Kanton_list, "inst/application/data/tax_rates_Kanton_list.rds"
 # >> ZH ----
 .cleanZH <- function(ZH_KantonTaxRates) {
   TarifTable <- ZH_KantonTaxRates %>%
-    .[grepl("bis|über*", .)] %>%
+    .[grepl("bis|?ber*", .)] %>%
     strsplit("\\s+") %>%
     .helper_cuts_tax(c(2, 5)) %>%
     rbind(data.frame(cuts = 1E6, tax = 0))
@@ -158,7 +159,7 @@ paircols <- list(c(1, 3), c(4, 6), c(7, 9))
 }
 
 GTtarif <- .cleanBE(BE_KantonTaxRates[1:grep("^Verheiratete und Einelternfamilien", BE_KantonTaxRates)]) 
-VTtarif <- .cleanBE(BE_KantonTaxRates[grep("^Verheiratete und Einelternfamilien", BE_KantonTaxRates) : grep("^Vermögen\r", BE_KantonTaxRates)]) 
+VTtarif <- .cleanBE(BE_KantonTaxRates[grep("^Verheiratete und Einelternfamilien", BE_KantonTaxRates) : grep("^Verm?gen\r", BE_KantonTaxRates)]) 
 
 BE <- .combine_subset_VT_GT(GTtarif, VTtarif) 
 
