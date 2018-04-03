@@ -101,7 +101,7 @@ The savings process for retirement benefits starts on January 1 following the ye
 
 $Pensionable salary(t) = max(Salary(t) - ⅞ AHV salary, 30 * AHV salary)$ [^1]
 
-Contribution Rates under Pilar II are defined by law[^2] (art.16)
+Contribution Rates under Pillar II are defined by law[^2] (art.16)
 
 25-34 | 35-44 | 45-54 | 55-64/65
 7%    | 10%   | 15%   | 18%
