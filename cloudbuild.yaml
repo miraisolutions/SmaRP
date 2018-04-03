@@ -7,11 +7,11 @@ steps:
             '--cache-from',
             'eu.gcr.io/mirai-sbb/smarp:latest',
             '-t', 'eu.gcr.io/mirai-sbb/smarp:latest',
-            '-t', 'eu.gcr.io/mirai-sbb/smarp:$REVISION_ID',
+            '-t', 'eu.gcr.io/mirai-sbb/smarp:$COMMIT_SHA',
             '.'
         ]
 - name: 'gcr.io/cloud-builders/docker'
-  args: ["push", "eu.gcr.io/mirai-sbb/smarp:$REVISION_ID"]
+  args: ["push", "eu.gcr.io/mirai-sbb/smarp:$COMMIT_SHA"]
 - name: 'gcr.io/cloud-builders/docker'
   args: ["push", "eu.gcr.io/mirai-sbb/smarp:latest"]
 - name: 'gcr.io/cloud-builders/kubectl'
@@ -20,7 +20,7 @@ steps:
   - image
   - deployment
   - smarp
-  - smarp=eu.gcr.io/mirai-sbb/smarp:latest
+  - smarp=eu.gcr.io/mirai-sbb/smarp:$COMMIT_SHA
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-b'
   - 'CLOUDSDK_CONTAINER_CLUSTER=smarp'
@@ -30,8 +30,10 @@ steps:
   - --overwrite
   - deployment
   - smarp
-  - DEPLOY_SHA=$REVISION_ID
+  - DEPLOY_SHA=$COMMIT_SHA
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-b'
   - 'CLOUDSDK_CONTAINER_CLUSTER=smarp'
-images: ['eu.gcr.io/mirai-sbb/smarp:latest']
+images: 
+- 'eu.gcr.io/mirai-sbb/smarp:$COMMIT_SHA'
+- 'eu.gcr.io/mirai-sbb/smarp:latest'
