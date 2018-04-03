@@ -21,7 +21,7 @@ steps:
   - smarp=eu.gcr.io/mirai-sbb/smarp:latest
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-b'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=smarp'
 - name: 'gcr.io/cloud-builders/kubectl'
   args:
   - annotate
@@ -31,5 +31,5 @@ steps:
   - DEPLOY_SHA=$SHORT_SHA
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-b'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=smarp'
 images: ['eu.gcr.io/mirai-sbb/smarp:latest']
