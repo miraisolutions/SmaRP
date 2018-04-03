@@ -39,6 +39,9 @@ RUN echo "options(shiny.port = 3838, shiny.host = '0.0.0.0')" >> /usr/local/lib/
 # install PhantomJS
 RUN R -e "library(webshot); webshot::install_phantomjs()"
 
+# install SmaRP
+RUN cd /root && install2.r --repos NULL --error -- --no-multiarch --with-keep.source SmaRP
+
 EXPOSE 3838
 
-CMD ["R", "-e", "shiny::runApp('/root/SmaRP')"]
+CMD ["R", "-e", "library(SmaRP); SmaRP::launch_application()"]
