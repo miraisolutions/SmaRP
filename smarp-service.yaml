@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: smarp-service
+  labels:
+    run: smarp
+spec:
+  ports:
+  - nodePort: 30255
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: smarp
+  sessionAffinity: None
+  type: LoadBalancer
