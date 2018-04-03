@@ -20,3 +20,4 @@ Imports:
     shinyBS,
     shinythemes,
     webshot
+Suggests: testthat
