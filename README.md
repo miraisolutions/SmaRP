@@ -1,4 +1,4 @@
-# swissretire
+# SmaRP: Smart Retirement Planning
 Shiny app for projecting retirement funds/benefits.
 
 The app is structured as follow:
