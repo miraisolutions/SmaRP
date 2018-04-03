@@ -11,6 +11,8 @@ steps:
             '.'
         ]
 - name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "eu.gcr.io/mirai-sbb/smarp:$REVISION_ID"]
+- name: 'gcr.io/cloud-builders/docker'
   args: ["push", "eu.gcr.io/mirai-sbb/smarp:latest"]
 - name: 'gcr.io/cloud-builders/kubectl'
   args:
@@ -28,7 +30,7 @@ steps:
   - --overwrite
   - deployment
   - smarp
-  - DEPLOY_SHA=$SHORT_SHA
+  - DEPLOY_SHA=$REVISION_ID
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-b'
   - 'CLOUDSDK_CONTAINER_CLUSTER=smarp'
