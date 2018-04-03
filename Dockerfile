@@ -29,16 +29,21 @@ RUN install2.r --error \
     shinyBS \
     shinythemes \
     webshot
+    
+# install PhantomJS
+RUN R -e "library(webshot); webshot::install_phantomjs()"
 
 # copy the app to the image
 RUN mkdir /root/SmaRP
 COPY . /root/SmaRP
 
 # set host and port
-RUN echo "options(shiny.port = 3838, shiny.host = '0.0.0.0')" >> /usr/local/lib/R/etc/Rprofile.site
-# install PhantomJS
-RUN R -e "library(webshot); webshot::install_phantomjs()"
+RUN echo "options(shiny.port = 80, shiny.host = '0.0.0.0')" >> /usr/local/lib/R/etc/Rprofile.site
 
-EXPOSE 3838
+# install SmaRP
+RUN cd /root && \
+    install2.r --repos NULL --error -- --no-multiarch --with-keep.source SmaRP
 
-CMD ["R", "-e", "shiny::runApp('/root/SmaRP')"]
+EXPOSE 80
+
+CMD ["R", "-e", "library(SmaRP); SmaRP::launch_application()"]

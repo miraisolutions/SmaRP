@@ -1,4 +1,4 @@
-# swissretire
+# SmaRP: Smart Retirement Planning
 Shiny app for projecting retirement funds/benefits.
 
 The app is structured as follow:
@@ -41,8 +41,8 @@ gcloud docker -- pull eu.gcr.io/mirai-sbb/smarp:latest
 ### Run Docker container (locally)
 
 ```
-docker run -d -p 3838:3838 mirai/smarp
+docker run -d -p 80:80 mirai/smarp
 ```
 
 You can then load the SmaRP app in your browser:
-http://localhost:3838/
+http://localhost/
