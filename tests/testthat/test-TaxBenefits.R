@@ -23,7 +23,27 @@ TaxRate = NULL
 rate = BVGparams$BVGMindestzinssatz
 
 
-test_that(paste0("test lookup on kanton taxrate table for Income", Salary, " Kanton ", kanton, " and Civil Status ", rate_group)){
+test_that(paste0("test lookup on kanton taxrate table for Income", Salary, " Kanton ", kanton, " and Civil Status ", rate_group), {
   TaxRate <- lookupTaxRate(Income=Salary, Tabelle, CivilSatus=rate_group)
-  expect_equal(TaxRate, 2848.67)
-}
+  expect_equal(TaxRate, 2848.67, tolerance=1e-3)
+})
+
+test_that(paste0("test tax amount for Income", Salary, " postalcode ", postalcode, " NKids ", NKids, " churchtax ", churchtax, " rate_group ", rate_group),{
+  TaxAmount <- getTaxAmount(Income=Salary, postalcode, NKids, churchtax, rate_group, tax_rates_Kanton_list, BundessteueTabelle, PLZGemeinden)
+  expect_equal(TaxAmount, 7832.257, tolerance=1e-3)
+})
+
+test_that(paste0(""), {
+  TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge = RetirementAge ))
+  ncp <- nrow(TaxBenefitsPath) 
+  TaxBenefitsPath %<>% within({
+    BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
+    P3purchase = rep(P3purchase, ncp)
+    TotalContr = BVGpurchase + P3purchase
+    ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
+    TaxableIncome = pmax(ExpectedSalaryPath - pmin(TotalContr, MaxContrTax),0)
+  })
+  TaxBenefit <- calcTaxBenefitSwiss(TaxBenefitsPath$ExpectedSalaryPath, TaxBenefitsPath$TaxableIncome, postalcode, NKids, churchtax, rate_group, tax_rates_Kanton_list, BundessteueTabelle, PLZGemeinden)
+  TaxBenefit_ref <- readRDS("../../tests/testthat/resources/TaxBenefit.rds")
+  expect_equal(TaxBenefit, TaxBenefit_ref, tolerance=1e-3)
+})
