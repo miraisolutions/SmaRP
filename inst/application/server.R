@@ -46,6 +46,18 @@ shinyServer(function(input, output, session) {
     input$Birthdate
   })
   
+  genre <- reactive({
+    if(Inputcase() == "Swiss" & !input$provideRetirementAge){
+      validate(
+        need(input$genre, "Please provide your genre")
+      )
+      input$genre
+    } else {
+      "M"
+    }
+  })
+  
+  
   RetirementAge <- reactive({
     if(input$provideRetirementAge){
       validate(
@@ -126,7 +138,7 @@ shinyServer(function(input, output, session) {
   # )
   
   postalcode <- reactive({
-    if(Inputcase() == "Swiss" & isnotAvailable(input$provideTaxRateSwiss)){
+    if(Inputcase() == "Swiss" & !input$provideTaxRateSwiss){
       validate(
         need(input$postalcode, "Please provide a valid postalcode")
       )
@@ -145,20 +157,8 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  genre <- reactive({
-    if(Inputcase() == "Swiss" & isnotAvailable(input$provideRetirementAge)){
-      validate(
-        need(input$genre, "Please provide your genre")
-      )
-      input$genre
-    } else {
-      "M"
-    }
-  })
-  
-  
   rate_group <- reactive({
-    if(Inputcase() == "Swiss" & isnotAvailable(input$provideTaxRateSwiss)){
+    if(Inputcase() == "Swiss" & !input$provideTaxRateSwiss){
       validate(
         need(input$rate_group, "Please provide a valid civil status")
       )
@@ -169,7 +169,7 @@ shinyServer(function(input, output, session) {
   })
   
   churchtax <- reactive(({
-    if(Inputcase() == "Swiss" & isnotAvailable(input$provideTaxRateSwiss)){
+    if(Inputcase() == "Swiss" & !input$provideTaxRateSwiss){
       validate(
         need(input$churchtax, "Please provide a valid religous status")
       )
@@ -422,6 +422,9 @@ shinyServer(function(input, output, session) {
   # "taxRateValue", taxRateValue(),"\n",
   # "Inputcase", Inputcase(), "\n",
   # #"Road2Retirement", Road2Retirement(),
+  # "genre", genre(),"\n",
+  # "provideRetirementAge is", input$provideRetirementAge, "\n",
+  # "Inputcase is",  Inputcase(), "\n",
   
   
   # Disclaimer ----
