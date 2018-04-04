@@ -71,7 +71,6 @@ if(is.null(params$TaxRate)){
 The tax rate is `r taxrate`.
 
 The postal code of residence `r params$postalcode` is used to infer the kanton of residence `r params$Kanton` and necessary for the tax rate computation.
-`r params$rate_group`
 
 <!-- ```{r, echo = FALSE} -->
 <!-- Rate_group.list <- list("A" = "Single", -->
@@ -84,7 +83,7 @@ The postal code of residence `r params$postalcode` is used to infer the kanton o
 
 ```{r, echo = FALSE}
 if (params$churchtax == "N"){
-  churchaffiliation <- "No"
+  churchaffiliation <- "no"
 } else {
   churchaffiliation <- "a"
 }
@@ -103,8 +102,16 @@ $Pensionable salary(t) = max(Salary(t) - ⅞ AHV salary, 30 * AHV salary)$ [^1]
 
 Contribution Rates under Pillar II are defined by law[^2] (art.16)
 
-25-34 | 35-44 | 45-54 | 55-64/65
-7%    | 10%   | 15%   | 18%
+\begin{tabular}{ c | c | c | c }
+\hline
+    &  &   &   \\
+  25-34 & 35-44 & 45-54 & 55-64/65 \\ \hline
+    &  &   &   \\
+  7\% & 10\% & 15\% & 18\% \\
+    &  &   &   \\
+  \hline
+\end{tabular}
+
 
 $Mandatory Contributions(t) = Pensionable salary(t) * Contribution Rate(t)$
 
