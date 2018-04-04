@@ -118,41 +118,77 @@ $Pillar II = \sum_{t0}^T(Mandatory Contributions + Voluntary Contributions) * \e
 
 ## Private pension fund
 
-The private pension fund (```PillarIII```) at year ```t``` is calculated as:
+The private pension fund ($PillarIII$) at year $t$ is calculated as:
 
 $PilarIII (t)=  \sum_{t=t_0}^TVoluntaryContributions * e^{r(T-t)}$
 
-where ```VoluntaryContributions``` is provided as input,  ```r``` is the interest rate applied to the private pension fund, $t_0$ is today, and ```T``` is the retirement age. 
+where $VoluntaryContributions$ is provided as input,  $r$ is the interest rate applied to the private pension fund, $t_0$ is today, and $T$ is the retirement age. 
 
 ## Tax Benefit
 
-The tax benefit (```TaxBenefit```) at year ```t```, if the marginal tax rate is provided as an input (```TaxRate```), is calculated as:
+The tax benefit ($TaxBenefit$) at year $t$, if the marginal tax rate is provided as an input ($TaxRate$), is calculated as:
 
 $TaxBenefit = \sum_{t_0}^TVoluntaryContributions *  TaxRate * e^{r(T-t)}$
 
-where ```VoluntaryContributions``` is provided as input, $t_0$ is today, and ```T``` is the retirement age. 
+where $VoluntaryContributions$ is provided as input, $t_0$ is today, and $T$ is the retirement age. 
 
 If the tax rate is not provided as an input, the tax benefits are computed as:
 
 $TaxBenefit = TaxPaid(Salary) - TaxPaid(TaxableIncome)$[^4]
 
-The ```TaxPaid``` is a function that calculates the amount of taxes to pay given a certain income. The tax benefit is the difference between the taxes due for the salary and those due once all deductions are considered (taxable income).
+The $TaxPaid$ is a function that calculates the amount of taxes to pay given a certain income. The tax benefit is the difference between the taxes due for the salary and those due once all deductions are considered (taxable income).
 
-In SmaRP the taxable Income (```TaxableIncome```) at time ```t``` is computed as:
+In SmaRP the taxable Income ($TaxableIncome$) at time $t$ is computed as:
 
 $TaxableIncome(t) = max(Salary(t) - min(TotalContr, MaxContrTax),0)$
 
-where ```Salary(t)``` is the salary at year ```t```, ```TotalContr``` is the sum of the Pillar II and Pillar III purchases and ```MaxContrTax``` is the maximum deductable amount allowed by law.
+where $Salary(t)$ is the salary at year $t$, $TotalContr$ is the sum of the Pillar II and Pillar III purchases and $MaxContrTax$ is the maximum deductable amount allowed by law.
 
 [^4]:  Important: The taxable income does not correspond to the net or gross salary. Social insurance contributions and a wide range of other deductions are substracted from the gross salary. The amount remaining is the taxable income, the base to calculate your tax bill.
 
 ### The TaxPaid function
 
-The ```TaxPaid``` function is the sum of the federal and kantonal taxes.
+The $TaxPaid$ function is the sum of the federal and kantonal taxes.
 
-The Federal tax at year ```t``` is computed as:
+The Federal tax at year $t$ is computed as:
 
 $FederalTax(t) = \sum_{t_0}^T(Income(t) *  FederalTaxRate) - 251*Nkids$
 
-where ```Income(t)``` is the income at time ```t```, ```Nkids``` is the number of kids under 18 and ```FederalTaxRate``` is a factor based on the civil status and family structure. 
+where $Income(t)$ is the income at time $t$, $Nkids$ is the number of kids under 18 and $FederalTaxRate$ is a factor based on the civil status and family structure. 
+
+<!-- The Federal tax rate can be looked up in the following table. -->
+
+<!-- ```{r, echo = FALSE} -->
+<!-- set.caption('Federal Tax Table') -->
+<!-- pander(params$BundessteueTabelle) -->
+<!-- ``` -->
+
+The kantonal tax at year $t$ is computed as:
+  
+$KantonalTax(t) = \sum_{t_0}^T(Income(t) *  KantonalTaxRate) * (F_{kanton} + F_{municipality} + F_{church)}$
+  
+where $Income(t)$ is the income at time $t$, $KantonalTaxRate$ is a factor based on the civil status and family structure,  $F_{kanton}$ is a kanton-dependent multiplication factor, $F_{municipality}$ is a municipality-dependent  multiplication factor and $F_{church}$ is a curch affiliation dependent multiplication factor.
+
+<!-- The Kantonal tax rate for kanton `r params$Kanton` can be looked up in the following table. -->
+
+<!-- `r head(params$tax_rates_Kanton_list[[1]])` -->
+
+<!-- ```{r, echo = FALSE} -->
+<!-- set.caption('Kantonal Tax Table') -->
+<!-- tax_rates_Kanton<- params$tax_rates_Kanton_list[[params$Kanton]] -->
+<!-- pander(tax_rates_Kanton) -->
+<!-- ``` -->
+
+```{r, echo = FALSE}
+fkanton <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "FactorKanton"]
+gemeinde_name <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "GDENAME"]
+fgemeinde <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "FactorGemeinde"]
+fkirche <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "FactorKirche"]
+```
+
+The kanton-dependent multiplication factor for kanton `r params$Kanton` is `r fkanton`.
+
+The municipality-dependent multiplication factor for municipality `r gemeinde_name` is `r fgemeinde`.
+
+The curch affiliation dependent multiplication factor for municipality `r gemeinde_name` is `r fkirche`. If there is no church affiliation this factor is ```0```.
 

@@ -460,10 +460,10 @@ shinyServer(function(input, output, session) {
                           TaxRate =  taxRateValue(),
                           case = Inputcase(),
                           retirementfund = retirementfund(), 
-                          percentageLastSalary = percentageLastSalary()#,
+                          percentageLastSalary = percentageLastSalary(),
                           # tax_rates_Kanton_list = tax_rates_Kanton_list,
                           # BundessteueTabelle = BundessteueTabelle,
-                          # PLZGemeinden = PLZGemeinden
+                          PLZGemeinden = PLZGemeinden
                           )
   )
   

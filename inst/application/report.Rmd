@@ -37,7 +37,7 @@ params:
       percentageLastSalary: NA
       # tax_rates_Kanton_list: NA
       # BundessteueTabelle: NA
-      # PLZGemeinden: NA
+      PLZGemeinden: NA
 ---
 
 ```{r setup, include=FALSE}

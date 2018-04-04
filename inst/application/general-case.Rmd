@@ -38,17 +38,17 @@ The tax rate used to calculate the tax benefits is `r params$TaxRate`.
 
 ## Private pension fund
 
-The private pension fund (```PillarIII```) at year ```t``` is calculated as:
+The private pension fund ($PillarIII$) at year $t$ is calculated as:
 
 $PilarIII (t)=  \sum_{t=t_0}^TVoluntaryContributions * e^{r(T-t)}$
 
-where ```VoluntaryContributions``` is provided as input,  ```r``` is the interest rate applied to the private pension fund, $t_0$ is today, and ```T``` is the retirement age. 
+where $VoluntaryContributions$ is provided as input,  $r$ is the interest rate applied to the private pension fund, $t_0$ is today, and $T$ is the retirement age. 
 
 ## Tax Benefit
 
-The tax benefit (```TaxBenefit```) at year ```t``` is calculated as:
+The tax benefit ($TaxBenefit$) at year $t$ is calculated as:
 
 $TaxBenefit = \sum_{t_0}^TVoluntaryContributions *  TaxRate * e^{r(T-t)}$
 
-where ```VoluntaryContributions``` is provided as input, ```Taxrate``` is the marginal tax rate given as input, $t_0$ is today, and ```T``` is the retirement age. 
+where $VoluntaryContributions$ is provided as input, $Taxrate$ is the marginal tax rate given as input, $t_0$ is today, and $T$ is the retirement age. 
 
