@@ -58,10 +58,17 @@ URLs <- list(
   URL_LU_KantonTaxRates =  "http://srl-pdf.lu.ch/620Einkommenstabelle_klein_%C2%A757_01.07.2014_XML.pdf",
   URL_SG_KantonTaxRates = "https://www.steuern.sg.ch/home/sachthemen/eservices/steuerfuesse_im_kanton/_jcr_content/Par/downloadlist/DownloadListPar/download.ocFile/Stg%2010-(Splitting-)%20gerundet_f%C3%BCr_Internet%20V2.pdf",
   URL_TI_KantonTaxRates = "https://www4.ti.ch/fileadmin/DFE/DC/DOC-IPF/2017/Istruzioni_PF__2017.pdf",
+  URL_VD_KantonTaxRates = "https://www.vd.ch/fileadmin/user_upload/organisation/dfin/aci/fichiers_pdf/Bareme_revenu_2012_14.pdf",
+  URL_AG_KantonTaxRates = "https://www.ag.ch/media/kanton_aargau/dfr/dokumente_3/steuern/natuerliche_personen/berechnung_tarife_np/2015_tarif_einkommenssteuer.pdf",
+  URL_GE_KantonTaxRates = "https://www.ge.ch/document/7102/telecharger",
+  URL_VS_KantonTaxRates = "https://lex.vs.ch/frontend/versions/2125/download_pdf_file",
   
   URL_UR_GemeindeTaxRates = "http://www.ur.ch/dl.php/de/5a3b5d3790e10/Steuerfuss_EWG_ab2009_18.pdf",
   URL_UR_KirchgemeindenTaxRates = "http://www.ur.ch/dl.php/de/5a3b5d7792502/Steuerfuss_KIG_ab2009_18.pdf",
-  URL_SG_GemeindeTaxRates = "https://www.steuern.sg.ch/home/sachthemen/eservices/steuerfuesse_im_kanton/_jcr_content/Par/downloadlist_0/DownloadListPar/download_1920277742.ocFile/Steuerf%C3%BCsse%202017.pdf"
+  URL_SG_GemeindeTaxRates = "https://www.steuern.sg.ch/home/sachthemen/eservices/steuerfuesse_im_kanton/_jcr_content/Par/downloadlist_0/DownloadListPar/download_1920277742.ocFile/Steuerf%C3%BCsse%202017.pdf",
+  URL_VD_GemeindeTaxRates = "https://www.vd.ch/fileadmin/user_upload/organisation/dfin/aci/fichiers_pdf/Impots_communaux_2018.pdf",
+  URL_AG_GemeindeTaxRates = "https://www.ag.ch/media/kanton_aargau/dfr/dokumente_3/steuern/natuerliche_personen/berechnung_tarife_np/2018_Steuerfuesse1.pdf",
+  URL_VS_GemeindeTaxRates = "https://www.vs.ch/documents/508074/628286/Coefficients_Indexations_Communes_2012-2017.pdf/271f3629-9dff-4b49-b828-0e70fd932549"
 )
 
 lapply(URLs, function(x) {
