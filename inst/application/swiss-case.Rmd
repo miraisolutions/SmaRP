@@ -4,6 +4,10 @@ The Swiss case has been selected.
 
 The Swiss social security system is based on a three-pillar regime. 
 
+\begin{center}
+\includegraphics[width=0.4\textwidth]{www/SwissRetirementSystem.png}
+\end{center}
+
 The first Pillar is a state- run pay-as-you-earn system with minimum benefits. It is law and salary dependent only and it is not expliciedly considered in SmaRP.
 
 The Pillar II is a compulsory, tax-deductible company occupational pension insurance fund. Voluntary additional Pillar II buy-ins are regulated, but allow for benefits improvement at retirement age while reducing the tax burden during the working career. 
@@ -11,6 +15,11 @@ The Pillar II is a compulsory, tax-deductible company occupational pension insur
 The voluntary contribution (Pillar III) is a privately-run, tax-deductible insurance fund. The private pension fund is modelled as an asset of a given amount ("Current assets"), to which contributions can be added annually (Annual contribution). The annual expected return of such asset is given as an input and assumed constant until the retirement date.
 
 Since the tax benefits are always a key factor of a smart retirement project, SmaRP takes them into consideration and are implemented as an additional Fund.
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{www/TaxBenefits.png}
+\end{center}
+
 The taxation is  municipality-dependent. It can either be provided as an input or inferred from the user provided inputs.
 If inferred, it is computed as two parts: the federal tax that is the same for all kantons, and kantonal tax that depends on the kanton. 
 The kantonal tax  is further modulated at municipality level via a factor. 

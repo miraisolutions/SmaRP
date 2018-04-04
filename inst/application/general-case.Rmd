@@ -4,6 +4,10 @@ The General case has been selected.
 
 This choice indicates that the expected pension system is based only on a state-run pay-as-you-earn system (Pillar I) and a private pension fund (Pillar III). 
 
+\begin{center}
+\includegraphics[width=0.4\textwidth]{www/GeneralRetirementSystem.png}
+\end{center}
+
 This is representative of most European Pension Systems.
 
 The pay-as-you-earn system is law and salary dependent only and it is not expliciedly considered in SmaRP.
