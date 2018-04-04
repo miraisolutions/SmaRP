@@ -33,7 +33,7 @@ test_that(paste0("test tax amount for Income", Salary, " postalcode ", postalcod
   expect_equal(TaxAmount, 7832.257, tolerance=1e-3)
 })
 
-test_that(paste0(""), {
+test_that(paste0("test the TaxBenefit"), {
   TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge = RetirementAge ))
   ncp <- nrow(TaxBenefitsPath) 
   TaxBenefitsPath %<>% within({

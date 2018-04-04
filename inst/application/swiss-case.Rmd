@@ -72,14 +72,7 @@ The tax rate is `r taxrate`.
 
 The postal code of residence `r params$postalcode` is used to infer the kanton of residence `r params$Kanton` and necessary for the tax rate computation.
 
-<!-- ```{r, echo = FALSE} -->
-<!-- Rate_group.list <- list("A" = "Single", -->
-<!--                         "B" = "Married", -->
-<!--                         "C" = "Married Double Income") -->
-<!-- maritalStatus <-"A" #Rate_group.list[[params$rate_group]] -->
-<!-- ``` -->
-
-<!-- The user's marital status is `r maritalStatus`, with  `r params$NKids`  children. This information has an inpact on the total tax benefits. -->
+The user's marital status is `r params$rate_group`, with  `r params$NKids`  children. This information has an inpact on the total tax benefits.
 
 ```{r, echo = FALSE}
 if (params$churchtax == "N"){
@@ -98,7 +91,7 @@ The user's declares to have `r churchaffiliation` church affiliation. This infor
 
 The savings process for retirement benefits starts on January 1 following the year in which the person turns 24.
 
-$Pensionable salary(t) = max(Salary(t) - ⅞ AHV salary, 30 * AHV salary)$ [^1]
+$$ Pensionable salary(t) = max(Salary(t) - \frac{7}{8} AHV Salary(t), 30 * AHVSalary) $$ [^1]
 
 Contribution Rates under Pillar II are defined by law[^2] (art.16)
 
@@ -113,41 +106,41 @@ Contribution Rates under Pillar II are defined by law[^2] (art.16)
 \end{tabular}
 
 
-$Mandatory Contributions(t) = Pensionable salary(t) * Contribution Rate(t)$
+$$ MandatoryContributions(t) = PensionableSalary(t) * ContributionRate(t) $$
 
-$r = 1\%$[^3]
+$$ r = 1\% $$[^3]
 
-$Pillar II = \sum_{t0}^T(Mandatory Contributions + Voluntary Contributions) * \exp^{r*(T-t)}$
+$$ Pillar II = \sum_{t0}^T(Mandatory Contributions + Voluntary Contributions) * \exp^{r*(T-t)} $$
 
 [^1]: AHV salary: 2350 month, 28200 year.
 [^2]: 831.40. Bundesgesetz über die berufliche Alters-, Hinterlassenen- und Invalidenvorsorge (Art.16)
 [^3]: Minimum interest rate on the retirement assets as of. 01.01.2017
 
-## Private pension fund
+## Private pension fund Pillar III
 
 The private pension fund ($PillarIII$) at year $t$ is calculated as:
 
-$PilarIII (t)=  \sum_{t=t_0}^TVoluntaryContributions * e^{r(T-t)}$
+$$ PilarIII (t)=  \sum_{t=t_0}^TVoluntaryContributions * e^{r(T-t)} $$
 
-where $VoluntaryContributions$ is provided as input,  $r$ is the interest rate applied to the private pension fund, $t_0$ is today, and $T$ is the retirement age. 
+where $VoluntaryContributions$ is provided as input,  $r$ is the interest rate applied to the private pension fund, $t_0$ is today, and $T$ is the retirement age.
 
 ## Tax Benefit
 
 The tax benefit ($TaxBenefit$) at year $t$, if the marginal tax rate is provided as an input ($TaxRate$), is calculated as:
 
-$TaxBenefit = \sum_{t_0}^TVoluntaryContributions *  TaxRate * e^{r(T-t)}$
+$$ TaxBenefit = \sum_{t_0}^TVoluntaryContributions *  TaxRate * e^{r(T-t)} $$
 
-where $VoluntaryContributions$ is provided as input, $t_0$ is today, and $T$ is the retirement age. 
+where $VoluntaryContributions$ is provided as input, $t_0$ is today, and $T$ is the retirement age.
 
 If the tax rate is not provided as an input, the tax benefits are computed as:
 
-$TaxBenefit = TaxPaid(Salary) - TaxPaid(TaxableIncome)$[^4]
+$$ TaxBenefit = TaxPaid(Salary) - TaxPaid(TaxableIncome) $$[^4]
 
 The $TaxPaid$ is a function that calculates the amount of taxes to pay given a certain income. The tax benefit is the difference between the taxes due for the salary and those due once all deductions are considered (taxable income).
 
 In SmaRP the taxable Income ($TaxableIncome$) at time $t$ is computed as:
 
-$TaxableIncome(t) = max(Salary(t) - min(TotalContr, MaxContrTax),0)$
+$$ TaxableIncome(t) = max(Salary(t) - min(TotalContr, MaxContrTax),0) $$
 
 where $Salary(t)$ is the salary at year $t$, $TotalContr$ is the sum of the Pillar II and Pillar III purchases and $MaxContrTax$ is the maximum deductable amount allowed by law.
 
@@ -159,32 +152,21 @@ The $TaxPaid$ function is the sum of the federal and kantonal taxes.
 
 The Federal tax at year $t$ is computed as:
 
-$FederalTax(t) = \sum_{t_0}^T(Income(t) *  FederalTaxRate) - 251*Nkids$
+$$ FederalTax(t) = \sum_{t_0}^T(Income(t) *  FederalTaxRate) - 251*Nkids $$
 
-where $Income(t)$ is the income at time $t$, $Nkids$ is the number of kids under 18 and $FederalTaxRate$ is a factor based on the civil status and family structure. 
+where $Income(t)$ is the income at time $t$, $Nkids$ is the number of kids under 18 and $FederalTaxRate$ is a factor based on the civil status and family structure.
 
 <!-- The Federal tax rate can be looked up in the following table. -->
 
-<!-- ```{r, echo = FALSE} -->
-<!-- set.caption('Federal Tax Table') -->
-<!-- pander(params$BundessteueTabelle) -->
-<!-- ``` -->
 
 The kantonal tax at year $t$ is computed as:
-  
-$KantonalTax(t) = \sum_{t_0}^T(Income(t) *  KantonalTaxRate) * (F_{kanton} + F_{municipality} + F_{church)}$
-  
+
+$$ KantonalTax(t) = \sum_{t_0}^T(Income(t) *  KantonalTaxRate) * (F_{kanton} + F_{municipality} + F_{church)} $$
+
 where $Income(t)$ is the income at time $t$, $KantonalTaxRate$ is a factor based on the civil status and family structure,  $F_{kanton}$ is a kanton-dependent multiplication factor, $F_{municipality}$ is a municipality-dependent  multiplication factor and $F_{church}$ is a curch affiliation dependent multiplication factor.
 
 <!-- The Kantonal tax rate for kanton `r params$Kanton` can be looked up in the following table. -->
 
-<!-- `r head(params$tax_rates_Kanton_list[[1]])` -->
-
-<!-- ```{r, echo = FALSE} -->
-<!-- set.caption('Kantonal Tax Table') -->
-<!-- tax_rates_Kanton<- params$tax_rates_Kanton_list[[params$Kanton]] -->
-<!-- pander(tax_rates_Kanton) -->
-<!-- ``` -->
 
 ```{r, echo = FALSE}
 fkanton <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "FactorKanton"]

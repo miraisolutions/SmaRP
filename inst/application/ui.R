@@ -22,13 +22,14 @@ shinyUI(
       # tags$head(
       #   tags$style(HTML("hr {border-top: 1px solid #000000;}"))
       # ),
-      fluidRow(img(src='mirai.png', align = "right",  height = "10%", width = "10%"), style = "margin-top: 10px;margin-right: 30px;margin-bottom: 10px;"),
+      fluidRow(
+        a(href="http://www.mirai-solutions.com", img(src='mirai.png', align = "right",  height = "10%", width = "10%")), style = "margin-top: 10px;margin-right: 30px;margin-bottom: 10px;" ),
       #titlePanel(
         fluidRow(
           id="head1",
           column(1, 
                  fluidRow(),
-                 fluidRow(img(src='SmaRPStiker.png',  height = "110%", width = "110%"), style="margin:10px;")
+                 fluidRow(a(href="https://github.com/miraisolutions/SmaRP.git", img(src='SmaRPStiker.png',  height = "110%", width = "110%")), style="margin:10px;")
                  ),
           column(6,
                  fluidRow(h2("SmaRP:")),
@@ -131,7 +132,7 @@ shinyUI(
                             fluidRow(
                               column( 6,numericInput("Salary", label = h5("Current Annual Salary"), value = 100000, step = 1000, min = 0),
                                       bsTooltip("Salary", IB$Salary, placement = "right", options = list(container = "body"))),
-                              column( 6,numericInput("SalaryGrowthRate", label = h5("Expected salary growth rate"), value = 0.02, step = 0.001, min = 0, max = 0.1),
+                              column( 6,numericInput("SalaryGrowthRate", label = h5("Expected salary growth rate"), value = 0.005, step = 0.001, min = 0, max = 0.1),
                                       bsTooltip("SalaryGrowthRate", IB$SalaryGrowthRate, placement = "right", options = list(container = "body"))),
                               style = "margin-left: 20px;"),
                             fluidRow(
@@ -205,7 +206,9 @@ shinyUI(
     ), #end of FluidRow
     hr(),
     fluidRow(
-      column(9, a(href="https://github.com/miraisolutions/swissretire.git",icon("github-square", "fa-2x"))),
+      column(9, id="git", a(href="https://github.com/miraisolutions/SmaRP.git", icon("github-square", "fa-2x"))# , title=IB$git)#,
+             #bsTooltip("git", IB$git, placement = "right", options = list(container = "body"))
+             ),
       column(3, a(href="http://www.mirai-solutions.com", img(src='mirai.png', align = "right",  height = "20%", width = "40%")), align="right" )
       ,style = " margin-bottom: 10px;" 
       )
