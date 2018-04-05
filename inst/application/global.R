@@ -70,3 +70,6 @@ tax_rates_Kanton_list <- readRDS(system.file("application", "data", "tax_rates_K
 
 #BundessteueTabelle <- readRDS("data/BundessteueTabelle.rds")
 BundessteueTabelle <-  readRDS(system.file("application", "data", "BundessteueTabelle.rds", package = "SmaRP"))
+
+# deduction percentage
+deduction_percentage <- 0.1

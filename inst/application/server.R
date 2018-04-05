@@ -191,6 +191,11 @@ shinyServer(function(input, output, session) {
   })
   
   
+  SalaryProxy <- reactive({ 
+    Salary() - Salary()*deduction_percentage
+  })
+  
+  
   SalaryGrowthRate <- reactive({ if(Inputcase() == "Swiss"){
     isnotAvailableReturnZero(input$SalaryGrowthRate)}
     else if (Inputcase() == "General"){
@@ -261,7 +266,7 @@ shinyServer(function(input, output, session) {
   # calc P2 fund ----
   ContributionP2Path <- reactive({ 
     buildContributionP2Path(birthday = Birthdate(),
-                            Salary = Salary(), #ifelse(input$case == "General", 0, Salary()),
+                            Salary = SalaryProxy(), #ifelse(input$case == "General", 0, Salary()),
                             SalaryGrowthRate = SalaryGrowthRate(),
                             CurrentP2 = CurrentP2(), #ifelse(input$case == "General", 0, CurrentP2()),
                             P2purchase = P2purchase(),
@@ -289,7 +294,7 @@ shinyServer(function(input, output, session) {
                      P2purchase = P2purchase(), 
                      P3purchase = P3purchase(), 
                      returnP3 = returnP3(),
-                     Salary = Salary(), #ifelse(input$case == "General", 0, Salary()),
+                     Salary = SalaryProxy(), #ifelse(input$case == "General", 0, Salary()),
                      SalaryGrowthRate = SalaryGrowthRate(),
                      postalcode = postalcode(),
                      NKids = ifelse(isolate(input$NKids) >5, 5, isolate(input$NKids)),
@@ -400,6 +405,7 @@ shinyServer(function(input, output, session) {
   output$Totals <- renderText({
     paste("Total retirement fund as of", retirementdate(), "is",
           printCurrency(retirementfund()), percentageLastSalary(),
+          SalaryProxy(),
           #currency(),
           sep = " ")
   })
