@@ -472,7 +472,8 @@ shinyServer(function(input, output, session) {
                           percentageLastSalary = percentageLastSalary(),
                           # tax_rates_Kanton_list = tax_rates_Kanton_list,
                           # BundessteueTabelle = BundessteueTabelle,
-                          PLZGemeinden = PLZGemeinden
+                          PLZGemeinden = PLZGemeinden,
+                          deduction_percentage = deduction_percentage
                           )
   )
   
