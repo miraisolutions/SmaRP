@@ -51,6 +51,7 @@ library(pander)
 library(shiny)
 library(lubridate)
 
+
 if (params$case=="General"){
   show_text <- FALSE
 } else {
@@ -62,6 +63,27 @@ if(params$P2purchase + params$P3purchase >0){
 } else {
   show_tax = FALSE
 }
+
+# Convert to Monetary data type ----------------------------------------------------------------
+printCurrency <- function(value,  digits=0, sep=",", decimal=".") { #currency.sym ="",
+  paste(
+    #currency.sym,
+    formatC(value, format = "f", big.mark = sep, digits=digits, decimal.mark=decimal),
+    sep=""
+  )
+}
+
+
+# Make table -------------------------------------------------------------
+
+makeTable <- function(Road2Retirement, moncols){ #, currency=""
+  TableMonetary <- Road2Retirement[, c("calendar", moncols)] %>%
+    mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-"))
+  TableMonetary[, moncols] <- sapply(TableMonetary[, moncols], printCurrency) #, currency
+  return(TableMonetary)
+}
+
+options(warn = -1)
 ```
 
 
@@ -91,7 +113,7 @@ plot2 <-  gvisBarChart(
       yvar = colnames(params$TserieGraphData)[which(colnames(params$TserieGraphData)!="calendar")],
       options = list(wwidth = 1200, height = 500, isStacked = TRUE, legend = "bottom", colors="['#008cc3', '#FF9966', '#13991c']")
     ) 
- 
+
 Road2Retirement_to_print <- params$Road2Retirement %>%
   select(calendar, ExpectedSalaryPath, BVGcontriburionrates, BVGContributions, BVGpurchase, DirectP2, ReturnP2, TotalP2, P3ContributionPath, P3purchase, DirectP3, ReturnP3, TotalP3, DirectTax, ReturnTax, TotalTax, Total) %>%
   rename(P2ContributionPath = BVGContributions) %>%
@@ -103,7 +125,7 @@ Road2Retirement_to_print <- params$Road2Retirement %>%
 deduction_percentage <- 100*params$deduction_percentage
 ```
 
-The total retirement fund as of `r params$retirementdate` is `r params$retirementfund` `r  params$percentageLastSalary`.
+The total retirement fund as of `r params$retirementdate` is `r printCurrency(params$retirementfund)` `r  params$percentageLastSalary`.
 
 This plot represent the time-evolution of the different contributions to the total retirement fund.
 
@@ -152,27 +174,44 @@ The time-dependent data is shown in the following tables.
 
 
 ```{r, echo = FALSE}
+moncols <- c(  "ExpectedSalary", "OccupationalPension", "PrivatePension", "TaxBenefits") 
 set.caption('Detailed Private Pension Fund Contribution')
 Road2Retirement_to_print_Summarized <- Road2Retirement_to_print %>%
   mutate(TaxBenefits = TotalTax) %>%
   mutate(OccupationalPension = DirectP2 + ReturnP2) %>%
   mutate(PrivatePension = DirectP3 + ReturnP3) %>%
   rename(ExpectedSalary = ExpectedSalaryPath) %>%
-  select(calendar,ExpectedSalary, OccupationalPension, PrivatePension, TaxBenefits)
+  select(calendar,ExpectedSalary, OccupationalPension, PrivatePension, TaxBenefits) %>%
+  makeTable(., moncols)
 pander(Road2Retirement_to_print_Summarized)
 ```
 
 ```{r, echo = FALSE, eval=show_text, include=show_text}
+if (show_text){
+moncols <- c(  "P2ContributionPath", "P2purchase", "DirectP2", "ReturnP2", "TotalP2") 
 set.caption('Detailed Occupational Pension Fund Contribution')
 Road2Retirement_to_print_Pillar2 <- Road2Retirement_to_print %>%
-  select(calendar,  P2ContributionPath, P2purchase, DirectP2, ReturnP2, TotalP2)
+  select(calendar,  P2ContributionPath, P2purchase, DirectP2, ReturnP2, TotalP2) %>%
+  makeTable(., moncols)
 pander(Road2Retirement_to_print_Pillar2)
+}
+```
+
+```{r, echo = FALSE, eval=show_text, include=show_text}
+moncols <- c(  "P3ContributionPath", "P3purchase", "DirectP3", "ReturnP3", "TotalP3") 
+set.caption('Detailed Provate Pension Fund Contribution')
+Road2Retirement_to_print_Pillar3 <- Road2Retirement_to_print %>%
+  select(calendar,  P3ContributionPath, P3purchase, DirectP3, ReturnP3, TotalP3) %>%
+  makeTable(., moncols)
+pander(Road2Retirement_to_print_Pillar3)
 ```
 
 ```{r, echo = FALSE, eval=show_tax, include=show_tax}
+moncols <- c(  "DirectTax", "ReturnTax", "TotalTax") 
 set.caption('Detailed Tax Benefit Contribution')
 Road2Retirement_to_print_TaxBenefit <- Road2Retirement_to_print %>%
-  select(calendar, DirectTax, ReturnTax, TotalTax)
+  select(calendar, DirectTax, ReturnTax, TotalTax)%>%
+  makeTable(., moncols)
 pander(Road2Retirement_to_print_TaxBenefit)
 ```
 

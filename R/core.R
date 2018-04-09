@@ -231,7 +231,10 @@ calcAnnuityAcumPath <- function(contributions, t, rate){
   for(i in 2:length(contributions)) {
     res[i] <- (res[i-1] + contributions[i]) * exp(rate * t[i]) 
   }
-  res
+  res1 <- vector()
+  res1[1]<-0
+  res1[2:length(res)]<-res[1:length(res)-1]
+  res1
 }
 
 
@@ -285,7 +288,7 @@ returnSteuerfuss <- function(plz){
 #' @name printCurrency
 #' @example printCurrency(123123.334) 
 #' @export
-printCurrency <- function(value,  digits=2, sep=",", decimal=".") { #currency.sym ="",
+printCurrency <- function(value,  digits=0, sep=",", decimal=".") { #currency.sym ="",
   paste(
     #currency.sym,
     formatC(value, format = "f", big.mark = sep, digits=digits, decimal.mark=decimal),

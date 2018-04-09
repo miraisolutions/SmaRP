@@ -22,9 +22,9 @@ shinyUI(
       # tags$head(
       #   tags$style(HTML("hr {border-top: 1px solid #000000;}"))
       # ),
-      fluidRow(
-        a(href="http://www.mirai-solutions.com", img(src='mirai.png', align = "right",  height = "10%", width = "10%")), style = "margin-top: 10px;margin-right: 30px;margin-bottom: 10px;" ),
-      #titlePanel(
+      # fluidRow(
+      #   a(href="http://www.mirai-solutions.com", img(src='mirai.png', align = "right",  height = "10%", width = "10%")), style = "margin-top: 10px;margin-right: 30px;margin-bottom: 10px;" ),
+      # #titlePanel(
         fluidRow(
           id="head1",
           column(1, 
@@ -87,12 +87,12 @@ shinyUI(
                             fluidRow( tags$h4("Tax Benefits"),style = "margin-left: 20px;"),
                             fluidRow( numericInput("TaxRelief", label = h5("Maximum Tax Relief"), value = 10000, step = 100, min = 0),
                                       bsTooltip("TaxRelief", IB$TaxRelief, placement = "right", options = list(container = "body")),
-                                      style = "margin-left: 30px;"),
+                                      style = "margin-left: 20px;"),
                             fluidRow( numericInput("TaxRate", label = h5("Marginal Tax Rate"), value = 0.1, step = 0.01, min = 0, max = 0.9),
                                       bsTooltip("TaxRate", IB$TaxRate, placement = "right", options = list(container = "body")),
-                                      style = "margin-left: 30px;")
+                                      style = "margin-left: 20px;")
                             #,fluidRow( selectInput("currency", label = h5("Currency"), selected = "CHF", choices = currencies.list)
-                            #          , style = "margin-left: 30px;")
+                            #          , style = "margin-left: 20px;")
                    ), # end General tabPanel
                    tabPanel(title = "Swiss case",
                             value = "Swiss",
@@ -103,23 +103,24 @@ shinyUI(
                                                                              selected = "8001")),
                                                       column( 6, numericInput("NKids", label = h5("Number of Children"), value = 0, min = 0, max = 9),
                                                               bsTooltip("NKids", IB$NKids, placement = "right", options = list(container = "body"))),
-                                                      style = "margin-left: 20px;"),
-                                             conditionalPanel(condition= 'input.provideRetirementAge==""',
-                                                              fluidRow(radioButtons("genre", label = NULL, inline = TRUE,
-                                                                                    choices = list("Male" = "M", "Female" = "F"), 
-                                                                                    selected = "M"),
-                                                                       style = "margin-left: 30px;")
-                                                              ), # end conditional panel
-                                             fluidRow(radioButtons("rate_group", label = NULL, inline = TRUE, 
+                                                      style = "margin-left: 5px;"),
+                                             fluidRow(column( 6,
+                                                   checkboxInput("churchtax", "Church affiliation", FALSE)),
+                                             column(6, 
+                                                    conditionalPanel(condition= 'input.provideRetirementAge==""',
+                                                                     fluidRow(radioButtons("genre", label = NULL, inline = TRUE,
+                                                                                           choices = list("Male" = "M", "Female" = "F"), 
+                                                                                           selected = "M")
+                                                                             ,style = "margin-left: 5px;margin-top:10px;"
+                                                                     )
+                                                    ) # end conditional panel
+                                             ), 
+                                             style = "margin-left: 10px;"),
+                                             fluidRow( radioButtons("rate_group", label = NULL, inline = TRUE, 
                                                                    choices = Rate_group.list, 
                                                                    selected = "A"),
                                                       bsTooltip("rate_group", IB$rate_group, placement = "right", options = list(container = "body")),
-                                                      style = "margin-left: 30px;"), 
-                                             #br(),
-                                             fluidRow(radioButtons("churchtax", label = h5("Church affiliation"), inline = TRUE,
-                                                                   choices = list("Y" = "Y", "N" = "N"), 
-                                                                   selected = "N"),
-                                                      style = "margin-left: 30px;")
+                                                      style = "margin-left: 20px;")
                             ), # end conditional panel
                             hr(),
                             wellPanel(
@@ -134,20 +135,20 @@ shinyUI(
                                       bsTooltip("Salary", IB$Salary, placement = "right", options = list(container = "body"))),
                               column( 6,numericInput("SalaryGrowthRate", label = h5("Expected salary growth rate"), value = 0.005, step = 0.001, min = 0, max = 0.1),
                                       bsTooltip("SalaryGrowthRate", IB$SalaryGrowthRate, placement = "right", options = list(container = "body"))),
-                              style = "margin-left: 20px;"),
+                              style = "margin-left: 5px;"),
                             fluidRow(
                               column( 6, numericInput("CurrentP2", label = h5("Current BVG assets"), value = 100000, step = 1000, min = 0),
                                       bsTooltip("CurrentP2", IB$CurrentP2, placement = "right", options = list(container = "body"))),
                               column( 6, numericInput("P2interestRate", label = h5("Interest Rate % (optional)"), value = 100*BVGparams$BVGMindestzinssatz, step = 1, min = 100*BVGparams$BVGMindestzinssatz, max = 100),
                                       bsTooltip("P2interestRate", IB$P2interestRate, placement = "right", options = list(container = "body"))),
-                              style = "margin-left: 20px;"),
+                              style = "margin-left: 5px;"),
                             #br(),
                             fluidRow(
                               column( 6, numericInput("P2purchase", label = h5("Voluntary purchases"), value = 0, step = 500, min = 0),
                                       bsTooltip("P2purchase", IB$P2purchase, placement = "right", options = list(container = "body"))),
                               column( 6, radioButtons("TypePurchase", label = NULL, inline = FALSE,  choices = Purchase.list),
                                       bsTooltip("TypePurchase", IB$TypePurchase, placement = "right", options = list(container = "body")), style = "margin-top: 20px;"),
-                              style = "margin-left: 20px;")#,
+                              style = "margin-left: 5px;")#,
                             # hr(),
                             # fluidRow( 
                             #   wellPanel(
@@ -159,7 +160,7 @@ shinyUI(
                             #   #,style = "margin-left: 30px;"
                             #   ),
                             # br()
-                   ) #  end Swiss tabPanel
+                  ) #  end Swiss tabPanel
                  ) # end of tabsetPanel
                ) # end of tab panel
              ) # end of tabsetPanel

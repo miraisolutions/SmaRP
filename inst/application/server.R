@@ -148,14 +148,7 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  NKids_notzero <- reactive({  isnotAvailableReturnZero(input$NKids)  })
-  NKids <- reactive({
-    if(NKids_notzero() >5){
-      5
-    }else{
-      NKids_notzero()
-    }
-  })
+  NKids <- reactive({  isnotAvailableReturnZero(input$NKids)  })
   
   rate_group <- reactive({
     if(Inputcase() == "Swiss" & !input$provideTaxRateSwiss){
@@ -168,16 +161,13 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  churchtax <- reactive(({
-    if(Inputcase() == "Swiss" & !input$provideTaxRateSwiss){
-      validate(
-        need(input$churchtax, "Please provide a valid religous status")
-      )
-      input$churchtax
-    } else {
-      "N"
-    }
-  }))
+  churchtax <- reactive({
+      if(input$churchtax == TRUE){
+        "Y"
+      } else {
+        "N"
+      }
+  })
   
   Salary <- reactive({ 
     #isnotAvailableReturnZero(input$Salary)})
