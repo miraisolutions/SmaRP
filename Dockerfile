@@ -19,11 +19,13 @@ RUN apt-get update && apt-get install -y \
 # Install needed packages
 RUN install2.r --error \
     dplyr \
+    ggplot2 \
     googleVis \
     kableExtra \
     lubridate \
     magrittr \
     pander \
+    reshape2 \
     rmarkdown \
     shiny \
     shinyBS \
