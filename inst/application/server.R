@@ -363,6 +363,7 @@ shinyServer(function(input, output, session) {
     cbind(FotoFinish(), FotoFinish()) %>%
       set_colnames(c(colnames(FotoFinish()), paste0(colnames(FotoFinish()), ".annotation"))) %>%
       mutate(contribution = "") %>%
+      changeToPercentage() %>%
       .[, order(colnames(.))]
   })
   
@@ -373,7 +374,8 @@ shinyServer(function(input, output, session) {
       xvar = "contribution",
       yvar= colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
       options = list(width = 600, height = 130, isStacked = TRUE, vAxes = "[{minValue:0}]", 
-                     legend = "none", colors=miraiColors(), opacity = 0.3)
+                     legend = "none", colors=miraiColors(), opacity = 0.3,
+                     hAxis="{format:'#,###%'}")
     )
   })
   
