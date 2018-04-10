@@ -17,3 +17,18 @@ IB <- list(CurrentP3 = "Current retirement assets in your Private Pension Fund."
            P2interestRate = "Interest Rate on the Occupational Pension Fund return. If not provided, the minimum by low is used.",
            git = "Redirect to git repository."
 ) 
+
+# Validity Message
+VM <-list(genre = "Gender is a mandatory input when the date of retirement is not provided.",
+           Birthdate = "Birthdate is a mandatory input.",
+           RetirementAge = "Provide the desired retirement age.",
+           need_not_zero_base = "Provide a non zero value for ",
+           CurrentP3_notZero = "Private Pension Fund.",
+           CurrentP3_CurrentP2_Salary_Purchases_notZero = "either Salary, Private Pension Fund, Occupational Pension Fund or funds purchases.",
+           returnP3_notzero= "Private Pension Fund return.",
+           postalcode = "Provide a valid postalcode.",
+           rate_group = "Provide a valid civil status.",
+           Salary = "Provide a non-zero Income.",
+           TypePurchase = "Provide a valid Occupational Pension Fund purchase type.",
+           TaxRateSwiss = "Provide a valid Tax Rate."
+)

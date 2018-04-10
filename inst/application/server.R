@@ -41,7 +41,7 @@ shinyServer(function(input, output, session) {
   
   Birthdate <- reactive({
     validate(
-      need(input$Birthdate, 'Birthdate is a mandatory input')
+      need(input$Birthdate, VM$Birthdate)
     )
     input$Birthdate
   })
@@ -49,7 +49,7 @@ shinyServer(function(input, output, session) {
   genre <- reactive({
     if(Inputcase() == "Swiss" & !input$provideRetirementAge){
       validate(
-        need(input$genre, "Please provide your genre")
+        need(input$genre, VM$genre)
       )
       input$genre
     } else {
@@ -69,7 +69,7 @@ shinyServer(function(input, output, session) {
   RetirementAge <- reactive({
     if(input$provideRetirementAge){
       validate(
-        need(input$RetirementAge, 'Please provide the desired retirement age')
+        need(input$RetirementAge, VM$RetirementAge)
       )
       input$RetirementAge
     } else if(Inputcase() == "General"){
@@ -89,12 +89,12 @@ shinyServer(function(input, output, session) {
   CurrentP3 <-reactive({
     if (Inputcase() == "General") {
       validate(
-        need_not_zero(CurrentP3_notZero(), "Pillar III value")
+        need_not_zero(CurrentP3_notZero(), VM$CurrentP3_notZer)
       )
       CurrentP3_notZero()
     } else if (   Inputcase() == "Swiss" & P3purchase()==0 & Salary() == 0 &  CurrentP2() == 0 & P2purchase()==0){
       validate(
-        need_not_zero(CurrentP3_notZero(), "either Salary, Pillar II or Pillar III value")
+        need_not_zero(CurrentP3_notZero(), VM$CurrentP3_CurrentP2_Salary_Purchases_notZero)
       )
       CurrentP3_notZero()
     }    else {
@@ -108,12 +108,12 @@ shinyServer(function(input, output, session) {
   returnP3 <- reactive({
     if (Inputcase() == "General") {
       validate(
-        need_not_zero(returnP3_notzero(), "Pillar III Return")
+        need_not_zero(returnP3_notzero(), VM$returnP3_notzero)
       )
       returnP3_notzero()
     } else if (   Inputcase() == "Swiss" & CurrentP3() == 0 & P3purchase()==0 & Salary() == 0 &  CurrentP2() == 0 & P2purchase()==0){
       validate(
-        need_not_zero(returnP3_notzero(), "either Salary, Pillar II or Pillar III value")
+        need_not_zero(returnP3_notzero(), VM$CurrentP3_CurrentP2_Salary_Purchases_notZero)
       )
       returnP3_notzero()
     } else{
@@ -148,7 +148,7 @@ shinyServer(function(input, output, session) {
   postalcode <- reactive({
     if(Inputcase() == "Swiss" & !input$provideTaxRateSwiss){
       validate(
-        need(input$postalcode, "Please provide a valid postalcode")
+        need(input$postalcode, VM$postalcode)
       )
       input$postalcode
     }else{
@@ -161,7 +161,7 @@ shinyServer(function(input, output, session) {
   rate_group <- reactive({
     if(Inputcase() == "Swiss" & !input$provideTaxRateSwiss){
       validate(
-        need(input$rate_group, "Please provide a valid civil status")
+        need(input$rate_group, VM$rate_group)
       )
       input$rate_group
     } else{
@@ -181,7 +181,7 @@ shinyServer(function(input, output, session) {
     #isnotAvailableReturnZero(input$Salary)})
     if(Inputcase() == "Swiss"){
       validate(
-        need(input$Salary, "Please provide a non zero Salary")
+        need(input$Salary, VM$Salary)
       )
       input$Salary}
     else if (Inputcase() == "General") {
@@ -226,7 +226,7 @@ shinyServer(function(input, output, session) {
   TypePurchase <- reactive({
     if(Inputcase() =="Swiss"){
       validate(
-        need(input$TypePurchase, "please provide a valid Pillar 2 Purchase Type")
+        need(input$TypePurchase, VM$TypePurchase)
       )
       input$TypePurchase
     } else {
@@ -252,7 +252,7 @@ shinyServer(function(input, output, session) {
       isnotAvailableReturnZero(input$TaxRate)
     } else if(Inputcase() == "Swiss" & input$provideTaxRateSwiss){
       validate(
-        need(input$TaxRateSwiss, "Please provided the Tax Rate")
+        need(input$TaxRateSwiss, VM$TaxRateSwiss)
       )
       input$TaxRateSwiss
     } else{
@@ -260,6 +260,7 @@ shinyServer(function(input, output, session) {
     }
   })
   
+# Calculations ------------------  
   
   # calc P2 fund ----
   ContributionP2Path <- reactive({ 
