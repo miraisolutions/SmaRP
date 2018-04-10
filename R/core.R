@@ -96,8 +96,8 @@
 #' @example buildt("1981-08-12")
 #' @export
 buildt <- function(birthday, givenday = today("UTC"), RetirementAge = 65){
-  calendar = getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge)
-  t = c(as.vector(diff(calendar)/365), 0)
+  calendar = getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge +1 )
+  t = c(as.vector(diff(calendar)/365))
   return(t)
 }
 
@@ -190,9 +190,9 @@ calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
 #' @export
 calcBVGpurchase <- function(TypePurchase, P2purchase, ncp){
   if (TypePurchase == "AnnualP2") {
-    BVGpurchase <- rep(P2purchase, ncp)
+    BVGpurchase <- c(0, rep(P2purchase, ncp-1))
   } else {
-    BVGpurchase <- c(P2purchase, rep(0, ncp -1))
+    BVGpurchase <- c(0, P2purchase, rep(0, ncp -2))
   }
 }
 
@@ -212,7 +212,7 @@ buildContributionP3path <- function(birthday,
   ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge = RetirementAge ))
   ncp <- nrow(ContributionP3Path) 
   ContributionP3Path %<>% within({
-    P3purchase = rep(P3purchase, ncp)
+    P3purchase = c(0, rep(P3purchase, ncp-1))
     P3ContributionPath = P3purchase + c(CurrentP3, rep(0, ncp -1))
     t = buildt(birthday, RetirementAge = RetirementAge )
     TotalP3 = calcAnnuityAcumPath(P3ContributionPath, t, returnP3)
@@ -225,17 +225,26 @@ buildContributionP3path <- function(birthday,
 #' @name calcAnnuityAcumPath
 #' @example calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000), t = c(0.284931, 1, 1, 1, 0), rate = 0.01)
 #' @export
+# calcAnnuityAcumPath <- function(contributions, t, rate){
+#   res <- vector()
+#   res[1] <- contributions[1] * exp(rate * t[1])
+#   for(i in 2:length(contributions)) {
+#     res[i] <- (res[i-1] + contributions[i]) * exp(rate * t[i]) 
+#   }
+#   res1 <- vector()
+#   res1[1]<-0
+#   res1[2:length(res)]<-res[1:length(res)-1]
+#   res1
+# }
 calcAnnuityAcumPath <- function(contributions, t, rate){
   res <- vector()
-  res[1] <- contributions[1] * exp(rate * t[1])
+  res[1] <- contributions[1]
   for(i in 2:length(contributions)) {
-    res[i] <- (res[i-1] + contributions[i]) * exp(rate * t[i]) 
+    res[i] <- res[i-1]* exp(rate * t[i])  + contributions[i]
   }
-  res1 <- vector()
-  res1[1]<-0
-  res1[2:length(res)]<-res[1:length(res)-1]
-  res1
+  res
 }
+
 
 
 #' @name downloadPLZ

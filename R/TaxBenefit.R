@@ -51,7 +51,7 @@ buildTaxBenefits <- function(birthday,
   ncp <- nrow(TaxBenefitsPath) 
   TaxBenefitsPath %<>% within({
     BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
-    P3purchase = rep(P3purchase, ncp)
+    P3purchase = c(0, rep(P3purchase, ncp-1))
     TotalContr = BVGpurchase + P3purchase
     ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
     TaxableIncome = pmax(ExpectedSalaryPath - pmin(TotalContr, MaxContrTax),0)
