@@ -82,7 +82,7 @@ URLs <- list(
 )
 
 lapply(URLs, function(x) {
-  download.file(x, paste0("inst//application//data//taxdata//", gsub("URL_", "", x), ".pdf"), mode="wb")
+  download.file(x, paste0("data//taxdata//", gsub("URL_", "", x), ".pdf"), mode="wb")
 })
 
 
