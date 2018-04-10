@@ -53,22 +53,32 @@ options(stringsAsFactors = FALSE)
 
 # URLs -----
 URLs <- list(
-  URL_ZH_KantonTaxRates = "https://www.steueramt.zh.ch/internet/finanzdirektion/ksta/de/steuerberechnung/steuertarife/_jcr_content/contentPar/downloadlist/downloaditems/steuertarife_2017_f_.spooler.download.1519312936206.pdf/Steuertarif_2017_Staatssteuer_Bundessteuer.pdf",
-  URL_BE_KantonTaxRates = "http://www.fin.be.ch/fin/de/index/steuern/ratgeber/publikationen/wegleitungen.assetref/dam/documents/FIN/SV/de/Wegleitungen/Aktuelles_Steuerjahr/wl_natuerliche-personen_de.pdf",
-  URL_LU_KantonTaxRates =  "http://srl-pdf.lu.ch/620Einkommenstabelle_klein_%C2%A757_01.07.2014_XML.pdf",
-  URL_SG_KantonTaxRates = "https://www.steuern.sg.ch/home/sachthemen/eservices/steuerfuesse_im_kanton/_jcr_content/Par/downloadlist/DownloadListPar/download.ocFile/Stg%2010-(Splitting-)%20gerundet_f%C3%BCr_Internet%20V2.pdf",
-  URL_TI_KantonTaxRates = "https://www4.ti.ch/fileadmin/DFE/DC/DOC-IPF/2017/Istruzioni_PF__2017.pdf",
-  URL_VD_KantonTaxRates = "https://www.vd.ch/fileadmin/user_upload/organisation/dfin/aci/fichiers_pdf/Bareme_revenu_2012_14.pdf",
+  URL_AG_GemeindeTaxRates = "https://www.ag.ch/media/kanton_aargau/dfr/dokumente_3/steuern/natuerliche_personen/berechnung_tarife_np/2018_Steuerfuesse1.pdf",
   URL_AG_KantonTaxRates = "https://www.ag.ch/media/kanton_aargau/dfr/dokumente_3/steuern/natuerliche_personen/berechnung_tarife_np/2015_tarif_einkommenssteuer.pdf",
+  URL_BE_KantonTaxRates = "http://www.fin.be.ch/fin/de/index/steuern/ratgeber/publikationen/wegleitungen.assetref/dam/documents/FIN/SV/de/Wegleitungen/Aktuelles_Steuerjahr/wl_natuerliche-personen_de.pdf",
+  # URL_BS_GemeindeTaxRates = 3 Gemeinde (Basel Stadt, Bettingen, Riehen)
+  URL_BS_KantonTaxRates = "http://www.steuerverwaltung.bs.ch/dam/jcr:ac657f62-6da2-41d4-b045-6d486d5b5648/17000_mb_np_tar_ab2014.pdf",
   URL_GE_KantonTaxRates = "https://www.ge.ch/document/7102/telecharger",
-  URL_VS_KantonTaxRates = "https://lex.vs.ch/frontend/versions/2125/download_pdf_file",
-  
+  URL_LU_KantonTaxRates =  "http://srl-pdf.lu.ch/620Einkommenstabelle_klein_%C2%A757_01.07.2014_XML.pdf",
+  URL_NE_GemeindeTaxRates = "https://www.ne.ch/autorites/DEAS/STAT/domaines/Documents/18_2_5.xlsx",
+  URL_NE_KantonTaxRates = "https://www.ne.ch/autorites/DFS/SCCO/Documents/PP/bareme_reference_revenu_coeff100_2017.pdf",
+  URL_SG_GemeindeTaxRates = "https://www.steuern.sg.ch/home/sachthemen/eservices/steuerfuesse_im_kanton/_jcr_content/Par/downloadlist_0/DownloadListPar/download_1920277742.ocFile/Steuerf%C3%BCsse%202017.pdf",
+  URL_SG_KantonTaxRates = "https://www.steuern.sg.ch/home/sachthemen/eservices/steuerfuesse_im_kanton/_jcr_content/Par/downloadlist/DownloadListPar/download.ocFile/Stg%2010-(Splitting-)%20gerundet_f%C3%BCr_Internet%20V2.pdf",
+  URL_SH_GemeindeTaxRates = "https://www.sh.ch/Steuerfuesse-2018.5073.0.html",
+  URL_SH_KantonTaxRates = "https://www.sh.ch/fileadmin/Redaktoren/Dokumente/Steuerverwaltung/2010_Einkommenssteuer.pdf",
+  URL_SZ_GemeindeTaxRates = "https://www.sz.ch/public/upload/assets/32701/Steuerfusstabelle_2018_Internet.pdf",
+  URL_SZ_KantonTaxRates = "https://www.sz.ch/public/upload/assets/18207/stb_90.10_tarif_2015.pdf",
+  URL_TI_KantonTaxRates = "https://www4.ti.ch/fileadmin/DFE/DC/DOC-IPF/2017/Istruzioni_PF__2017.pdf",
   URL_UR_GemeindeTaxRates = "http://www.ur.ch/dl.php/de/5a3b5d3790e10/Steuerfuss_EWG_ab2009_18.pdf",
   URL_UR_KirchgemeindenTaxRates = "http://www.ur.ch/dl.php/de/5a3b5d7792502/Steuerfuss_KIG_ab2009_18.pdf",
-  URL_SG_GemeindeTaxRates = "https://www.steuern.sg.ch/home/sachthemen/eservices/steuerfuesse_im_kanton/_jcr_content/Par/downloadlist_0/DownloadListPar/download_1920277742.ocFile/Steuerf%C3%BCsse%202017.pdf",
   URL_VD_GemeindeTaxRates = "https://www.vd.ch/fileadmin/user_upload/organisation/dfin/aci/fichiers_pdf/Impots_communaux_2018.pdf",
-  URL_AG_GemeindeTaxRates = "https://www.ag.ch/media/kanton_aargau/dfr/dokumente_3/steuern/natuerliche_personen/berechnung_tarife_np/2018_Steuerfuesse1.pdf",
-  URL_VS_GemeindeTaxRates = "https://www.vs.ch/documents/508074/628286/Coefficients_Indexations_Communes_2012-2017.pdf/271f3629-9dff-4b49-b828-0e70fd932549"
+  URL_VD_KantonTaxRates = "https://www.vd.ch/fileadmin/user_upload/organisation/dfin/aci/fichiers_pdf/Bareme_revenu_2012_14.pdf",
+  URL_VS_GemeindeTaxRates = "https://www.vs.ch/documents/508074/628286/Coefficients_Indexations_Communes_2012-2017.pdf/271f3629-9dff-4b49-b828-0e70fd932549",
+  URL_VS_KantonTaxRates = "https://lex.vs.ch/frontend/versions/2125/download_pdf_file",
+  URL_ZG_GemeindeTaxRates = "https://www.zg.ch/behoerden/finanzdirektion/steuerverwaltung/steuerfuss/download/steuerfuesse-2018.pdf/download",
+  URL_ZG_KantonTaxRates_Married = "https://www.zg.ch/behoerden/finanzdirektion/steuerverwaltung/steuertarif/download/steuertarife-verheiratete-ab-2001/download",
+  URL_ZG_KantonTaxRates_Singles = "https://www.zg.ch/behoerden/finanzdirektion/steuerverwaltung/steuertarif/download/steuertarife-alleinstehende-ab-2001/download",
+  URL_ZH_KantonTaxRates = "https://www.steueramt.zh.ch/internet/finanzdirektion/ksta/de/steuerberechnung/steuertarife/_jcr_content/contentPar/downloadlist/downloaditems/steuertarife_2017_f_.spooler.download.1519312936206.pdf/Steuertarif_2017_Staatssteuer_Bundessteuer.pdf"
 )
 
 lapply(URLs, function(x) {
@@ -125,7 +135,7 @@ saveRDS(tax_rates_Kanton_list, "inst/application/data/tax_rates_Kanton_list.rds"
 # >> ZH ----
 .cleanZH <- function(ZH_KantonTaxRates) {
   TarifTable <- ZH_KantonTaxRates %>%
-    .[grepl("bis|über*", .)] %>%
+    .[grepl("bis|Ã¼ber*", .)] %>%
     strsplit("\\s+") %>%
     .helper_cuts_tax(c(2, 5)) %>%
     rbind(data.frame(cuts = 1E6, tax = 0))
@@ -167,7 +177,7 @@ paircols <- list(c(1, 3), c(4, 6), c(7, 9))
 }
 
 GTtarif <- .cleanBE(BE_KantonTaxRates[1:grep("^Verheiratete und Einelternfamilien", BE_KantonTaxRates)]) 
-VTtarif <- .cleanBE(BE_KantonTaxRates[grep("^Verheiratete und Einelternfamilien", BE_KantonTaxRates) : grep("^Vermögen\r", BE_KantonTaxRates)]) 
+VTtarif <- .cleanBE(BE_KantonTaxRates[grep("^Verheiratete und Einelternfamilien", BE_KantonTaxRates) : grep("^VermÃ¶gen\r", BE_KantonTaxRates)]) 
 
 BE <- .combine_subset_VT_GT(GTtarif, VTtarif) 
 
