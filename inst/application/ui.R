@@ -115,12 +115,12 @@ shinyUI(
                                                                      )
                                                     ) # end conditional panel
                                              ), 
-                                             style = "margin-left: 10px;"),
+                                             style = "margin-left: 5px;"),
                                              fluidRow( radioButtons("rate_group", label = NULL, inline = TRUE, 
                                                                    choices = Rate_group.list, 
                                                                    selected = "A"),
                                                       bsTooltip("rate_group", IB$rate_group, placement = "right", options = list(container = "body")),
-                                                      style = "margin-left: 20px;")
+                                                      style = "margin-left: 25px;")
                             ), # end conditional panel
                             hr(),
                             wellPanel(
