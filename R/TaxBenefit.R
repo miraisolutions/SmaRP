@@ -3,11 +3,14 @@
 
 
 #' @name lookupTaxRate
-#' @example lookupTaxRate(Income=100000, Tabelle=tax_rates_Kanton_list[["ZH"]], CivilSatus="A")
+#' @examples
+#' \dontrun{
+#' lookupTaxRate(Income = 100000, Tabelle = tax_rates_Kanton_list[["ZH"]], CivilStatus = "A")
+#' }
 #' @export
-lookupTaxRate <- function(Income, Tabelle, CivilSatus){
+lookupTaxRate <- function(Income, Tabelle, CivilStatus){
   #Define column to pick
-  if(CivilSatus =="A"){
+  if(CivilStatus =="A"){
     CivilStatusColumn <-"taxAmountSingle"
   } else{
     CivilStatusColumn <-"taxAmountMarried"
@@ -26,7 +29,9 @@ lookupTaxRate <- function(Income, Tabelle, CivilSatus){
 
 #' @name buildTaxBenefits
 #' @importFrom dplyr select
-#' @example buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3, Salary, SalaryGrowthRate, postalcode, NKids, churchtax, rate_group, MaxContrTax, tax_rates_Kanton_list, BundessteueTabelle, givenday = today("UTC", RetirementAge =65, PLZGemeinden))
+#' @examples
+#' \dontrun{buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3, Salary, SalaryGrowthRate, postalcode, NKids, churchtax, rate_group, MaxContrTax, tax_rates_Kanton_list, BundessteueTabelle, givenday = today("UTC", RetirementAge =65, PLZGemeinden))
+#' }
 #' @export
 buildTaxBenefits <- function(birthday,
                              TypePurchase,
@@ -70,7 +75,10 @@ buildTaxBenefits <- function(birthday,
 }
 
 #' @name calcTaxBenefitGeneral
-#' @example calcTaxBenefit(rep(6500,10), rep(0.1, 10), 6000)
+#' @examples
+#' \dontrun{
+#' calcTaxBenefit(rep(6500,10), rep(0.1, 10), 6000)
+#' }
 #' @export
 calcTaxBenefitGeneral <- function(TotalContr, TaxRatePath, MaxContrTax) {
   TaxBenefits <- vector()
@@ -83,7 +91,10 @@ calcTaxBenefitGeneral <- function(TotalContr, TaxRatePath, MaxContrTax) {
 
 
 #' @name calcTaxBenefitSwiss
-#' @example calcTaxBenefit(rep(6500,10), rep(0.1, 10), 6000)
+#' @examples
+#' \dontrun{
+#' calcTaxBenefit(rep(6500,10), rep(0.1, 10), 6000)
+#' }
 #' @export
 calcTaxBenefitSwiss <- function(ExpectedSalaryPath, TaxableIncome, postalcode, NKids, churchtax, rate_group, tax_rates_Kanton_list, BundessteueTabelle, PLZGemeinden){
   TaxAmountGrossIncome <- sapply(ExpectedSalaryPath, getTaxAmount,postalcode, NKids, churchtax, rate_group, tax_rates_Kanton_list, BundessteueTabelle, PLZGemeinden)
@@ -93,7 +104,6 @@ calcTaxBenefitSwiss <- function(ExpectedSalaryPath, TaxableIncome, postalcode, N
 }
 
 #' @name getTaxAmount
-#' @example 
 #' @export
 getTaxAmount <- function(Income, postalcode, NKids, churchtax, rate_group, tax_rates_Kanton_list, BundessteueTabelle, PLZGemeinden){  
   TaxAmountFederal<- lookupTaxRate(Income, BundessteueTabelle, rate_group) - 251*NKids

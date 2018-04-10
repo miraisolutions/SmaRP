@@ -93,7 +93,10 @@
 
 
 #' @name buildt
-#' @example buildt("1981-08-12")
+#' @examples
+#' \dontrun{
+#' buildt("1981-08-12")
+#' }
 #' @export
 buildt <- function(birthday, givenday = today("UTC"), RetirementAge = 65){
   calendar = getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge)
@@ -111,7 +114,10 @@ calcAge <- function(birthday, givenday = today("UTC")) {
 
 #' @name getRetirementday
 #' @importFrom lubridate ymd years
-#' @example getRetirementday("1981-08-12")
+#' @examples
+#' \dontrun{
+#' getRetirementday("1981-08-12")
+#' }
 #' @export
 getRetirementday <- function(birthday, RetirementAge = 65) {
   retirementday <- ymd(birthday) + years(RetirementAge)
@@ -120,7 +126,10 @@ getRetirementday <- function(birthday, RetirementAge = 65) {
 
 #' @name getRetirementCalendar
 #' @importFrom lubridate today ymd years year month day
-#' @example getRetirementCalendar("1981-08-12")
+#' @examples
+#' \dontrun{
+#' getRetirementCalendar("1981-08-12")
+#' }
 #' @export
 getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementAge = 65){
   retirementday <- getRetirementday(birthday, RetirementAge)
@@ -138,7 +147,10 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 #' @name buildContributionP2Path
 #' @importFrom dplyr mutate left_join
 #' @importFrom magrittr '%>%' '%<>%' 
-#' @example buildContributionP2Path(birthday, Salary, SalaryGrowthRate, CurrentP2, P2purchase, TypePurchase, BVGMindestzinssatz, givenday = today("UTC")) %>% print
+#' @examples
+#' \dontrun{
+#' buildContributionP2Path(birthday, Salary, SalaryGrowthRate, CurrentP2, P2purchase, TypePurchase, BVGMindestzinssatz, givenday = today("UTC")) %>% print
+#' }
 #' @export
 buildContributionP2Path <- function(birthday,
                                     Salary,
@@ -178,7 +190,10 @@ buildContributionP2Path <- function(birthday,
 }
 
 #' @name calcExpectedSalaryPath
-#' @example calcExpectedSalaryPath(90000, 0.02, 20)
+#' @examples
+#' \dontrun{
+#' calcExpectedSalaryPath(90000, 0.02, 20)
+#' }
 #' @export
 calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
   nrise <- ncp - 2 #No rise current and last appraissal  
@@ -186,7 +201,10 @@ calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
 }
 
 #' @name calcBVGpurchase
-#' @example calcBVGpurchase(TypePurchase = "AnnualP2", P2purchase = 2000, ncp = 25) %>% print
+#' @examples
+#' \dontrun{
+#' calcBVGpurchase(TypePurchase = "AnnualP2", P2purchase = 2000, ncp = 25) %>% print
+#' }
 #' @export
 calcBVGpurchase <- function(TypePurchase, P2purchase, ncp){
   if (TypePurchase == "AnnualP2") {
@@ -199,7 +217,10 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp){
 #' @name buildContributionP3path
 #' @importFrom dplyr mutate
 #' @importFrom magrittr '%>%' '%<>%' 
-#' @example buildContributionP3path(birthday, P3purchase, CurrentP3, returnP3) %>% print
+#' @examples
+#' \dontrun{
+#' buildContributionP3path(birthday, P3purchase, CurrentP3, returnP3) %>% print
+#' }
 #' @export
 buildContributionP3path <- function(birthday, 
                                     P3purchase,
@@ -223,7 +244,10 @@ buildContributionP3path <- function(birthday,
 }
 
 #' @name calcAnnuityAcumPath
-#' @example calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000), t = c(0.284931, 1, 1, 1, 0), rate = 0.01)
+#' @examples
+#' \dontrun{
+#' calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000), t = c(0.284931, 1, 1, 1, 0), rate = 0.01)
+#' }
 #' @export
 calcAnnuityAcumPath <- function(contributions, t, rate){
   res <- vector()
@@ -239,7 +263,10 @@ calcAnnuityAcumPath <- function(contributions, t, rate){
 
 
 #' @name downloadPLZ
-#' @example downloadPLZ(refresh=TRUE) 
+#' @examples
+#' \dontrun{
+#' downloadPLZ(refresh=TRUE)
+#' }
 #' @export
 downloadInputs <- function(refresh){
   if(refresh){
@@ -286,7 +313,10 @@ returnSteuerfuss <- function(plz){
 
 # Convert to Monetary data type  -----------------------------------------------------------------
 #' @name printCurrency
-#' @example printCurrency(123123.334) 
+#' @examples
+#' \dontrun{
+#' printCurrency(123123.334)
+#' }
 #' @export
 printCurrency <- function(value,  digits=0, sep=",", decimal=".") { #currency.sym ="",
   paste(
@@ -299,7 +329,10 @@ printCurrency <- function(value,  digits=0, sep=",", decimal=".") { #currency.sy
 
 # Make table -------------------------------------------------------------
 #' @name makeTable 
-#' @example makeTable(Road2Retirement) 
+#' @examples
+#' \dontrun{
+#' makeTable(Road2Retirement)
+#' }
 #' @export
 makeTable <- function(Road2Retirement){ #, currency=""
   moncols <- c( "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")

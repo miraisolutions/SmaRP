@@ -24,7 +24,7 @@ rate = BVGparams$BVGMindestzinssatz
 
 
 test_that(paste0("test lookup on kanton taxrate table for Income", Salary, " Kanton ", kanton, " and Civil Status ", rate_group), {
-  TaxRate <- lookupTaxRate(Income=Salary, Tabelle, CivilSatus=rate_group)
+  TaxRate <- lookupTaxRate(Income=Salary, Tabelle, CivilStatus=rate_group)
   expect_equal(TaxRate, 2848.67, tolerance=1e-3)
 })
 
