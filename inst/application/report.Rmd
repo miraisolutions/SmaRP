@@ -43,11 +43,13 @@ params:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
 library(googleVis)
 library(dplyr)
 library(knitr)
 library(kableExtra)
 library(pander)
+library(reshape2)
 library(shiny)
 library(lubridate)
 
@@ -130,13 +132,28 @@ The total retirement fund as of `r params$retirementdate` is `r printCurrency(pa
 This plot represent the time-evolution of the different contributions to the total retirement fund.
 
 ```{r, echo = FALSE}
-webshot::webshot(plot(plot1), file = "TimeSeriesPlot.png", delay = 5)
+tserieGraphData.columns <- setdiff(names(params$TserieGraphData), "calendar")
+
+tserieGraphData.long <- melt(params$TserieGraphData,
+                             id = "calendar",
+                             measure = tserieGraphData.columns)
+
+ggplot(tserieGraphData.long, aes(x = calendar, y = value, fill = variable)) +
+  geom_area()
 ```
 
 This plot represent the percentage of  each contribution to the total retirement fund.
 
-```{r}
-webshot::webshot(plot(plot2), file = "BarChart.png", delay = 5)
+```{r, echo = FALSE}
+barGraphData.columns <- setdiff(names(params$BarGraphData), "contribution")
+barGraphData.columns <- grep("annotation$", barGraphData.columns, value = TRUE, invert = TRUE)
+barGraphData.long <- melt(params$BarGraphData,
+                          id = "contribution",
+                          measure = barGraphData.columns)
+
+ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variable))+
+  geom_bar(stat = "identity") +
+  coord_flip()
 ```
 
 

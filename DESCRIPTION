@@ -10,11 +10,13 @@ LazyData: true
 RoxygenNote: 6.0.1
 Imports:
     dplyr,
+    ggplot2,
     googleVis,
     kableExtra,
     lubridate,
     magrittr,
     pander,
+    reshape2,
     rmarkdown,
     shiny,
     shinyBS,
