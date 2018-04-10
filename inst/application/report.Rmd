@@ -137,9 +137,16 @@ tserieGraphData.columns <- setdiff(names(params$TserieGraphData), "calendar")
 tserieGraphData.long <- melt(params$TserieGraphData,
                              id = "calendar",
                              measure = tserieGraphData.columns)
+tserieGraphData.long$variable <- factor(tserieGraphData.long$variable,
+                                        levels = sort(unique(tserieGraphData.long$variable),
+                                                      decreasing = TRUE))
 
 ggplot(tserieGraphData.long, aes(x = calendar, y = value, fill = variable)) +
-  geom_area()
+  scale_fill_manual(NULL, values = c("OccupationalPension" = "#008cc3", "PrivatePension" = "#FF9966", "TaxBenefits" = "#13991c")) +
+  scale_y_continuous(labels = scales::comma) +
+  labs(x = NULL, y = NULL) +
+  geom_area(alpha = 0.7) +
+  theme(aspect.ratio = 0.6)
 ```
 
 This plot represent the percentage of  each contribution to the total retirement fund.
@@ -156,7 +163,7 @@ barGraphData.long$variable <- factor(barGraphData.long$variable,
                                                    decreasing = TRUE))
 
 ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variable, label = value)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", alpha = 0.7) +
   geom_text(aes(label = sprintf("%1.0f%%", 100 * value)), size = 3, position = position_stack(vjust = 0.5)) +
   scale_y_continuous(labels = scales::percent) +
   coord_flip() +
