@@ -179,7 +179,9 @@ shinyUI(
                
                tabPanel(title = "Table", 
                         value = "Table", 
-                        htmlOutput("table")
+                        div(style='width:800px; overflow-x: scroll',
+                            htmlOutput("table")
+                        )
                ) # end tab Table
                
              ), # end tabsetPanel
