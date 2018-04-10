@@ -150,10 +150,15 @@ barGraphData.columns <- grep("annotation$", barGraphData.columns, value = TRUE, 
 barGraphData.long <- melt(params$BarGraphData,
                           id = "contribution",
                           measure = barGraphData.columns)
+barGraphData.long$variable <- factor(barGraphData.long$variable, levels = sort(barGraphData.long$variable, decreasing = TRUE))
 
 ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variable))+
   geom_bar(stat = "identity") +
-  coord_flip()
+  scale_y_continuous(labels = scales::percent) +
+  coord_flip() +
+  scale_fill_manual(NULL, values = c("OccupationalPension" = "#008cc3", "PrivatePension" = "#FF9966", "TaxBenefits" = "#13991c")) +
+  labs(x = NULL, y = NULL) +
+  theme(aspect.ratio = 0.1)
 ```
 
 
