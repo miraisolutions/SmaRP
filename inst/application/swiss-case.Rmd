@@ -129,7 +129,7 @@ $$ Pillar II = \sum_{t0}^T(Mandatory Contributions + Voluntary Contributions) * 
 
 The private pension fund ($PillarIII$) at year $t$ is calculated as:
 
-$$ PilarIII (t)=  \sum_{t=t_0}^TVoluntaryContributions * e^{r(T-t)} $$
+$$ PillarIII (t)=  \sum_{t=t_0}^TVoluntaryContributions * e^{r(T-t)} $$
 
 where $VoluntaryContributions$ is provided as input,  $r$ is the interest rate applied to the private pension fund, $t_0$ is today, and $T$ is the retirement age.
 
