@@ -57,6 +57,14 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  miraiColors <-reactive({
+    if(Inputcase() == "Swiss" ){
+      "['#008cc3', '#FF9966', '#13991c']"
+    } else {
+      "['#FF9966', '#13991c']"
+    }
+    
+  })
   
   RetirementAge <- reactive({
     if(input$provideRetirementAge){
@@ -334,7 +342,7 @@ shinyServer(function(input, output, session) {
       data = TserieGraphData(),
       xvar = "calendar",
       yvar = colnames(TserieGraphData())[which(colnames(TserieGraphData())!="calendar")],
-      options = list(width = 800, height = 400, isStacked = TRUE, legend = "bottom", colors="['#008cc3', '#FF9966', '#13991c']")
+      options = list(width = 800, height = 400, isStacked = TRUE, legend = "bottom", colors=miraiColors())
     ) 
   })
   
@@ -365,7 +373,7 @@ shinyServer(function(input, output, session) {
       xvar = "contribution",
       yvar= colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
       options = list(width = 600, height = 130, isStacked = TRUE, vAxes = "[{minValue:0}]", 
-                     legend = "none", colors="['#008cc3', '#FF9966', '#13991c']", opacity = 0.3)
+                     legend = "none", colors=miraiColors(), opacity = 0.3)
     )
   })
   
