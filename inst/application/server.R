@@ -488,8 +488,6 @@ shinyServer(function(input, output, session) {
         #        output_format = "html_document",
         params = params()
       )
-      #     outputpdf <- webshot::webshot(output, file = "report.pdf")
-      #      file.copy(outputpdf,file)
       file.copy(output,file)
     }
   )# end of downloadHandler
