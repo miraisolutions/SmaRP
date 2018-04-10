@@ -70,11 +70,11 @@ The annual contribution to the Pillar III is of `r params$P3purchase` monetary u
 
 The maximum amount of deductable from the taxable income via voluntary contributions to retirement funds is given by law and equal to `r params$MaxContrTax`.
 
-```{r, echo=FALSE}
+```{r taxrate, echo=FALSE}
 if(is.null(params$TaxRate)){
-  taxrate<- "calculated"
+  taxrate <- "calculated"
 } else {
-  taxrate<- paste0("is provided as input and has value", params$TaxRate)
+  taxrate <- paste0("is provided as input and has value", params$TaxRate)
 }
 ```
 The tax rate is `r taxrate`.
@@ -83,7 +83,7 @@ The postal code of residence `r params$postalcode` is used to infer the kanton o
 
 The user's marital status is `r params$rate_group`, with  `r params$NKids`  children. This information has an inpact on the total tax benefits.
 
-```{r, echo = FALSE}
+```{r churchaffiliation, echo = FALSE}
 if (params$churchtax == "N"){
   churchaffiliation <- "no"
 } else {
@@ -177,7 +177,7 @@ where $Income(t)$ is the income at time $t$, $KantonalTaxRate$ is a factor based
 <!-- The Kantonal tax rate for kanton `r params$Kanton` can be looked up in the following table. -->
 
 
-```{r, echo = FALSE}
+```{r taxRates, echo = FALSE}
 fkanton <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "FactorKanton"]
 gemeinde_name <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "GDENAME"]
 fgemeinde <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "FactorGemeinde"]

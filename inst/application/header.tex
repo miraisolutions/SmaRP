@@ -1,5 +1,7 @@
 \usepackage{fancyhdr}
-\usepackage{xcolor}
+\makeatletter
+\@ifpackageloaded{xcolor}{}{\usepackage{xcolor}}
+\makeatother
 
 %set up page style
 \pagestyle{plain}

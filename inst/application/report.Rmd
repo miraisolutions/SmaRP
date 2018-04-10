@@ -98,24 +98,7 @@ The SmaRP app is available online at http://mirai-solutions.ch/apps/smarp/.
 # Main Results
 
 
-```{r, echo = FALSE}
-plot2 <-  gvisBarChart(
-      chartid = "plot2",
-      data = params$BarGraphData,
-      xvar = "contribution",
-      yvar= colnames(params$BarGraphData)[!grepl("contribution", colnames(params$BarGraphData))],
-      options = list(width = 1200, height = 300, isStacked = TRUE, vAxes = "[{minValue:0}]", 
-                     legend = "none", colors="['#008cc3', '#FF9966', '#13991c']", opacity = 0.3)
-    )
-
- plot1 <-   gvisAreaChart(
-      chartid = "plot1",
-      data = params$TserieGraphData,
-      xvar = "calendar",
-      yvar = colnames(params$TserieGraphData)[which(colnames(params$TserieGraphData)!="calendar")],
-      options = list(wwidth = 1200, height = 500, isStacked = TRUE, legend = "bottom", colors="['#008cc3', '#FF9966', '#13991c']")
-    ) 
-
+```{r deduction_percentage, echo = FALSE}
 Road2Retirement_to_print <- params$Road2Retirement %>%
   select(calendar, ExpectedSalaryPath, BVGcontriburionrates, BVGContributions, BVGpurchase, DirectP2, ReturnP2, TotalP2, P3ContributionPath, P3purchase, DirectP3, ReturnP3, TotalP3, DirectTax, ReturnTax, TotalTax, Total) %>%
   rename(P2ContributionPath = BVGContributions) %>%
@@ -131,7 +114,7 @@ The total retirement fund as of `r params$retirementdate` is `r printCurrency(pa
 
 This plot represent the time-evolution of the different contributions to the total retirement fund.
 
-```{r, echo = FALSE}
+```{r timeSeriesPlot, echo = FALSE}
 tserieGraphData.columns <- setdiff(names(params$TserieGraphData), "calendar")
 
 tserieGraphData.long <- melt(params$TserieGraphData,
@@ -156,7 +139,7 @@ ggplot(tserieGraphData.long, aes(x = calendar, y = value, fill = variable)) +
 
 This plot represent the percentage of  each contribution to the total retirement fund.
 
-```{r, echo = FALSE}
+```{r barPlot, echo = FALSE}
 barGraphData.columns <- setdiff(names(params$BarGraphData), "contribution")
 barGraphData.columns <- grep("annotation$", barGraphData.columns,
                              value = TRUE, invert = TRUE)
@@ -204,7 +187,7 @@ To calculate the tax benefits, we detract from the taxable income the minimum be
 The input and output values are expressed in monetary units and assumed to be of the same currency. No currency conversion is applied in SmaRP. 
 
 
-```{r test, child = if (show_text) 'swiss-case.Rmd' else 'general-case.Rmd'} 
+```{r swissOrGeneralCase, child = if (show_text) 'swiss-case.Rmd' else 'general-case.Rmd'} 
 ``` 
 
 
@@ -217,7 +200,7 @@ The time-dependent data is shown in the following tables.
 <!-- ``` -->
 
 
-```{r, echo = FALSE}
+```{r Road2Retirement_to_print_Summarized, echo = FALSE}
 moncols <- c(  "ExpectedSalary", "OccupationalPension", "PrivatePension", "TaxBenefits") 
 set.caption('Detailed Private Pension Fund Contribution')
 Road2Retirement_to_print_Summarized <- Road2Retirement_to_print %>%
@@ -230,7 +213,7 @@ Road2Retirement_to_print_Summarized <- Road2Retirement_to_print %>%
 pander(Road2Retirement_to_print_Summarized)
 ```
 
-```{r, echo = FALSE, eval=show_text, include=show_text}
+```{r Road2Retirement_to_print_Pillar2, echo = FALSE, eval=show_text, include=show_text}
 if (show_text){
 moncols <- c(  "P2ContributionPath", "P2purchase", "DirectP2", "ReturnP2", "TotalP2") 
 set.caption('Detailed Occupational Pension Fund Contribution')
@@ -241,7 +224,7 @@ pander(Road2Retirement_to_print_Pillar2)
 }
 ```
 
-```{r, echo = FALSE, eval=show_text, include=show_text}
+```{r Road2Retirement_to_print_Pillar3, echo = FALSE, eval=show_text, include=show_text}
 moncols <- c(  "P3ContributionPath", "P3purchase", "DirectP3", "ReturnP3", "TotalP3") 
 set.caption('Detailed Provate Pension Fund Contribution')
 Road2Retirement_to_print_Pillar3 <- Road2Retirement_to_print %>%
@@ -250,7 +233,7 @@ Road2Retirement_to_print_Pillar3 <- Road2Retirement_to_print %>%
 pander(Road2Retirement_to_print_Pillar3)
 ```
 
-```{r, echo = FALSE, eval=show_tax, include=show_tax}
+```{r Road2Retirement_to_print_TaxBenefit, echo = FALSE, eval=show_tax, include=show_tax}
 moncols <- c(  "DirectTax", "ReturnTax", "TotalTax") 
 set.caption('Detailed Tax Benefit Contribution')
 Road2Retirement_to_print_TaxBenefit <- Road2Retirement_to_print %>%
