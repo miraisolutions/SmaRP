@@ -343,9 +343,10 @@ need_not_zero <- function(input, inputname) {
 
 
 # Format Percentage -------------------------------------------------------
-
-changeToPercentage<- function(df){
+#' @name df 
+#' @export
+changeToPercentage <- function(df){
   colsannotation <- grepl(".annotation", colnames(df))
   df[, colsannotation] <- paste0(format(df[, colsannotation], digits=2, nsmall=2), "%")
-  return(df)
+  df
 }
