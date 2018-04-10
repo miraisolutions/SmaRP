@@ -146,14 +146,18 @@ This plot represent the percentage of  each contribution to the total retirement
 
 ```{r, echo = FALSE}
 barGraphData.columns <- setdiff(names(params$BarGraphData), "contribution")
-barGraphData.columns <- grep("annotation$", barGraphData.columns, value = TRUE, invert = TRUE)
+barGraphData.columns <- grep("annotation$", barGraphData.columns,
+                             value = TRUE, invert = TRUE)
 barGraphData.long <- melt(params$BarGraphData,
                           id = "contribution",
                           measure = barGraphData.columns)
-barGraphData.long$variable <- factor(barGraphData.long$variable, levels = sort(barGraphData.long$variable, decreasing = TRUE))
+barGraphData.long$variable <- factor(barGraphData.long$variable,
+                                     levels = sort(barGraphData.long$variable,
+                                                   decreasing = TRUE))
 
-ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variable))+
+ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variable, label = value)) +
   geom_bar(stat = "identity") +
+  geom_text(aes(label = sprintf("%1.0f%%", 100 * value)), size = 3, position = position_stack(vjust = 0.5)) +
   scale_y_continuous(labels = scales::percent) +
   coord_flip() +
   scale_fill_manual(NULL, values = c("OccupationalPension" = "#008cc3", "PrivatePension" = "#FF9966", "TaxBenefits" = "#13991c")) +
