@@ -37,3 +37,4 @@ steps:
 images: 
 - 'eu.gcr.io/mirai-sbb/smarp:$COMMIT_SHA'
 - 'eu.gcr.io/mirai-sbb/smarp:latest'
+timeout: 1200s
