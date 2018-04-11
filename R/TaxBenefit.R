@@ -67,7 +67,7 @@ buildTaxBenefits <- function(birthday,
     }
     t = buildt(birthday, RetirementAge = RetirementAge )
     TotalTax = calcAnnuityAcumPath(TaxBenefits, t, returnP3)
-    ReturnTax = TotalTax - cumsum(TaxBenefits)
+    ReturnTax = TotalTax - cumsum(TaxBenefits) 
     DirectTax = cumsum(TaxBenefits)
   }) %>%
     select(-c(ExpectedSalaryPath, P3purchase, BVGpurchase, TaxableIncome))
