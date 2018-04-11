@@ -81,9 +81,14 @@ URLs <- list(
   URL_ZH_KantonTaxRates = "https://www.steueramt.zh.ch/internet/finanzdirektion/ksta/de/steuerberechnung/steuertarife/_jcr_content/contentPar/downloadlist/downloaditems/steuertarife_2017_f_.spooler.download.1519312936206.pdf/Steuertarif_2017_Staatssteuer_Bundessteuer.pdf"
 )
 
-lapply(URLs, function(x) {
-  download.file(x, paste0("data//taxdata//", gsub("URL_", "", x), ".pdf"), mode="wb")
-})
+# lapply(URLs, function(x) {
+#   download.file(x, paste0("data//taxdata//", gsub("URL_", "", names(x)), ".pdf"))
+# })
+for (u in 1:length(URLs)){#u=1
+  url2download <- URLs[[u]]
+  filename<- paste0("data//taxdata//",gsub("URL_", "",names(URLs[u])), ".pdf")
+  download.file(url2download, filename)
+}
 
 
 # List of unique kantons
@@ -205,6 +210,68 @@ BE <- .combine_subset_VT_GT(GTtarif, VTtarif)
 # >> SO ----
 
 # >> BS ----
+
+.tmpstep <- function(x, taxAmount="taxAmountSingle", mgRate="mgRateSingle") {
+  res <- sapply(strsplit(x, "\\s+")[1:length(x)], "[", c(1:15)) %>%
+    t() %>% 
+    as.data.frame()
+  res <- mapply(c, res[,1:3], res[,4:6], res[,7:9], res[,10:12], res[,13:15] )  %>%
+    magrittr::set_colnames(c("I", mgRate,  taxAmount))%>%
+    as.data.frame()
+  return(res)
+}
+
+fix_nas <- function (x, value = 0) {
+  x[is.na(x) | is.infinite(x) | is.nan(x)] = value
+  return(x)
+}
+
+BS_KantonTaxRates_all <- pdftools::pdf_text("data//taxdata//BS_KantonTaxRates.pdf") %>%
+  strsplit("\n")
+
+BS_KantonTaxRates_Single <- BS_KantonTaxRates_all[3:13]%>%
+  lapply(function(x) {
+  x[!grepl("[a-z]", x) & !grepl("[:%:]", x)] %>%
+    trimws("left")})
+BS_KantonTaxRates_Single[[1]][1] <- paste0( "0 0 0 ", BS_KantonTaxRates_Single[[1]][1]) 
+BS_KantonTaxRates_Single <- BS_KantonTaxRates_Single %>%
+  lapply(function(x) {.tmpstep(x, taxAmount="taxAmountSingle", mgRate="mgRateSingle")}) %>% 
+  dplyr::bind_rows()
+  
+
+
+BS_KantonTaxRates_Married <- BS_KantonTaxRates_all[14:28] %>%
+  lapply(function(x) {
+    x[!grepl("[a-z]", x) & !grepl("[:%:]", x)] %>%
+      trimws("left") })
+BS_KantonTaxRates_Married[[1]][1] <- paste0( "0 0 0 ", BS_KantonTaxRates_Married[[1]][1]) 
+BS_KantonTaxRates_Married <- BS_KantonTaxRates_Married %>%
+  lapply(function(x) {.tmpstep(x, taxAmount="taxAmountMarried", mgRate="mgRateMarried")}) %>% 
+  dplyr::bind_rows() 
+
+BS_KantonTaxRates <- BS_KantonTaxRates_Single %>%
+  left_join(BS_KantonTaxRates_Married, by="I") %>%
+  dplyr::mutate(I = gsub("'", "", I) %>% as.numeric(),
+                mgRateSingle = .str2numeric(mgRateSingle),
+                mgRateMarried = .str2numeric(mgRateMarried),
+                taxAmountSingle = gsub("'", "", taxAmountSingle) %>% as.numeric(),
+                taxAmountMarried = gsub("'", "", taxAmountMarried) %>% as.numeric()) %>%
+  lapply(fix_nas) %>%
+  as.data.frame()
+
+
+tailBS <- tail(BS_KantonTaxRates, 1)
+
+BS <- data.frame(I = seq(0, 1E6, 100)) %>%
+  dplyr::left_join(BS_KantonTaxRates, by = "I") %>%
+  dplyr::mutate(mgRateSingle = ifelse(I > tailBS$I, tailBS$mgRateSingle, mgRateSingle),
+                mgRateMarried = ifelse(I > tailBS$I, tailBS$mgRateMarried, mgRateMarried),
+                mgRateSingle = ifelse(is.na(mgRateSingle), 0 , mgRateSingle),
+                mgRateMarried = ifelse(is.na(mgRateMarried), 0 , mgRateMarried))
+
+
+rm(URL_BS_KantonTaxRates, BS_KantonTaxRates, tailBS, BS_KantonTaxRates_Married, BS_KantonTaxRates_Single, BS_KantonTaxRates_all)
+
 
 # >> BL ----
 
