@@ -6,7 +6,7 @@
 # 
 #    http://shiny.rstudio.com/
 #
-
+library(SmaRP)
 library(shiny)
 #library(lubridate)
 #library(dplyr)
