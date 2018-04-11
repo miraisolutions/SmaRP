@@ -183,7 +183,7 @@ buildContributionP2Path <- function(birthday,
     BVGDirect = BVGContributions +c(CurrentP2, rep(0, ncp -1))
     t = buildt(birthday, RetirementAge = RetirementAge )
     TotalP2 = calcAnnuityAcumPath(BVGDirect, t, rate)
-    ReturnP2 = TotalP2 - cumsum(BVGDirect) - cumsum(P2Purchase)
+    ReturnP2 = TotalP2 - cumsum(BVGDirect) - cumsum(BVGpurchase)
     DirectP2 = cumsum(BVGDirect)
   })
   return(ContributionP2Path)
