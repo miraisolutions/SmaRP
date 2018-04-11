@@ -183,9 +183,9 @@ buildContributionP2Path <- function(birthday,
     BVGDirect = BVGContributions +c(CurrentP2, rep(0, ncp -1))
     t = buildt(birthday, RetirementAge = RetirementAge )
     TotalP2 = calcAnnuityAcumPath(BVGDirect, t, rate)
-    ReturnP2 = TotalP2 - cumsum(BVGDirect) - cumsum(BVGpurchase)
     DirectP2 = cumsum(BVGDirect)
-  })
+    ReturnP2 = TotalP2 - DirectP2
+    })
   return(ContributionP2Path)
 }
 
@@ -233,12 +233,12 @@ buildContributionP3path <- function(birthday,
   ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge = RetirementAge ))
   ncp <- nrow(ContributionP3Path) 
   ContributionP3Path %<>% within({
-    P3purchase = c(0, rep(P3purchase, ncp-1))
+    P3purchase = c(0, rep(P3purchase, ncp-2),0)
     P3ContributionPath = P3purchase + c(CurrentP3, rep(0, ncp -1))
     t = buildt(birthday, RetirementAge = RetirementAge )
     TotalP3 = calcAnnuityAcumPath(P3ContributionPath, t, returnP3)
-    ReturnP3 = TotalP3 - cumsum(P3ContributionPath) - cumsum(P3Purchase)
     DirectP3 = cumsum(P3ContributionPath)
+    ReturnP3 = TotalP3 - DirectP3
   }) 
   return(ContributionP3Path)
 }
