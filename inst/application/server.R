@@ -190,7 +190,7 @@ shinyServer(function(input, output, session) {
   
   
   SalaryProxy <- reactive({ 
-    Salary() - Salary()*(1-deduction_percentage)
+    Salary()*(1-deduction_percentage)
   })
   
   
