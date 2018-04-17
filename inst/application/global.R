@@ -64,6 +64,8 @@ Purchase.list <- list("Single Purchase" = "SingleP2",
 #PLZGemeinden <- readRDS("data/PLZGemeinden.rds")
 PLZGemeinden <- readRDS(system.file("application", "data", "PLZGemeinden.rds", package = "SmaRP"))
 PLZ.list <- setNames(PLZGemeinden$PLZ, PLZGemeinden$PLZ)
+kantons <- unique(PLZGemeinden$Kanton)
+
 
 #tax_rates_Kanton_list <- readRDS("data/tax_rates_Kanton_list_old.rds")
 tax_rates_Kanton_list <- readRDS(system.file("application", "data", "tax_rates_Kanton_list.rds", package = "SmaRP"))
