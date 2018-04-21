@@ -163,10 +163,8 @@ buildContributionP2Path <- function(birthday,
                                     RetirementAge
 ){
   # build BVG rates from global input
-  BVGRatesPath <- data.frame(years = seq(BVGcontriburionrates$lowerbound[1], BVGcontriburionrates$upperbound[nrow(BVGcontriburionrates)]),
-                             BVGcontriburionrates = rep(BVGcontriburionrates$BVGcontriburionrates, 
-                                                        times = BVGcontriburionrates$upperbound - BVGcontriburionrates$lowerbound + 1)
-  )%>% filter(years <= RetirementAge)
+  BVGRatesPath <- BVGcontriburionratesPath %>% 
+    filter(years <= RetirementAge)
   
   # calc contributions P2 Path
   ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge = RetirementAge )) %>%

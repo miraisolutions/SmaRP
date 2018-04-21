@@ -1,6 +1,69 @@
 
 # Functions to calculate tax Amount ---------------------------------------
 
+Age = 32
+Rate_group = "A"
+NKids = 2
+postalcode = 8400
+churchtax = "Y"
+Income = 85000
+
+getTaxAmount <- function(Income, Rate_group, Age, NKids, postalcode, churchtax){
+  
+  # Find Kanton and Gemeinde
+  Kanton = PLZGemeinden[PLZGemeinden$PLZ == postalcode, "Kanton"]
+  GDENR = PLZGemeinden[PLZGemeinden$PLZ == postalcode, "GDENR"]
+  
+  # Get Tarif
+  Tarif = ifelse(Rate_group == "C", "DOPMK",
+                 ifelse(Rate_group == "A" & NKids == 0, "Ledig", 
+                        ifelse(Rate_group == "B" & NKids == 0, "VOK", "VMK")))
+  
+  # Select Tarif, Gemeinde and build Income Cuts 
+  taxburden <- filter(taxburden.list[[grep(Tarif, names(taxburden.list))]], Gemeindenummer == GDENR)
+  idxNumCols <- !grepl("[a-z]", colnames(taxburden))
+  
+  IncomeCuts <- gsub("([0-9])\\.([0-9])", "\\1\\2",colnames(taxburden)[idxNumCols]) %>%
+    as.numeric()
+  taxrate <- taxburden[1, idxNumCols] %>% as.vector
+  
+  # Calc adjustIncomeKG
+  # 1. Age adjustment because of BVG contributions
+  # Tax burden based on 10% contribution. Therefore, an adjustment factor is applied accordingly.
+  AjustBVGContri <- BVGcontriburionratesPath %>%
+    filter(years == Age) %>%
+    transmute(AjustBVGContri = (BVGcontriburionrates - 0.1) * (min(Income, MaxBVG) - MinBVG))
+  
+  # 2. NKids ajustment (only for VMK and DOPMK)
+  # Tax burden based on 2 kids. Therefore, an adjustment factor is applied accordingly.
+  if(Tarif %in% c("DOPMK", "VMK")){
+    OriKinderabzugKG <- sum(KinderabzugKG[row.names(KinderabzugKG) == Kanton, 1:2])
+    AjustKinderabzug <- sum(KinderabzugKG[row.names(KinderabzugKG) == Kanton, 1:NKids]) - OriKinderabzugKG
+  } else {
+    AjustKinderabzug <- 0
+  }
+  
+  IncomeKG <- Income + AjustBVGContri + AjustKinderabzug
+  
+  TaxAmountKGC <- Income * (approx(x = IncomeCuts, y = taxrate, IncomeKG)$y) / 100
+  
+  # Church affiliation 
+  # TODO: get the factor at kanton level
+  if (!churchtax) {
+    TaxAmountKGC <- TaxAmountKGC * 0.1 
+  }
+  
+  # TODO: calc TaxableIncomeFederal
+  TaxableIncomeFederal <- Income
+ 
+  TaxAmountFederal<- lookupTaxRate(TaxableIncomeFederal, Rate_group) - 251*NKids
+  TaxAmount <- TaxAmountFederal + TaxAmountKGC
+  
+  return(TaxAmount)
+  
+}
+
+
 
 #' @name lookupTaxRate
 #' @examples

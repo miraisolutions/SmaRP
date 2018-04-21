@@ -17,44 +17,26 @@ MaxBVGfund <- 10 * MaxBVG
 # https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-64228.html
 BVGMindestzinssatz <<- 0.01
 
-BVGparams <- list(BVGMindestzinssatz = BVGMindestzinssatz,
-                   MaxAHV = MaxAHV,
-                   MinBVG = MinBVG,
-                   MaxBVG = MaxBVG,
-                   MaxBVGfund = MaxBVGfund)
+# BVGparams <<- list(BVGMindestzinssatz = BVGMindestzinssatz,
+#                    MaxAHV = MaxAHV,
+#                    MinBVG = MinBVG,
+#                    MaxBVG = MaxBVG,
+#                    MaxBVGfund = MaxBVGfund)
 
 # https://www.ch.ch/en/3rd-pillar/
 MaxContrTax <<- 6768  
 
-# CHF yield curves
-# https://www.six-swiss-exchange.com/services/yield_curves_en.html
-
-
-#Currencies
-currencies.list <- list("USD" ="USD",
-                        "EUR" = "EUR",
-                        "CHF" = "CHF")
-
 # https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
-BVGcontriburionrates <<- data.frame(lowerbound = c(18, 25, 35, 45, 55),
+BVGcontriburionrates <- data.frame(lowerbound = c(18, 25, 35, 45, 55),
                                     upperbound = c(24, 34, 44, 54, 70),
                                     BVGcontriburionrates = c(0.00, 0.07, 0.010, 0.015, 0.18))
+# BVGcontriburionrates path
+BVGcontriburionratesPath <<- data.frame(years = seq(BVGcontriburionrates$lowerbound[1], BVGcontriburionrates$upperbound[nrow(BVGcontriburionrates)]),
+                                        BVGcontriburionrates = rep(BVGcontriburionrates$BVGcontriburionrates, 
+                                                                   times = BVGcontriburionrates$upperbound - BVGcontriburionrates$lowerbound + 1)) 
 
 
-# https://www.estv.admin.ch/estv/de/home/direkte-bundessteuer/quellensteuer/dienstleistungen/tarife-herunterladen.html
-# tariffs.list <- list(
-#   "A Tarif f?r alleinstehende Personen" = "TA",
-#   "B Tarif f?r verheiratete Alleinverdiener" = "TB",
-#   "C Tarif f?r verheiratete Doppelverdiener" = "TC")
-
-# Kanton.list <- list("Zurich" = "ZH", "St.Gallen" = "SG", "Bern" = "BE")
-
-# Kids.list <- list("No Kids" = "0",
-#                  "One Kid" = "1",
-#                  "Two Kids" = "2",
-#                   "Three or More Kids" = "3")
-
-Rate_group.list <- list("Single" = "A",
+Rate_group.list <<- list("Single" = "A",
                         "Married" = "B",
                         "Married Double Income" = "C")
 
@@ -62,16 +44,24 @@ Purchase.list <- list("Single Purchase" = "SingleP2",
                       "Annual Purchase" = "AnnualP2")
 
 #PLZGemeinden <- readRDS("data/PLZGemeinden.rds")
-PLZGemeinden <- readRDS(system.file("application", "data", "PLZGemeinden.rds", package = "SmaRP"))
-PLZ.list <- setNames(PLZGemeinden$PLZ, PLZGemeinden$PLZ)
-kantons <- unique(PLZGemeinden$Kanton)
+PLZGemeinden <<- readRDS(system.file("application", "data", "PLZGemeinden.rds", package = "SmaRP"))
+PLZ.list <<- setNames(PLZGemeinden$PLZ, PLZGemeinden$PLZ)
+kantons <<- unique(PLZGemeinden$Kanton)
 
 
 #tax_rates_Kanton_list <- readRDS("data/tax_rates_Kanton_list_old.rds")
-tax_rates_Kanton_list <- readRDS(system.file("application", "data", "tax_rates_Kanton_list.rds", package = "SmaRP"))
+# tax_rates_Kanton_list <- readRDS(system.file("application", "data", "tax_rates_Kanton_list.rds", package = "SmaRP"))
 
 #BundessteueTabelle <- readRDS("data/BundessteueTabelle.rds")
-BundessteueTabelle <-  readRDS(system.file("application", "data", "BundessteueTabelle.rds", package = "SmaRP"))
+# taxburden.list <- readRDS("inst/application/data/taxburden.list.rds") 
+BundessteueTabelle <<-  readRDS(system.file("application", "data", "BundessteueTabelle.rds", package = "SmaRP"))
+taxburden.list <<- readRDS(system.file("application", "data", "taxburden.list.rds", package = "SmaRP"))
+
+# TODO: Build a table like this with accurate data
+KinderabzugKG <<- matrix(data = 9000, nrow = length(kantons), ncol = 10) %>%
+  as.data.frame %>%
+  set_rownames(kantons) %>%
+  set_colnames(seq(1:10))
 
 # deduction percentage
 deduction_percentage <- 0.1
