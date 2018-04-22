@@ -8,7 +8,7 @@ postalcode = 8400
 churchtax = "Y"
 Income = 85000
 
-getTaxAmount <- function(Income, Rate_group, Age, NKids, postalcode, churchtax){
+getTaxAmount_tmp <- function(Income, Rate_group, Age, NKids, postalcode, churchtax){
   
   # Find Kanton and Gemeinde
   Kanton = PLZGemeinden[PLZGemeinden$PLZ == postalcode, "Kanton"]
@@ -48,9 +48,9 @@ getTaxAmount <- function(Income, Rate_group, Age, NKids, postalcode, churchtax){
   TaxAmountKGC <- Income * (approx(x = IncomeCuts, y = taxrate, IncomeKG)$y) / 100
   
   # Church affiliation 
-  # TODO: get the factor at kanton level
+  # By default, assumed church affiliation. If not, there's a discount
   if (!churchtax) {
-    TaxAmountKGC <- TaxAmountKGC * 0.1 
+    TaxAmountKGC <- TaxAmountKGC * Kirchensteuer[Kirchensteuer$Kanton == Kanton, "Kirchensteuer"] 
   }
   
   # TODO: calc TaxableIncomeFederal
@@ -62,7 +62,6 @@ getTaxAmount <- function(Income, Rate_group, Age, NKids, postalcode, churchtax){
   return(TaxAmount)
   
 }
-
 
 
 #' @name lookupTaxRate
