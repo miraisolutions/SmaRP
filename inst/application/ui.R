@@ -15,7 +15,7 @@ source("helper_texts.R")
 shinyUI( 
   fluidPage(
     # add "title" tag within the head of the html page
-    titlePanel(title = NULL, windowTitle = "SmaRP: Smart Retirement Planning"),
+    #titlePanel(title = NULL, windowTitle = "SmaRP: Smart Retirement Planning"),
     #themeSelector(),
     theme = "style.css",
     fluidRow(
@@ -47,7 +47,9 @@ shinyUI(
                            style = "margin-left: 1%;"),
                  fluidRow(wellPanel(
                    checkboxInput("provideRetirementAge", "Desired Retirement Age (optional)", FALSE),
-                   uiOutput("conditionalRetirementAge")
+                   bsTooltip("provideRetirementAge", IB$RetirementAgeOptional, placement = "right", options = list(container = "body")),
+                   uiOutput("conditionalRetirementAge"),
+                   bsTooltip("conditionalRetirementAge", IB$RetirementAge, placement = "right", options = list(container = "body"))
                  )
                  ,style = "margin-left:1%;margin-right: 2%;"
                  ),
@@ -114,8 +116,10 @@ shinyUI(
                             hr(),
                             fluidRow(wellPanel(
                               checkboxInput("provideTaxRateSwiss", "Direct Tax Rate (optional)", FALSE),
-                              uiOutput("conditionalInputSwiss"))
-                              ,style = "margin-left:1%;margin-right: 2%;"
+                              bsTooltip("provideTaxRateSwiss", IB$TaxRateOptional, placement = "right", options = list(container = "body")),
+                              uiOutput("conditionalInputSwiss")),
+                              bsTooltip("conditionalInputSwiss", IB$TaxRate, placement = "right", options = list(container = "body")),
+                              style = "margin-left:1%;margin-right: 2%;"
                             ),
                             hr(),
                             fluidRow(tags$h4("Occupational Pension Fund (BVG)"),style = "margin-left: 1%;"),
