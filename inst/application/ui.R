@@ -61,7 +61,7 @@ shinyUI(
                  fluidRow(
                    column( 5, numericInput("P3purchase", label = h5("Annual contribution"), value = 0, step = 500, min = 0),
                            bsTooltip("P3purchase", IB$P3purchase, placement = "right", options = list(container = "body")), style = "margin-left: 0.5%;margin-right: 5%;"),
-                   column( 5, numericInput("returnP3", label = h5("Expected Return"), value = BVGMindestzinssatz, step = 0.001, min = 0, max = 0.25),
+                   column( 5, numericInput("returnP3", label = h5("Expected Return %"), value = BVGMindestzinssatz*100, step = 0.1, min = 0, max = 100),
                            bsTooltip("returnP3", IB$returnP3, placement = "right", options = list(container = "body")), style="margin-left:9%;")
                    )
                ), #end of Personal Input tabPanel
@@ -78,7 +78,7 @@ shinyUI(
                             fluidRow( numericInput("TaxRelief", label = h5("Maximum Tax Relief"), value = 10000, step = 100, min = 0, width = '94%'),
                                       bsTooltip("TaxRelief", IB$TaxRelief, placement = "right", options = list(container = "body")),
                                       style = "margin-left: 1%;"),
-                            fluidRow( numericInput("TaxRate", label = h5("Marginal Tax Rate"), value = 0.1, step = 0.01, min = 0, max = 0.9, width = '94%'),
+                            fluidRow( numericInput("TaxRate", label = h5("Marginal Tax Rate  %"), value = 10, step = 1, min = 0, max = 100, width = '94%'),
                                       bsTooltip("TaxRate", IB$TaxRate, placement = "right", options = list(container = "body")),
                                       style = "margin-left: 1%;")
                             #,fluidRow( selectInput("currency", label = h5("Currency"), selected = "CHF", choices = currencies.list)
@@ -88,13 +88,11 @@ shinyUI(
                             value = "Swiss",
                             conditionalPanel(condition= 'input.provideTaxRateSwiss==""',
                                              #                    fluidRow(tags$h4("Parameters for Tax Rate ecaluation"),style = "margin-left: 20px;"),
-                                             fluidRow(column( 5, selectInput("postalcode", label = h5("Postal Code"),
+                                             fluidRow(column( 6, selectInput("postalcode", label = h5("Postal Code"),
                                                                              choices = PLZ.list,
-                                                                             selected = "8001"), 
-                                                              style = "margin-left: 0.5%;"),
-                                                      column( 5, numericInput("NKids", label = h5("Number of Children"), value = 0, min = 0, max = 9),
-                                                              bsTooltip("NKids", IB$NKids, placement = "right", options = list(container = "body")),
-                                                              style =  "margin-left:3%;")
+                                                                             selected = "8001")),
+                                                      column( 6, numericInput("NKids", label = h5("Number of Children"), value = 0, min = 0, max = 9),
+                                                              bsTooltip("NKids", IB$NKids, placement = "right", options = list(container = "body")))
                                                       ),
                                              fluidRow(column( 6,
                                                    checkboxInput("churchtax", "Church affiliation", FALSE)),
@@ -103,7 +101,7 @@ shinyUI(
                                                                      fluidRow(radioButtons("genre", label = NULL, inline = TRUE,
                                                                                            choices = list("Male" = "M", "Female" = "F"), 
                                                                                            selected = "M")
-                                                                             ,style = "margin-top:7%;")
+                                                                             ,style = "margin-top:6%;margin-left:3%;")
                                                     ) # end conditional panel
                                              )
                                              ),
@@ -124,7 +122,7 @@ shinyUI(
                             fluidRow(
                               column( 6,numericInput("Salary", label = h5("Current Annual Salary"), value = 100000, step = 1000, min = 0),
                                       bsTooltip("Salary", IB$Salary, placement = "right", options = list(container = "body"))),
-                              column( 6,numericInput("SalaryGrowthRate", label = h5("Expected salary growth rate"), value = 0.005, step = 0.001, min = 0, max = 0.1),
+                              column( 6,numericInput("SalaryGrowthRate", label = h5("Expected Salary Growth Rate %"), value = 0.5, step = 0.1, min = 0, max = 100),
                                       bsTooltip("SalaryGrowthRate", IB$SalaryGrowthRate, placement = "right", options = list(container = "body")))
                               ),
                             fluidRow(
