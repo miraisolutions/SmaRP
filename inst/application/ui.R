@@ -62,7 +62,7 @@ shinyUI(
                    column( 5, numericInput("P3purchase", label = h5("Annual contribution"), value = 0, step = 500, min = 0),
                            bsTooltip("P3purchase", IB$P3purchase, placement = "right", options = list(container = "body")), style = "margin-left: 0.5%;margin-right: 5%;"),
                    column( 5, numericInput("returnP3", label = h5("Expected Return"), value = BVGMindestzinssatz, step = 0.001, min = 0, max = 0.25),
-                           bsTooltip("returnP3", IB$returnP3, placement = "right", options = list(container = "body")), style="margin-left:9%")
+                           bsTooltip("returnP3", IB$returnP3, placement = "right", options = list(container = "body")), style="margin-left:9%;")
                    )
                ), #end of Personal Input tabPanel
                tabPanel(
@@ -182,7 +182,7 @@ shinyUI(
              fluidRow(align="left", 
                       #Add button to download report
                       downloadButton("report", "Generate report"),
-                      style = "margin-left: 8.5%")
+                      style = "margin-left: 8.5%;")
       ) #end second column/main panel
     ), #end of FluidRow
     hr(),
@@ -191,7 +191,7 @@ shinyUI(
              #bsTooltip("git", IB$git, placement = "right", options = list(container = "body"))
              ),
       column(3, a(href="http://www.mirai-solutions.com", img(src='mirai.png', align = "right",width = "40%")), align="right" ,style = "margin-bottom: 1%;")
-      , style = "margin-right:0.1%"
+      , style = "margin-right:0.1%;"
       )
   ) # end of fluidPage
 ) #end of shinyUI
