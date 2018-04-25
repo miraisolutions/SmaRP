@@ -1,11 +1,10 @@
 
-# Functions to calculate tax Amount ---------------------------------------
-
+# tax Amount ---------------------------------------
 
 #' @name getTaxAmount
 #' @examples
 #' \dontrun{
-#' getTaxAmount(Income = 200000, Rate_group = "C", Age = 32, NKids = 1, postalcode = 9443, churchtax = TRUE)
+#' getTaxAmount(Income = 200000, Rate_group = "C", Age = 32, NKids = 1, postalcode = 9443, churchtax = "Y")
 #' }
 #' @export
 getTaxAmount <- function(Income, Rate_group, Age, NKids, postalcode, churchtax){
@@ -49,7 +48,7 @@ getTaxAmount <- function(Income, Rate_group, Age, NKids, postalcode, churchtax){
   
   # Church affiliation 
   # By default, assumed church affiliation. If not, there's a discount
-  if (!churchtax) {
+  if (churchtax != "Y") {
     TaxAmountKGC <- TaxAmountKGC * Kirchensteuer[Kirchensteuer$Kanton == Kanton, "Kirchensteuer"] 
   }
   
@@ -92,15 +91,12 @@ lookupTaxRate <- function(Income, Tabelle, CivilStatus){
   return(TaxAmount)
 }
 
-
-
-
-# build Tax Benefit -------------------------------------------------------
+# tax benefit ----
 
 #' @name buildTaxBenefits
 #' @importFrom dplyr select
 #' @examples
-#' \dontrun{buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3, Salary, SalaryGrowthRate, postalcode, NKids, churchtax, rate_group, MaxContrTax, tax_rates_Kanton_list, BundessteueTabelle, givenday = today("UTC", RetirementAge =65, PLZGemeinden))
+#' \dontrun{buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3, Salary, SalaryGrowthRate, postalcode, NKids, churchtax, rate_group, MaxContrTax, givenday = today("UTC"), RetirementAge = 65)
 #' }
 #' @export
 buildTaxBenefits <- function(birthday,
@@ -161,12 +157,22 @@ calcTaxBenefitGeneral <- function(TotalContr, TaxRatePath, MaxContrTax) {
 #' @name calcTaxBenefitSwiss
 #' @examples
 #' \dontrun{
-#' calcTaxBenefit(rep(6500,10), rep(0.1, 10), 6000)
+# calcTaxBenefitSwiss(ExpectedSalaryPath = seq(90000, 100000, 1000),
+# TaxableIncome = seq(88000, 980000, 1000),
+#  Rate_group = "A",
+#  Age = seq(55, 65),
+#  NKids = 0,
+#  postalcode = 8400,
+#  churchtax = "Y")
 #' }
 #' @export
 calcTaxBenefitSwiss <- function(ExpectedSalaryPath, TaxableIncome, Rate_group, Age, NKids, postalcode, churchtax){
-  TaxAmountGrossIncome <- sapply(ExpectedSalaryPath, getTaxAmount, Rate_group, Age, NKids, postalcode, churchtax)
-  TaxAmountTaxableIncome <- sapply(TaxableIncome, getTaxAmount, Rate_group, Age, NKids, postalcode, churchtax)
+  TaxAmountGrossIncome <-  sapply(1:length(ExpectedSalaryPath), function(i) {
+    getTaxAmount(ExpectedSalaryPath[i], Rate_group, Age[i], NKids, postalcode, churchtax)
+  })
+  TaxAmountTaxableIncome <-  sapply(1:length(ExpectedSalaryPath), function(i) {
+    getTaxAmount(TaxableIncome[i], Rate_group, Age[i], NKids, postalcode, churchtax)
+  })
   TaxBenefits <- TaxAmountGrossIncome - TaxAmountTaxableIncome
   return(TaxBenefits)
 }

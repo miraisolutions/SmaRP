@@ -30,7 +30,6 @@ BVGcontriburionratesPath <<- data.frame(years = seq(BVGcontriburionrates$lowerbo
                                         BVGcontriburionrates = rep(BVGcontriburionrates$BVGcontriburionrates, 
                                                                    times = BVGcontriburionrates$upperbound - BVGcontriburionrates$lowerbound + 1)) 
 
-
 Rate_group.list <<- list("Single" = "A",
                         "Married" = "B",
                         "Married Double Income" = "C")
