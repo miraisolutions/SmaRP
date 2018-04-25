@@ -300,12 +300,9 @@ shinyServer(function(input, output, session) {
                      churchtax = churchtax(),
                      rate_group = rate_group(),
                      MaxContrTax = TaxRelief(),
-                     tax_rates_Kanton = tax_rates_Kanton_list,
-                     BundessteueTabelle = BundessteueTabelle,
                      givenday = today("UTC"),
                      RetirementAge = RetirementAge(),
-                     TaxRate = taxRateValue(),
-                     PLZGemeinden=PLZGemeinden)
+                     TaxRate = taxRateValue())
   })
   
   # build main df ----
