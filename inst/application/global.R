@@ -17,11 +17,6 @@ MaxBVGfund <- 10 * MaxBVG
 # https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-64228.html
 BVGMindestzinssatz <<- 0.01
 
-# BVGparams <<- list(BVGMindestzinssatz = BVGMindestzinssatz,
-#                    MaxAHV = MaxAHV,
-#                    MinBVG = MinBVG,
-#                    MaxBVG = MaxBVG,
-#                    MaxBVGfund = MaxBVGfund)
 
 # https://www.ch.ch/en/3rd-pillar/
 MaxContrTax <<- 6768  
@@ -52,7 +47,7 @@ kantons <<- unique(PLZGemeinden$Kanton)
 #tax_rates_Kanton_list <- readRDS("data/tax_rates_Kanton_list_old.rds")
 # tax_rates_Kanton_list <- readRDS(system.file("application", "data", "tax_rates_Kanton_list.rds", package = "SmaRP"))
 
-#BundessteueTabelle <- readRDS("data/BundessteueTabelle.rds")
+#BundessteueTabelle <- readRDS("inst/application/data/BundessteueTabelle.rds")
 # taxburden.list <- readRDS("inst/application/data/taxburden.list.rds") 
 BundessteueTabelle <<-  readRDS(system.file("application", "data", "BundessteueTabelle.rds", package = "SmaRP"))
 taxburden.list <<- readRDS(system.file("application", "data", "taxburden.list.rds", package = "SmaRP"))
@@ -67,6 +62,12 @@ KinderabzugKG <<- matrix(data = 9000, nrow = length(kantons), ncol = 10) %>%
 Kirchensteuer <<- unique(PLZGemeinden[, c("Kanton", "FactorKanton", "FactorGemeinde", "FactorKirche")]) %>%
   mutate(Kirchensteuer = (FactorKanton + FactorGemeinde)/ (FactorKanton + FactorGemeinde + FactorKirche))
 
-
-# deduction percentage
-deduction_percentage <- 0.1
+# Bundesabzuge
+AHL <<- 0.0515
+ALV <<- 0.011
+VersicherungsL <<- 2550
+VersicherungsV <<- 5250
+VersicherungsK <<- 700
+DOV <<- 13400
+Kinder <<- 6500
+Verheiratet <<- 2600
