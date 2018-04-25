@@ -15,32 +15,21 @@ source("helper_texts.R")
 shinyUI( 
   fluidPage(
     # add "title" tag within the head of the html page
-    titlePanel(title = NULL, windowTitle = "SmaRP: Smart Retirement Planning"),
+    #titlePanel(title = NULL, windowTitle = "SmaRP: Smart Retirement Planning"),
     #themeSelector(),
     theme = "style.css",
     fluidRow(
-      # tags$head(
-      #   tags$style(HTML("hr {border-top: 1px solid #000000;}"))
-      # ),
-      # fluidRow(
-      #   a(href="http://www.mirai-solutions.com", img(src='mirai.png', align = "right",  height = "10%", width = "10%")), style = "margin-top: 10px;margin-right: 30px;margin-bottom: 10px;" ),
-      # #titlePanel(
         fluidRow(
           id="head1",
           column(1, 
-                 fluidRow(),
-                 fluidRow(a(href="https://github.com/miraisolutions/SmaRP.git", img(src='SmaRPStiker.png',  height = "110%", width = "110%")), style="margin:10px;")
+                 fluidRow(a(href="https://github.com/miraisolutions/SmaRP.git", img(src='SmaRPStiker.png',  height = "90%", width = "90%")), style="margin-left: 10%;margin-top: 10%;margin-bottom: 10%;")
                  ),
           column(6,
                  fluidRow(h2("SmaRP:")),
                  fluidRow(h3("Smart Retirement Planning"))
           ), # end of first column
           # column(4, 
-          #        fluidRow(img(src='mirai.png', align = "right",  height = "70%", width = "70%"), style = "margin-top: 20px;")#, height = 100, width = 300
-          #        #fluidRow(a(href="http://www.mirai-solutions.com", "mirai-solutions.com"),align="right",style = "margin-right: 10px;" )
-          #        ), # end of second column
-          # column(1) # empty column to have the logo no too much to the right
-          style = "margin: 10px;" 
+          style = "margin-left: 0.1%;" 
         ) #end of fluid row
       #)#, # end of title panel
       #hr()
@@ -54,26 +43,29 @@ shinyUI(
                  title = "Generic Inputs", 
                  value = "Personal",
                  br(),
-                 fluidRow( dateInput("Birthdate", label = h5("Birthdate"), value = "1980-12-31", format = "yyyy-mm-dd"),
-                           style = "margin-left: 30px;"),
-                 wellPanel(
+                 fluidRow( dateInput("Birthdate", label = h5("Birthdate"), value = "1980-12-31", format = "yyyy-mm-dd", width = '94%'),
+                           style = "margin-left: 1%;"),
+                 fluidRow(wellPanel(
                    checkboxInput("provideRetirementAge", "Desired Retirement Age (optional)", FALSE),
+                   bsTooltip("provideRetirementAge", IB$RetirementAgeOptional, placement = "right", options = list(container = "body")),
                    uiOutput("conditionalRetirementAge"),
-                   style = "margin-left: 20px;margin-right: 20px;"
+                   bsTooltip("conditionalRetirementAge", IB$RetirementAge, placement = "right", options = list(container = "body"))
+                 )
+                 ,style = "margin-left:1%;margin-right: 2%;"
                  ),
                  hr(),
-                 fluidRow( tags$h4("Private Pension Fund"), style = "margin-left: 30px;"),
+                 fluidRow( tags$h4("Private Pension Fund"), style = "margin-left: 1%;"),
                  #infoBoxOutput("ibox",width = 0.5),
                  fluidRow(
-                   numericInput("CurrentP3", label = h5("Current assets"), value = 50000, step = 1000, min = 0),
+                   numericInput("CurrentP3", label = h5("Current assets"), value = 50000, step = 1000, min = 0, width = '94%'),
                    bsTooltip("CurrentP3", IB$CurrentP3, placement = "right", options = list(container = "body")),
-                   style = "margin-left: 30px;"),
+                   style = "margin-left: 1%;"),
                  fluidRow(
-                   column( 6, numericInput("P3purchase", label = h5("Annual contribution"), value = 0, step = 500, min = 0),
-                           bsTooltip("P3purchase", IB$P3purchase, placement = "right", options = list(container = "body"))),
-                   column( 6, numericInput("returnP3", label = h5("Expected Return"), value = BVGMindestzinssatz, step = 0.001, min = 0, max = 0.25),
-                           bsTooltip("returnP3", IB$returnP3, placement = "right", options = list(container = "body"))),
-                   style = "margin-left: 20px;")
+                   column( 5, numericInput("P3purchase", label = h5("Annual contribution"), value = 0, step = 500, min = 0),
+                           bsTooltip("P3purchase", IB$P3purchase, placement = "right", options = list(container = "body")), style = "margin-left: 0.5%;margin-right: 5%;"),
+                   column( 5, numericInput("returnP3", label = h5("Expected Return %"), value = BVGMindestzinssatz*100, step = 0.1, min = 0, max = 100),
+                           bsTooltip("returnP3", IB$returnP3, placement = "right", options = list(container = "body")), style="margin-left:9%;")
+                   )
                ), #end of Personal Input tabPanel
                tabPanel(
                  title = "Particular cases", 
@@ -84,15 +76,15 @@ shinyUI(
                    type = "pills",
                    tabPanel(title = "General case", 
                             value = "General",
-                            fluidRow( tags$h4("Tax Benefits"),style = "margin-left: 20px;"),
-                            fluidRow( numericInput("TaxRelief", label = h5("Maximum Tax Relief"), value = 10000, step = 100, min = 0),
+                            fluidRow( tags$h4("Tax Benefits"),style = "margin-left: 1%;"),
+                            fluidRow( numericInput("TaxRelief", label = h5("Maximum Tax Relief"), value = 10000, step = 100, min = 0, width = '94%'),
                                       bsTooltip("TaxRelief", IB$TaxRelief, placement = "right", options = list(container = "body")),
-                                      style = "margin-left: 20px;"),
-                            fluidRow( numericInput("TaxRate", label = h5("Marginal Tax Rate"), value = 0.1, step = 0.01, min = 0, max = 0.9),
+                                      style = "margin-left: 1%;"),
+                            fluidRow( numericInput("TaxRate", label = h5("Marginal Tax Rate  %"), value = 10, step = 1, min = 0, max = 100, width = '94%'),
                                       bsTooltip("TaxRate", IB$TaxRate, placement = "right", options = list(container = "body")),
-                                      style = "margin-left: 20px;")
+                                      style = "margin-left: 1%;")
                             #,fluidRow( selectInput("currency", label = h5("Currency"), selected = "CHF", choices = currencies.list)
-                            #          , style = "margin-left: 20px;")
+                            #          , style = "margin-left: 1%;")
                    ), # end General tabPanel
                    tabPanel(title = "Swiss case",
                             value = "Swiss",
@@ -102,8 +94,8 @@ shinyUI(
                                                                              choices = PLZ.list,
                                                                              selected = "8001")),
                                                       column( 6, numericInput("NKids", label = h5("Number of Children"), value = 0, min = 0, max = 9),
-                                                              bsTooltip("NKids", IB$NKids, placement = "right", options = list(container = "body"))),
-                                                      style = "margin-left: 5px;"),
+                                                              bsTooltip("NKids", IB$NKids, placement = "right", options = list(container = "body")))
+                                                      ),
                                              fluidRow(column( 6,
                                                    checkboxInput("churchtax", "Church affiliation", FALSE)),
                                              column(6, 
@@ -111,51 +103,51 @@ shinyUI(
                                                                      fluidRow(radioButtons("genre", label = NULL, inline = TRUE,
                                                                                            choices = list("Male" = "M", "Female" = "F"), 
                                                                                            selected = "M")
-                                                                             ,style = "margin-left: 5px;margin-top:10px;"
-                                                                     )
+                                                                             ,style = "margin-top:6%;margin-left:3%;")
                                                     ) # end conditional panel
-                                             ), 
-                                             style = "margin-left: 5px;"),
+                                             )
+                                             ),
                                              fluidRow( radioButtons("rate_group", label = NULL, inline = TRUE, 
                                                                    choices = Rate_group.list, 
                                                                    selected = "A"),
                                                       bsTooltip("rate_group", IB$rate_group, placement = "right", options = list(container = "body")),
-                                                      style = "margin-left: 25px;")
+                                                      style = "margin-left: 1%;")
                             ), # end conditional panel
                             hr(),
-                            wellPanel(
+                            fluidRow(wellPanel(
                               checkboxInput("provideTaxRateSwiss", "Direct Tax Rate (optional)", FALSE),
-                              uiOutput("conditionalInputSwiss"),
-                              style = "margin-left: 20px;margin-right: 20px;"
+                              bsTooltip("provideTaxRateSwiss", IB$TaxRateOptional, placement = "right", options = list(container = "body")),
+                              uiOutput("conditionalInputSwiss")),
+                              bsTooltip("conditionalInputSwiss", IB$TaxRate, placement = "right", options = list(container = "body")),
+                              style = "margin-left:1%;margin-right: 2%;"
                             ),
                             hr(),
-                            fluidRow(tags$h4("Occupational Pension Fund (BVG)"),style = "margin-left: 20px;"),
+                            fluidRow(tags$h4("Occupational Pension Fund (BVG)"),style = "margin-left: 1%;"),
                             fluidRow(
                               column( 6,numericInput("Salary", label = h5("Current Annual Salary"), value = 100000, step = 1000, min = 0),
                                       bsTooltip("Salary", IB$Salary, placement = "right", options = list(container = "body"))),
-                              column( 6,numericInput("SalaryGrowthRate", label = h5("Expected salary growth rate"), value = 0.005, step = 0.001, min = 0, max = 0.1),
-                                      bsTooltip("SalaryGrowthRate", IB$SalaryGrowthRate, placement = "right", options = list(container = "body"))),
-                              style = "margin-left: 5px;"),
+                              column( 6,numericInput("SalaryGrowthRate", label = h5("Expected Salary Growth Rate %"), value = 0.5, step = 0.1, min = 0, max = 100),
+                                      bsTooltip("SalaryGrowthRate", IB$SalaryGrowthRate, placement = "right", options = list(container = "body")))
+                              ),
                             fluidRow(
                               column( 6, numericInput("CurrentP2", label = h5("Current BVG assets"), value = 100000, step = 1000, min = 0),
                                       bsTooltip("CurrentP2", IB$CurrentP2, placement = "right", options = list(container = "body"))),
                               column( 6, numericInput("P2interestRate", label = h5("Interest Rate % (optional)"), value = 100*BVGparams$BVGMindestzinssatz, step = 1, min = 100*BVGparams$BVGMindestzinssatz, max = 100),
-                                      bsTooltip("P2interestRate", IB$P2interestRate, placement = "right", options = list(container = "body"))),
-                              style = "margin-left: 5px;"),
+                                      bsTooltip("P2interestRate", IB$P2interestRate, placement = "right", options = list(container = "body")))
+                              ),
                             #br(),
                             fluidRow(
                               column( 6, numericInput("P2purchase", label = h5("Voluntary purchases"), value = 0, step = 500, min = 0),
                                       bsTooltip("P2purchase", IB$P2purchase, placement = "right", options = list(container = "body"))),
                               column( 6, radioButtons("TypePurchase", label = NULL, inline = FALSE,  choices = Purchase.list),
-                                      bsTooltip("TypePurchase", IB$TypePurchase, placement = "right", options = list(container = "body")), style = "margin-top: 20px;"),
-                              style = "margin-left: 5px;")#,
+                                      bsTooltip("TypePurchase", IB$TypePurchase, placement = "right", options = list(container = "body")), style = "margin-top: 20px;")
+                             )#,
                             # hr(),
                             # fluidRow( 
                             #   wellPanel(
                             #     checkboxInput("login", "login as an admin", FALSE),
                             #     uiOutput("conditionalrefreshButton"),
-                            #     uiOutput("conditionalrefreshText"),
-                            #     style = "margin-left: 20px;margin-right: 20px;"
+                            #     uiOutput("conditionalrefreshText")
                             #   )
                             #   #,style = "margin-left: 30px;"
                             #   ),
@@ -173,7 +165,7 @@ shinyUI(
                         #                   hr(),
                         fluidRow(align="center", verbatimTextOutput("Totals")),
                         fluidRow(htmlOutput("plot1")),
-                        fluidRow(htmlOutput("plot2"), style = "margin-left: 60px;")#,
+                        fluidRow(htmlOutput("plot2"), style = "margin-left: 7%;")#,
                         #fluidRow(align="center", textOutput('safeError'))
                ), # end tab Plot
                
@@ -189,31 +181,19 @@ shinyUI(
              fluidRow(align="left", 
                       #Disclaimer
                       verbatimTextOutput("disclaimer")),
-             # tags$head(tags$style("#Totals{
-             #                      font-family:Helvetica;
-             #                      color: blue;
-             #                      font-size: 20px;
-             #                      font-style: bold;
-             #                      text-align: center;
-             #                      }"),
-             #           tags$style("#disclaimer{
-             #                      font-family:Helvetica;
-             #                      color: grey;
-             #                      font-size: 12px;
-             #                      text-align: left;
-             #                      }")),
              fluidRow(align="left", 
                       #Add button to download report
-                      downloadButton("report", "Generate report"))
+                      downloadButton("report", "Generate report"),
+                      style = "margin-left: 8.5%;")
       ) #end second column/main panel
     ), #end of FluidRow
     hr(),
     fluidRow(
-      column(9, id="git", a(href="https://github.com/miraisolutions/SmaRP.git", icon("github-square", "fa-2x"))# , title=IB$git)#,
+      column(9, id="git", a(href="https://github.com/miraisolutions/SmaRP.git", icon("github-square", "fa-2x")) # , title=IB$git),
              #bsTooltip("git", IB$git, placement = "right", options = list(container = "body"))
              ),
-      column(3, a(href="http://www.mirai-solutions.com", img(src='mirai.png', align = "right",  height = "20%", width = "40%")), align="right" )
-      ,style = " margin-bottom: 10px;" 
+      column(3, a(href="http://www.mirai-solutions.com", img(src='mirai.png', align = "right",width = "40%")), align="right" ,style = "margin-bottom: 1%;")
+      , style = "margin-right:0.1%;"
       )
   ) # end of fluidPage
 ) #end of shinyUI

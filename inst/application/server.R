@@ -104,7 +104,7 @@ shinyServer(function(input, output, session) {
   
   P3purchase <- reactive({isnotAvailableReturnZero(input$P3purchase)})
   
-  returnP3_notzero <- reactive({isnotAvailableReturnZero(input$returnP3)})
+  returnP3_notzero <- reactive({isnotAvailableReturnZero(input$returnP3/100)})
   returnP3 <- reactive({
     if (Inputcase() == "General") {
       validate(
@@ -195,7 +195,7 @@ shinyServer(function(input, output, session) {
   
   
   SalaryGrowthRate <- reactive({ if(Inputcase() == "Swiss"){
-    isnotAvailableReturnZero(input$SalaryGrowthRate)}
+    isnotAvailableReturnZero(input$SalaryGrowthRate/100)}
     else if (Inputcase() == "General"){
       0}
   })
@@ -249,12 +249,12 @@ shinyServer(function(input, output, session) {
   # TaxRate ----
   taxRateValue <- reactive({
     if(Inputcase() == "General"){
-      isnotAvailableReturnZero(input$TaxRate)
+      isnotAvailableReturnZero(input$TaxRate/100)
     } else if(Inputcase() == "Swiss" & input$provideTaxRateSwiss){
       validate(
         need(input$TaxRateSwiss, VM$TaxRateSwiss)
       )
-      input$TaxRateSwiss
+      input$TaxRateSwiss/100
     } else{
       NULL
     }
@@ -502,7 +502,7 @@ shinyServer(function(input, output, session) {
   # Conditional TaxRate input ----
   output$conditionalInputSwiss <- renderUI({
     if(input$provideTaxRateSwiss){
-      numericInput("TaxRateSwiss", label = h5("Direct Tax Rate (optional)"), value = 1, step = 0.1, min = 0)
+      numericInput("TaxRateSwiss", label = h5("Direct Tax Rate % (optional)"), value = 10, step = 1, min = 0, max = 100)
     }
     #shinyjs::hide("genre")
   })

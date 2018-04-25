@@ -8,6 +8,7 @@ body {
   background-repeat: repeat-x;
   background-position: center center;
   background-size: cover;
+  margin-bottom:0.5%;
 }
 
 hr {border-top: 1px solid #000000;}
@@ -30,7 +31,9 @@ h4 {
   color: #737373;
   font-size: 12px;
   text-align: left;
-  margin: 20px;
+  margin-left: 10%;
+  margin-right: 15%;
+  margin-top: 1%;
 }
 
 #Totals{
@@ -38,7 +41,10 @@ h4 {
   color: #008cc3;
   font-size: 18px;
   text-align: center;
-  margin: 20px;
+  margin-left: 10%;
+  margin-right: 15%;
+  margin-top: 2%;
+  margin-bottom: 0.5%;
 }
                                   
 h2 {
@@ -46,8 +52,7 @@ h2 {
   color: #ea8b5b;
   font-size: 30px;
   text-align: left;
-  margin-left: 20px;
-  margin-top: 10px;
+  margin-left: 2%;
   font-weight: bold;
 }
 
@@ -56,8 +61,8 @@ h3 {
   color: #000000;
   font-size: 18px;
   text-align: left;
-  margin-left: 20px;
-  margin-top: 0;
+  margin-left: 2%;
+  margin-top: 0.1%;
   font-weight: bold;
 }
 
@@ -66,7 +71,6 @@ a {
   font-size: 14px;
   color:#008cc3;
   text-align: left;
-  margin-left: 20px;
   font-weight: normal;
 }
 
@@ -76,23 +80,23 @@ small {
   color:#737373;  
 }
 
-.tabbable > .nav > li > a[data-value='Personal'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; margin-left:20px}
-.tabbable > .nav > li[class=active]    > a[data-value='Personal'] {background-color:#008cc3;   color:white; border-bottom: 1px solid #D7DBDD; margin-left:20px}
+.tabbable > .nav > li > a[data-value='Personal'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 130%;}
+.tabbable > .nav > li[class=active]    > a[data-value='Personal'] {background-color:#008cc3;   color:white; border-bottom: 1px solid #D7DBDD; width: 130%;}
 
-.tabbable > .nav > li > a[data-value='Residence'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; margin-left:70px}
-.tabbable > .nav > li[class=active]    > a[data-value='Residence'] {background-color:#008cc3;   color:white; border-bottom: 1px solid #D7DBDD; margin-left:70px}
+.tabbable > .nav > li > a[data-value='Residence'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 132%; margin-left:40%;}
+.tabbable > .nav > li[class=active]    > a[data-value='Residence'] {background-color:#008cc3;   color:white; border-bottom: 1px solid #D7DBDD;width: 132%; margin-left:40%;}
 
-.tabbable > .nav > li > a[data-value='Swiss'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; margin-left:80px}
-.tabbable > .nav > li[class=active]    > a[data-value='Swiss'] {background-color:#FF9966;   color:white; border: 1.1px solid #D7DBDD; margin-left:80px}
+.tabbable > .nav > li > a[data-value='General'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 140%;}
+.tabbable > .nav > li[class=active]    > a[data-value='General'] {background-color: #FF9966;   color:white; border: 1.1px solid #D7DBDD; width: 140%;}
 
-.tabbable > .nav > li > a[data-value='General'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; margin-left:20px}
-.tabbable > .nav > li[class=active]    > a[data-value='General'] {background-color: #FF9966;   color:white; border: 1.1px solid #D7DBDD; margin-left:20px}
+.tabbable > .nav > li > a[data-value='Swiss'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 170%; margin-left:60%;}
+.tabbable > .nav > li[class=active]    > a[data-value='Swiss'] {background-color:#FF9966;   color:white; border: 1.1px solid #D7DBDD;width: 170%; margin-left:60%;}
 
-.tabbable > .nav > li > a[data-value='Table'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD}
-.tabbable > .nav > li[class=active]    > a[data-value='Table'] {background-color:#FF9966;   color:white; border: 1.1px solid #D7DBDD}
+.tabbable > .nav > li > a[data-value='Plot'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 140%; margin-left:100%;}
+.tabbable > .nav > li[class=active]    > a[data-value='Plot'] {background-color: #FF9966;   color:white; border: 1.1px solid #D7DBDD; width: 140%; margin-left:100%;}
 
-.tabbable > .nav > li > a[data-value='Plot'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD}
-.tabbable > .nav > li[class=active]    > a[data-value='Plot'] {background-color: #FF9966;   color:white; border: 1.1px solid #D7DBDD}
+.tabbable > .nav > li > a[data-value='Table'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 130%;margin-left:140%;}
+.tabbable > .nav > li[class=active]    > a[data-value='Table'] {background-color:#FF9966;   color:white; border: 1.1px solid #D7DBDD; width: 130%;margin-left:140%;}
 
 .tabbable > .nav > li > a                  {background-color: white;  color:#008cc3}
 .tabbable > .nav > li[class=active]    > a {background-color: #008cc3;   color:white}
