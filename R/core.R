@@ -3,8 +3,8 @@
 # library(lubridate)
 # library(dplyr)
 # source(system.file("application", "global.R", package = "SmaRP"))
-# birthday = "1981-08-12"
-# P3purchase = 0
+# birthday = "1975-10-10"
+# P3purchase = 5000
 # CurrentP3 = 0
 # returnP3 = 0.05
 # CurrentP2 = 50000
@@ -177,7 +177,7 @@ buildContributionP2Path <- function(birthday,
   ContributionP2Path %<>% within({
     ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
     BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
-    BVGContributions = if_else(is.na(BVGpurchase + (ExpectedSalaryPath * BVGcontriburionrates)), 0, BVGpurchase + (ExpectedSalaryPath * BVGcontriburionrates))
+    BVGContributions = if_else(is.na(BVGpurchase + (max(0, ExpectedSalaryPath- MinBVG) * BVGcontriburionrates)), 0, BVGpurchase + (max(0, ExpectedSalaryPath- MinBVG) * BVGcontriburionrates))
     BVGDirect = BVGContributions +c(CurrentP2, rep(0, ncp -1))
     t = buildt(birthday, RetirementAge = RetirementAge )
     TotalP2 = calcAnnuityAcumPath(BVGDirect, t, rate)
@@ -247,17 +247,6 @@ buildContributionP3path <- function(birthday,
 #' calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000), t = c(0.284931, 1, 1, 1, 0), rate = 0.01)
 #' }
 #' @export
-# calcAnnuityAcumPath <- function(contributions, t, rate){
-#   res <- vector()
-#   res[1] <- contributions[1] * exp(rate * t[1])
-#   for(i in 2:length(contributions)) {
-#     res[i] <- (res[i-1] + contributions[i]) * exp(rate * t[i]) 
-#   }
-#   res1 <- vector()
-#   res1[1]<-0
-#   res1[2:length(res)]<-res[1:length(res)-1]
-#   res1
-# }
 calcAnnuityAcumPath <- function(contributions, t, rate){
   res <- vector()
   res[1] <- contributions[1]
