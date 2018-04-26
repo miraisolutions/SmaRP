@@ -470,7 +470,15 @@ shinyServer(function(input, output, session) {
                           # tax_rates_Kanton_list = tax_rates_Kanton_list,
                           # BundessteueTabelle = BundessteueTabelle,
                           PLZGemeinden = PLZGemeinden,
-                          deduction_percentage = deduction_percentage
+                          #deduction_percentage = deduction_percentage
+                          AHL = AHL,
+                          ALV = ALV,
+                          VersicherungsL = VersicherungsL,
+                          VersicherungsV= VersicherungsV,
+                          VersicherungsK = VersicherungsK,
+                          DOV = DOV, 
+                          Kinder = Kinder,
+                          Verheiratet = Verheiratet
                           )
   )
   
