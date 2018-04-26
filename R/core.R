@@ -317,11 +317,11 @@ returnSteuerfuss <- function(plz){
 printCurrency <- function(value,  digits=0, sep=",", decimal=".") { #currency.sym ="",
   paste(
     #currency.sym,
-    formatC(value/1000, format = "f", big.mark = sep, digits=digits, decimal.mark=decimal),
-    "k ",
+    formatC(value, format = "f", big.mark = sep, digits=digits, decimal.mark=decimal),
     sep=""
   )
 }
+
 
 
 # Make table -------------------------------------------------------------

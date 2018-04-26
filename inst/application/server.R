@@ -402,7 +402,9 @@ shinyServer(function(input, output, session) {
   
   output$Totals <- renderText({
     paste("Total retirement fund as of", retirementdate(), "is",
-          printCurrency(retirementfund()), percentageLastSalary(),
+          formatC(retirementfund()/1000, format = "f", big.mark = sep, digits=digits, decimal.mark=decimal),
+          "k ",
+          percentageLastSalary(),
           #currency(),
           sep = " ")
   })
