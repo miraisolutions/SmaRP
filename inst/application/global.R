@@ -63,7 +63,7 @@ Kirchensteuer <<- unique(PLZGemeinden[, c("Kanton", "FactorKanton", "FactorGemei
   mutate(Kirchensteuer = (FactorKanton + FactorGemeinde)/ (FactorKanton + FactorGemeinde + FactorKirche))
 
 # deduction percentage
-deduction_percentage <- 0.1
+#deduction_percentage <- 0.1
 
 # Bundesabzuge
 AHL <<- 0.0515

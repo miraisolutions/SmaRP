@@ -189,9 +189,9 @@ shinyServer(function(input, output, session) {
   })
   
   
-  SalaryProxy <- reactive({ 
-    Salary()*(1-deduction_percentage)
-  })
+  # SalaryProxy <- reactive({ 
+  #   Salary()*(1-deduction_percentage)
+  # })
   
   
   SalaryGrowthRate <- reactive({ if(Inputcase() == "Swiss"){
@@ -265,7 +265,7 @@ shinyServer(function(input, output, session) {
   # calc P2 fund ----
   ContributionP2Path <- reactive({ 
     buildContributionP2Path(birthday = Birthdate(),
-                            Salary = SalaryProxy(), #ifelse(input$case == "General", 0, Salary()),
+                            Salary = Salary(), #ifelse(input$case == "General", 0, Salary()),
                             SalaryGrowthRate = SalaryGrowthRate(),
                             CurrentP2 = CurrentP2(), #ifelse(input$case == "General", 0, CurrentP2()),
                             P2purchase = P2purchase(),
