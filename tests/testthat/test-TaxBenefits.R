@@ -20,7 +20,7 @@ Tabelle=tax_rates_Kanton_list[[kanton]]
 churchtax = "N"
 rate_group = "A"
 TaxRate = NULL
-rate = BVGparams$BVGMindestzinssatz
+rate = BVGMindestzinssatz
 
 
 test_that(paste0("test lookup on kanton taxrate table for Income", Salary, " Kanton ", kanton, " and Civil Status ", rate_group), {

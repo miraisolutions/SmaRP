@@ -49,6 +49,10 @@ options(stringsAsFactors = FALSE)
   return(res)
 }
 
+fix_nas <- function (x, value = 0) {
+  x[is.na(x) | is.infinite(x) | is.nan(x)] = value
+  return(x)
+}
 
 
 # URLs -----
@@ -204,6 +208,29 @@ BE <- .combine_subset_VT_GT(GTtarif, VTtarif)
 # >> GL ----
 
 # >> ZG ----
+BaseDFSingle <- data.frame(I = seq(0, 1E6, 100), mgRateSingle=rep(0,1E4+1), taxAmountSingle = rep(0,1E4+1))
+BaseDFMarried <- data.frame(I = seq(0, 1E6, 100), mgRateSingle=rep(0,1E4+1), taxAmountSingle = rep(0,1E4+1))
+  
+  
+ZG_KantonTaxRates_Single <- pdftools::pdf_text("data//taxdata/ZG_KantonTaxRates_Singles.pdf") %>%
+  strsplit("\n") %>% .[[1]]
+x<- ZG_KantonTaxRates_Single[9:23]
+res <- sapply(strsplit(x, "\\s+")[1:length(x)], "[", c(1:9)) %>%
+  t() %>% 
+  as.data.frame(stringsAsFactors = FALSE)
+res[15,6] <- res[15,4]
+res <- res %>%
+  select(c(V2, V6, V9)) %>% #res <- res %>%
+  lapply(fix_nas) %>%
+  as.data.frame(stringsAsFactors = FALSE) %>%
+  magrittr::set_colnames(c("Satz","I", "mgRateSingle")) %>% #res <- res %>%
+  mutate(I = gsub("'", "", I) %>% as.numeric(),
+         Satz = gsub("[:%:]", "", Satz) %>% as.numeric(),
+         mgRateSingle = gsub("'", "", mgRateSingle) %>% as.numeric())
+
+BaseDFSingle %>% left_join(res, by = c("I", "mgRateSingle")) %>%
+  
+
 
 # >> FR ----
 
@@ -219,11 +246,6 @@ BE <- .combine_subset_VT_GT(GTtarif, VTtarif)
     magrittr::set_colnames(c("I", mgRate,  taxAmount))%>%
     as.data.frame()
   return(res)
-}
-
-fix_nas <- function (x, value = 0) {
-  x[is.na(x) | is.infinite(x) | is.nan(x)] = value
-  return(x)
 }
 
 BS_KantonTaxRates_all <- pdftools::pdf_text("data//taxdata//BS_KantonTaxRates.pdf") %>%

@@ -208,7 +208,7 @@ shinyServer(function(input, output, session) {
   
   P2interestRate <- reactive({if (Inputcase()=="Swiss"){
     if (isnotAvailable(input$P2interestRate)){
-      BVGparams$BVGMindestzinssatz
+      BVGMindestzinssatz
     } else {
       input$P2interestRate/100
     }
@@ -293,7 +293,7 @@ shinyServer(function(input, output, session) {
                      P2purchase = P2purchase(), 
                      P3purchase = P3purchase(), 
                      returnP3 = returnP3(),
-                     Salary = SalaryProxy(), #ifelse(input$case == "General", 0, Salary()),
+                     Salary = Salary(), #ifelse(input$case == "General", 0, Salary()),
                      SalaryGrowthRate = SalaryGrowthRate(),
                      postalcode = postalcode(),
                      NKids = ifelse(isolate(input$NKids) >5, 5, isolate(input$NKids)),

@@ -1,4 +1,5 @@
 library(dplyr)
+library(magrittr)
 
 # Global variables
 
@@ -60,6 +61,9 @@ KinderabzugKG <<- matrix(data = 9000, nrow = length(kantons), ncol = 10) %>%
 # TODO: Build a table like this with accurate data (from Steuerfusse in den Kantonhauptorten)
 Kirchensteuer <<- unique(PLZGemeinden[, c("Kanton", "FactorKanton", "FactorGemeinde", "FactorKirche")]) %>%
   mutate(Kirchensteuer = (FactorKanton + FactorGemeinde)/ (FactorKanton + FactorGemeinde + FactorKirche))
+
+# deduction percentage
+deduction_percentage <- 0.1
 
 # Bundesabzuge
 AHL <<- 0.0515

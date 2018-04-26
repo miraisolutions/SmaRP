@@ -21,7 +21,7 @@ Tabelle=tax_rates_Kanton_list[[kanton]]
 churchtax = "N"
 rate_group = "A"
 TaxRate = NULL
-rate = BVGparams$BVGMindestzinssatz
+rate = BVGMindestzinssatz
 miraiColors<- "['#008cc3', '#FF9966', '#13991c']"
 
 
