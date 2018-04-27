@@ -32,7 +32,7 @@ h4 {
   font-size: 12px;
   text-align: left;
   margin-left: 10%;
-  margin-right: 15%;
+  margin-right: 10%;
   margin-top: 1%;
 }
 
@@ -42,7 +42,7 @@ h4 {
   font-size: 18px;
   text-align: center;
   margin-left: 10%;
-  margin-right: 15%;
+  margin-right: 10%;
   margin-top: 2%;
   margin-bottom: 0.5%;
 }
@@ -80,23 +80,23 @@ small {
   color:#737373;  
 }
 
-.tabbable > .nav > li > a[data-value='Personal'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 130%;}
-.tabbable > .nav > li[class=active]    > a[data-value='Personal'] {background-color:#008cc3;   color:white; border-bottom: 1px solid #D7DBDD; width: 130%;}
+.tabbable > .nav > li > a[data-value='Personal'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 150px;}
+.tabbable > .nav > li[class=active]    > a[data-value='Personal'] {background-color:#008cc3;   color:white; border-bottom: 1px solid #D7DBDD; width: 150px;}
 
-.tabbable > .nav > li > a[data-value='Residence'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 132%; margin-left:40%;}
-.tabbable > .nav > li[class=active]    > a[data-value='Residence'] {background-color:#008cc3;   color:white; border-bottom: 1px solid #D7DBDD;width: 132%; margin-left:40%;}
+.tabbable > .nav > li > a[data-value='Residence'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 150px; margin-left:10px;}
+.tabbable > .nav > li[class=active]    > a[data-value='Residence'] {background-color:#008cc3;   color:white; border-bottom: 1px solid #D7DBDD;width: 150px; margin-left:10px;}
 
-.tabbable > .nav > li > a[data-value='General'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 140%;}
-.tabbable > .nav > li[class=active]    > a[data-value='General'] {background-color: #FF9966;   color:white; border: 1.1px solid #D7DBDD; width: 140%;}
+.tabbable > .nav > li > a[data-value='General'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 150px;}
+.tabbable > .nav > li[class=active]    > a[data-value='General'] {background-color: #FF9966;   color:white; border: 1.1px solid #D7DBDD; width: 150px;}
 
-.tabbable > .nav > li > a[data-value='Swiss'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 170%; margin-left:60%;}
-.tabbable > .nav > li[class=active]    > a[data-value='Swiss'] {background-color:#FF9966;   color:white; border: 1.1px solid #D7DBDD;width: 170%; margin-left:60%;}
+.tabbable > .nav > li > a[data-value='Swiss'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 150px; margin-left:10px;}
+.tabbable > .nav > li[class=active]    > a[data-value='Swiss'] {background-color:#FF9966;   color:white; border: 1.1px solid #D7DBDD;width: 150px; margin-left:10px;}
 
-.tabbable > .nav > li > a[data-value='Plot'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 140%; margin-left:100%;}
-.tabbable > .nav > li[class=active]    > a[data-value='Plot'] {background-color: #FF9966;   color:white; border: 1.1px solid #D7DBDD; width: 140%; margin-left:100%;}
+.tabbable > .nav > li > a[data-value='Plot'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 100px; margin-left:20px;}
+.tabbable > .nav > li[class=active]    > a[data-value='Plot'] {background-color: #FF9966;   color:white; border: 1.1px solid #D7DBDD; width: 100px; margin-left:20px;}
 
-.tabbable > .nav > li > a[data-value='Table'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 130%;margin-left:140%;}
-.tabbable > .nav > li[class=active]    > a[data-value='Table'] {background-color:#FF9966;   color:white; border: 1.1px solid #D7DBDD; width: 130%;margin-left:140%;}
+.tabbable > .nav > li > a[data-value='Table'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 100px;margin-left:10px;}
+.tabbable > .nav > li[class=active]    > a[data-value='Table'] {background-color:#FF9966;   color:white; border: 1.1px solid #D7DBDD; width: 100px;margin-left:10px;}
 
 .tabbable > .nav > li > a                  {background-color: white;  color:#008cc3}
 .tabbable > .nav > li[class=active]    > a {background-color: #008cc3;   color:white}
