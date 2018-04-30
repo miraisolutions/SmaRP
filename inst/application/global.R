@@ -65,9 +65,10 @@ Kirchensteuer <<- unique(PLZGemeinden[, c("Kanton", "FactorKanton", "FactorGemei
 # deduction percentage
 #deduction_percentage <- 0.1
 
-# Bundesabzuge
+# Abzuge
 AHL <<- 0.0515
 ALV <<- 0.011
+maxALV <<- 1630.2
 VersicherungsL <<- 1700 # übrige mit Vorsorge
 VersicherungsV <<- 3500 # Verheitatete mit Vorsorge
 VersicherungsK <<- 700
@@ -76,4 +77,7 @@ Kinder <<- 6500
 Verheiratet <<- 2600
 BerufsauslagenTarif <<- 0.03
 BerufsauslagenMax <<- 4000
+BerufsauslagenMin <<- 2000
+NBU <<- 0.0084
+maxNBU <<- 1065
 
