@@ -23,9 +23,9 @@ BVGMindestzinssatz <<- 0.01
 MaxContrTax <<- 6768  
 
 # https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
-BVGcontriburionrates <- data.frame(lowerbound = c(18, 25, 35, 45, 55),
+BVGcontriburionrates <<- data.frame(lowerbound = c(18, 25, 35, 45, 55),
                                     upperbound = c(24, 34, 44, 54, 70),
-                                    BVGcontriburionrates = c(0.00, 0.07, 0.010, 0.015, 0.18))
+                                    BVGcontriburionrates = c(0.00, 0.07, 0.10, 0.15, 0.18))
 # BVGcontriburionrates path
 BVGcontriburionratesPath <<- data.frame(years = seq(BVGcontriburionrates$lowerbound[1], BVGcontriburionrates$upperbound[nrow(BVGcontriburionrates)]),
                                         BVGcontriburionrates = rep(BVGcontriburionrates$BVGcontriburionrates, 
