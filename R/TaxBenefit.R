@@ -20,7 +20,6 @@ getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
   
   DOfactor <- ifelse(Tarif == "DOPMK", 2, 1)
   
-  
   # Select Tarif, Gemeinde and build Income Cuts 
   taxburden <- filter(taxburden.list[[grep(Tarif, names(taxburden.list))]], Gemeindenummer == GDENR)
   idxNumCols <- !grepl("[a-z]", colnames(taxburden))
@@ -45,9 +44,13 @@ getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
     AjustKinderabzug <- 0
   }
   
-  IncomeKG <- Income + AjustKinderabzug + (DOfactor * AjustBVGContri)
+  # 3. NBU (not applied on taxburden source)
+  # To match http://www.estv2.admin.ch/d/dienstleistungen/steuerrechner/steuerrechner.htm
+  NBUanzug <- min(DOfactor * maxNBU, Income * NBU)
   
-  TaxAmountKGC <- Income * (approx(x = IncomeCuts, y = taxrate, IncomeKG)$y) / 100
+  IncomeKG <- Income + AjustKinderabzug + (DOfactor * AjustBVGContri[1,1]) - NBUanzug
+  
+  TaxAmountKGC <- max(0, IncomeKG * (approx(x = IncomeCuts, y = taxrate, IncomeKG)$y) / 100)
   
   # Church affiliation 
   # By default, assumed church affiliation. If not, there's a discount
@@ -58,18 +61,19 @@ getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
   # Get Taxable Federal Income
   TaxableIncomeFederal <- BVGcontriburionratesPath %>%
     filter(years == Age) %>%
-    mutate(BVG = DOfactor * (BVGcontriburionrates * (min(Income, MaxBVG) - MinBVG)),
-           AHL = Income * AHL,
-           ALV = Income * ALV, 
-           NetSalary = Income - BVG -AHL - ALV,
-           Verheiratet = ifelse(Tarif == "Ledig", 0, Verheiratet),
-           Versicherung = ifelse(Tarif == "Ledig", VersicherungsL, VersicherungsV + NKids * VersicherungsK),
-           DO =  ifelse(Tarif == "DOPMK", DOV, 0),
-           Beruf = min(DOfactor * BerufsauslagenMax, NetSalary * BerufsauslagenTarif),
-           Kids =  NKids *  + Kinder ) %>%
+    mutate( DO =  ifelse(Tarif == "DOPMK", DOV, 0),
+            BVG = DOfactor * (BVGcontriburionrates * (min(Income, MaxBVG) - MinBVG)),
+            AHL = Income * AHL,
+            ALV = min(DOfactor * maxALV, Income * ALV), 
+            NBU = min(DOfactor * maxNBU, Income * NBU),
+            NetSalary = Income - BVG -AHL - ALV - NBU,
+            Verheiratet = ifelse(Tarif == "Ledig", 0, Verheiratet),
+            Versicherung = ifelse(Tarif == "Ledig", VersicherungsL, VersicherungsV + NKids * VersicherungsK),
+            Beruf = max(DOfactor * BerufsauslagenMin, min(DOfactor * BerufsauslagenMax, NetSalary * BerufsauslagenTarif)),
+            Kids =  NKids *  + Kinder ) %>%
     transmute(AjustSalary = NetSalary - Verheiratet - Versicherung - DO - Beruf - Kids)
-
-  TaxAmountFederal<- lookupTaxRate(TaxableIncomeFederal, BundessteueTabelle,rate_group) - 251*NKids
+  
+  TaxAmountFederal<- max(0, lookupTaxRate(TaxableIncomeFederal, BundessteueTabelle,rate_group) - 251*NKids)
   TaxAmount <- TaxAmountFederal + TaxAmountKGC
   
   return(TaxAmount)
