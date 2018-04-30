@@ -68,9 +68,12 @@ Kirchensteuer <<- unique(PLZGemeinden[, c("Kanton", "FactorKanton", "FactorGemei
 # Bundesabzuge
 AHL <<- 0.0515
 ALV <<- 0.011
-VersicherungsL <<- 2550
-VersicherungsV <<- 5250
+VersicherungsL <<- 1700 # übrige mit Vorsorge
+VersicherungsV <<- 3500 # Verheitatete mit Vorsorge
 VersicherungsK <<- 700
-DOV <<- 13400
+DOV <<- 13400 # assumption: always max
 Kinder <<- 6500
 Verheiratet <<- 2600
+BerufsauslagenTarif <<- 0.03
+BerufsauslagenMax <<- 4000
+
