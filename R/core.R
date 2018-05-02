@@ -332,8 +332,8 @@ printCurrency <- function(value,  digits=0, sep=",", decimal=".") { #currency.sy
 #' makeTable(Road2Retirement)
 #' }
 #' @export
-makeTable <- function(Road2Retirement){ #, currency=""
-  moncols <- c( "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")
+makeTable <- function(Road2Retirement, moncols = c( "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")){ #, currency=""
+  # moncols <- 
   TableMonetary <- Road2Retirement[, c("calendar", moncols)] %>%
     mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-"))
   TableMonetary[, moncols] <- sapply(TableMonetary[, moncols], printCurrency) #, currency
@@ -366,7 +366,7 @@ isnotAvailableReturnZero <- function(inputValue){
 #' @export
 need_not_zero <- function(input, inputname) {
   if (input == 0 | input == "" | is.null(input)) {
-    paste0(VB$need_not_zero_base,inputname)
+    paste0(VM$need_not_zero_base,inputname)
   } else {
     NULL
   }
