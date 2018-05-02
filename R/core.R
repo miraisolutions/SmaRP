@@ -173,11 +173,12 @@ buildContributionP2Path <- function(birthday,
     mutate(BVGcontriburionrates = if_else(is.na(BVGcontriburionrates), 0, BVGcontriburionrates))
   
   ncp <- nrow(ContributionP2Path)
+  isPurchase <-c(0, rep(1, ncp-1))
   
   ContributionP2Path %<>% within({
     ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
     BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
-    BVGContributions = if_else(is.na(BVGpurchase + (max(0, ExpectedSalaryPath- MinBVG) * BVGcontriburionrates)), 0, BVGpurchase + (max(0, ExpectedSalaryPath- MinBVG) * BVGcontriburionrates))
+    BVGContributions = if_else(is.na(BVGpurchase + (max(0, ExpectedSalaryPath- MinBVG) * BVGcontriburionrates)), 0, BVGpurchase + (max(0, ExpectedSalaryPath- MinBVG) * BVGcontriburionrates*isPurchase))
     BVGDirect = BVGContributions +c(CurrentP2, rep(0, ncp -1))
     t = buildt(birthday, RetirementAge = RetirementAge )
     TotalP2 = calcAnnuityAcumPath(BVGDirect, t, rate)
