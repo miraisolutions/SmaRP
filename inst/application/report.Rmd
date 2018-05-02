@@ -192,11 +192,11 @@ The deductions are estimated as follows:
 * health insurance, old-age and survivor's insurance (AHV/AVS): `r params$AHL`
 * unemployment, accident and invalidity insurance (ALV): `r params$ALV`
 * Deduction for:
-  * Not married people: `r params$VersicherungsL`
-  * Married people: `r params$VersicherungsV` plus `r params$Verheiratet`
-  * Not married people with children: `r params$VersicherungsK`
-  * Married people with double income: `r params$DOV`
-  * Deduction per child: `r params$Kinder`
+  * Not married people: `r printCurrency(params$VersicherungsL)`
+  * Married people: `r printCurrency(params$VersicherungsV)` plus `r printCurrency(params$Verheiratet)`
+  * Not married people with children: `r printCurrency(params$VersicherungsK)`
+  * Married people with double income: `r printCurrency(params$DOV)`
+  * Deduction per child: `r printCurrency(params$Kinder)`
 
 To calculate the tax benefits, we detract from the taxable income the minimum between the maximum deductible amount allowed by law and the total purchase of pension funds.
 
