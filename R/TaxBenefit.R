@@ -4,22 +4,31 @@
 #' @name getTaxAmount
 #' @examples
 #' \dontrun{
-#' getTaxAmount(Income = 200000, rate_group = "C", Age = 32, NKids = 1, postalcode = 9443, churchtax = "Y")
+#' getTaxAmount(Income = 200000, rate_group = "C", Age = 32, NKids = 5, postalcode = 8400, churchtax = "Y")
 #' }
 #' @export
 getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
   
   # Find Kanton and Gemeinde
-  Kanton = PLZGemeinden[PLZGemeinden$PLZ == postalcode, "Kanton"]
+  Kanton = PLZGemeinden[PLZGemeinden$PLZ == postalcode, "Kanton"] %>% unique()
   GDENR = PLZGemeinden[PLZGemeinden$PLZ == postalcode, "GDENR"]
+  GDENAME = PLZGemeinden[PLZGemeinden$PLZ == postalcode, "GDENAME"] 
   
+  # TODO: Solve conflics among postalcodes - gemeinden
+  # 1. Merge by GDENAME
+  # 2. Fix in case: Duplicate gemeinde with a predominant one (example Horgen, Illnau-Effretikon)
+  if (length(GDENR) > 1) {
+    GDENR <- names(which(sapply(table(GDENR), function(x) x == max(table(GDENR)))))
+  }
+  # 3. Fall back to Kanton (Main City)
+
   # Get Tarif
   Tarif = ifelse(rate_group == "C", "DOPMK",
                  ifelse(rate_group == "A" & NKids == 0, "Ledig", 
                         ifelse(rate_group == "B" & NKids == 0, "VOK", "VMK")))
   
   DOfactor <- ifelse(Tarif == "DOPMK", 2, 1)
-  
+
   # Select Tarif, Gemeinde and build Income Cuts 
   taxburden <- filter(taxburden.list[[grep(Tarif, names(taxburden.list))]], Gemeindenummer == GDENR)
   idxNumCols <- !grepl("[a-z]", colnames(taxburden))
@@ -39,7 +48,7 @@ getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
   # Tax burden based on 2 kids. Therefore, an adjustment factor is applied accordingly.
   if(Tarif %in% c("DOPMK", "VMK")){
     OriKinderabzugKG <- sum(KinderabzugKG[row.names(KinderabzugKG) == Kanton, 1:2])
-    AjustKinderabzug <- sum(KinderabzugKG[row.names(KinderabzugKG) == Kanton, 1:NKids]) - OriKinderabzugKG
+    AjustKinderabzug <- OriKinderabzugKG - sum(KinderabzugKG[row.names(KinderabzugKG) == Kanton, 1:NKids])
   } else {
     AjustKinderabzug <- 0
   }
