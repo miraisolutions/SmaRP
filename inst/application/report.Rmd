@@ -49,8 +49,10 @@ params:
       Verheiratet: NA
 ---
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(SmaRP)
 library(ggplot2)
 library(googleVis)
 library(dplyr)
@@ -72,25 +74,6 @@ if(params$P2purchase + params$P3purchase >0){
   show_tax = TRUE
 } else {
   show_tax = FALSE
-}
-
-# Convert to Monetary data type ----------------------------------------------------------------
-printCurrency <- function(value,  digits=0, sep=",", decimal=".") { #currency.sym ="",
-  paste(
-    #currency.sym,
-    formatC(value, format = "f", big.mark = sep, digits=digits, decimal.mark=decimal),
-    sep=""
-  )
-}
-
-
-# Make table -------------------------------------------------------------
-
-makeTable <- function(Road2Retirement, moncols){ #, currency=""
-  TableMonetary <- Road2Retirement[, c("calendar", moncols)] %>%
-    mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-"))
-  TableMonetary[, moncols] <- sapply(TableMonetary[, moncols], printCurrency) #, currency
-  return(TableMonetary)
 }
 
 options(warn = -1)
@@ -225,7 +208,7 @@ Road2Retirement_to_print_Summarized <- Road2Retirement_to_print %>%
   mutate(PrivatePension = DirectP3 + ReturnP3) %>%
   rename(ExpectedSalary = ExpectedSalaryPath) %>%
   select(calendar,ExpectedSalary, OccupationalPension, PrivatePension, TaxBenefits) %>%
-  makeTable(., moncols)
+  makeTable(moncols)
 pander(Road2Retirement_to_print_Summarized)
 ```
 
@@ -235,7 +218,7 @@ moncols <- c(  "P2ContributionPath", "P2purchase", "DirectP2", "ReturnP2", "Tota
 set.caption('Detailed Occupational Pension Fund Contribution')
 Road2Retirement_to_print_Pillar2 <- Road2Retirement_to_print %>%
   select(calendar,  P2ContributionPath, P2purchase, DirectP2, ReturnP2, TotalP2) %>%
-  makeTable(., moncols)
+  makeTable(moncols)
 pander(Road2Retirement_to_print_Pillar2)
 }
 ```
@@ -245,7 +228,7 @@ moncols <- c(  "P3ContributionPath", "P3purchase", "DirectP3", "ReturnP3", "Tota
 set.caption('Detailed Provate Pension Fund Contribution')
 Road2Retirement_to_print_Pillar3 <- Road2Retirement_to_print %>%
   select(calendar,  P3ContributionPath, P3purchase, DirectP3, ReturnP3, TotalP3) %>%
-  makeTable(., moncols)
+  makeTable(moncols)
 pander(Road2Retirement_to_print_Pillar3)
 ```
 
@@ -254,7 +237,7 @@ moncols <- c(  "DirectTax", "ReturnTax", "TotalTax")
 set.caption('Detailed Tax Benefit Contribution')
 Road2Retirement_to_print_TaxBenefit <- Road2Retirement_to_print %>%
   select(calendar, DirectTax, ReturnTax, TotalTax)%>%
-  makeTable(., moncols)
+  makeTable(moncols)
 pander(Road2Retirement_to_print_TaxBenefit)
 ```
 
