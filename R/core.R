@@ -365,7 +365,7 @@ isnotAvailableReturnZero <- function(inputValue){
 #' @export
 need_not_zero <- function(input, inputname) {
   if (input == 0 | input == "" | is.null(input)) {
-    paste0(VB$need_not_zero_base,inputname)
+    paste0(VM$need_not_zero_base,inputname)
   } else {
     NULL
   }
