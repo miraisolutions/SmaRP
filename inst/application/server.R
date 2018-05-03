@@ -18,7 +18,7 @@ library(shinyBS) # needed for the info windows
 
 # source core methodology and global variables
 #source("core.R")
-
+source("helper_texts.R")
 options(shiny.sanitize.errors = TRUE)
 
 # Define server logic required to draw a histogram
@@ -42,6 +42,9 @@ shinyServer(function(input, output, session) {
   Birthdate <- reactive({
     validate(
       need(input$Birthdate, VM$Birthdate)
+    )
+    validate(
+      need((input$Birthdate -65) >0, VM$Birthdate2)
     )
     input$Birthdate
   })

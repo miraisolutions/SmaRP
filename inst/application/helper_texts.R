@@ -24,6 +24,7 @@ IB <- list(CurrentP3 = "Current retirement assets in your Private Pension Fund."
 # Validity Message
 VM <-list(genre = "Gender is a mandatory input when the date of retirement is not provided.",
            Birthdate = "Birthdate is a mandatory input.",
+           Birthdate2 = "You should be retired already.",
            RetirementAge = "Provide the desired retirement age.",
            need_not_zero_base = "Provide a non zero value for ",
            CurrentP3_notZero = "Private Pension Fund.",
