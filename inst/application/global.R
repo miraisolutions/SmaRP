@@ -81,3 +81,14 @@ BerufsauslagenMin <<- 2000
 NBU <<- 0.0084
 maxNBU <<- 1065
 
+
+#DF of cantons and capitals
+canton.capital.df <- data.frame("canton" = c("AI","AG","AR","BE","BL","BS","FR","GE","GL","GR","JU","LU","NE","NW","OW",
+                                             "SG","SH","SO","SZ","TI","TG","UR","VD","VS","ZG","ZH"), 
+                                "capital" = c("Appenzell","Aarau","Herisau","Bern","Liestal","Basel","Fribourg","Genève","Glarus","Chur","Delémont","Luzern","Neuchâtel","Stans","Sarnen",
+                                              "St. Gallen","Schaffhausen","Solothurn","Schwyz","Bellinzona","Frauenfeld","Altdorf (UR)","Lausanne","Sion","Zug","Zürich"))
+canton.capital.df <- canton.capital.df %>%
+  left_join(PLZGemeinden, by=c("capital"="GDENAME")) %>%
+  select(one_of(c("capital", "Kanton", "GDENR")))
+
+canton.capital.df <- canton.capital.df[!duplicated(canton.capital.df$Kanton),]

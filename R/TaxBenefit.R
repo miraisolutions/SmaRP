@@ -12,15 +12,7 @@ getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
   # Find Kanton and Gemeinde
   Kanton = PLZGemeinden[PLZGemeinden$PLZ == postalcode, "Kanton"] %>% unique()
   GDENR = PLZGemeinden[PLZGemeinden$PLZ == postalcode, "GDENR"]
-  GDENAME = PLZGemeinden[PLZGemeinden$PLZ == postalcode, "GDENAME"] 
-  
-  # TODO: Solve conflics among postalcodes - gemeinden
-  # 1. Merge by GDENAME
-  # 2. Fix in case: Duplicate gemeinde with a predominant one (example Horgen, Illnau-Effretikon)
-  if (length(GDENR) > 1) {
-    GDENR <- names(which(sapply(table(GDENR), function(x) x == max(table(GDENR)))))
-  }
-  # 3. Fall back to Kanton (Main City)
+  GDENAME = PLZGemeinden[PLZGemeinden$PLZ == postalcode, "GDENAME"]
 
   # Get Tarif
   Tarif = ifelse(rate_group == "C", "DOPMK",
@@ -29,8 +21,28 @@ getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
   
   DOfactor <- ifelse(Tarif == "DOPMK", 2, 1)
 
+  # in case of multiple gemeinden with the same postal code, take the one that appears more often. If all equal take the first
+  if (length(GDENR) > 1) {
+    GDENR <- names(which(sapply(table(GDENR), function(x) x == max(table(GDENR)))))[1]
+  }
+  # in case of multiple gemeinden with the same postal code, take the one that appears more often. If all equal take the first
+  if (length(GDENAME) > 1) {
+    GDENAME <- names(which(sapply(table(GDENAME), function(x) x == max(table(GDENAME)))))[1]
+  }
+  
   # Select Tarif, Gemeinde and build Income Cuts 
   taxburden <- filter(taxburden.list[[grep(Tarif, names(taxburden.list))]], Gemeindenummer == GDENR)
+
+  # In case there is no match by GDENR Merge by GDENAME
+  if(nrow(taxburden)==0){
+    taxburden <- filter(taxburden.list[[grep(Tarif, names(taxburden.list))]], Gemeinde == GDENAME)
+    # In case there is no match by GDENR and by GDENAME, Fall back to Kanton (Main City)
+    if(nrow(taxburden)==0){
+    GDENR =  PLZGemeinden[PLZGemeinden$GDENAME==canton.capital.df[canton.capital.df$Kanton==Kanton,"capital"], "GDENR"]
+    taxburden <- filter(taxburden.list[[grep(Tarif, names(taxburden.list))]], Gemeindenummer == GDENR)
+    }
+  }
+  
   idxNumCols <- !grepl("[a-z]", colnames(taxburden))
   
   IncomeCuts <- gsub("([0-9])\\.([0-9])", "\\1\\2",colnames(taxburden)[idxNumCols]) %>%
