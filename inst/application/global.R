@@ -57,13 +57,16 @@ KinderabzugKG <<- matrix(data = 9000, nrow = length(kantons), ncol = 10) %>%
   as.data.frame %>%
   set_rownames(kantons) %>%
   set_colnames(seq(1:10))
+KinderabzugKG[rownames(KinderabzugKG) == "ZG", ] <- 12000
+KinderabzugKG[rownames(KinderabzugKG) == "BS", ] <- 7800
+KinderabzugKG[rownames(KinderabzugKG) == "TG", ] <- 7000
+KinderabzugKG[rownames(KinderabzugKG) == "LU", ] <- 7200
+
 
 # TODO: Build a table like this with accurate data (from Steuerfusse in den Kantonhauptorten)
 Kirchensteuer <<- unique(PLZGemeinden[, c("Kanton", "FactorKanton", "FactorGemeinde", "FactorKirche")]) %>%
   mutate(Kirchensteuer = (FactorKanton + FactorGemeinde)/ (FactorKanton + FactorGemeinde + FactorKirche))
-
-# deduction percentage
-#deduction_percentage <- 0.1
+Kirchensteuer[Kirchensteuer$Kanton == "VS", "Kirchensteuer"] <- 0.97
 
 # Abzuge
 AHL <<- 0.0515
