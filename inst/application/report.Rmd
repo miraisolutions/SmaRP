@@ -74,6 +74,13 @@ if(params$P2purchase + params$P3purchase >0){
 }
 
 options(warn = -1)
+
+DOV <- format(round(params$DOV, 2), nsmall = 2)
+VersicherungsV <- format(round(params$VersicherungsV, 2), nsmall = 2)
+VersicherungsL <- format(round(params$VersicherungsL, 2), nsmall = 2)
+ALV <- format(round(params$ALV, 2), nsmall = 2)
+AHL <- format(round(params$AHL, 2), nsmall = 2)
+
 ```
 
 
@@ -169,12 +176,12 @@ In case of Married and Double Income couples, the aggregated amonunt of all vari
 When calculating the tax savings, a proxy of the taxable income is used. 
 The taxable income is computed  by detracting from the gross salary the following deductions: 
 
-* Old-age and survivor's insurance (AHV/AVS): `r params$AHL`
-* Unemployment, accident and invalidity insurance (ALV): `r params$ALV`
+* Old-age and survivor's insurance (AHV/AVS): `r AHL`
+* Unemployment, accident and invalidity insurance (ALV): `r ALV`
 * Deduction for:
-  * Health insurance: `r params$VersicherungsL` plus `r params$VersicherungsV`
+  * Health insurance: `r VersicherungsL` plus `r VersicherungsV`
   * Married people: `r params$Verheiratet`
-  * Married people with double income: `r params$DOV`
+  * Married people with double income: `r DOV`
   * Deduction per child: `r params$Kinder`
 
 In case of voluntary contributions to pension funds, those contributions are deducted as well.
