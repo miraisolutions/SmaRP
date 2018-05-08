@@ -26,17 +26,19 @@ Here it is assumed that the full pension fund which is not part of the state-run
 
 # Parameters
 
-The date of birth provided as input is `r params$birthday`.
+Input parameters are:
 
-With a retirement age of `r params$RetirementAge`, the retirement year is `r params$retirementdate`.
+* The date of birth provided as input is `r params$birthday`.
 
-The private pension fund has a current amount of `r params$CurrentP3` monetary units.
+* With a retirement age of `r params$RetirementAge`, the retirement year is `r params$retirementdate`.
 
-The annual contribution to the private pension fund is of `r params$P3purchase` monetary units, with an expected return of `r params$returnP3`.
+* The private pension fund has a current amount of `r params$CurrentP3` monetary units.
 
-The maximum amount of deductable from the taxable income via voluntary contributions to retirement funds is `r params$MaxContrTax`.
+* The annual contribution to the private pension fund is of `r params$P3purchase` monetary units, with an expected return of `r params$returnP3`.
 
-The tax rate used to calculate the tax benefits is `r params$TaxRate`.
+* The maximum amount of deductable from the taxable income via voluntary contributions to retirement funds is `r params$MaxContrTax`.
+
+* The tax rate used to calculate the tax benefits is `r params$TaxRate`.
 
 # Methodology
 

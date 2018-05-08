@@ -14,7 +14,7 @@ The Pillar II is a compulsory, tax-deductible company occupational pension insur
 
 The voluntary contribution (Pillar III) is a privately-run, tax-deductible insurance fund. The private pension fund is modelled as an asset of a given amount ("Current assets"), to which contributions can be added annually (Annual contribution). The annual expected return of such asset is given as an input and assumed constant until the retirement date.
 
-Since the tax benefits are always a key factor of a smart retirement project, SmaRP takes them into consideration and are implemented as an additional Fund.
+Since the tax benefits are always a key factor of a smart retirement project, SmaRP takes them into consideration and are implemented as an additional fund.
 
 \begin{center}
 \includegraphics[width=0.6\textwidth]{www/TaxBenefits.png}
@@ -29,7 +29,7 @@ The retirement age can either be explicitedly provided as an input, or can be in
 
 ## Swiss-case specific assumptions and limitations
 
-If Married Double Income, SmaRP assumes that all the inputs correspond to the aggregated amounts. 
+If married double-income, SmaRP assumes that all the inputs correspond to the aggregated amounts and a 50% income distribution is assumed. 
 
 In certain kantons there is a different church tax based on the type of church the user belongs to (Evangelische Kirche and Roeman-katolische Kirche). SmaRP does not make such distinction and always assumes the highest of the values.
 Moreover, when the church-tax depends on the kantonal tax rate (in stead of being a fixed factor), an approximation is made and treated as the maximum possible factor (relevant for kantons: VS, BS, BL).
@@ -52,36 +52,42 @@ https://www.estv.admin.ch/estv/de/home/allgemein/steuerinformationen/dienstleist
 
 # Parameters
 
-The date of birth provided as input is `r params$birthday`.
+```{r, echo = FALSE}
+TypePurchase <- ifelse(params$TypePurchase =="SingleP2", "single purchase", "annual purchase")
+```
 
-With a retirement age of `r params$RetirementAge`, the retirement year is `r params$retirementdate`.
+Input parameters are:
 
-The current salary is `r params$Salary`, with a growth rate of `r params$SalaryGrowthRate`, which is assumed constant until retirement.
+* The date of birth provided as input is `r params$birthday`.
 
-The occupational pension fund (Pillar II) has a current amount of `r params$CurrentP2` monetary units.
+* With a retirement age of `r params$RetirementAge`, the retirement year is `r params$retirementdate`.
 
-The contribution to the Pillar II is of `r params$P2purchase` monetary units, and is purchased as a `r params$TypePurchase`.
+* The current salary is `r params$Salary`, with a growth rate of `r params$SalaryGrowthRate`, which is assumed constant until retirement.
 
-The interest rate of of the Pillar II is given by `r params$rate`, which is always higher than the minimum required by law.
+* The occupational pension fund (Pillar II) has a current amount of `r params$CurrentP2` monetary units.
 
-The private pension fund (Pillar III) has a current amount of `r params$CurrentP3` monetary units.
+* The contribution to the Pillar II is of `r params$P2purchase` monetary units, and is purchased as a `r TypePurchase`.
 
-The annual contribution to the Pillar III is of `r params$P3purchase` monetary units, with an expected return of `r params$returnP3`.
+T* he interest rate of of the Pillar II is given by `r params$rate`, and we ensure that the amount considered in the calculation is always higher than the minimum required by law.
 
-The maximum amount of deductable from the taxable income via voluntary contributions to retirement funds is given by law and equal to `r params$MaxContrTax`.
+* The private pension fund (Pillar III) has a current amount of `r params$CurrentP3` monetary units.
+
+* The annual contribution to the Pillar III is of `r params$P3purchase` monetary units, with an expected return of `r params$returnP3`.
+
+* The maximum amount of deductable from the taxable income via voluntary contributions to retirement funds is given by law and equal to `r params$MaxContrTax`.
 
 ```{r taxrate, echo=FALSE}
 if(is.null(params$TaxRate)){
-  taxrate <- "calculated"
+  taxrate <- "not provided as an input and it is therefore calculated"
 } else {
   taxrate <- paste0("is provided as input and has value", params$TaxRate)
 }
 ```
-The tax rate is `r taxrate`.
+* The tax rate is `r taxrate`.
 
-The postal code of residence `r params$postalcode` is used to infer the kanton of residence `r params$Kanton` and necessary for the tax rate computation.
+* The postal code of residence `r params$postalcode` is used to infer the kanton of residence `r params$Kanton` and can be used for the tax rate computation.
 
-The user's marital status is `r params$rate_group`, with  `r params$NKids`  children. This information has an inpact on the total tax benefits.
+* The user's marital status is `r params$rate_group`, with  `r params$NKids`  children. This information has an inpact on the total tax benefits.
 
 ```{r churchaffiliation, echo = FALSE}
 if (params$churchtax == "N"){
@@ -91,7 +97,7 @@ if (params$churchtax == "N"){
 }
 ```
 
-The user's declares to have `r churchaffiliation` church affiliation. This information has an inpact on the total tax benefits.
+* The user's declares to have `r churchaffiliation` church affiliation. This information has an inpact on the total tax benefits.
 
 
 #  Methodology
@@ -100,10 +106,10 @@ The user's declares to have `r churchaffiliation` church affiliation. This infor
 
 The savings process for retirement benefits starts on January 1 following the year in which the person turns 24.
 
-$$ Pensionable salary(t) = max(Salary(t) - \frac{7}{8} AHV Salary(t), 30 * AHVSalary) $$ [^1]
+$$ PensionableSalary(t) = max(Salary(t) - \frac{7}{8} AHV Salary(t), 30 * AHVSalary) $$ [^1]
 
 Contribution Rates under Pillar II are defined by law[^2] (art.16)
-
+\begin{center}
 \begin{tabular}{ c | c | c | c }
 \hline
     &  &   &   \\
@@ -113,7 +119,7 @@ Contribution Rates under Pillar II are defined by law[^2] (art.16)
     &  &   &   \\
   \hline
 \end{tabular}
-
+\end{center}
 
 $$ MandatoryContributions(t) = PensionableSalary(t) * ContributionRate(t) $$
 
@@ -137,17 +143,17 @@ where $VoluntaryContributions$ is provided as input,  $r$ is the interest rate a
 
 The tax benefit ($TaxBenefit$) at year $t$, if the marginal tax rate is provided as an input ($TaxRate$), is calculated as:
 
-$$ TaxBenefit = \sum_{t_0}^TVoluntaryContributions *  TaxRate * e^{r(T-t)} $$
+$$ TaxBenefit(t) = \sum_{t_0}^TVoluntaryContributions(t) *  TaxRate(t) * e^{r(T-t)} $$
 
 where $VoluntaryContributions$ is provided as input, $t_0$ is today, and $T$ is the retirement age.
 
 If the tax rate is not provided as an input, the tax benefits are computed as:
 
-$$ TaxBenefit = TaxPaid(Salary) - TaxPaid(TaxableIncome) $$[^4]
+$$ TaxBenefit(t) = TaxPaid_{Salary}(t) - TaxPaid_{TaxableIncome}(t) $$[^4]
 
 The $TaxPaid$ is a function that calculates the amount of taxes to pay given a certain income. The tax benefit is the difference between the taxes due for the salary and those due once all deductions are considered (taxable income).
 
-In SmaRP the taxable Income ($TaxableIncome$) at time $t$ is computed as:
+In SmaRP the taxable income ($TaxableIncome$) at time $t$ is computed as:
 
 $$ TaxableIncome(t) = max(Salary(t) - min(TotalContr, MaxContrTax),0) $$
 
