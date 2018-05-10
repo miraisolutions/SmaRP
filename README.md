@@ -100,3 +100,30 @@ is deployed to the GKE cluster and the old one gets deactivated.
 You can check which builds have been triggered and the current status of a build
 in the Google Cloud Console:
 https://console.cloud.google.com/gcr/builds?project=mirai-sbb
+
+
+## Google Cloud Setup for Conferences and Demos
+
+For scenarios involving multiple concurrent users (for example during conferences or demos) it is recommended to use a Virtual Machine with higher specs (for example a `n1-standard-4`):
+
+```
+gcloud container clusters create "smarp" --async --project "mirai-sbb" --zone "europe-west1-b" --cluster-version "1.9.7-gke.0" --machine-type "n1-standard-4" --image-type "COS" --disk-size "80" --scopes "default,storage-full,bigquery,datastore,sql,sql-admin" --num-nodes "1"
+```
+
+Get credentials for the newly created cluster:
+
+```
+gcloud container clusters get-credentials smarp
+```
+
+Run the latest version of the smarp Docker image in the GKE cluster using explicit CPU and memory requests and limits:
+
+```
+kubectl run smarp --image=eu.gcr.io/mirai-sbb/smarp:latest --requests="cpu=3,memory=10Gi" --limits="cpu=3.5,memory=11Gi"
+```
+
+Configure a load balancer as described above. Then replace the existing IP address in
+
+https://github.com/miraisolutions/miraisolutions.github.io/blob/master/apps/smarp/index.html#L9
+
+with the new public IP address assigned to the load balancer.
