@@ -58,7 +58,7 @@ http://localhost/
 Create a new GKE cluster called "smarp":
 
 ```
-gcloud container clusters create "smarp" --async --project "mirai-sbb" --zone "europe-west1-b" --cluster-version "1.8.8-gke.0" --machine-type "n1-standard-1" --image-type "COS" --disk-size "80" --scopes "default,storage-full,bigquery,datastore,sql,sql-admin" --num-nodes "1"
+gcloud container clusters create "smarp" --async --project "mirai-sbb" --zone "europe-west1-b" --cluster-version "1.9.7-gke.0" --machine-type "n1-standard-1" --image-type "COS" --disk-size "80" --scopes "default,storage-full,bigquery,datastore,sql,sql-admin" --num-nodes "1"
 ```
 
 Get credentials for the newly created cluster:
