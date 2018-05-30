@@ -47,8 +47,8 @@ kantons <<- unique(PLZGemeinden$Kanton)
 #tax_rates_Kanton_list <- readRDS("data/tax_rates_Kanton_list_old.rds")
 # tax_rates_Kanton_list <- readRDS(system.file("application", "data", "tax_rates_Kanton_list.rds", package = "SmaRP"))
 
-#BundessteueTabelle <- readRDS("inst/application/data/BundessteueTabelle.rds")
-# taxburden.list <- readRDS("inst/application/data/taxburden.list.rds") 
+# BundessteueTabelle <- readRDS("inst/application/data/BundessteueTabelle.rds")
+# taxburden.list <- readRDS("inst/application/data/taxburden.list.rds")
 BundessteueTabelle <<-  readRDS(system.file("application", "data", "BundessteueTabelle.rds", package = "SmaRP"))
 taxburden.list <<- readRDS(system.file("application", "data", "taxburden.list.rds", package = "SmaRP"))
 
