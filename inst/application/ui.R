@@ -44,6 +44,10 @@ shinyUI(
       # Sidebar  --------------------------------------------------------
       column(4,
              # Personal Info  -------------------------------------------
+             fluidRow(
+               tags$h4("Personal Info"), 
+               style = "margin-left: 1%;"),
+             
              # Birthdate
              fluidRow(
                dateInput("Birthdate", 
@@ -121,7 +125,7 @@ shinyUI(
              
              # Pillar III  -------------------------------------------------------------
              fluidRow(
-               tags$h4("Private Pension Fund"), 
+               tags$h4("Private Pension Fund - Pillar III"), 
                style = "margin-left: 1%;"),
              
              fluidRow(
@@ -164,7 +168,7 @@ shinyUI(
              
              # Pillar II  -------------------------------------------------------------
              fluidRow(
-               tags$h4("Occupational Pension Fund (BVG)"),
+               tags$h4("Occupational Pension Fund - Pillar II"),
                style = "margin-left: 1%;"),
              
              fluidRow(
