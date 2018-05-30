@@ -32,7 +32,6 @@ params:
       TserieGraphData: NA
       RetirementAge: NA
       TaxRate: NA
-      case: NA
       retirementfund: NA
       percentageLastSalary: NA
       PLZGemeinden: NA
@@ -60,12 +59,8 @@ library(reshape2)
 library(shiny)
 library(lubridate)
 
+show_text <- TRUE
 
-if (params$case=="General"){
-  show_text <- FALSE
-} else {
-  show_text <- TRUE
-}
 
 if(params$P2purchase + params$P3purchase >0){
   show_tax = TRUE
@@ -164,8 +159,7 @@ ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variabl
 
 # Assumptions and limitations
 
-SmaRP was originally based on the Swiss retirement system. Most of the functionalities are generic, but the basic configuration and parameters are specific of Switzerland.
-The General case is obtained by turning off Swiss-specific modules and requesting conditional inputs.
+SmaRP is based on the Swiss retirement system. Most of the functionalities are generic, but the basic configuration and parameters are specific of Switzerland.
 
 SmaRP applies only to employees, i.e. persons whose main income is a salary. Self-employed people are not considered.
 
@@ -198,11 +192,6 @@ The input and output values are expressed in monetary units and assumed to be of
 # Results
 
 The time-dependent data is shown in the following tables.
-<!-- ```{r} -->
-<!-- kable(params$Road2Retirement,  format = "latex", booktabs = TRUE, caption = "Time progress of Retirement Pension Fund")  %>% -->
-<!--           kable_styling(latex_options = "scale_down") -->
-<!-- ``` -->
-
 
 ```{r Road2Retirement_to_print_Summarized, echo = FALSE}
 moncols <- c(  "ExpectedSalary", "OccupationalPension", "PrivatePension", "TaxBenefits") 

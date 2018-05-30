@@ -1,84 +1,50 @@
-#
-# This is the server logic of a Shiny web application. You can run the 
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-# 
-#    http://shiny.rstudio.com/
-#
 library(SmaRP)
 library(shiny)
-#library(lubridate)
-#library(dplyr)
 library(magrittr)
 library(googleVis)
 library(rmarkdown)
 library(shinyBS) # needed for the info windows
-#library(shinyjs) #needed for hiding inputs 
 
-# source core methodology and global variables
-#source("core.R")
 source("helper_texts.R")
 options(shiny.sanitize.errors = TRUE)
 
-# Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
   
-  # Determine whether or not the user is a manager.
-  isAdmin <- reactive({
-    if (user() == "admin"){
-      return(TRUE)
-    } else{
-      return(FALSE)
-    }
-  })
+  # Validate inputs and set defaults ----
   
-  # validate inputs and set defaults ----
-  
-  Inputcase <- reactive({
-    input$case
-  })
-  
+  # Birthday
   Birthdate <- reactive({
     validate(
       need(input$Birthdate, VM$Birthdate)
     )
     validate(
-      need((input$Birthdate -65) >0, VM$Birthdate2)
+      need((input$Birthdate -65) > 0, VM$Birthdate2)
     )
     input$Birthdate
   })
   
+  # Gender
   genre <- reactive({
-    if(Inputcase() == "Swiss" & !input$provideRetirementAge){
-      validate(
-        need(input$genre, VM$genre)
-      )
-      input$genre
-    } else {
-      "M"
-    }
+    validate(
+      need(input$genre, VM$genre)
+    )
+    input$genre
   })
   
+  # Mirai Colors 
   miraiColors <-reactive({
-    if(Inputcase() == "Swiss" ){
-      "['#008cc3', '#FF9966', '#13991c']"
-    } else {
-      "['#FF9966', '#13991c']"
-    }
-    
+    "['#008cc3', '#FF9966', '#13991c']"
   })
   
+  # Retirement Age
   RetirementAge <- reactive({
     if(input$provideRetirementAge){
       validate(
         need(input$RetirementAge, VM$RetirementAge)
       )
       input$RetirementAge
-    } else if(Inputcase() == "General"){
-      65
     } else {
-      if (genre()=="M"){
+      if (genre() == "M"){
         MRetirementAge
       } else {
         FRetirementAge
@@ -86,21 +52,18 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  # Pillar III
   CurrentP3_notZero <- reactive({ 
-    isnotAvailableReturnZero(input$CurrentP3)})
+    isnotAvailableReturnZero(input$CurrentP3)
+  })
   
-  CurrentP3 <-reactive({
-    if (Inputcase() == "General") {
-      validate(
-        need_not_zero(CurrentP3_notZero(), VM$CurrentP3_notZer)
-      )
-      CurrentP3_notZero()
-    } else if (   Inputcase() == "Swiss" & P3purchase()==0 & Salary() == 0 &  CurrentP2() == 0 & P2purchase()==0){
+  CurrentP3 <- reactive({
+    if ( P3purchase() == 0 & Salary() == 0 &  CurrentP2() == 0 & P2purchase()==0){
       validate(
         need_not_zero(CurrentP3_notZero(), VM$CurrentP3_CurrentP2_Salary_Purchases_notZero)
       )
       CurrentP3_notZero()
-    }    else {
+    } else {
       CurrentP3_notZero()
     }
   })
@@ -108,13 +71,9 @@ shinyServer(function(input, output, session) {
   P3purchase <- reactive({isnotAvailableReturnZero(input$P3purchase)})
   
   returnP3_notzero <- reactive({isnotAvailableReturnZero(input$returnP3/100)})
+  
   returnP3 <- reactive({
-    if (Inputcase() == "General") {
-      validate(
-        need_not_zero(returnP3_notzero(), VM$returnP3_notzero)
-      )
-      returnP3_notzero()
-    } else if (   Inputcase() == "Swiss" & CurrentP3() == 0 & P3purchase()==0 & Salary() == 0 &  CurrentP2() == 0 & P2purchase()==0){
+    if ( CurrentP3() == 0 & P3purchase() == 0 & Salary() == 0 &  CurrentP2() == 0 & P2purchase() == 0){
       validate(
         need_not_zero(returnP3_notzero(), VM$CurrentP3_CurrentP2_Salary_Purchases_notZero)
       )
@@ -124,153 +83,77 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  # Tax 
   TaxRelief <- reactive({ 
-    if(Inputcase() == "General"){
-      isnotAvailableReturnZero(input$TaxRelief)
-    }
-    else{
-      if (input$rate_group == "C"){
-        2* MaxContrTax
-      }else{
-        MaxContrTax
-      }
+    if (input$rate_group == "C"){
+      2* MaxContrTax
+    }else{
+      MaxContrTax
     }
   }) 
   
-  # currency <- reactive(
-  #   if(Inputcase() == "General"){
-  #     validate(
-  #       need(input$currency, "Please provide a valid currency")
-  #     )
-  #     input$currency
-  #   } else{
-  #     "CHF"
-  #   }
-  # )
-  
   postalcode <- reactive({
-    if(Inputcase() == "Swiss" & !input$provideTaxRateSwiss){
-      validate(
-        need(input$postalcode, VM$postalcode)
-      )
-      input$postalcode
-    }else{
-      8001 
-    }
+    validate(
+      need(input$postalcode, VM$postalcode)
+    )
+    input$postalcode
   })
   
   NKids <- reactive({  isnotAvailableReturnZero(input$NKids)  })
   
   rate_group <- reactive({
-    if(Inputcase() == "Swiss" & !input$provideTaxRateSwiss){
-      validate(
-        need(input$rate_group, VM$rate_group)
-      )
-      input$rate_group
-    } else{
-      "A"
-    }
+    validate(
+      need(input$rate_group, VM$rate_group)
+    )
+    input$rate_group
   })
   
   churchtax <- reactive({
-      if(input$churchtax == TRUE){
-        "Y"
-      } else {
-        "N"
-      }
+    if(input$churchtax == TRUE){
+      "Y"
+    } else {
+      "N"
+    }
   })
   
-  Salary <- reactive({ 
-    #isnotAvailableReturnZero(input$Salary)})
-    if(Inputcase() == "Swiss"){
-      validate(
-        need(input$Salary, VM$Salary)
-      )
-      input$Salary}
-    else if (Inputcase() == "General") {
-      0}
+  # Salary
+  Salary <- reactive({
+    validate(
+      need(input$Salary, VM$Salary)
+    )
+    input$Salary
   })
   
+  SalaryGrowthRate <- reactive({isnotAvailableReturnZero(input$SalaryGrowthRate/100)})
   
-  # SalaryProxy <- reactive({ 
-  #   Salary()*(1-deduction_percentage)
-  # })
+  # Pillar II
+  CurrentP2 <- reactive({ isnotAvailableReturnZero(input$CurrentP2) })
   
-  
-  SalaryGrowthRate <- reactive({ if(Inputcase() == "Swiss"){
-    isnotAvailableReturnZero(input$SalaryGrowthRate/100)}
-    else if (Inputcase() == "General"){
-      0}
-  })
-  
-  CurrentP2 <- reactive({ if(Inputcase() == "Swiss"){
-    isnotAvailableReturnZero(input$CurrentP2)}
-    else if (Inputcase() == "General"){
-      0}
-  })
-  
-  P2interestRate <- reactive({if (Inputcase()=="Swiss"){
+  P2interestRate <- reactive({
     if (isnotAvailable(input$P2interestRate)){
       BVGMindestzinssatz
     } else {
       input$P2interestRate/100
     }
-  } else{
-    0
-  }
   })
   
-  P2purchase <- reactive({ if(Inputcase() == "Swiss"){
-    isnotAvailableReturnZero(input$P2purchase)}
-    else if (Inputcase() == "General"){
-      0}
-  })
+  P2purchase <- reactive({isnotAvailableReturnZero(input$P2purchase)})
   
   TypePurchase <- reactive({
-    if(Inputcase() =="Swiss"){
-      validate(
-        need(input$TypePurchase, VM$TypePurchase)
-      )
-      input$TypePurchase
-    } else {
-      "SingleP2"
-    }
+    validate(
+      need(input$TypePurchase, VM$TypePurchase)
+    )
+    input$TypePurchase
   })
   
-  
-  # output$safeError <- renderText({
-  #   if(Inputcase() == "General" & CurrentP3() == 0 & P3purchase()==0 & returnP3() == 0){
-  #     print(" Provide Private Pension Fund inputs")
-  #   }  else if (Inputcase() == "Swiss" & CurrentP3() == 0 & P3purchase()==0 & returnP3() == 0 & Salary() == 0 &  CurrentP2() == 0 & P2purchase()==0){
-  #     print(" Provide at least one of Salary, Pillar II or Pillar III inputs")
-  #   } else{
-  #     print("")
-  #   }
-  # })
-  # 
-  
-  # TaxRate ----
-  taxRateValue <- reactive({
-    if(Inputcase() == "General"){
-      isnotAvailableReturnZero(input$TaxRate/100)
-    } else if(Inputcase() == "Swiss" & input$provideTaxRateSwiss){
-      validate(
-        need(input$TaxRateSwiss, VM$TaxRateSwiss)
-      )
-      input$TaxRateSwiss/100
-    } else{
-      NULL
-    }
-  })
-  
-# Calculations ------------------  
+  # Calculations ------------------  
   
   # calc P2 fund ----
   ContributionP2Path <- reactive({ 
     buildContributionP2Path(birthday = Birthdate(),
-                            Salary = Salary(), #ifelse(input$case == "General", 0, Salary()),
+                            Salary = Salary(), 
                             SalaryGrowthRate = SalaryGrowthRate(),
-                            CurrentP2 = CurrentP2(), #ifelse(input$case == "General", 0, CurrentP2()),
+                            CurrentP2 = CurrentP2(), 
                             P2purchase = P2purchase(),
                             TypePurchase = TypePurchase(),
                             rate = P2interestRate(),
@@ -296,7 +179,7 @@ shinyServer(function(input, output, session) {
                      P2purchase = P2purchase(), 
                      P3purchase = P3purchase(), 
                      returnP3 = returnP3(),
-                     Salary = Salary(), #ifelse(input$case == "General", 0, Salary()),
+                     Salary = Salary(),
                      SalaryGrowthRate = SalaryGrowthRate(),
                      postalcode = postalcode(),
                      NKids = ifelse(isolate(input$NKids) >5, 5, isolate(input$NKids)),
@@ -305,7 +188,7 @@ shinyServer(function(input, output, session) {
                      MaxContrTax = TaxRelief(),
                      givenday = today("UTC"),
                      RetirementAge = RetirementAge(),
-                     TaxRate = taxRateValue())
+                     TaxRate = NULL)
   })
   
   # build main df ----
@@ -317,19 +200,15 @@ shinyServer(function(input, output, session) {
   }) 
   
   # Table ----
-  
   output$table <- renderTable({
-    # Road2Retirement()[, c("calendar", "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")] %>%
-    #   mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-")) 
     makeTable(Road2Retirement = Road2Retirement()
-              #,currency = paste0( currency(), " ")
     )
   }, digits = 0)
   
   
   # T series plot ----
   TserieGraphData <- reactive({
-      Road2Retirement() %>% 
+    Road2Retirement() %>% 
       mutate(TaxBenefits = TotalTax) %>%
       mutate(OccupationalPension = DirectP2 + ReturnP2) %>%
       mutate(PrivatePension = DirectP3 + ReturnP3) %>%
@@ -408,31 +287,8 @@ shinyServer(function(input, output, session) {
           formatC(retirementfund()/1000, format = "f", big.mark = ",", digits=0, decimal.mark="."),
           "k ",
           percentageLastSalary(),
-          #currency(),
           sep = " ")
   })
-  # "Salary", Salary(), "\n",
-  # "Birthdate", Birthdate(),"\n",
-  # "SalaryGrowthRate", SalaryGrowthRate(),"\n",
-  # "CurrentP2", CurrentP2(),"\n",
-  # "P2purchase", P2purchase(),"\n",
-  # "TypePurchase", TypePurchase(),"\n",
-  # "P3purchase", P3purchase(), "\n",
-  # "CurrentP3", CurrentP3(), "\n",
-  # "returnP3", returnP3(),"\n",
-  # "postalcode", postalcode(),"\n",
-  # "NKids", NKids(), "\n",
-  # "churchtax", churchtax(),"\n",
-  # "rate_group", rate_group(),"\n",
-  # "TaxRelief", TaxRelief(),"\n",
-  # "retirementdate", retirementdate(),"\n",
-  # "RetirementAge", RetirementAge(),"\n",
-  # "taxRateValue", taxRateValue(),"\n",
-  # "Inputcase", Inputcase(), "\n",
-  # #"Road2Retirement", Road2Retirement(),
-  # "genre", genre(),"\n",
-  # "provideRetirementAge is", input$provideRetirementAge, "\n",
-  # "Inputcase is",  Inputcase(), "\n",
   
   
   # Disclaimer ----
@@ -460,7 +316,7 @@ shinyServer(function(input, output, session) {
                           returnP3 = returnP3(),
                           postalcode = postalcode(),
                           Kanton = returnPLZKanton(postalcode()),
-                          NKids = NKids(), #ifelse((input$NKids) >5, 5, (input$NKids)), 
+                          NKids = NKids(), 
                           churchtax = churchtax(),
                           rate_group = rate_group(),
                           MaxContrTax = TaxRelief(),
@@ -468,14 +324,10 @@ shinyServer(function(input, output, session) {
                           BarGraphData = BarGraphData(),
                           TserieGraphData = TserieGraphData(),
                           RetirementAge = RetirementAge(),
-                          TaxRate =  taxRateValue(),
-                          case = Inputcase(),
+                          TaxRate =  NULL,
                           retirementfund = retirementfund(), 
                           percentageLastSalary = percentageLastSalary(),
-                          # tax_rates_Kanton_list = tax_rates_Kanton_list,
-                          # BundessteueTabelle = BundessteueTabelle,
                           PLZGemeinden = PLZGemeinden,
-                          #deduction_percentage = deduction_percentage
                           AHL = AHL,
                           ALV = ALV,
                           VersicherungsL = VersicherungsL,
@@ -484,7 +336,7 @@ shinyServer(function(input, output, session) {
                           DOV = DOV, 
                           Kinder = Kinder,
                           Verheiratet = Verheiratet
-                          )
+  )
   )
   
   #output report
@@ -503,7 +355,7 @@ shinyServer(function(input, output, session) {
   )# end of downloadHandler
   
   # refresh inputs ----
-  #Refresh plz-gemeinde correspondance
+  # Refresh plz-gemeinde correspondance
   # when the value of input$refreshButton becomes out of date 
   # (i.e., when the button is pressed)
   refreshText <- eventReactive(input$refreshButton, {downloadInputs(refresh = TRUE)})
@@ -512,34 +364,6 @@ shinyServer(function(input, output, session) {
     paste(as.character(refreshText()))
   })
   
-  # Conditional TaxRate input ----
-  output$conditionalInputSwiss <- renderUI({
-    if(input$provideTaxRateSwiss){
-      numericInput("TaxRateSwiss", label = h5("Direct Tax Rate % (optional)"), value = 10, step = 1, min = 0, max = 100)
-    }
-    #shinyjs::hide("genre")
-  })
-  
-  # # Conditional refreshButton input ----
-  # output$conditionalrefreshButton <- renderUI({
-  #   if(input$login){
-  #     actionButton("refreshButton", "refresh calculation parameters")
-  #   }
-  #   #shinyjs::hide("genre")
-  # })
-  
-  # output$conditionalrefreshText <- renderUI({
-  #   if(input$login){
-  #     verbatimTextOutput("refreshText")
-  #   }
-  #   #shinyjs::hide("genre")
-  # })
-  
-  # observeEvent(input$provideTaxRateSwiss, {
-  #   removeUI(
-  #     selector = "div:has(> #genre)"
-  #   )
-  # })
   
   # Conditional Retirement age input ----
   output$conditionalRetirementAge <- renderUI({
@@ -547,36 +371,5 @@ shinyServer(function(input, output, session) {
       numericInput("RetirementAge", label = h5("Desired Retirement Age"), value = 65, step = 1, min = 55, max = 70)
     }
   })
-  
-  # output$ibox <- renderInfoBox({
-  #   infoBox(
-  #     "i",
-  #     "Here some text",
-  #     icon = icon("info")
-  #   )
-  # })
-  
-  #   BarGraphData <- reactive({
-  #     data.frame(Funds = colnames(FotoFinish()),
-  #                percentage = as.vector(t(FotoFinish()))) %>%
-  #       arrange(Funds) %>%
-  #       mutate(pos = cumsum(percentage) - (0.5 * percentage),
-  #              percentage = round(percentage * 100, digits = 1),
-  #              pos = round(pos * 100, digits = 1)) 
-  #   })
-  # 
-  #   output$plot2 <- renderPlot({
-  #     ggplot() + 
-  #       geom_bar(aes(y = percentage, x = "", fill = Funds), 
-  #                data = BarGraphData(),
-  #                position = position_stack(reverse = TRUE),
-  #                stat="identity") +
-  #       geom_text(data = BarGraphData(),
-  #                 aes(x = "", y = pos, label = paste0(percentage,"%")),
-  #                 size = 4) +
-  #       coord_flip()
-  #      
-  #   })
-  
 }
 )
