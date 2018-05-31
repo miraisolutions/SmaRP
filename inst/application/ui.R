@@ -123,49 +123,6 @@ shinyUI(
              
              hr(),
              
-             # Pillar III  -------------------------------------------------------------
-             fluidRow(
-               tags$h4("Private Pension Fund - Pillar III"), 
-               style = "margin-left: 1%;"),
-             
-             fluidRow(
-               numericInput("CurrentP3", 
-                            label = h5("Current assets"), 
-                            value = 50000, 
-                            step  = 1000, 
-                            min   = 0, 
-                            width = '94%'),
-               bsTooltip("CurrentP3", 
-                         IB$CurrentP3, 
-                         placement = "right", 
-                         options   = list(container = "body")),
-               style = "margin-left: 1%;"),
-             
-             fluidRow(
-               column(5, 
-                      numericInput("P3purchase", 
-                                   label = h5("Annual contribution"), 
-                                   value = 0, 
-                                   step  = 500, 
-                                   min   = 0),
-                      bsTooltip("P3purchase", 
-                                IB$P3purchase, 
-                                placement = "right", 
-                                options   = list(container = "body")), 
-                      style = "margin-left: 0.5%;margin-right: 5%;"),
-               column(5, 
-                      numericInput("returnP3", 
-                                   label = h5("Expected Return %"), 
-                                   value = BVGMindestzinssatz*100, 
-                                   step  = 0.1, 
-                                   min   = 0, 
-                                   max   = 100),
-                      bsTooltip("returnP3", 
-                                IB$returnP3, 
-                                placement = "right", 
-                                options   = list(container = "body")),
-                      style = "margin-left:9%;")),
-             
              # Pillar II  -------------------------------------------------------------
              fluidRow(
                tags$h4("Occupational Pension Fund - Pillar II"),
@@ -237,7 +194,53 @@ shinyUI(
                                 IB$TypePurchase, 
                                 placement = "right", 
                                 options   = list(container = "body")), 
-                      style = "margin-top: 20px;"))
+                      style = "margin-top: 20px;")),
+             
+             hr(),
+             
+             # Pillar III  -------------------------------------------------------------
+             fluidRow(
+               tags$h4("Private Pension Fund - Pillar III"), 
+               style = "margin-left: 1%;"),
+             
+             fluidRow(
+               numericInput("CurrentP3", 
+                            label = h5("Current assets"), 
+                            value = 50000, 
+                            step  = 1000, 
+                            min   = 0, 
+                            width = '94%'),
+               bsTooltip("CurrentP3", 
+                         IB$CurrentP3, 
+                         placement = "right", 
+                         options   = list(container = "body")),
+               style = "margin-left: 1%;"),
+             
+             fluidRow(
+               column(5, 
+                      numericInput("P3purchase", 
+                                   label = h5("Annual contribution"), 
+                                   value = 0, 
+                                   step  = 500, 
+                                   min   = 0),
+                      bsTooltip("P3purchase", 
+                                IB$P3purchase, 
+                                placement = "right", 
+                                options   = list(container = "body")), 
+                      style = "margin-left: 0.5%;margin-right: 5%;"),
+               column(5, 
+                      numericInput("returnP3", 
+                                   label = h5("Expected Return %"), 
+                                   value = BVGMindestzinssatz*100, 
+                                   step  = 0.1, 
+                                   min   = 0, 
+                                   max   = 100),
+                      bsTooltip("returnP3", 
+                                IB$returnP3, 
+                                placement = "right", 
+                                options   = list(container = "body")),
+                      style = "margin-left:9%;"))
+             
       ), #end first column/side bar panel
       
       # Main Panel -------------------------------------------------------------
