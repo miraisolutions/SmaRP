@@ -91,10 +91,10 @@ getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
             Verheiratet = ifelse(Tarif == "Ledig", 0, Verheiratet),
             Versicherung = ifelse(Tarif == "Ledig", VersicherungsL, VersicherungsV + NKids * VersicherungsK),
             Beruf = max(DOfactor * BerufsauslagenMin, min(DOfactor * BerufsauslagenMax, NetSalary * BerufsauslagenTarif)),
-            Kids =  NKids *  + Kinder ) %>%
+            Kids =  NKids * Kinder ) %>%
     transmute(AjustSalary = NetSalary - Verheiratet - Versicherung - DO - Beruf - Kids)
   
-  TaxAmountFederal<- max(0, lookupTaxRate(TaxableIncomeFederal, BundessteueTabelle,rate_group) - 251*NKids)
+  TaxAmountFederal<- max(0, lookupTaxRate(TaxableIncomeFederal, BundessteueTabelle,rate_group) - 251 * NKids)
   TaxAmount <- TaxAmountFederal + TaxAmountKGC
   
   return(TaxAmount)
@@ -110,15 +110,15 @@ getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
 #' @export
 lookupTaxRate <- function(Income, Tabelle, CivilStatus){
   #Define column to pick
-  if(CivilStatus =="A"){
-    CivilStatusColumn <-"taxAmountSingle"
+  if(CivilStatus == "A"){
+    CivilStatusColumn <- "taxAmountSingle"
   } else{
-    CivilStatusColumn <-"taxAmountMarried"
+    CivilStatusColumn <- "taxAmountMarried"
   }
   #Get closest bin
   salary_bins <- Tabelle$I
   nearest_salary <- salary_bins[findInterval(Income, salary_bins)]
-  TaxAmount<- Tabelle[Tabelle$I==nearest_salary, CivilStatusColumn]
+  TaxAmount <- Tabelle[Tabelle$I==nearest_salary, CivilStatusColumn]
   return(TaxAmount)
 }
 
@@ -150,7 +150,7 @@ buildTaxBenefits <- function(birthday,
   ncp <- nrow(TaxBenefitsPath) 
   TaxBenefitsPath %<>% within({
     BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
-    P3purchase = c(0, rep(P3purchase, ncp-1))
+    P3purchase = c(0, rep(P3purchase, ncp - 1))
     TotalContr = BVGpurchase + P3purchase
     ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
     TaxableIncome = pmax(ExpectedSalaryPath - pmin(TotalContr, MaxContrTax),0)
