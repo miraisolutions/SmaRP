@@ -52,15 +52,29 @@ kantons <<- unique(PLZGemeinden$Kanton)
 BundessteueTabelle <<-  readRDS(system.file("application", "data", "BundessteueTabelle.rds", package = "SmaRP"))
 taxburden.list <<- readRDS(system.file("application", "data", "taxburden.list.rds", package = "SmaRP"))
 
-# TODO: Build a table like this with accurate data
-KinderabzugKG <<- matrix(data = 9000, nrow = length(kantons), ncol = 10) %>%
+# Kinderabzuge table
+# https://www.estv.admin.ch/dam/estv/de/dokumente/allgemein/Dokumentation/Publikationen/steuermaeppchen/KinderabzugE_de-fr.pdf.download.pdf/KinderabzugE_de-fr.pdf
+# - It's assumed that all kids live on their household, attend a public school on their village  and are always 6 years old.
+# - BL, VD and VS work differenly and therefore are not accurate.
+KinderabzugKG <<- matrix(data = 6500, nrow = length(kantons), ncol = 10) %>%
   as.data.frame %>%
   set_rownames(kantons) %>%
   set_colnames(seq(1:10))
-KinderabzugKG[rownames(KinderabzugKG) == "ZG", ] <- 12000
+
+KinderabzugKG[rownames(KinderabzugKG) == "NW", ] <- 5400
+KinderabzugKG[rownames(KinderabzugKG) %in% c("SO", "AR", "GR"), ] <- 6000
+KinderabzugKG[rownames(KinderabzugKG) %in% c("TG", "AG", "GL"), ] <- 7000
+KinderabzugKG[rownames(KinderabzugKG) %in% c("LU", "SG"), ] <- 7200
+KinderabzugKG[rownames(KinderabzugKG) == "VS", ] <- 7510
 KinderabzugKG[rownames(KinderabzugKG) == "BS", ] <- 7800
-KinderabzugKG[rownames(KinderabzugKG) == "TG", ] <- 7000
-KinderabzugKG[rownames(KinderabzugKG) == "LU", ] <- 7200
+KinderabzugKG[rownames(KinderabzugKG) %in% c("BE", "UR"), ] <- 8000
+KinderabzugKG[rownames(KinderabzugKG) %in% c("ZH", "SZ"), ] <- 9000
+KinderabzugKG[rownames(KinderabzugKG) == "GE", ] <- 9980
+KinderabzugKG[rownames(KinderabzugKG) == "TI", ] <- 11000
+KinderabzugKG[rownames(KinderabzugKG) == "ZG", ] <- 12000
+KinderabzugKG[rownames(KinderabzugKG) == "FR", ] <- c(8500, 8500, rep(9500, 8))
+KinderabzugKG[rownames(KinderabzugKG) == "AI", ] <- c(6000, 6000, rep(8000, 8))
+KinderabzugKG[rownames(KinderabzugKG) == "JU", ] <- c(5300, 5300, rep(5900, 8))
 
 
 # TODO: Build a table like this with accurate data (from Steuerfusse in den Kantonhauptorten)
