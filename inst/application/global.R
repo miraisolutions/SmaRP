@@ -38,7 +38,7 @@ Rate_group.list <<- list("Single" = "A",
 Purchase.list <- list("Single Purchase" = "SingleP2",
                       "Annual Purchase" = "AnnualP2")
 
-#PLZGemeinden <- readRDS("data/PLZGemeinden.rds")
+#PLZGemeinden <- readRDS("inst/application/data/PLZGemeinden.rds")
 PLZGemeinden <<- readRDS(system.file("application", "data", "PLZGemeinden.rds", package = "SmaRP"))
 PLZ.list <<- setNames(PLZGemeinden$PLZ, PLZGemeinden$PLZ)
 kantons <<- unique(PLZGemeinden$Kanton)
@@ -77,7 +77,7 @@ KinderabzugKG[rownames(KinderabzugKG) == "AI", ] <- c(6000, 6000, rep(8000, 8))
 KinderabzugKG[rownames(KinderabzugKG) == "JU", ] <- c(5300, 5300, rep(5900, 8))
 
 
-# TODO: Build a table like this with accurate data (from Steuerfusse in den Kantonhauptorten)
+# TODO: Build a table like this with accurate data (by now, taken Steuerfusse in den Kantonhauptorten)
 Kirchensteuer <<- unique(PLZGemeinden[, c("Kanton", "FactorKanton", "FactorGemeinde", "FactorKirche")]) %>%
   mutate(Kirchensteuer = (FactorKanton + FactorGemeinde)/ (FactorKanton + FactorGemeinde + FactorKirche))
 Kirchensteuer[Kirchensteuer$Kanton == "VS", "Kirchensteuer"] <- 0.97
@@ -99,7 +99,7 @@ NBU <<- 0.0084
 maxNBU <<- 1065
 
 
-#DF of cantons and capitals
+# DF of cantons and capitals
 canton.capital.df <- data.frame("canton" = c("AI","AG","AR","BE","BL","BS","FR","GE","GL","GR","JU","LU","NE","NW","OW",
                                              "SG","SH","SO","SZ","TI","TG","UR","VD","VS","ZG","ZH"), 
                                 "capital" = c("Appenzell","Aarau","Herisau","Bern","Liestal","Basel","Fribourg","Genève","Glarus","Chur","Delémont","Luzern","Neuchâtel","Stans","Sarnen",

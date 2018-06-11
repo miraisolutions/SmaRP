@@ -1,17 +1,41 @@
 # postalcodes2rds
 
-# Download Mapping PLZ Gemainde -------------------------------------------
+# Script to create the PLZGemeinden table and make it available in SmaRP
+# source:
+# https://www.bfs.admin.ch/bfs/de/home/grundlagen/agvch/gwr-korrespondenztabelle.html
 
+# read original
+fileName <- "inst/application/data/CorrespondancePostleitzahlGemeinde.xlsx"
+PLZGemeindenOri <- XLConnect::readWorksheetFromFile(file = fileName, sheet = "PLZ4") %>%
+  magrittr::set_colnames(c("PLZ", "PerGDE" ,"Kanton", "GDENR", "GDENAME"))
 
-# List of PLZ and corresponding Gemeinden; 
-# source https://www.bfs.admin.ch/bfs/it/home/basi-statistiche/elenco-ufficiale-comuni-svizzera/tabella-corrispondenza-rea.html
+# There are postal codes assign to several gemeinden given a percentage (PerGDE)
+# Since we want a relation 1-1 postalcode - gemeinde, we have to apply some filtering criteria
+# 1. Given a postalcode, select the gemeinde with higher percentage
+PLZGemeinden <- dplyr::inner_join(PLZGemeindenOri,
+                                  PLZGemeindenOri %>%
+                                    dplyr::group_by(PLZ) %>%
+                                    dplyr::summarise(maxPerGDE = max(PerGDE)),
+                                  by = c("PLZ" = "PLZ", "PerGDE" = "maxPerGDE")) 
 
-fileName <- "data/CorrespondancePostleitzahlGemeinde.xlsx"
-PLZGemeinden <- XLConnect::readWorksheetFromFile(file = fileName, sheet = "PLZ6") %>%
-  dplyr::select(c(PLZ4, KTKZ, GDENR, GDENAMK)) %>%
-  dplyr::rename("PLZ" = "PLZ4", "GDENAME" = "GDENAMK", "Kanton" = "KTKZ")
+# 2. In case equally distributed gemeinden, we take the one with the higher gemeinde number.
+# Applies only in 1 case 
+# PLZGemeindenOri %>% subset(PLZ == "2933")
+PLZGemeinden <- dplyr::inner_join(PLZGemeinden,
+                                  PLZGemeinden %>%
+                                    group_by(PLZ) %>%
+                                    summarise(maxGDENR = max(GDENR)),
+                                  by = c("PLZ" = "PLZ", "GDENR" = "maxGDENR"))
 
-# Define dummy table with Steuernfuesse per Kanton ------------------------------
+# check there are not missing postal codes
+assertthat::are_equal(unique(PLZGemeindenOri$PLZ), PLZGemeinden$PLZ)
+
+# check duplicates per postalcode
+assertthat::assert_that(!any(duplicated(PLZGemeinden$PLZ)))
+
+# add info with Steuernfuesse per Kanton for Churh tax
+# source:
+# https://www.estv.admin.ch/dam/estv/de/dokumente/allgemein/Dokumentation/Publikationen/dossier_steuerinformationen/e/Steuersatz-Steuerfuss_2016.pdf.download.pdf/Steuersatz-Steuerfuss_de_2016.pdf
 
 # Assumptions:
 # Per Gemeinde add the Kantonsteuer Factor, the Gemeindesteuer Factor and the Kirchesteuerfactor
@@ -21,15 +45,14 @@ PLZGemeinden <- XLConnect::readWorksheetFromFile(file = fileName, sheet = "PLZ6"
 # When Kirchesteuer depends on the taxrate, we make an approximation (relevant for kantons: VS, BS, BL)
 
 GemeindeFactorTabelle <- data.frame(
-        "Kanton" = unique(PLZGemeinden$Kanton),
-        "FactorKanton" = rep(1, length(unique(PLZGemeinden$Kanton))),
-        "FactorGemeinde" = rep(1, length(unique(PLZGemeinden$Kanton))),
-        "FactorKirche" = rep(1, length(unique(PLZGemeinden$Kanton)))
+  "Kanton" = unique(PLZGemeinden$Kanton),
+  "FactorKanton" = rep(1, length(unique(PLZGemeinden$Kanton))),
+  "FactorGemeinde" = rep(1, length(unique(PLZGemeinden$Kanton))),
+  "FactorKirche" = rep(1, length(unique(PLZGemeinden$Kanton))),
+  stringsAsFactors = FALSE
 ) 
 
-GemeindeFactorTabelle %<>% arrange(Kanton)
 Factorcols<- c("FactorKanton", "FactorGemeinde", "FactorKirche")
-
 GemeindeFactorTabelle[GemeindeFactorTabelle$Kanton=="ZH", Factorcols] <- c(1,1.19, 0.1)
 GemeindeFactorTabelle[GemeindeFactorTabelle$Kanton=="BE", Factorcols] <- c(3.06,1.54, 0.207)
 GemeindeFactorTabelle[GemeindeFactorTabelle$Kanton=="LU", Factorcols] <- c(1.6,1.85, 0.25)
@@ -57,12 +80,11 @@ GemeindeFactorTabelle[GemeindeFactorTabelle$Kanton=="NE", Factorcols] <- c(1.23,
 GemeindeFactorTabelle[GemeindeFactorTabelle$Kanton=="GE", Factorcols] <- c(0.485,0.455, 0)
 GemeindeFactorTabelle[GemeindeFactorTabelle$Kanton=="JU", Factorcols] <- c(2.85,1.9, 0.081)
 
-# Join Steuerfuesse per Kanton and PLZ ------------------------------------
+# join PLZGemeinden and GemeindeFactorTabelle 
+PLZGemeinden <- PLZGemeinden %>% 
+  dplyr::left_join(GemeindeFactorTabelle,
+                   by = "Kanton") %>% 
+  dplyr::select(-PerGDE)
 
-# Old Approach
-# PLZGemeinden <- PLZGemeinden %>%
-#   mutate(Steuerfuss = runif(n = nrow(.), 0.6, 1.4))
-
-PLZGemeinden %<>% left_join(GemeindeFactorTabelle)
-
+# save PLZGemeinden as RDS  
 saveRDS(PLZGemeinden, "inst/application/data/PLZGemeinden.rds")
