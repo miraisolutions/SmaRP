@@ -32,8 +32,8 @@ BVGcontriburionratesPath <<- data.frame(years = seq(BVGcontriburionrates$lowerbo
                                                                    times = BVGcontriburionrates$upperbound - BVGcontriburionrates$lowerbound + 1)) 
 
 Rate_group.list <<- list("Single" = "A",
-                        "Married" = "B",
-                        "Married Double Income" = "C")
+                         "Married" = "B",
+                         "Married Double Income" = "C")
 
 Purchase.list <- list("Single Purchase" = "SingleP2",
                       "Annual Purchase" = "AnnualP2")

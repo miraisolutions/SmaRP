@@ -63,16 +63,5 @@ test_that("Test case Geneve1 (teststhat/resources/testGeneve1.pdf)",{
   expect_lt(abs(TaxAmount - 4116) / 110000, 0.005)
 })
 
-test_that("Test case Zug1 (teststhat/resources/testZug1.pdf)",{
-  TaxAmount <- getTaxAmount(Income = 280000,
-                            rate_group = "C",
-                            postalcode = 6340,
-                            Age = 50,
-                            NKids = 1,
-                            churchtax = "Y")
-  
-  expect_lt(abs(TaxAmount - 4116) / TaxAmount, 0.05)
-  expect_lt(abs(TaxAmount - 4116) / 110000, 0.005)
-})
 
 

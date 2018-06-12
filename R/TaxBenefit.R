@@ -1,6 +1,30 @@
 
-# tax Amount ---------------------------------------
-
+#' Calculates the tax amount (federal, kantonal and local)
+#' 
+#' @description This function uses 2 main sources for tax data.
+#' At Kanton and Gemeinde level, the source is taxburden.list.
+#' At federal level, we use the official taxrate table (BundessteueTabelle) and we try to aproximate the taxable income.
+ 
+#' @details This function assumes the following objects on the global enviornment
+#'  * PLZGemeinden (includes Kirchensteuer)
+#'  * taxburden.list
+#'  * BundessteueTabelle 
+#'  * BVGcontriburionratesPath, BVGcontriburionrates
+#'  * MaxBVG, MinBVG
+#'  * KinderabzugKG
+#'  * NBU, maxNBU
+#'  * AHL
+#'  * ALV, maxALV
+#'  * VersicherungsL, VersicherungsV, VersicherungsK
+#'  * BerufsauslagenTarif, BerufsauslagenMax, BerufsauslagenMin
+#'  
+#' @param Income scalar numeric 
+#' @param rate_group character
+#' @param Age scalar numeric
+#' @param NKids scalar numeric
+#' @param postalcode character
+#' @param churchtax character Y/N
+#'
 #' @name getTaxAmount
 #' @examples
 #' \dontrun{
@@ -9,10 +33,12 @@
 #' @export
 getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
   
+  browser()
+  
   # Find Kanton and Gemeinde
-  Kanton = PLZGemeinden[PLZGemeinden$PLZ == postalcode, "Kanton"] %>% unique()
-  GDENR = PLZGemeinden[PLZGemeinden$PLZ == postalcode, "GDENR"]
-  GDENAME = PLZGemeinden[PLZGemeinden$PLZ == postalcode, "GDENAME"]
+  Kanton = subset(PLZGemeinden, PLZ == postalcode, select = "Kanton")
+  GDENR = subset(PLZGemeinden, PLZ == postalcode, "GDENR")
+  GDENAME = subset(PLZGemeinden, PLZ == postalcode, "GDENAME")
 
   # Get Tarif
   Tarif = ifelse(rate_group == "C", "DOPMK",
@@ -21,30 +47,11 @@ getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
   
   DOfactor <- ifelse(Tarif == "DOPMK", 2, 1)
 
-  # in case of multiple gemeinden with the same postal code, take the one that appears more often. If all equal take the first
-  if (length(GDENR) > 1) {
-    GDENR <- names(which(sapply(table(GDENR), function(x) x == max(table(GDENR)))))[1]
-  }
-  # in case of multiple gemeinden with the same postal code, take the one that appears more often. If all equal take the first
-  if (length(GDENAME) > 1) {
-    GDENAME <- names(which(sapply(table(GDENAME), function(x) x == max(table(GDENAME)))))[1]
-  }
-  
   # Select Tarif, Gemeinde and build Income Cuts 
   taxburden <- filter(taxburden.list[[grep(Tarif, names(taxburden.list))]], Gemeindenummer == GDENR)
 
-  # In case there is no match by GDENR Merge by GDENAME
-  if(nrow(taxburden)==0){
-    taxburden <- filter(taxburden.list[[grep(Tarif, names(taxburden.list))]], Gemeinde == GDENAME)
-    # In case there is no match by GDENR and by GDENAME, Fall back to Kanton (Main City)
-    if(nrow(taxburden)==0){
-    GDENR =  PLZGemeinden[PLZGemeinden$GDENAME==canton.capital.df[canton.capital.df$Kanton==Kanton,"capital"], "GDENR"]
-    taxburden <- filter(taxburden.list[[grep(Tarif, names(taxburden.list))]], Gemeindenummer == GDENR)
-    }
-  }
-  
+  # Get taxrate vector associated to one Gemeinde
   idxNumCols <- !grepl("[a-z]", colnames(taxburden))
-  
   IncomeCuts <- gsub("([0-9])\\.([0-9])", "\\1\\2",colnames(taxburden)[idxNumCols]) %>%
     as.numeric()
   taxrate <- taxburden[1, idxNumCols] %>% as.vector
@@ -66,7 +73,6 @@ getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
   }
   
   # 3. NBU (not applied on taxburden source)
-  # To match http://www.estv2.admin.ch/d/dienstleistungen/steuerrechner/steuerrechner.htm
   NBUanzug <- min(DOfactor * maxNBU, Income * NBU)
   
   IncomeKG <- Income + AjustKinderabzug + (DOfactor * AjustBVGContri[1,1]) - NBUanzug
@@ -94,7 +100,7 @@ getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
             Kids =  NKids *  + Kinder ) %>%
     transmute(AjustSalary = NetSalary - Verheiratet - Versicherung - DO - Beruf - Kids)
   
-  TaxAmountFederal<- max(0, lookupTaxRate(TaxableIncomeFederal, BundessteueTabelle,rate_group) - 251*NKids)
+  TaxAmountFederal<- max(0, lookupTaxRate(TaxableIncomeFederal, BundessteueTabelle, rate_group) - 251*NKids)
   TaxAmount <- TaxAmountFederal + TaxAmountKGC
   
   return(TaxAmount)
@@ -208,18 +214,3 @@ calcTaxBenefitSwiss <- function(ExpectedSalaryPath, TaxableIncome, rate_group, A
   return(TaxBenefits)
 }
 
-#' #' @name getTaxAmount
-#' #' @export
-#' getTaxAmount_old <- function(Income, postalcode, NKids, churchtax, rate_group, tax_rates_Kanton_list, BundessteueTabelle, PLZGemeinden){  
-#'   TaxAmountFederal<- lookupTaxRate(Income, BundessteueTabelle, rate_group) - 251*NKids
-#'   kanton<- returnPLZKanton(postalcode)
-#'   FactorKanton <- PLZGemeinden[PLZGemeinden$PLZ==postalcode, "FactorKanton"]
-#'   FactorGemeinde <- PLZGemeinden[PLZGemeinden$PLZ==postalcode, "FactorGemeinde"]
-#'   FactorKirche <- ifelse(churchtax=="N", 0, PLZGemeinden[PLZGemeinden$PLZ==postalcode, "FactorKirche"])
-#'   EinfacherSteuer <- lookupTaxRate(Income, tax_rates_Kanton_list[[kanton]], rate_group)
-#'   TaxAmountKanton <- EinfacherSteuer* FactorKanton
-#'   TaxAmountGemeinde <- EinfacherSteuer * FactorGemeinde
-#'   TaxAmountChurch <- EinfacherSteuer* FactorKirche
-#'   TaxAmount<- TaxAmountFederal + TaxAmountKanton + TaxAmountGemeinde + TaxAmountChurch
-#'   return(TaxAmount)
-#' }
