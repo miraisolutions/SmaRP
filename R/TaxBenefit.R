@@ -4,7 +4,7 @@
 #' @description This function uses 2 main sources for tax data.
 #' At Kanton and Gemeinde level, the source is taxburden.list.
 #' At federal level, we use the official taxrate table (BundessteueTabelle) and we try to aproximate the taxable income.
- 
+
 #' @details This function assumes the following objects on the global enviornment
 #'  * PLZGemeinden (includes Kirchensteuer)
 #'  * taxburden.list
@@ -31,25 +31,28 @@
 #' getTaxAmount(Income = 200000, rate_group = "C", Age = 32, NKids = 5, postalcode = 8400, churchtax = "Y")
 #' }
 #' @export
-getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
-  
-  browser()
+getTaxAmount <- function(Income, 
+                         rate_group, 
+                         Age, 
+                         NKids, 
+                         postalcode, 
+                         churchtax) {
   
   # Find Kanton and Gemeinde
-  Kanton = subset(PLZGemeinden, PLZ == postalcode, select = "Kanton")
-  GDENR = subset(PLZGemeinden, PLZ == postalcode, "GDENR")
-  GDENAME = subset(PLZGemeinden, PLZ == postalcode, "GDENAME")
-
+  Kanton <- subset(PLZGemeinden, PLZ == postalcode, select = "Kanton")[1,1]
+  GDENR <- subset(PLZGemeinden, PLZ == postalcode, "GDENR")[1,1]
+  GDENAME <- subset(PLZGemeinden, PLZ == postalcode, "GDENAME")[1,1]
+  
   # Get Tarif
-  Tarif = ifelse(rate_group == "C", "DOPMK",
-                 ifelse(rate_group == "A" & NKids == 0, "Ledig", 
-                        ifelse(rate_group == "B" & NKids == 0, "VOK", "VMK")))
+  Tarif <- ifelse(rate_group == "C", "DOPMK",
+                  ifelse(rate_group == "A" & NKids == 0, "Ledig", 
+                         ifelse(rate_group == "B" & NKids == 0, "VOK", "VMK")))
   
   DOfactor <- ifelse(Tarif == "DOPMK", 2, 1)
-
+  
   # Select Tarif, Gemeinde and build Income Cuts 
   taxburden <- filter(taxburden.list[[grep(Tarif, names(taxburden.list))]], Gemeindenummer == GDENR)
-
+  
   # Get taxrate vector associated to one Gemeinde
   idxNumCols <- !grepl("[a-z]", colnames(taxburden))
   IncomeCuts <- gsub("([0-9])\\.([0-9])", "\\1\\2",colnames(taxburden)[idxNumCols]) %>%
@@ -100,7 +103,7 @@ getTaxAmount <- function(Income, rate_group, Age, NKids, postalcode, churchtax){
             Kids =  NKids *  + Kinder ) %>%
     transmute(AjustSalary = NetSalary - Verheiratet - Versicherung - DO - Beruf - Kids)
   
-  TaxAmountFederal<- max(0, lookupTaxRate(TaxableIncomeFederal, BundessteueTabelle, rate_group) - 251*NKids)
+  TaxAmountFederal <- max(0, lookupTaxRate(TaxableIncomeFederal, BundessteueTabelle, rate_group) - 251*NKids)
   TaxAmount <- TaxAmountFederal + TaxAmountKGC
   
   return(TaxAmount)
@@ -150,8 +153,7 @@ buildTaxBenefits <- function(birthday,
                              MaxContrTax,
                              givenday = today("UTC"),
                              RetirementAge,
-                             TaxRate = NULL
-) {
+                             TaxRate = NULL) {
   TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge = RetirementAge ))
   ncp <- nrow(TaxBenefitsPath) 
   TaxBenefitsPath %<>% within({
@@ -195,22 +197,34 @@ calcTaxBenefitGeneral <- function(TotalContr, TaxRatePath, MaxContrTax) {
 #' @examples
 #' \dontrun{
 # calcTaxBenefitSwiss(ExpectedSalaryPath = seq(90000, 100000, 1000),
-# TaxableIncome = seq(88000, 980000, 1000),
-#  rate_group = "A",
-#  Age = seq(55, 65),
-#  NKids = 0,
-#  postalcode = 8400,
-#  churchtax = "Y")
+#                     TaxableIncome = seq(88000, 98000, 1000),
+#                     rate_group = "A",
+#                     Age = seq(55, 65),
+#                     NKids = 0,
+#                     postalcode = 8400,
+#                     churchtax = "Y")
 #' }
 #' @export
-calcTaxBenefitSwiss <- function(ExpectedSalaryPath, TaxableIncome, rate_group, Age, NKids, postalcode, churchtax){
-  TaxAmountGrossIncome <-  sapply(1:length(ExpectedSalaryPath), function(i) {
+calcTaxBenefitSwiss <- function(ExpectedSalaryPath,
+                                TaxableIncome,
+                                rate_group,
+                                Age,
+                                NKids,
+                                postalcode,
+                                churchtax) {
+
+  assertthat::are_equal(length(ExpectedSalaryPath), length(TaxableIncome))
+  
+  TaxAmountGrossIncome <-  sapply(seq_along(ExpectedSalaryPath), function(i) {
     getTaxAmount(ExpectedSalaryPath[i], rate_group, Age[i], NKids, postalcode, churchtax)
   })
-  TaxAmountTaxableIncome <-  sapply(1:length(ExpectedSalaryPath), function(i) {
+  
+  TaxAmountTaxableIncome <-  sapply(seq_along(ExpectedSalaryPath), function(i) {
     getTaxAmount(TaxableIncome[i], rate_group, Age[i], NKids, postalcode, churchtax)
   })
+  
   TaxBenefits <- TaxAmountGrossIncome - TaxAmountTaxableIncome
+  
   return(TaxBenefits)
 }
 
