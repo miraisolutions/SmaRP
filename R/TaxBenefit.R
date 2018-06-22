@@ -5,7 +5,8 @@
 #' At Kanton and Gemeinde level, the source is taxburden.list.
 #' At federal level, we use the official taxrate table (BundessteueTabelle) and we try to aproximate the taxable income.
 
-#' @details This function assumes the following objects on the global enviornment
+#' @details 
+#' This function assumes the following objects on the global enviornment
 #'  * PLZGemeinden (includes Kirchensteuer)
 #'  * taxburden.list
 #'  * BundessteueTabelle 
@@ -18,14 +19,16 @@
 #'  * VersicherungsL, VersicherungsV, VersicherungsK
 #'  * BerufsauslagenTarif, BerufsauslagenMax, BerufsauslagenMin
 #'  
+#' @family swisstax
+
 #' @param Income scalar numeric 
 #' @param rate_group character
 #' @param Age scalar numeric
 #' @param NKids scalar numeric
 #' @param postalcode character
 #' @param churchtax character Y/N
+#' @import dplyr
 #'
-#' @name getTaxAmount
 #' @examples
 #' \dontrun{
 #' getTaxAmount(Income = 200000, rate_group = "C", Age = 32, NKids = 5, postalcode = 8400, churchtax = "Y")
@@ -103,7 +106,7 @@ getTaxAmount <- function(Income,
             Kids =  NKids *  + Kinder ) %>%
     transmute(AjustSalary = NetSalary - Verheiratet - Versicherung - DO - Beruf - Kids)
   
-  TaxAmountFederal <- max(0, lookupTaxRate(TaxableIncomeFederal, BundessteueTabelle, rate_group) - 251*NKids)
+  TaxAmountFederal <- max(0, lookupTaxAmount(TaxableIncomeFederal, BundessteueTabelle, rate_group) - 251 * NKids)
   TaxAmount <- TaxAmountFederal + TaxAmountKGC
   
   return(TaxAmount)
@@ -111,30 +114,62 @@ getTaxAmount <- function(Income,
 }
 
 
-#' @name lookupTaxRate
+#' Returns the tax amount to be paid given one income.
+#' 
+#' @family swisstax
+#' 
+#' @param Income 
+#' @param Tabelle 
+#' @param CivilStatus 
 #' @examples
 #' \dontrun{
-#' lookupTaxRate(Income = 100000, Tabelle = tax_rates_Kanton_list[["ZH"]], CivilStatus = "A")
+#' lookupTaxAmount(Income = 100000, Tabelle = BundessteueTabelle, CivilStatus = "A")
 #' }
 #' @export
-lookupTaxRate <- function(Income, Tabelle, CivilStatus){
-  #Define column to pick
-  if(CivilStatus =="A"){
-    CivilStatusColumn <-"taxAmountSingle"
-  } else{
-    CivilStatusColumn <-"taxAmountMarried"
+lookupTaxAmount <- function(Income, Tabelle, CivilStatus) {
+  
+  # Define column to pick
+  if(CivilStatus == "A") {
+    CivilStatusColumn <- "taxAmountSingle"
+  } else {
+    CivilStatusColumn <- "taxAmountMarried"
   }
-  #Get closest bin
+  
+  # Get closest bin
   salary_bins <- Tabelle$I
   nearest_salary <- salary_bins[findInterval(Income, salary_bins)]
-  TaxAmount<- Tabelle[Tabelle$I==nearest_salary, CivilStatusColumn]
+  TaxAmount <- Tabelle[Tabelle$I == nearest_salary, CivilStatusColumn]
+  
   return(TaxAmount)
 }
 
-# tax benefit ----
-
-#' @name buildTaxBenefits
-#' @importFrom dplyr select
+#' Builds a data frame with the tax benefits path
+#' 
+#' @details 
+#' All inputs are scalars. Builds a data frame as long as the years to retirement. 
+#' Calls 'getTaxAmount()' through 'calcTaxBenefitSwiss()', therefore, it assumes objects on the global enviornment.
+#' 
+#' @seealso [calcTaxBenefitSwiss()]
+#' @seealso [getTaxAmount()]
+#' @family swisstax
+#' 
+#' @param birthday 
+#' @param TypePurchase 
+#' @param P2purchase 
+#' @param P3purchase 
+#' @param returnP3 
+#' @param Salary 
+#' @param SalaryGrowthRate 
+#' @param postalcode 
+#' @param NKids 
+#' @param churchtax 
+#' @param rate_group 
+#' @param MaxContrTax 
+#' @param givenday 
+#' @param RetirementAge 
+#' @param TaxRate 
+#' @import dplyr
+#'
 #' @examples
 #' \dontrun{buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3, Salary, SalaryGrowthRate, postalcode, NKids, churchtax, rate_group, MaxContrTax, givenday = today("UTC"), RetirementAge = 65)
 #' }
@@ -154,46 +189,43 @@ buildTaxBenefits <- function(birthday,
                              givenday = today("UTC"),
                              RetirementAge,
                              TaxRate = NULL) {
-  TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge = RetirementAge ))
+  
+  TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today("UTC"),
+                                                                 RetirementAge = RetirementAge ))
   ncp <- nrow(TaxBenefitsPath) 
-  TaxBenefitsPath %<>% within({
-    BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
-    P3purchase = c(0, rep(P3purchase, ncp-1))
-    TotalContr = BVGpurchase + P3purchase
-    ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
-    TaxableIncome = pmax(ExpectedSalaryPath - pmin(TotalContr, MaxContrTax),0)
-    AgePath = sapply(calendar, calcAge, birthday = birthday) %>% as.integer 
-    if(!is.null(TaxRate)){
-      TaxBenefits = calcTaxBenefitGeneral(TotalContr =TotalContr, TaxRatePath = rep(TaxRate, length(ExpectedSalaryPath)), MaxContrTax=MaxContrTax)
-    } else {
-      TaxBenefits =  calcTaxBenefitSwiss(ExpectedSalaryPath, TaxableIncome, rate_group, AgePath, NKids, postalcode, churchtax)
-    }
-    t = buildt(birthday, RetirementAge = RetirementAge )
-    TotalTax = calcAnnuityAcumPath(TaxBenefits, t, returnP3)
-    ReturnTax = TotalTax - cumsum(TaxBenefits) 
-    DirectTax = cumsum(TaxBenefits)
-  }) %>%
+  
+  TaxBenefitsPath <- TaxBenefitsPath %>%
+    mutate(BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp),
+           P3purchase = c(0, rep(P3purchase, ncp - 1)),
+           TotalContr = BVGpurchase + P3purchase,
+           ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp),
+           TaxableIncome = pmax(ExpectedSalaryPath - pmin(TotalContr, MaxContrTax), 0),
+           AgePath = as.integer(sapply(calendar, calcAge, birthday = birthday)),
+           TaxBenefits = calcTaxBenefitSwiss(ExpectedSalaryPath, TaxableIncome, rate_group, AgePath, NKids, postalcode, churchtax),
+           t = buildt(birthday, RetirementAge = RetirementAge),
+           TotalTax = calcAnnuityAcumPath(TaxBenefits, t, returnP3),
+           ReturnTax = TotalTax - cumsum(TaxBenefits) ,
+           DirectTax = cumsum(TaxBenefits)) %>%
     select(-c(ExpectedSalaryPath, P3purchase, BVGpurchase, TaxableIncome))
+  
   return(TaxBenefitsPath)
 }
 
-#' @name calcTaxBenefitGeneral
-#' @examples
-#' \dontrun{
-#' calcTaxBenefit(rep(6500,10), rep(0.1, 10), 6000)
-#' }
-#' @export
-calcTaxBenefitGeneral <- function(TotalContr, TaxRatePath, MaxContrTax) {
-  TaxBenefits <- vector()
-  TaxBenefits[1] <- TotalContr[1] * TaxRatePath[1]
-  for (i in 2:length(TaxRatePath)) {
-    TaxBenefits[i] <- min((TotalContr[i] + TaxBenefits[i-1]), MaxContrTax) * TaxRatePath[i]
-  }
-  return(TaxBenefits)
-}
 
-
-#' @name calcTaxBenefitSwiss
+#' Calculates the tax benefit as a difference of the taxes paid with and without retirement contributions.
+#' 
+#' Calls 'getTaxAmount()', therefore, it assumes objects on the global enviornment.
+#' @seealso [getTaxAmount()]
+#' @family swisstax
+#'
+#' @param ExpectedSalaryPath vector length equals year to retirement
+#' @param TaxableIncome vector length equals year to retirement
+#' @param rate_group 
+#' @param Age vector length equals year to retirement
+#' @param NKids 
+#' @param postalcode 
+#' @param churchtax 
+#' 
 #' @examples
 #' \dontrun{
 # calcTaxBenefitSwiss(ExpectedSalaryPath = seq(90000, 100000, 1000),
@@ -212,7 +244,7 @@ calcTaxBenefitSwiss <- function(ExpectedSalaryPath,
                                 NKids,
                                 postalcode,
                                 churchtax) {
-
+  
   assertthat::are_equal(length(ExpectedSalaryPath), length(TaxableIncome))
   
   TaxAmountGrossIncome <-  sapply(seq_along(ExpectedSalaryPath), function(i) {
