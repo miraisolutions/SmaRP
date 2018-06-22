@@ -99,7 +99,7 @@
 #' }
 #' @export
 buildt <- function(birthday, givenday = today("UTC"), RetirementAge = 65){
-  calendar = getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge +1 )
+  calendar = getRetirementCalendar(birthday, givenday, RetirementAge +1 )
   t = c(as.vector(diff(calendar)/365))
   return(t)
 }
@@ -145,8 +145,8 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 }
 
 #' @name buildContributionP2Path
-#' @importFrom dplyr mutate left_join
-#' @importFrom magrittr '%>%' '%<>%' 
+#' @import dplyr
+#' @importFrom magrittr '%<>%' 
 #' @examples
 #' \dontrun{
 #' buildContributionP2Path(birthday, Salary, SalaryGrowthRate, CurrentP2, P2purchase, TypePurchase, BVGMindestzinssatz, givenday = today("UTC")) %>% print
@@ -167,7 +167,7 @@ buildContributionP2Path <- function(birthday,
     filter(years <= RetirementAge)
   
   # calc contributions P2 Path
-  ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge = RetirementAge )) %>%
+  ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge )) %>%
     mutate(AgePath = sapply(calendar, calcAge, birthday = birthday) %>% as.integer) %>%
     left_join(BVGRatesPath, by = c("AgePath" = "years")) %>% 
     mutate(BVGcontriburionrates = if_else(is.na(BVGcontriburionrates), 0, BVGcontriburionrates))
@@ -180,7 +180,7 @@ buildContributionP2Path <- function(birthday,
     BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
     BVGContributions = if_else(is.na(BVGpurchase + (max(0, ExpectedSalaryPath- MinBVG) * BVGcontriburionrates)), 0, BVGpurchase + (max(0, ExpectedSalaryPath- MinBVG) * BVGcontriburionrates*isPurchase))
     BVGDirect = BVGContributions +c(CurrentP2, rep(0, ncp -1))
-    t = buildt(birthday, RetirementAge = RetirementAge )
+    t = buildt(birthday, givenday, RetirementAge = RetirementAge )
     TotalP2 = calcAnnuityAcumPath(BVGDirect, t, rate)
     DirectP2 = cumsum(BVGDirect)
     ReturnP2 = TotalP2 - DirectP2
@@ -213,9 +213,19 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp){
   }
 }
 
-#' @name buildContributionP3path
-#' @importFrom dplyr mutate
-#' @importFrom magrittr '%>%' '%<>%' 
+#' Build the contribution path for a standard pension fund, called Pillar 3 in Switzerland.
+#' Based on 'calcAnnuityAcumPath()'
+#'  
+#' @family Contributionpath
+#' 
+#' @param birthday 
+#' @param P3purchase 
+#' @param CurrentP3 
+#' @param returnP3 
+#' @param givenday 
+#' @param RetirementAge 
+#' @import dplyr
+#'
 #' @examples
 #' \dontrun{
 #' buildContributionP3path(birthday, P3purchase, CurrentP3, returnP3) %>% print
@@ -226,19 +236,20 @@ buildContributionP3path <- function(birthday,
                                     CurrentP3,
                                     returnP3,
                                     givenday = today("UTC"),
-                                    RetirementAge
-){
+                                    RetirementAge) {
   
-  ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today("UTC"), RetirementAge = RetirementAge ))
+  ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge ))
+  
   ncp <- nrow(ContributionP3Path) 
-  ContributionP3Path %<>% within({
-    P3purchase = c(0, rep(P3purchase, ncp-2),0)
-    P3ContributionPath = P3purchase + c(CurrentP3, rep(0, ncp -1))
-    t = buildt(birthday, RetirementAge = RetirementAge )
-    TotalP3 = calcAnnuityAcumPath(P3ContributionPath, t, returnP3)
-    DirectP3 = cumsum(P3ContributionPath)
-    ReturnP3 = TotalP3 - DirectP3
-  }) 
+  
+  ContributionP3Path <- ContributionP3Path %>%
+    mutate(P3purchase = c(0, rep(P3purchase, ncp - 2), 0),
+           P3ContributionPath = P3purchase + c(CurrentP3, rep(0, ncp - 1)),
+           t = buildt(birthday, givenday, RetirementAge = RetirementAge),
+           TotalP3 = calcAnnuityAcumPath(P3ContributionPath, t, returnP3),
+           DirectP3 = cumsum(P3ContributionPath),
+           ReturnP3 = TotalP3 - DirectP3)
+
   return(ContributionP3Path)
 }
 
@@ -249,13 +260,17 @@ buildContributionP3path <- function(birthday,
 #' }
 #' @export
 calcAnnuityAcumPath <- function(contributions, t, rate){
-  res <- vector()
-  res[1] <- contributions[1]
+  # set a default res 
+  res <- contributions
   for(i in 2:length(contributions)) {
     res[i] <- res[i-1]* exp(rate * t[i-1])  + contributions[i]
   }
   res
 }
+
+
+
+
 
 
 
