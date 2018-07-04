@@ -42,7 +42,7 @@ shinyServer(function(input, output, session) {
       validate(
         need(input$RetirementAge, VM$RetirementAge)
       )
-      input$RetirementAge
+      min(70, input$RetirementAge)
     } else {
       if (genre() == "M"){
         MRetirementAge
@@ -52,7 +52,8 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  # Pillar III
+  # Pillar III ----
+  # defaut option 0
   CurrentP3_notZero <- reactive({ 
     isnotAvailableReturnZero(input$CurrentP3)
   })
@@ -68,9 +69,13 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  P3purchase <- reactive({isnotAvailableReturnZero(input$P3purchase)})
+  P3purchase <- reactive({
+    isnotAvailableReturnZero(input$P3purchase)
+  })
   
-  returnP3_notzero <- reactive({isnotAvailableReturnZero(input$returnP3/100)})
+  returnP3_notzero <- reactive({
+    isnotAvailableReturnZero(input$returnP3 / 100)
+  })
   
   returnP3 <- reactive({
     if ( CurrentP3() == 0 & P3purchase() == 0 & Salary() == 0 &  CurrentP2() == 0 & P2purchase() == 0){
@@ -83,15 +88,17 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  # Tax 
+  
+  # Tax info ----
   TaxRelief <- reactive({ 
     if (input$rate_group == "C"){
-      2* MaxContrTax
+      MaxContrTax * 2
     }else{
       MaxContrTax
     }
   }) 
   
+  # Postal Code 
   postalcode <- reactive({
     validate(
       need(input$postalcode, VM$postalcode)
@@ -99,8 +106,12 @@ shinyServer(function(input, output, session) {
     input$postalcode
   })
   
-  NKids <- reactive({  isnotAvailableReturnZero(input$NKids)  })
+  # Number of kids (max = 9) 
+  NKids <- reactive({
+    min(isnotAvailableReturnZero(input$NKids), 9)
+  })
   
+  # Tariff
   rate_group <- reactive({
     validate(
       need(input$rate_group, VM$rate_group)
@@ -108,6 +119,7 @@ shinyServer(function(input, output, session) {
     input$rate_group
   })
   
+  # Church taxes
   churchtax <- reactive({
     if(input$churchtax == TRUE){
       "Y"
@@ -124,20 +136,26 @@ shinyServer(function(input, output, session) {
     input$Salary
   })
   
-  SalaryGrowthRate <- reactive({isnotAvailableReturnZero(input$SalaryGrowthRate/100)})
+  SalaryGrowthRate <- reactive({
+    isnotAvailableReturnZero(input$SalaryGrowthRate / 100)
+  })
   
   # Pillar II
-  CurrentP2 <- reactive({ isnotAvailableReturnZero(input$CurrentP2) })
+  CurrentP2 <- reactive(
+    {isnotAvailableReturnZero(input$CurrentP2)
+    })
   
   P2interestRate <- reactive({
     if (isnotAvailable(input$P2interestRate)){
       BVGMindestzinssatz
     } else {
-      input$P2interestRate/100
+      input$P2interestRate / 100
     }
   })
   
-  P2purchase <- reactive({isnotAvailableReturnZero(input$P2purchase)})
+  P2purchase <- reactive({
+    isnotAvailableReturnZero(input$P2purchase)
+  })
   
   TypePurchase <- reactive({
     validate(
@@ -146,7 +164,6 @@ shinyServer(function(input, output, session) {
     input$TypePurchase
   })
   
-  # Calculations ------------------  
   
   # calc P2 fund ----
   ContributionP2Path <- reactive({ 
@@ -157,7 +174,7 @@ shinyServer(function(input, output, session) {
                             P2purchase = P2purchase(),
                             TypePurchase = TypePurchase(),
                             rate = P2interestRate(),
-                            givenday = today("UTC"),
+                            givenday = lubridate::today("UTC"),
                             RetirementAge = RetirementAge()
     )
   })
@@ -182,16 +199,16 @@ shinyServer(function(input, output, session) {
                      Salary = Salary(),
                      SalaryGrowthRate = SalaryGrowthRate(),
                      postalcode = postalcode(),
-                     NKids = ifelse(isolate(input$NKids) >5, 5, isolate(input$NKids)),
+                     NKids = NKids(),
                      churchtax = churchtax(),
                      rate_group = rate_group(),
                      MaxContrTax = TaxRelief(),
-                     givenday = today("UTC"),
+                     givenday = lubridate::today("UTC"),
                      RetirementAge = RetirementAge(),
                      TaxRate = NULL)
   })
   
-  # build main df ----
+  # build Road2Retirement ----
   Road2Retirement <- reactive({
     ContributionP2Path() %>%
       left_join(ContributionP3path(), by = c("calendar", "t")) %>%
@@ -226,7 +243,7 @@ shinyServer(function(input, output, session) {
     ) 
   })
   
-  # bar plot -----
+  # Bar plot -----
   FotoFinish <- reactive({
     Road2Retirement() %>% 
       mutate(TaxBenefits = TotalTax) %>%
@@ -259,17 +276,21 @@ shinyServer(function(input, output, session) {
     )
   })
   
-  # Totals ----
+  # build Totals statement ----
   retirementdate <- reactive({
     getRetirementday(Birthdate(), RetirementAge() )
   })  
   
   retirementfund <- reactive({
-    Road2Retirement()[, "Total"] %>% tail(1) %>% as.integer
+    Road2Retirement()[, "Total"] %>% 
+      tail(1) %>% 
+      as.integer
   })
   
   lastSalary <- reactive({
-    Road2Retirement()[, "ExpectedSalaryPath"] %>% tail(1) %>% as.integer
+    Road2Retirement()[, "ExpectedSalaryPath"] %>%
+      tail(1) %>% 
+      as.integer
   })
   
   percentageLastSalary <- reactive({
@@ -300,7 +321,6 @@ shinyServer(function(input, output, session) {
   })
   
   # Output Report ----
-  
   
   #params list to be passed to the output
   params <- reactive(list(Salary = Salary(),
@@ -336,10 +356,12 @@ shinyServer(function(input, output, session) {
                           DOV = DOV, 
                           Kinder = Kinder,
                           Verheiratet = Verheiratet
-  )
-  )
+                          )
+                     )
+
   
-  #output report
+  
+  # output report
   output$report <- downloadHandler(
     filename = "report.pdf",
     content = function(file){
@@ -360,14 +382,14 @@ shinyServer(function(input, output, session) {
   # (i.e., when the button is pressed)
   refreshText <- eventReactive(input$refreshButton, {downloadInputs(refresh = TRUE)})
   
-  output$refreshText<-renderText({
+  output$refreshText<- renderText({
     paste(as.character(refreshText()))
   })
   
   
   # Conditional Retirement age input ----
   output$conditionalRetirementAge <- renderUI({
-    if(input$provideRetirementAge){
+    if(input$provideRetirementAge) {
       numericInput("RetirementAge", label = h5("Desired Retirement Age"), value = 65, step = 1, min = 55, max = 70)
     }
   })
