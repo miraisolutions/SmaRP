@@ -1,5 +1,6 @@
+source(system.file("application", "global.R", package = "SmaRP"))
 
-context("getTaxAmount")
+context("buildContributionP3path")
 
 test_that("Test case P3 (teststhat/resources/tesstP3path.xls)", {
   
