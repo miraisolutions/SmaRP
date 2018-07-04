@@ -338,8 +338,6 @@ printCurrency <- function(value,  digits=0, sep=",", decimal=".") { #currency.sy
   )
 }
 
-
-
 # Make table -------------------------------------------------------------
 #' @name makeTable 
 #' @examples
@@ -356,11 +354,11 @@ makeTable <- function(Road2Retirement, moncols = c( "DirectP2", "ReturnP2", "Tot
 }
 
 
-# Utility functions for validity checks -----------------------------------
+# Utility functions for validity checks ----
 #' @name isnotAvailable  
 #' @export
 isnotAvailable <- function(inputValue){
-  if(inputValue =="" | is.na(inputValue) |is.null(inputValue) ){
+  if(inputValue =="" | is.na(inputValue) | is.null(inputValue)){
     TRUE
   } else {
     FALSE
@@ -369,13 +367,14 @@ isnotAvailable <- function(inputValue){
 
 #' @name isnotAvailableReturnZero  
 #' @export
-isnotAvailableReturnZero <- function(inputValue){
+isnotAvailableReturnZero <- function(inputValue, fallback = 0){
   if(isnotAvailable(inputValue) ){
-    0
+    fallback
   } else {
     inputValue
   }
 }
+
 
 #' @name need_not_zero 
 #' @export
@@ -388,12 +387,12 @@ need_not_zero <- function(input, inputname) {
 }
 
 
-# Format Percentage -------------------------------------------------------
+# Format Percentage ----
 #' @name df 
 #' @export
 changeToPercentage <- function(df){
   colsannotation <- grepl(".annotation", colnames(df))
-  df[, colsannotation] <-df[, colsannotation]*100
+  df[, colsannotation] <-df[, colsannotation] * 100
   df[, colsannotation] <- paste0(format(df[, colsannotation], digits=2, nsmall=2), "%")
   df
 }
