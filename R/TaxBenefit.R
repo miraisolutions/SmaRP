@@ -62,6 +62,10 @@ getTaxAmount <- function(Income,
     as.numeric()
   taxrate <- taxburden[1, idxNumCols] %>% as.vector
   
+  # Constrain Income
+  Income <- Income %>%
+    max(0) %>% min(1e+09)
+  
   # Calc adjustIncomeKG
   # 1. Age adjustment because of BVG contributions
   # Tax burden based on the Pensionkassebeitrage from the examples (5%). Therefore, an adjustment factor is applied accordingly.
@@ -81,7 +85,7 @@ getTaxAmount <- function(Income,
   # 3. NBU (not applied on taxburden source)
   NBUanzug <- min(DOfactor * maxNBU, Income * NBU)
   
-  IncomeKG <- Income + AjustKinderabzug + (DOfactor * AjustBVGContri[1,1]) - NBUanzug
+  IncomeKG <- Income + AjustKinderabzug + (DOfactor * AjustBVGContri[1,1]) - NBUanzug 
   
   TaxAmountKGC <- max(0, IncomeKG * (approx(x = IncomeCuts, y = taxrate, IncomeKG)$y) / 100)
   
@@ -164,14 +168,13 @@ lookupTaxAmount <- function(Income, Tabelle, CivilStatus) {
 #' @param NKids 
 #' @param churchtax 
 #' @param rate_group 
-#' @param MaxContrTax 
 #' @param givenday 
 #' @param RetirementAge 
-#' @param TaxRate 
 #' @import dplyr
 #'
 #' @examples
-#' \dontrun{buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3, Salary, SalaryGrowthRate, postalcode, NKids, churchtax, rate_group, MaxContrTax, givenday = today("UTC"), RetirementAge = 65)
+#' \dontrun{buildTaxBenefits(
+#' birthday, TypePurchase, P2purchase, P3purchase, returnP3, Salary, SalaryGrowthRate, postalcode, NKids, churchtax, rate_group, MaxContrTax, givenday = today("UTC"), RetirementAge = 65)
 #' }
 #' @export
 buildTaxBenefits <- function(birthday,
@@ -185,13 +188,10 @@ buildTaxBenefits <- function(birthday,
                              NKids,
                              churchtax,
                              rate_group,
-                             MaxContrTax,
                              givenday = today("UTC"),
-                             RetirementAge,
-                             TaxRate = NULL) {
+                             RetirementAge) {
   
-  TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday = today("UTC"),
-                                                                 RetirementAge = RetirementAge ))
+  TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge))
   ncp <- nrow(TaxBenefitsPath) 
   
   TaxBenefitsPath <- TaxBenefitsPath %>%

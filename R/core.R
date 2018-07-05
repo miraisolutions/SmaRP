@@ -1,4 +1,4 @@
-# # # #
+# # # # #
 # # # Example
 # library(lubridate)
 # library(dplyr)
@@ -46,7 +46,6 @@
 #                              NKids,
 #                              churchtax,
 #                              rate_group,
-#                              MaxContrTax,
 #                              tax_rates_Kanton_list,
 #                              BundessteueTabelle,
 #                              givenday = today("UTC"),
@@ -99,7 +98,7 @@
 #' }
 #' @export
 buildt <- function(birthday, givenday = today("UTC"), RetirementAge = 65){
-  calendar = getRetirementCalendar(birthday, givenday, RetirementAge +1 )
+  calendar = getRetirementCalendar(birthday, givenday, RetirementAge  +1 )
   t = c(as.vector(diff(calendar)/365))
   return(t)
 }
@@ -108,7 +107,7 @@ buildt <- function(birthday, givenday = today("UTC"), RetirementAge = 65){
 #' @importFrom lubridate today interval duration
 #' @export
 calcAge <- function(birthday, givenday = today("UTC")) {
-  age <- lubridate:::interval(start = birthday, end = givenday) / duration(num = 1, units = "year")
+  age <- interval(start = birthday, end = givenday) / duration(num = 1, units = "year")
   age
 }
 
@@ -149,7 +148,16 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 #' @importFrom magrittr '%<>%' 
 #' @examples
 #' \dontrun{
-#' buildContributionP2Path(birthday, Salary, SalaryGrowthRate, CurrentP2, P2purchase, TypePurchase, BVGMindestzinssatz, givenday = today("UTC")) %>% print
+#' buildContributionP2Path(
+#'   birthday = "1975-10-10",
+#'   Salary = 90000,
+#'   SalaryGrowthRate = 0.01,
+#'   CurrentP2 = 10000,
+#'   P2purchase = 2000,
+#'   TypePurchase = "AnnualP2",
+#'   rate = 0.025,
+#'   givenday = as.Date("2018-07-04"),
+#'   RetirementAge = 67)
 #' }
 #' @export
 buildContributionP2Path <- function(birthday,
@@ -160,15 +168,16 @@ buildContributionP2Path <- function(birthday,
                                     TypePurchase,
                                     rate = BVGMindestzinssatz,
                                     givenday = today("UTC"),
-                                    RetirementAge
-){
+                                    RetirementAge){
+  
   # build BVG rates from global input
   BVGRatesPath <- BVGcontriburionratesPath %>% 
     filter(years <= RetirementAge)
   
   # calc contributions P2 Path
   ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge )) %>%
-    mutate(AgePath = sapply(calendar, calcAge, birthday = birthday) %>% as.integer) %>%
+    mutate(AgePath = sapply(calendar, calcAge, birthday = birthday) %>%
+             as.integer) %>%
     left_join(BVGRatesPath, by = c("AgePath" = "years")) %>% 
     mutate(BVGcontriburionrates = if_else(is.na(BVGcontriburionrates), 0, BVGcontriburionrates))
   
@@ -178,13 +187,14 @@ buildContributionP2Path <- function(birthday,
   ContributionP2Path %<>% within({
     ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
     BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
-    BVGContributions = if_else(is.na(BVGpurchase + (max(0, ExpectedSalaryPath- MinBVG) * BVGcontriburionrates)), 0, BVGpurchase + (max(0, ExpectedSalaryPath- MinBVG) * BVGcontriburionrates*isPurchase))
+    BVGContributions = if_else(is.na(BVGpurchase + (max(0, ExpectedSalaryPath- MinBVG) * BVGcontriburionrates)), 0, BVGpurchase + (max(0, ExpectedSalaryPath- MinBVG) * BVGcontriburionrates * isPurchase))
     BVGDirect = BVGContributions +c(CurrentP2, rep(0, ncp -1))
     t = buildt(birthday, givenday, RetirementAge = RetirementAge )
     TotalP2 = calcAnnuityAcumPath(BVGDirect, t, rate)
     DirectP2 = cumsum(BVGDirect)
     ReturnP2 = TotalP2 - DirectP2
-    })
+  })
+  
   return(ContributionP2Path)
 }
 
@@ -195,7 +205,8 @@ buildContributionP2Path <- function(birthday,
 #' }
 #' @export
 calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
-  nrise <- ncp - 2 #No rise current and last appraissal  
+  nrise <- ncp - 2 
+  # Not rise now neither last appraissal  
   res <- cumprod(c(Salary, rep(1 + SalaryGrowthRate, nrise), 1))
 }
 
@@ -228,7 +239,13 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp){
 #'
 #' @examples
 #' \dontrun{
-#' buildContributionP3path(birthday, P3purchase, CurrentP3, returnP3) %>% print
+#' buildContributionP3path(
+#'   birthday = "1980-12-01",
+#'   P3purchase = 5000,
+#'   CurrentP3 = 100000,
+#'   returnP3 = 0.03,
+#'   givenday = as.Date("2015-11-30"),
+#'   RetirementAge = 62)
 #' }
 #' @export
 buildContributionP3path <- function(birthday, 
@@ -249,7 +266,7 @@ buildContributionP3path <- function(birthday,
            TotalP3 = calcAnnuityAcumPath(P3ContributionPath, t, returnP3),
            DirectP3 = cumsum(P3ContributionPath),
            ReturnP3 = TotalP3 - DirectP3)
-
+  
   return(ContributionP3Path)
 }
 
@@ -267,11 +284,6 @@ calcAnnuityAcumPath <- function(contributions, t, rate){
   }
   res
 }
-
-
-
-
-
 
 
 #' @name downloadPLZ
@@ -314,16 +326,15 @@ returnPLZKanton <- function(plz){
   return(Kanton)
 }
 
-#' @name returnSteuerfuss 
-#' @export
-returnSteuerfuss <- function(plz){
-  Steuerfuss <- PLZGemeinden$FactorKanton[PLZGemeinden$PLZ == as.numeric(plz)]
-  return(Steuerfuss)
-}
+#' #' @name returnSteuerfuss 
+#' #' @export
+#' returnSteuerfuss <- function(plz){
+#'   Steuerfuss <- PLZGemeinden$FactorKanton[PLZGemeinden$PLZ == as.numeric(plz)]
+#'   return(Steuerfuss)
+#' }
 
 
 
-# Convert to Monetary data type  -----------------------------------------------------------------
 #' @name printCurrency
 #' @examples
 #' \dontrun{
@@ -338,7 +349,6 @@ printCurrency <- function(value,  digits=0, sep=",", decimal=".") { #currency.sy
   )
 }
 
-# Make table -------------------------------------------------------------
 #' @name makeTable 
 #' @examples
 #' \dontrun{

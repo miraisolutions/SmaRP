@@ -202,10 +202,8 @@ shinyServer(function(input, output, session) {
                      NKids = NKids(),
                      churchtax = churchtax(),
                      rate_group = rate_group(),
-                     MaxContrTax = TaxRelief(),
                      givenday = lubridate::today("UTC"),
-                     RetirementAge = RetirementAge(),
-                     TaxRate = NULL)
+                     RetirementAge = RetirementAge())
   })
   
   # build Road2Retirement ----
@@ -356,9 +354,9 @@ shinyServer(function(input, output, session) {
                           DOV = DOV, 
                           Kinder = Kinder,
                           Verheiratet = Verheiratet
-                          )
-                     )
-
+  )
+  )
+  
   
   
   # output report
