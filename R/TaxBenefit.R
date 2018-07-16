@@ -107,7 +107,7 @@ getTaxAmount <- function(Income,
             Verheiratet = ifelse(Tarif == "Ledig", 0, Verheiratet),
             Versicherung = ifelse(Tarif == "Ledig", VersicherungsL, VersicherungsV + NKids * VersicherungsK),
             Beruf = max(DOfactor * BerufsauslagenMin, min(DOfactor * BerufsauslagenMax, NetSalary * BerufsauslagenTarif)),
-            Kids =  NKids *  + Kinder ) %>%
+            Kids =  NKids * Kinder ) %>%
     transmute(AjustSalary = NetSalary - Verheiratet - Versicherung - DO - Beruf - Kids)
   
   TaxAmountFederal <- max(0, lookupTaxAmount(TaxableIncomeFederal, BundessteueTabelle, rate_group) - 251 * NKids)
@@ -193,7 +193,7 @@ buildTaxBenefits <- function(birthday,
   
   TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge))
   ncp <- nrow(TaxBenefitsPath) 
-  
+
   TaxBenefitsPath <- TaxBenefitsPath %>%
     mutate(BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp),
            P3purchase = c(0, rep(P3purchase, ncp - 1)),
