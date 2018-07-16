@@ -64,7 +64,7 @@ getTaxAmount <- function(Income,
   
   # Constrain Income
   Income <- Income %>%
-    max(0) %>% min(1e+09)
+    max(0) %>% min(1e+08)
   
   # Calc adjustIncomeKG
   # 1. Age adjustment because of BVG contributions

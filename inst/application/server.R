@@ -294,7 +294,7 @@ shinyServer(function(input, output, session) {
   percentageLastSalary <- reactive({
     if (lastSalary() != 0){
       numTimes <- retirementfund() / lastSalary() 
-      numTimes %<>% formatC( format = "f",  digits=2)
+      numTimes %<>% formatC(format = "f",  digits=2)
       paste0("which is ", numTimes, " times your last salary")
     } else {
       ""

@@ -1,10 +1,10 @@
 # Steuerbelastung (tax burden) in den Gemeinden
 # https://www.estv.admin.ch/estv/de/home/allgemein/steuerstatistiken/fachinformationen/steuerbelastungen/steuerbelastung.html#529360841
 
-# download and safe
-url2download <- "https://www.estv.admin.ch/dam/estv/de/dokumente/allgemein/Dokumentation/Zahlen_fakten/Steuerstatistiken/steuerbelastung/2016/SB-NP-alle-Gden_2016.xlsx.download.xlsx/SB-NP-alle-Gden_de-fr_2016.xlsx"
-filename <- "data//taxdata//Steuerbelastung.xls"
-download.file(url2download, filename)
+# # download and safe
+# url2download <- "https://www.estv.admin.ch/dam/estv/de/dokumente/allgemein/Dokumentation/Zahlen_fakten/Steuerstatistiken/steuerbelastung/2016/SB-NP-alle-Gden_2016.xlsx.download.xlsx/SB-NP-alle-Gden_de-fr_2016.xlsx"
+# filename <- "data//taxdata//Steuerbelastung.xls"
+# download.file(url2download, filename)
 
 wb <- XLConnect::loadWorkbook("inst/application/data//taxdata//Steuerbelastung.xls")
 
