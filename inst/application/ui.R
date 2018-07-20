@@ -10,19 +10,17 @@ source("helper_texts.R")
 # #189bce background header
 # #ea8b5b title orange
 
-# UI ----------------------------------------------------------------------
-
 shinyUI( 
   
-  # Page ------------------------------------------------------------------
+  # Page ----
   
   fluidPage(
     
-    # Style  --------------------------------------------------------------
+    # Style  ----
     
     theme = "style.css",
     
-    # Header  -------------------------------------------------------------
+    # Header  ----
     
     fluidRow(
       id = "head1",
@@ -37,11 +35,9 @@ shinyUI(
              fluidRow(h3("Smart Retirement Planning"))),
       style = "margin-left: 0.1%;"), # end of FluidRow / Header
     
-    # Main  -------------------------------------------------------------
-    
+    # Main  ----
     fluidRow(
-      
-      # Sidebar  --------------------------------------------------------
+       # Sidebar  --------------------------------------------------------
       column(4,
              # Personal Info  -------------------------------------------
              fluidRow(
@@ -54,8 +50,8 @@ shinyUI(
                          label  = h5("Birthdate"),  
                          value  = "1980-12-31", 
                          format = "yyyy-mm-dd", 
-                         width  = '94%'),
-               style = "margin-left: 1%;"),
+                         width  = '100%'),
+               style = "margin-left: 0%; margin-right: 0%;"),
              
              # Desired retirement age conditional panel
              fluidRow(
@@ -72,7 +68,8 @@ shinyUI(
                            IB$RetirementAge, 
                            placement = "right", 
                            options   = list(container = "body"))
-               ),style = "margin-left:1%;margin-right: 2%;"),
+               ), 
+               style = "margin-left:0%; margin-right: 0%;"),
              
              # PLZ and Kids
              fluidRow(
@@ -209,7 +206,7 @@ shinyUI(
                             value = 50000, 
                             step  = 1000, 
                             min   = 0, 
-                            width = '94%'),
+                            width = '50%'),
                bsTooltip("CurrentP3", 
                          IB$CurrentP3, 
                          placement = "right", 
@@ -227,7 +224,7 @@ shinyUI(
                                 IB$P3purchase, 
                                 placement = "right", 
                                 options   = list(container = "body")), 
-                      style = "margin-left: 0.5%;margin-right: 5%;"),
+                      style = "margin-left: 0.5%; margin-right: 5%;"),
                column(5, 
                       numericInput("returnP3", 
                                    label = h5("Expected Return %"), 
@@ -268,7 +265,7 @@ shinyUI(
                ) # end tab Table
              ), # end tabsetPanel
              
-             # Footer Main Panel  ----------------------------------------------------
+             # Footer Main Panel  ----
              #Disclaimer
              fluidRow(align = "left", 
                       verbatimTextOutput("disclaimer")),
@@ -283,7 +280,7 @@ shinyUI(
     
     hr(),
     
-    # Footer  -------------------------------------------------------------
+    # Footer  ----
     
     fluidRow(
       column(9, 
