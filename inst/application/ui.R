@@ -29,7 +29,7 @@ shinyUI(
                         img(src    = 'SmaRPStiker.png',  
                             height = "90%", 
                             width  = "90%")), 
-                      style = "margin-left: 10%;margin-top: 10%;margin-bottom: 10%;")),
+                      style = "margin-left: 10%; margin-top: 10%; margin-bottom: 10%;")),
       column(6,
              fluidRow(h2("SmaRP:")),
              fluidRow(h3("Smart Retirement Planning"))),
@@ -37,21 +37,25 @@ shinyUI(
     
     # Main  ----
     fluidRow(
-       # Sidebar  --------------------------------------------------------
+      # Sidebar  ----
       column(4,
-             # Personal Info  -------------------------------------------
+             # Personal Info  ----
              fluidRow(
                tags$h4("Personal Info"), 
-               style = "margin-left: 1%;"),
+               style = "margin-left: 0.1%;"),
              
              # Birthdate
              fluidRow(
-               dateInput("Birthdate", 
-                         label  = h5("Birthdate"),  
-                         value  = "1980-12-31", 
-                         format = "yyyy-mm-dd", 
-                         width  = '100%'),
-               style = "margin-left: 0%; margin-right: 0%;"),
+               column(6, 
+                      dateInput("Birthdate", 
+                                label  = h5("Birthdate"),  
+                                value  = "1980-12-31", 
+                                format = "yyyy-mm-dd"),
+                      bsTooltip("Birthdate", 
+                                IB$Birthdate, 
+                                placement = "right", 
+                                options   = list(container = "body"))
+               )),
              
              # Desired retirement age conditional panel
              fluidRow(
@@ -69,7 +73,7 @@ shinyUI(
                            placement = "right", 
                            options   = list(container = "body"))
                ), 
-               style = "margin-left:0%; margin-right: 0%;"),
+               style = "margin-left: 0.1%; margin-right: 0%;"),
              
              # PLZ and Kids
              fluidRow(
@@ -87,7 +91,8 @@ shinyUI(
                       bsTooltip("NKids", 
                                 IB$NKids, 
                                 placement = "right", 
-                                options = list(container = "body")))),
+                                options = list(container = "body"))
+               )),
              
              # Church tax and gender
              fluidRow(
@@ -102,8 +107,7 @@ shinyUI(
                                                       label    = NULL, 
                                                       inline   = TRUE,
                                                       choices  = list("Male" = "M", "Female" = "F"), 
-                                                      selected = "M"),
-                                         style = "margin-top:6%;margin-left:3%;")))),
+                                                      selected = "M"))))),
              
              # Rate Group
              fluidRow(
@@ -114,16 +118,16 @@ shinyUI(
                             selected = "A"),
                bsTooltip("rate_group",
                          IB$rate_group,
-                         placement = "right", 
+                         placement = "center", 
                          options = list(container = "body")),
-               style = "margin-left: 1%;"),
+               style = "margin-right: 0.0%; margin-left: 1%;"),
              
              hr(),
              
-             # Pillar II  -------------------------------------------------------------
+             # Pillar II  -------
              fluidRow(
                tags$h4("Occupational Pension Fund - Pillar II"),
-               style = "margin-left: 1%;"),
+               style = "margin-left: 0.1%;"),
              
              fluidRow(
                column(6,
@@ -195,26 +199,25 @@ shinyUI(
              
              hr(),
              
-             # Pillar III  -------------------------------------------------------------
+             # Pillar III  -------
              fluidRow(
                tags$h4("Private Pension Fund - Pillar III"), 
-               style = "margin-left: 1%;"),
+               style = "margin-left: 0.1%;"),
              
              fluidRow(
-               numericInput("CurrentP3", 
-                            label = h5("Current assets"), 
-                            value = 50000, 
-                            step  = 1000, 
-                            min   = 0, 
-                            width = '50%'),
-               bsTooltip("CurrentP3", 
-                         IB$CurrentP3, 
-                         placement = "right", 
-                         options   = list(container = "body")),
-               style = "margin-left: 1%;"),
+               column(6, 
+                      numericInput("CurrentP3", 
+                                   label = h5("Current assets"), 
+                                   value = 50000, 
+                                   step  = 1000, 
+                                   min   = 0),
+                      bsTooltip("CurrentP3", 
+                                IB$CurrentP3, 
+                                placement = "right", 
+                                options   = list(container = "body")))),
              
              fluidRow(
-               column(5, 
+               column(6, 
                       numericInput("P3purchase", 
                                    label = h5("Annual contribution"), 
                                    value = 0, 
@@ -223,9 +226,8 @@ shinyUI(
                       bsTooltip("P3purchase", 
                                 IB$P3purchase, 
                                 placement = "right", 
-                                options   = list(container = "body")), 
-                      style = "margin-left: 0.5%; margin-right: 5%;"),
-               column(5, 
+                                options   = list(container = "body"))), 
+               column(6, 
                       numericInput("returnP3", 
                                    label = h5("Expected Return %"), 
                                    value = BVGMindestzinssatz*100, 
@@ -236,17 +238,17 @@ shinyUI(
                                 IB$returnP3, 
                                 placement = "right", 
                                 options   = list(container = "body")),
-                      style = "margin-left:9%;"))
+                      style = "margin-left: 0%; margin-right: 0%;"))
              
       ), #end first column/side bar panel
       
-      # Main Panel -------------------------------------------------------------
+      # Main Panel -------
       
       column(8, 
              tabsetPanel(
                type = "pills",
                
-               # Plot  ----------------------------------------------------------
+               # Plot  ----
                tabPanel(title = "Plot", 
                         value = "Plot", 
                         fluidRow(align = "center", 
@@ -294,6 +296,6 @@ shinyUI(
                    width = "40%")), 
              align ="right", 
              style = "margin-bottom: 1%;"),
-      style = "margin-right:0.1%;")
+      style = "margin-right: 0.1%;")
   ) # end of fluidPage
 ) #end of shinyUI
