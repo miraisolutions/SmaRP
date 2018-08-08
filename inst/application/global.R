@@ -3,14 +3,14 @@ library(magrittr)
 
 # Global variables
 
-#Gender Bases Retirement age
+# Gender Bases Retirement age
 MRetirementAge <- 65
 FRetirementAge <- 64
 
 # https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
 # https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-62487.html
 MaxAHV <- 2350 * 12
-MinBVG <- MaxAHV * (7/8)
+MinBVG <- MaxAHV * (7 / 8)
 MaxBVG <- MaxAHV * 3
 MaxBVGfund <- 10 * MaxBVG
 
@@ -20,32 +20,41 @@ BVGMindestzinssatz <- 0.01
 
 
 # https://www.ch.ch/en/3rd-pillar/
-MaxContrTax <- 6768  
+MaxContrTax <- 6768
 
 # https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
-BVGcontriburionrates <- data.frame(lowerbound = c(18, 25, 35, 45, 55),
-                                    upperbound = c(24, 34, 44, 54, 70),
-                                    BVGcontriburionrates = c(0.00, 0.07, 0.10, 0.15, 0.18))
+BVGcontriburionrates <- data.frame(
+  lowerbound = c(18, 25, 35, 45, 55),
+  upperbound = c(24, 34, 44, 54, 70),
+  BVGcontriburionrates = c(0.00, 0.07, 0.10, 0.15, 0.18)
+)
 # BVGcontriburionrates path
-BVGcontriburionratesPath <- data.frame(years = seq(BVGcontriburionrates$lowerbound[1], BVGcontriburionrates$upperbound[nrow(BVGcontriburionrates)]),
-                                        BVGcontriburionrates = rep(BVGcontriburionrates$BVGcontriburionrates, 
-                                                                   times = BVGcontriburionrates$upperbound - BVGcontriburionrates$lowerbound + 1)) 
+BVGcontriburionratesPath <- data.frame(
+  years = seq(BVGcontriburionrates$lowerbound[1], BVGcontriburionrates$upperbound[nrow(BVGcontriburionrates)]),
+  BVGcontriburionrates = rep(BVGcontriburionrates$BVGcontriburionrates,
+    times = BVGcontriburionrates$upperbound - BVGcontriburionrates$lowerbound + 1
+  )
+)
 
-Rate_group.list <- list("Single" = "A",
-                         "Married" = "B",
-                         "Married Double Income" = "C")
+Rate_group.list <- list(
+  "Single" = "A",
+  "Married" = "B",
+  "Married Double Income" = "C"
+)
 
-Purchase.list <- list("Single Purchase" = "SingleP2",
-                      "Annual Purchase" = "AnnualP2")
+Purchase.list <- list(
+  "Single Purchase" = "SingleP2",
+  "Annual Purchase" = "AnnualP2"
+)
 
-#PLZGemeinden <- readRDS("inst/application/data/PLZGemeinden.rds")
+# PLZGemeinden <- readRDS("inst/application/data/PLZGemeinden.rds")
 PLZGemeinden <- readRDS(system.file("application", "data", "PLZGemeinden.rds", package = "SmaRP"))
 PLZ.list <- setNames(PLZGemeinden$PLZ, PLZGemeinden$PLZ)
 kantons <- unique(PLZGemeinden$Kanton)
 
 # BundessteueTabelle <- readRDS("inst/application/data/BundessteueTabelle.rds")
 # taxburden.list <- readRDS("inst/application/data/taxburden.list.rds")
-BundessteueTabelle <-  readRDS(system.file("application", "data", "BundessteueTabelle.rds", package = "SmaRP"))
+BundessteueTabelle <- readRDS(system.file("application", "data", "BundessteueTabelle.rds", package = "SmaRP"))
 taxburden.list <- readRDS(system.file("application", "data", "taxburden.list.rds", package = "SmaRP"))
 
 # Kinderabzuge table
@@ -53,7 +62,7 @@ taxburden.list <- readRDS(system.file("application", "data", "taxburden.list.rds
 # - It's assumed that all kids live on their household, attend a public school on their village  and are always 6 years old.
 # - BL, VD and VS work differenly and therefore are not accurate.
 KinderabzugKG <- matrix(data = 6500, nrow = length(kantons), ncol = 10) %>%
-  as.data.frame %>%
+  as.data.frame() %>%
   set_rownames(kantons) %>%
   set_colnames(seq(1:10))
 
@@ -75,7 +84,7 @@ KinderabzugKG[rownames(KinderabzugKG) == "JU", ] <- c(5300, 5300, rep(5900, 8))
 
 # TODO: Build a table like this with accurate data (by now, taken Steuerfusse in den Kantonhauptorten)
 Kirchensteuer <- unique(PLZGemeinden[, c("Kanton", "FactorKanton", "FactorGemeinde", "FactorKirche")]) %>%
-  mutate(Kirchensteuer = (FactorKanton + FactorGemeinde)/ (FactorKanton + FactorGemeinde + FactorKirche))
+  mutate(Kirchensteuer = (FactorKanton + FactorGemeinde) / (FactorKanton + FactorGemeinde + FactorKirche))
 Kirchensteuer[Kirchensteuer$Kanton == "VS", "Kirchensteuer"] <- 0.97
 
 # Abzuge
