@@ -1,12 +1,18 @@
 # SmaRP: Smart Retirement Planning
-Shiny app for projecting retirement funds/benefits.
+SmaRP, Smart Retirement Planning has been designed and developed by Mirai Solutions GmbH to support
+users in an educated decision-making process towards their retirement.
 
-The app is structured as follow:
+SmaRP is structured as a package which contains a Shiny App
 
-- `server.r` and `ui.r` are the main files needed by a Shiny app
-- `core.r` contains all the functions needed to perform the calculations
-- `input_sources.r` gathers all the official/legal information and provides them as input
-- `report.Rmd` is the template formatted report
+- Under \R we find the two main files which contain all the core functionalities: `core.r` and `TaxBenefit.r`. Contains also `launch_application.R` which triggers `runApp()`.
+
+- In \inst\application are stored all files required to run the App
+
+  - `server.r` and `ui.r` are the main files needed by a Shiny app.
+  - `global.r` gathers all the official/legal information and provides them as input.
+  - `helper_texts.r` collects all the text messages displayed on the info boxes.
+  - `report.Rmd` and `swiss-case.Rmd` are the templates for the report.
+  -  In \data are stored all information (tables) needed such the tax rates, the municipalities, etc.  
 
 ## Docker
 
