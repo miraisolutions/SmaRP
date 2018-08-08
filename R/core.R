@@ -5,9 +5,9 @@
 #' buildt("1981-08-12")
 #' }
 #' @export
-buildt <- function(birthday, givenday = today("UTC"), RetirementAge = 65){
-  calendar = getRetirementCalendar(birthday, givenday, RetirementAge  +1 )
-  t = c(as.vector(diff(calendar)/365))
+buildt <- function(birthday, givenday = today("UTC"), RetirementAge = 65) {
+  calendar <- getRetirementCalendar(birthday, givenday, RetirementAge + 1)
+  t <- c(as.vector(diff(calendar) / 365))
   return(t)
 }
 
@@ -38,12 +38,12 @@ getRetirementday <- function(birthday, RetirementAge = 65) {
 #' getRetirementCalendar("1981-08-12")
 #' }
 #' @export
-getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementAge = 65){
+getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementAge = 65) {
   retirementday <- getRetirementday(birthday, RetirementAge)
   age <- calcAge(birthday, givenday)
-  refyeardiff <- year(givenday) - year(birthday)                   
+  refyeardiff <- year(givenday) - year(birthday)
   if (refyeardiff <= age) {
-    nextbirthday <- ymd(paste(year(givenday) + 1, month(birthday), day(birthday), sep = "-")) 
+    nextbirthday <- ymd(paste(year(givenday) + 1, month(birthday), day(birthday), sep = "-"))
   } else {
     nextbirthday <- ymd(paste(year(givenday), month(birthday), day(birthday), sep = "-"))
   }
@@ -53,7 +53,7 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 
 #' @name buildContributionP2Path
 #' @import dplyr
-#' @importFrom magrittr '%<>%' 
+#' @importFrom magrittr '%<>%'
 #' @examples
 #' \dontrun{
 #' buildContributionP2Path(
@@ -76,33 +76,33 @@ buildContributionP2Path <- function(birthday,
                                     TypePurchase,
                                     rate = BVGMindestzinssatz,
                                     givenday = today("UTC"),
-                                    RetirementAge){
-  
+                                    RetirementAge) {
+
   # build BVG rates from global input
-  BVGRatesPath <- BVGcontriburionratesPath %>% 
+  BVGRatesPath <- BVGcontriburionratesPath %>%
     filter(years <= RetirementAge)
-  
+
   # calc contributions P2 Path
-  ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge )) %>%
+  ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge)) %>%
     mutate(AgePath = sapply(calendar, calcAge, birthday = birthday) %>%
-             as.integer) %>%
-    left_join(BVGRatesPath, by = c("AgePath" = "years")) %>% 
+      as.integer()) %>%
+    left_join(BVGRatesPath, by = c("AgePath" = "years")) %>%
     mutate(BVGcontriburionrates = if_else(is.na(BVGcontriburionrates), 0, BVGcontriburionrates))
-  
+
   ncp <- nrow(ContributionP2Path)
-  isPurchase <-c(0, rep(1, ncp-1))
-  
+  isPurchase <- c(0, rep(1, ncp - 1))
+
   ContributionP2Path %<>% within({
-    ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
-    BVGpurchase = calcBVGpurchase(TypePurchase, P2purchase, ncp)
-    BVGContributions = if_else(is.na(BVGpurchase + (max(0, ExpectedSalaryPath- MinBVG) * BVGcontriburionrates)), 0, BVGpurchase + (max(0, ExpectedSalaryPath- MinBVG) * BVGcontriburionrates * isPurchase))
-    BVGDirect = BVGContributions +c(CurrentP2, rep(0, ncp -1))
-    t = buildt(birthday, givenday, RetirementAge = RetirementAge )
-    TotalP2 = calcAnnuityAcumPath(BVGDirect, t, rate)
-    DirectP2 = cumsum(BVGDirect)
-    ReturnP2 = TotalP2 - DirectP2
+    ExpectedSalaryPath <- calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
+    BVGpurchase <- calcBVGpurchase(TypePurchase, P2purchase, ncp)
+    BVGContributions <- if_else(is.na(BVGpurchase + (max(0, ExpectedSalaryPath - MinBVG) * BVGcontriburionrates)), 0, BVGpurchase + (max(0, ExpectedSalaryPath - MinBVG) * BVGcontriburionrates * isPurchase))
+    BVGDirect <- BVGContributions + c(CurrentP2, rep(0, ncp - 1))
+    t <- buildt(birthday, givenday, RetirementAge = RetirementAge)
+    TotalP2 <- calcAnnuityAcumPath(BVGDirect, t, rate)
+    DirectP2 <- cumsum(BVGDirect)
+    ReturnP2 <- TotalP2 - DirectP2
   })
-  
+
   return(ContributionP2Path)
 }
 
@@ -113,8 +113,8 @@ buildContributionP2Path <- function(birthday,
 #' }
 #' @export
 calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
-  nrise <- ncp - 2 
-  # Not rise now neither last appraissal  
+  nrise <- ncp - 2
+  # Not rise now neither last appraissal
   res <- cumprod(c(Salary, rep(1 + SalaryGrowthRate, nrise), 1))
 }
 
@@ -124,25 +124,25 @@ calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
 #' calcBVGpurchase(TypePurchase = "AnnualP2", P2purchase = 2000, ncp = 25) %>% print
 #' }
 #' @export
-calcBVGpurchase <- function(TypePurchase, P2purchase, ncp){
+calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
   if (TypePurchase == "AnnualP2") {
-    BVGpurchase <- c(0, rep(P2purchase, ncp-1))
+    BVGpurchase <- c(0, rep(P2purchase, ncp - 1))
   } else {
-    BVGpurchase <- c(0, P2purchase, rep(0, ncp -2))
+    BVGpurchase <- c(0, P2purchase, rep(0, ncp - 2))
   }
 }
 
 #' Build the contribution path for a standard pension fund, called Pillar 3 in Switzerland.
 #' Based on 'calcAnnuityAcumPath()'
-#'  
+#'
 #' @family Contributionpath
-#' 
-#' @param birthday 
-#' @param P3purchase 
-#' @param CurrentP3 
-#' @param returnP3 
-#' @param givenday 
-#' @param RetirementAge 
+#'
+#' @param birthday
+#' @param P3purchase
+#' @param CurrentP3
+#' @param returnP3
+#' @param givenday
+#' @param RetirementAge
 #' @import dplyr
 #'
 #' @examples
@@ -156,25 +156,26 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp){
 #'   RetirementAge = 62)
 #' }
 #' @export
-buildContributionP3path <- function(birthday, 
+buildContributionP3path <- function(birthday,
                                     P3purchase,
                                     CurrentP3,
                                     returnP3,
                                     givenday = today("UTC"),
                                     RetirementAge) {
-  
-  ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge ))
-  
-  ncp <- nrow(ContributionP3Path) 
-  
+  ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge))
+
+  ncp <- nrow(ContributionP3Path)
+
   ContributionP3Path <- ContributionP3Path %>%
-    mutate(P3purchase = c(0, rep(P3purchase, ncp - 2), 0),
-           P3ContributionPath = P3purchase + c(CurrentP3, rep(0, ncp - 1)),
-           t = buildt(birthday, givenday, RetirementAge = RetirementAge),
-           TotalP3 = calcAnnuityAcumPath(P3ContributionPath, t, returnP3),
-           DirectP3 = cumsum(P3ContributionPath),
-           ReturnP3 = TotalP3 - DirectP3)
-  
+    mutate(
+      P3purchase = c(0, rep(P3purchase, ncp - 2), 0),
+      P3ContributionPath = P3purchase + c(CurrentP3, rep(0, ncp - 1)),
+      t = buildt(birthday, givenday, RetirementAge = RetirementAge),
+      TotalP3 = calcAnnuityAcumPath(P3ContributionPath, t, returnP3),
+      DirectP3 = cumsum(P3ContributionPath),
+      ReturnP3 = TotalP3 - DirectP3
+    )
+
   return(ContributionP3Path)
 }
 
@@ -184,63 +185,22 @@ buildContributionP3path <- function(birthday,
 #' calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000), t = c(0.284931, 1, 1, 1, 0), rate = 0.01)
 #' }
 #' @export
-calcAnnuityAcumPath <- function(contributions, t, rate){
-  # set a default res 
+calcAnnuityAcumPath <- function(contributions, t, rate) {
+  # set a default res
   res <- contributions
-  for(i in 2:length(contributions)) {
-    res[i] <- res[i-1]* exp(rate * t[i-1])  + contributions[i]
+  for (i in 2:length(contributions)) {
+    res[i] <- res[i - 1] * exp(rate * t[i - 1]) + contributions[i]
   }
   res
 }
 
 
-#' @name downloadPLZ
-#' @examples
-#' \dontrun{
-#' downloadPLZ(refresh=TRUE)
-#' }
+#' @name returnPLZKanton
 #' @export
-downloadInputs <- function(refresh){
-  if(refresh){
-    URL_plz <- "https://www.bfs.admin.ch/bfsstatic/dam/assets/4242620/master"
-    fileName <- "data/CorrespondancePostleitzahlGemeinde.xlsx"
-    currentDateTime <- tryCatch( {download.file(URL_plz,destfile=fileName,mode="wb")},
-                                 error = function(e) {message <- "update not possible, try again later"
-                                 return(message)},
-                                 warning = function(w) {message <- "update not possible, try again later"
-                                 return(message)},
-                                 finally = {return(Sys.time())}
-    )
-    URL_taxrate <- "https://www.estv.admin.ch/dam/estv/it/dokumente/bundessteuer/quellensteuer/schweiz/tar2018txt.zip.download.zip/tar2018txt.zip"
-    repositoryName <- "data/raw1"
-    zipfileName <- paste0(repositoryName, "/raw1.zip")
-    currentDateTime <- tryCatch( {download.file(URL_taxrate,destfile=zipfileName)},
-                                 error =function(e) {message <- "update not possible, try again later"
-                                 return(message)},
-                                 warning = function(w) {message <- "update not possible, try again later"
-                                 return(message)},
-                                 finally = { #unzip(zipfileName, exdir=repositoryName, overwrite=TRUE)
-                                   return(Sys.time())}
-    )
-    return(currentDateTime)
-  }
-}
-
-#' @name returnPLZKanton 
-#' @export
-returnPLZKanton <- function(plz){
-  
+returnPLZKanton <- function(plz) {
   Kanton <- PLZGemeinden$Kanton[PLZGemeinden$PLZ == as.numeric(plz)]
   return(Kanton)
 }
-
-#' #' @name returnSteuerfuss 
-#' #' @export
-#' returnSteuerfuss <- function(plz){
-#'   Steuerfuss <- PLZGemeinden$FactorKanton[PLZGemeinden$PLZ == as.numeric(plz)]
-#'   return(Steuerfuss)
-#' }
-
 
 
 #' @name printCurrency
@@ -249,44 +209,44 @@ returnPLZKanton <- function(plz){
 #' printCurrency(123123.334)
 #' }
 #' @export
-printCurrency <- function(value,  digits=0, sep=",", decimal=".") { #currency.sym ="",
+printCurrency <- function(value, digits = 0, sep = ",", decimal = ".") { # currency.sym ="",
   paste(
-    #currency.sym,
-    formatC(value, format = "f", big.mark = sep, digits=digits, decimal.mark=decimal),
-    sep=""
+    # currency.sym,
+    formatC(value, format = "f", big.mark = sep, digits = digits, decimal.mark = decimal),
+    sep = ""
   )
 }
 
-#' @name makeTable 
+#' @name makeTable
 #' @examples
 #' \dontrun{
 #' makeTable(Road2Retirement)
 #' }
 #' @export
-makeTable <- function(Road2Retirement, moncols = c( "DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")){ #, currency=""
-  # moncols <- 
+makeTable <- function(Road2Retirement, moncols = c("DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")) { # , currency=""
+  # moncols <-
   TableMonetary <- Road2Retirement[, c("calendar", moncols)] %>%
     mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-"))
-  TableMonetary[, moncols] <- sapply(TableMonetary[, moncols], printCurrency) #, currency
+  TableMonetary[, moncols] <- sapply(TableMonetary[, moncols], printCurrency) # , currency
   return(TableMonetary)
 }
 
 
 # Utility functions for validity checks ----
-#' @name isnotAvailable  
+#' @name isnotAvailable
 #' @export
-isnotAvailable <- function(inputValue){
-  if(inputValue =="" | is.na(inputValue) | is.null(inputValue)){
+isnotAvailable <- function(inputValue) {
+  if (inputValue == "" | is.na(inputValue) | is.null(inputValue)) {
     TRUE
   } else {
     FALSE
   }
 }
 
-#' @name isnotAvailableReturnZero  
+#' @name isnotAvailableReturnZero
 #' @export
-isnotAvailableReturnZero <- function(inputValue, fallback = 0){
-  if(isnotAvailable(inputValue) ){
+isnotAvailableReturnZero <- function(inputValue, fallback = 0) {
+  if (isnotAvailable(inputValue)) {
     fallback
   } else {
     inputValue
@@ -294,11 +254,11 @@ isnotAvailableReturnZero <- function(inputValue, fallback = 0){
 }
 
 
-#' @name need_not_zero 
+#' @name need_not_zero
 #' @export
 need_not_zero <- function(input, inputname) {
   if (input == 0 | input == "" | is.null(input)) {
-    paste0(VM$need_not_zero_base,inputname)
+    paste0(VM$need_not_zero_base, inputname)
   } else {
     NULL
   }
@@ -306,11 +266,11 @@ need_not_zero <- function(input, inputname) {
 
 
 # Format Percentage ----
-#' @name df 
+#' @name df
 #' @export
-changeToPercentage <- function(df){
+changeToPercentage <- function(df) {
   colsannotation <- grepl(".annotation", colnames(df))
-  df[, colsannotation] <-df[, colsannotation] * 100
-  df[, colsannotation] <- paste0(format(df[, colsannotation], digits=2, nsmall=2), "%")
+  df[, colsannotation] <- df[, colsannotation] * 100
+  df[, colsannotation] <- paste0(format(df[, colsannotation], digits = 2, nsmall = 2), "%")
   df
 }
