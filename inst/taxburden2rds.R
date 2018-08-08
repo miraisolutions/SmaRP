@@ -10,9 +10,8 @@ wb <- XLConnect::loadWorkbook("inst/application/data//taxdata//Steuerbelastung.x
 
 
 .readTaxBurden <- function(wb, sheet) {
-  
   IncomeLevelHeaders <- XLConnect::readWorksheet(wb, sheet = sheet, startRow = 5, endRow = 5, startCol = 4, endCol = 27, header = FALSE, colTypes = "character") %>%
-    as.character
+    as.character()
   Headers <- c("Kanton", "Gemeindenummer", "Gemeinde", IncomeLevelHeaders)
 
   # build tax burden
@@ -20,17 +19,18 @@ wb <- XLConnect::loadWorkbook("inst/application/data//taxdata//Steuerbelastung.x
   taxburden <- XLConnect::readWorksheet(wb, sheet = sheet, startRow = 7, startCol = 1, header = FALSE) %>%
     magrittr::set_colnames(Headers) %>%
     dplyr::filter(Kanton %in% kantons) %>%
-    dplyr::mutate("0" = 0,
-                  "12.000" = 0,
-                  "999.999.999" = .[, ncol(.)]) %>%
+    dplyr::mutate(
+      "0" = 0,
+      "12.000" = 0,
+      "999.999.999" = .[, ncol(.)]
+    ) %>%
     magrittr::extract(c(Headers[1:3], "0", "12.000", IncomeLevelHeaders, "999.999.999"))
-  
+
   return(taxburden)
 }
 
-TarifsName = c("Ledig", "VOK", "VMK", "DOPMK")
+TarifsName <- c("Ledig", "VOK", "VMK", "DOPMK")
 taxburden <- lapply(TarifsName, function(x) .readTaxBurden(wb, x)) %>%
   setNames(sprintf("taxburden_%s", TarifsName))
 
 saveRDS(taxburden, "inst/application/data/taxburden.list.rds")
-
