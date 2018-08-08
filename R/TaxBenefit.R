@@ -202,7 +202,7 @@ buildTaxBenefits <- function(birthday,
            TaxableIncome = pmax(ExpectedSalaryPath - pmin(TotalContr, MaxContrTax), 0),
            AgePath = as.integer(sapply(calendar, calcAge, birthday = birthday)),
            TaxBenefits = calcTaxBenefitSwiss(ExpectedSalaryPath, TaxableIncome, rate_group, AgePath, NKids, postalcode, churchtax),
-           t = buildt(birthday, RetirementAge = RetirementAge),
+           t = buildt(birthday, givenday, RetirementAge = RetirementAge),
            TotalTax = calcAnnuityAcumPath(TaxBenefits, t, returnP3),
            ReturnTax = TotalTax - cumsum(TaxBenefits) ,
            DirectTax = cumsum(TaxBenefits)) %>%

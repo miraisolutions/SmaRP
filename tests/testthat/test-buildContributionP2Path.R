@@ -1,3 +1,4 @@
+source(system.file("application", "global.R", package = "SmaRP")) 
 context("buildContributionP2Path")
 
 test_that("Test case P2", {
@@ -13,7 +14,7 @@ test_that("Test case P2", {
     givenday = as.Date("2018-07-04"),
     RetirementAge = 67) 
   
-  expec_type(P2$AgePath, "integer")
+  expect_type(P2$AgePath, "integer")
   expect_equal(tail(P2$TotalP2, 1), 61900781, tolerance = 1E-2)
 })
 
