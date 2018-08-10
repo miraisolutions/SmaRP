@@ -1,5 +1,5 @@
 
-source(system.file("application", "global.R", package = "SmaRP"))
+source(system.file(c("application", "inst/application"), "global.R", package = "SmaRP")[1])
 
 context("getTaxAmount")
 
@@ -22,7 +22,7 @@ test_that("Test case St.Gallen1 (teststhat/resources/testStGallen1.pdf)",{
                             Age = 40,
                             NKids = 0,
                             churchtax = "N")
-  
+
   expect_lt(abs(TaxAmount - 30779) / TaxAmount, 0.05)
   expect_lt(abs(TaxAmount - 30779) / 150000, 0.01)
 })
@@ -34,7 +34,7 @@ test_that("Test case Bern1 (teststhat/resources/testStBern1.pdf)",{
                             Age = 32,
                             NKids = 3,
                             churchtax = "Y")
-  
+
   expect_lt(abs(TaxAmount - 10308) / TaxAmount, 0.05)
   expect_lt(abs(TaxAmount - 10308) / 124000, 0.005)
 })
@@ -46,7 +46,7 @@ test_that("Test case Luzern1 (teststhat/resources/testLuzern1.pdf)",{
                             Age = 27,
                             NKids = 0,
                             churchtax = "N")
-  
+
   expect_lt(abs(TaxAmount - 4188) / TaxAmount, 0.05)
   expect_lt(abs(TaxAmount - 4188) / 65000, 0.005)
 })
@@ -58,7 +58,7 @@ test_that("Test case Geneve1 (teststhat/resources/testGeneve1.pdf)",{
                             Age = 40,
                             NKids = 2,
                             churchtax = "Y")
-  
+
   expect_lt(abs(TaxAmount - 4116) / TaxAmount, 0.05)
   expect_lt(abs(TaxAmount - 4116) / 110000, 0.005)
 })

@@ -1,7 +1,8 @@
-library(dplyr)
-library(magrittr)
+library(SmaRP)
+`%>%` <- magrittr::`%>%`
 
 # Global variables
+source("helper_texts.R")
 
 # Gender Bases Retirement age
 MRetirementAge <- 65
@@ -49,7 +50,7 @@ Purchase.list <- list(
 
 # PLZGemeinden <- readRDS("inst/application/data/PLZGemeinden.rds")
 PLZGemeinden <- readRDS(system.file("application", "data", "PLZGemeinden.rds", package = "SmaRP"))
-PLZ.list <- setNames(PLZGemeinden$PLZ, PLZGemeinden$PLZ)
+PLZ.list <- stats::setNames(PLZGemeinden$PLZ, PLZGemeinden$PLZ)
 kantons <- unique(PLZGemeinden$Kanton)
 
 # BundessteueTabelle <- readRDS("inst/application/data/BundessteueTabelle.rds")
@@ -63,8 +64,8 @@ taxburden.list <- readRDS(system.file("application", "data", "taxburden.list.rds
 # - BL, VD and VS work differenly and therefore are not accurate.
 KinderabzugKG <- matrix(data = 6500, nrow = length(kantons), ncol = 10) %>%
   as.data.frame() %>%
-  set_rownames(kantons) %>%
-  set_colnames(seq(1:10))
+  magrittr::set_rownames(kantons) %>%
+  magrittr::set_colnames(seq(1:10))
 
 KinderabzugKG[rownames(KinderabzugKG) == "NW", ] <- 5400
 KinderabzugKG[rownames(KinderabzugKG) %in% c("SO", "AR", "GR"), ] <- 6000
@@ -84,7 +85,7 @@ KinderabzugKG[rownames(KinderabzugKG) == "JU", ] <- c(5300, 5300, rep(5900, 8))
 
 # TODO: Build a table like this with accurate data (by now, taken Steuerfusse in den Kantonhauptorten)
 Kirchensteuer <- unique(PLZGemeinden[, c("Kanton", "FactorKanton", "FactorGemeinde", "FactorKirche")]) %>%
-  mutate(Kirchensteuer = (FactorKanton + FactorGemeinde) / (FactorKanton + FactorGemeinde + FactorKirche))
+  dplyr::mutate(Kirchensteuer = (FactorKanton + FactorGemeinde) / (FactorKanton + FactorGemeinde + FactorKirche))
 Kirchensteuer[Kirchensteuer$Kanton == "VS", "Kirchensteuer"] <- 0.97
 
 # Abzuge

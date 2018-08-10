@@ -90,7 +90,7 @@ getTaxAmount <- function(Income,
 
   IncomeKG <- Income + AjustKinderabzug + (DOfactor * AjustBVGContri[1, 1]) - NBUanzug
 
-  TaxAmountKGC <- max(0, IncomeKG * (approx(x = IncomeCuts, y = taxrate, IncomeKG)$y) / 100)
+  TaxAmountKGC <- max(0, IncomeKG * (stats::approx(x = IncomeCuts, y = taxrate, IncomeKG)$y) / 100)
 
   # Church affiliation
   # By default, assumed church affiliation. If not, there's a discount
@@ -178,7 +178,20 @@ lookupTaxAmount <- function(Income, Tabelle, CivilStatus) {
 #'
 #' @examples
 #' \dontrun{buildTaxBenefits(
-#' birthday, TypePurchase, P2purchase, P3purchase, returnP3, Salary, SalaryGrowthRate, postalcode, NKids, churchtax, rate_group, MaxContrTax, givenday = today("UTC"), RetirementAge = 65)
+#'  birthday,
+#'  TypePurchase,
+#'  P2purchase,
+#'  P3purchase,
+#'  returnP3,
+#'  Salary,
+#'  SalaryGrowthRate,
+#'  postalcode,
+#'  NKids,
+#'  churchtax,
+#'  rate_group,
+#'  MaxContrTax,
+#'  givenday = today("UTC"),
+#'  RetirementAge = 65)
 #' }
 #' @export
 buildTaxBenefits <- function(birthday,
@@ -219,7 +232,7 @@ buildTaxBenefits <- function(birthday,
 
 #' Calculates the tax benefit as a difference of the taxes paid with and without retirement contributions.
 #'
-#' Calls 'getTaxAmount()', therefore, it assumes objects on the global enviornment.
+#' Calls 'getTaxAmount()', therefore, it assumes objects in the global environment.
 #' @seealso [getTaxAmount()]
 #' @family swisstax
 #'
@@ -230,16 +243,15 @@ buildTaxBenefits <- function(birthday,
 #' @param NKids
 #' @param postalcode
 #' @param churchtax
-#'
 #' @examples
 #' \dontrun{
-# calcTaxBenefitSwiss(ExpectedSalaryPath = seq(90000, 100000, 1000),
-#                     TaxableIncome = seq(88000, 98000, 1000),
-#                     rate_group = "A",
-#                     Age = seq(55, 65),
-#                     NKids = 0,
-#                     postalcode = 8400,
-#                     churchtax = "Y")
+#'   calcTaxBenefitSwiss(ExpectedSalaryPath = seq(90000, 100000, 1000),
+#'                     TaxableIncome = seq(88000, 98000, 1000),
+#'                     rate_group = "A",
+#'                     Age = seq(55, 65),
+#'                     NKids = 0,
+#'                     postalcode = 8400,
+#'                     churchtax = "Y")
 #' }
 #' @export
 calcTaxBenefitSwiss <- function(ExpectedSalaryPath,

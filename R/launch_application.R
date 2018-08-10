@@ -1,13 +1,11 @@
-# function to launch the SmaRP shiny App
+# function to launch the SmaRP shiny app
 #' @name launch_application
 #' @examples
 #' \dontrun{
-#' library(SmaRP); launch_application()
+#'   library(SmaRP); launch_application()
 #' }
 #' @export
-
-launch_application <- function(...)
-{
-  shiny::runApp(appDir = system.file("application", package = "SmaRP"), 
+launch_application <- function(...) {
+  shiny::runApp(appDir = system.file("application", package = "SmaRP"),
                 ...)
 }

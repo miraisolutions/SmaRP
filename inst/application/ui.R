@@ -1,19 +1,12 @@
-library(shiny)
-library(shinyBS)
-library(shinythemes)
-source("global.R")
-source("helper_texts.R")
-
-
 # #FF9966 Mirai Orange
 # #008cc3 Mirai blue
 # #189bce background header
 # #ea8b5b title orange
 
-shinyUI(
+bsTooltip <- shinyBS::bsTooltip # info windows
 
-  # Page ----
-  fluidPage(
+# fluidPage UI
+fluidPage(
 
     # Style  ----
     theme = "style.css",
@@ -396,5 +389,4 @@ shinyUI(
       ),
       style = "margin-right: 0.1%;"
     )
-  ) # end of fluidPage
-) # end of shinyUI
+) # end of fluidPage

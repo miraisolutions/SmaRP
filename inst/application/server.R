@@ -1,14 +1,11 @@
-library(SmaRP)
-library(shiny)
+suppressPackageStartupMessages(library(googleVis))
+#library(rmarkdown)
+library(dplyr, warn.conflicts = FALSE)
 library(magrittr)
-library(googleVis)
-library(rmarkdown)
-library(shinyBS) # needed for the info windows
 
-source("helper_texts.R")
 options(shiny.sanitize.errors = TRUE)
 
-shinyServer(function(input, output, session) {
+function(input, output, session) {
 
   # Validate inputs and set defaults ----
 
@@ -400,4 +397,4 @@ shinyServer(function(input, output, session) {
       numericInput("RetirementAge", label = h5("Desired Retirement Age"), value = 65, step = 1, min = 55, max = 70)
     }
   })
-})
+}
