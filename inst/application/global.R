@@ -2,9 +2,7 @@ library(SmaRP)
 `%>%` <- magrittr::`%>%`
 
 # Global variables
-source("helper_texts.R")
-
-# Gender Bases Retirement age
+# Gender-based retirement age
 MRetirementAge <- 65
 FRetirementAge <- 64
 
