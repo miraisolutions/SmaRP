@@ -1,4 +1,5 @@
-source(system.file("application", "global.R", package = "SmaRP")) 
+prepare()
+
 context("buildContributionP2Path")
 
 test_that("Test case P2", {

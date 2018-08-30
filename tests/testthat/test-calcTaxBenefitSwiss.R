@@ -1,5 +1,4 @@
-
-source(system.file("application", "global.R", package = "SmaRP"))
+prepare()
 
 context("calcTaxBenefitSwiss")
 
