@@ -304,9 +304,9 @@ function(input, output, session) {
   })
 
   output$Totals <- renderText({
-    paste("Total retirement fund as of", retirementdate(), "is",
+    paste("Total retirement fund as of", format(retirementdate(), "%d-%m-%Y"), "is",
       formatC(retirementfund() / 1000, format = "f", big.mark = ",", digits = 0, decimal.mark = "."),
-      "k ",
+      "k,",
       percentageLastSalary(),
       sep = " "
     )
