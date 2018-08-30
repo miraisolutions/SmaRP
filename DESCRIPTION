@@ -12,7 +12,7 @@ Depends: R (>= 3.4.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0
+Roxygen: list(markdown = TRUE)
 Imports:
     assertthat,
     dplyr,
@@ -29,3 +29,5 @@ Imports:
     shinyBS,
     webshot
 Suggests: testthat, roxygen2
+VignetteBuilder: knitr
+RoxygenNote: 6.1.0

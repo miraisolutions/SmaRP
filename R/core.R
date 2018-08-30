@@ -1,9 +1,13 @@
-
-#' @name buildt
+#' Buildt
+#' @description TODO-Gabriel
+#' @template given_bday
+#' @param RetirementAge age of retirement
+#' @return TODO-Gabriel 
 #' @examples
 #' \dontrun{
 #' buildt("1981-08-12")
 #' }
+#' @importFrom lubridate today duration interval
 #' @export
 buildt <- function(birthday, givenday = today("UTC"), RetirementAge = 65) {
   calendar <- getRetirementCalendar(birthday, givenday, RetirementAge + 1)
@@ -11,32 +15,45 @@ buildt <- function(birthday, givenday = today("UTC"), RetirementAge = 65) {
   return(t)
 }
 
-#' @name calcAge
-#' @importFrom lubridate today interval duration
+
+#' Calculate Age
+#' @description Function to calculate person's age at a specific point in time.
+#' @inheritParams buildt 
+#' @return calculated age in years
+#' @details Calculated as the difference between current date and birthday.
+#' @importFrom lubridate today duration interval
 #' @export
+#' @examples
+#'  calcAge("1981-08-12")
 calcAge <- function(birthday, givenday = today("UTC")) {
   age <- interval(start = birthday, end = givenday) / duration(num = 1, units = "year")
   age
 }
 
-#' @name getRetirementday
+#' Get Retirement Day
+#' @description Calculate day of retirement assuming the person can retire at the age of 65
+#' @inheritParams buildt 
 #' @importFrom lubridate ymd years
+#' @return day at which retirement begins
 #' @examples
-#' \dontrun{
-#' getRetirementday("1981-08-12")
-#' }
+#'  getRetirementday("1981-08-12")
+#' @importFrom lubridate ymd years
 #' @export
 getRetirementday <- function(birthday, RetirementAge = 65) {
   retirementday <- ymd(birthday) + years(RetirementAge)
   retirementday
 }
 
-#' @name getRetirementCalendar
+#' Obtain Retirement Calendar
+#' @description TODO-Gabriel
+#' @inheritParams buildt 
 #' @importFrom lubridate today ymd years year month day
+#' @return retirement calendar
 #' @examples
 #' \dontrun{
 #' getRetirementCalendar("1981-08-12")
 #' }
+#' @importFrom lubridate today year ymd month day 
 #' @export
 getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementAge = 65) {
   retirementday <- getRetirementday(birthday, RetirementAge)
@@ -51,9 +68,16 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
   calendar
 }
 
-#' @name buildContributionP2Path
+#' Build Contribution Pillar II Path
+#' @description TODO-Gabriel
+#' @inheritParams buildt 
+#' @template salary
+#' @template P2
+#' @param TypePurchase TODO-Gabriel
+#' @param rate male or female
 #' @import dplyr
 #' @importFrom magrittr '%<>%'
+#' @return TODO-Gabriel
 #' @examples
 #' \dontrun{
 #' buildContributionP2Path(
@@ -106,7 +130,11 @@ buildContributionP2Path <- function(birthday,
   return(ContributionP2Path)
 }
 
-#' @name calcExpectedSalaryPath
+#' Calculate Expected Salary Path
+#' @description calculate whether salary will increase or decrease and by how much
+#' @template salary
+#' @param ncp TODO-Gabriel
+#' @return expected salary path
 #' @examples
 #' \dontrun{
 #' calcExpectedSalaryPath(90000, 0.02, 20)
@@ -118,7 +146,12 @@ calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
   res <- cumprod(c(Salary, rep(1 + SalaryGrowthRate, nrise), 1))
 }
 
-#' @name calcBVGpurchase
+#' Calculate BVG Purchase
+#' @description TODO-Gabriel
+#' @param TypePurchase type of purchase
+#' @param P2purchase TODO-Gabriel
+#' @param ncp TODO-Gabriel
+#' @return BVG purchase
 #' @examples
 #' \dontrun{
 #' calcBVGpurchase(TypePurchase = "AnnualP2", P2purchase = 2000, ncp = 25) %>% print
@@ -132,19 +165,12 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
   }
 }
 
-#' Build the contribution path for a standard pension fund, called Pillar 3 in Switzerland.
-#' Based on 'calcAnnuityAcumPath()'
-#'
-#' @family Contributionpath
-#'
-#' @param birthday
-#' @param P3purchase
-#' @param CurrentP3
-#' @param returnP3
-#' @param givenday
-#' @param RetirementAge
-#' @import dplyr
-#'
+#' Build Contribution Pillar III Path
+#' @description Build the contribution path for a standard pension fund, called Pillar 3 in Switzerland.
+# Based on 'calcAnnuityAcumPath()'
+#' @inheritParams buildt 
+#' @template P3
+#' @return TODO-Gabriel
 #' @examples
 #' \dontrun{
 #' buildContributionP3path(
@@ -155,6 +181,7 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
 #'   givenday = as.Date("2015-11-30"),
 #'   RetirementAge = 62)
 #' }
+#' @importFrom dplyr mutate '%>%'
 #' @export
 buildContributionP3path <- function(birthday,
                                     P3purchase,
@@ -179,14 +206,20 @@ buildContributionP3path <- function(birthday,
   return(ContributionP3Path)
 }
 
-#' @name calcAnnuityAcumPath
+#' TODO-Gabriel
+#' @description TODO-Gabriel
+#' @param contributions TODO-Gabriel
+#' @param t TODO-Gabriel
+#' @param rate male or female
+#' @return TODO-Gabriel
 #' @examples
 #' \dontrun{
-#' calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000), t = c(0.284931, 1, 1, 1, 0), rate = 0.01)
+#' calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000), 
+#'                                 t = c(0.284931, 1, 1, 1, 0), rate = 0.01)
 #' }
 #' @export
 calcAnnuityAcumPath <- function(contributions, t, rate) {
-  # set a default res
+  # set a default TODO-Gabriel
   res <- contributions
   for (i in 2:length(contributions)) {
     res[i] <- res[i - 1] * exp(rate * t[i - 1]) + contributions[i]
@@ -194,16 +227,20 @@ calcAnnuityAcumPath <- function(contributions, t, rate) {
   res
 }
 
-
-#' @name returnPLZKanton
+#' Return Postal Code Kanton
+#' @description Return in which canton the person is retiring
+#' @param plz canton's zip code
+#' @return canton's zip code
 #' @export
 returnPLZKanton <- function(plz) {
   Kanton <- PLZGemeinden$Kanton[PLZGemeinden$PLZ == as.numeric(plz)]
   return(Kanton)
 }
 
-
-#' @name printCurrency
+#' Print Currency
+#' @description TODO-Gabriel  
+#' @template print_currency
+#' @return currency
 #' @examples
 #' \dontrun{
 #' printCurrency(123123.334)
@@ -217,11 +254,17 @@ printCurrency <- function(value, digits = 0, sep = ",", decimal = ".") { # curre
   )
 }
 
-#' @name makeTable
+#' Make Table
+#' @description TODO-Gabriel
+#' @param Road2Retirement TODO-Gabriel
+#' @param moncols TODO-Gabriel
+#' @return TODO-Gabriel
 #' @examples
 #' \dontrun{
 #' makeTable(Road2Retirement)
 #' }
+#' @importFrom dplyr mutate '%>%'
+#' @importFrom lubridate year month
 #' @export
 makeTable <- function(Road2Retirement, moncols = c("DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")) { # , currency=""
   # moncols <-
@@ -233,7 +276,11 @@ makeTable <- function(Road2Retirement, moncols = c("DirectP2", "ReturnP2", "Tota
 
 
 # Utility functions for validity checks ----
-#' @name isnotAvailable
+
+#' Is not Available
+#' @description if input value is not available, then return logical TRUE else FALSE
+#' @param inputValue input value
+#' @return TRUE or FALSE 
 #' @export
 isnotAvailable <- function(inputValue) {
   if (inputValue == "" | is.na(inputValue) | is.null(inputValue)) {
@@ -243,7 +290,11 @@ isnotAvailable <- function(inputValue) {
   }
 }
 
-#' @name isnotAvailableReturnZero
+#' Is Not Available Return Zero
+#' @description if input value is not available, then return zero else input value
+#' @param inputValue input value
+#' @param fallback zero
+#' @return zero or input value
 #' @export
 isnotAvailableReturnZero <- function(inputValue, fallback = 0) {
   if (isnotAvailable(inputValue)) {
@@ -253,8 +304,11 @@ isnotAvailableReturnZero <- function(inputValue, fallback = 0) {
   }
 }
 
-
-#' @name need_not_zero
+#' Need Not Zero
+#' @description TODO-Gabriel
+#' @param  input zero, nothing or null
+#' @param inputname name of input
+#' @return TODO-Gabriel
 #' @export
 need_not_zero <- function(input, inputname) {
   if (input == 0 | input == "" | is.null(input)) {
@@ -266,7 +320,10 @@ need_not_zero <- function(input, inputname) {
 
 
 # Format Percentage ----
-#' @name df
+#' Change to Percentage
+#' @description from decimal to percentage value
+#' @param df TODO-Gabriel
+#' @return percentage value
 #' @export
 changeToPercentage <- function(df) {
   colsannotation <- grepl(".annotation", colnames(df))
