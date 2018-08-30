@@ -7,17 +7,20 @@
 getTaxAmount(Income, rate_group, Age, NKids, postalcode, churchtax)
 }
 \arguments{
-\item{Income}{scalar numeric}
+\item{Income}{Annual salary. \code{Numeric} scalar.}
 
-\item{rate_group}{character}
+\item{rate_group}{TODO-Gabriel. \code{Character}.}
 
-\item{Age}{scalar numeric}
+\item{Age}{Age of the person. \code{Numeric}}
 
-\item{NKids}{scalar numeric}
+\item{NKids}{number of children}
 
-\item{postalcode}{character}
+\item{postalcode}{zip code}
 
-\item{churchtax}{character Y/N}
+\item{churchtax}{TODO-Gabriel}
+}
+\value{
+Tax Amount
 }
 \description{
 This function uses 2 main sources for tax data.
@@ -26,21 +29,24 @@ At federal level, we use the official taxrate table (BundessteueTabelle) and we 
 }
 \details{
 This function assumes the following objects on the global enviornment
- * PLZGemeinden (includes Kirchensteuer)
- * taxburden.list
- * BundessteueTabelle
- * BVGcontriburionratesPath, BVGcontriburionrates
- * MaxBVG, MinBVG
- * KinderabzugKG
- * NBU, maxNBU
- * AHL
- * ALV, maxALV
- * VersicherungsL, VersicherungsV, VersicherungsK
- * BerufsauslagenTarif, BerufsauslagenMax, BerufsauslagenMin
+\itemize{
+\item PLZGemeinden (includes Kirchensteuer)
+\item taxburden.list
+\item BundessteueTabelle
+\item BVGcontriburionratesPath, BVGcontriburionrates
+\item MaxBVG, MinBVG
+\item KinderabzugKG
+\item NBU, maxNBU
+\item AHL
+\item ALV, maxALV
+\item VersicherungsL, VersicherungsV, VersicherungsK
+\item BerufsauslagenTarif, BerufsauslagenMax, BerufsauslagenMin
+}
 }
 \examples{
 \dontrun{
-getTaxAmount(Income = 200000, rate_group = "C", Age = 32, NKids = 5, postalcode = 8400, churchtax = "Y")
+getTaxAmount(Income = 200000, rate_group = "C", Age = 32, 
+             NKids = 5, postalcode = 8400, churchtax = "Y")
 }
 }
 \seealso{

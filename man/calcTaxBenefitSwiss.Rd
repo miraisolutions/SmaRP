@@ -2,7 +2,7 @@
 % Please edit documentation in R/TaxBenefit.R
 \name{calcTaxBenefitSwiss}
 \alias{calcTaxBenefitSwiss}
-\title{Calculates the tax benefit as a difference of the taxes paid with and without retirement contributions.}
+\title{Calculate Tax Benefit Swiss}
 \usage{
 calcTaxBenefitSwiss(ExpectedSalaryPath, TaxableIncome, rate_group, Age,
   NKids, postalcode, churchtax)
@@ -12,9 +12,21 @@ calcTaxBenefitSwiss(ExpectedSalaryPath, TaxableIncome, rate_group, Age,
 
 \item{TaxableIncome}{vector length equals year to retirement}
 
-\item{Age}{vector length equals year to retirement}
+\item{rate_group}{TODO-Gabriel. \code{Character}.}
+
+\item{Age}{Age of the person. \code{Numeric}}
+
+\item{NKids}{number of children}
+
+\item{postalcode}{zip code}
+
+\item{churchtax}{TODO-Gabriel}
+}
+\value{
+TODO-Gabriel
 }
 \description{
+Calculates the tax benefit as a difference of the taxes paid with and without retirement contributions.
 Calls 'getTaxAmount()', therefore, it assumes objects in the global environment.
 }
 \examples{
@@ -29,7 +41,7 @@ Calls 'getTaxAmount()', therefore, it assumes objects in the global environment.
 }
 }
 \seealso{
-[getTaxAmount()]
+\code{\link[=getTaxAmount]{getTaxAmount()}}
 
 Other swisstax: \code{\link{buildTaxBenefits}},
   \code{\link{getTaxAmount}}, \code{\link{lookupTaxAmount}}

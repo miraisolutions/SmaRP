@@ -8,6 +8,36 @@ buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
   Salary, SalaryGrowthRate, postalcode, NKids, churchtax, rate_group,
   givenday = today("UTC"), RetirementAge)
 }
+\arguments{
+\item{birthday}{date of birth ("YYYY-MM-DD").}
+
+\item{TypePurchase}{TODO-Gabriel}
+
+\item{P2purchase}{Pillar II purchase}
+
+\item{P3purchase}{Pillar III purchase}
+
+\item{returnP3}{TODO-Gabriel}
+
+\item{Salary}{stipend}
+
+\item{SalaryGrowthRate}{rate at which the salary increases/decreases}
+
+\item{postalcode}{zip code}
+
+\item{NKids}{number of children}
+
+\item{churchtax}{TODO-Gabriel}
+
+\item{rate_group}{TODO-Gabriel. \code{Character}.}
+
+\item{givenday}{date at which the age is computed ("YYYY-MM-DD").}
+
+\item{RetirementAge}{age of retirement}
+}
+\value{
+TODO-Gabriel
+}
 \description{
 Builds a data frame with the tax benefits path
 }
@@ -34,10 +64,6 @@ Calls 'getTaxAmount()' through 'calcTaxBenefitSwiss()', therefore, it assumes ob
 }
 }
 \seealso{
-[calcTaxBenefitSwiss()]
-
-[getTaxAmount()]
-
 Other swisstax: \code{\link{calcTaxBenefitSwiss}},
   \code{\link{getTaxAmount}}, \code{\link{lookupTaxAmount}}
 }

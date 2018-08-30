@@ -6,8 +6,18 @@
 \usage{
 lookupTaxAmount(Income, Tabelle, CivilStatus)
 }
+\arguments{
+\item{Income}{annual stipend}
+
+\item{Tabelle}{TODO-Gabriel}
+
+\item{CivilStatus}{marital status}
+}
+\value{
+tax amount to be paid
+}
 \description{
-Returns the tax amount to be paid given one income.
+TODO-Gabriel
 }
 \examples{
 \dontrun{

@@ -2,15 +2,29 @@
 % Please edit documentation in R/core.R
 \name{buildContributionP3path}
 \alias{buildContributionP3path}
-\title{Build the contribution path for a standard pension fund, called Pillar 3 in Switzerland.
-Based on 'calcAnnuityAcumPath()'}
+\title{Build Contribution Pillar III Path}
 \usage{
 buildContributionP3path(birthday, P3purchase, CurrentP3, returnP3,
   givenday = today("UTC"), RetirementAge)
 }
+\arguments{
+\item{birthday}{date of birth ("YYYY-MM-DD").}
+
+\item{P3purchase}{Pillar III purchase}
+
+\item{CurrentP3}{TODO-Gabriel}
+
+\item{returnP3}{TODO-Gabriel}
+
+\item{givenday}{date at which the age is computed ("YYYY-MM-DD").}
+
+\item{RetirementAge}{age of retirement}
+}
+\value{
+TODO-Gabriel
+}
 \description{
 Build the contribution path for a standard pension fund, called Pillar 3 in Switzerland.
-Based on 'calcAnnuityAcumPath()'
 }
 \examples{
 \dontrun{
@@ -23,4 +37,3 @@ buildContributionP3path(
   RetirementAge = 62)
 }
 }
-\concept{Contributionpath}
