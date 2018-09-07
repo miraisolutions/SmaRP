@@ -26,12 +26,18 @@ h4 {
   font-weight: bold;
 }
 
+#head2 {
+  font-family:Arial;
+  font-size: 12px;
+  color:black;
+}
+
 #disclaimer{
   font-family:Arial;
   color: #737373;
   font-size: 12px;
   text-align: left;
-  margin-left: 10%;
+  margin-left: 60%;
   margin-right: 10%;
   margin-top: 1%;
 }
@@ -41,7 +47,7 @@ h4 {
   color: #008cc3;
   font-size: 18px;
   text-align: center;
-  margin-left: 10%;
+  margin-left: 3%;
   margin-right: 10%;
   margin-top: 2%;
   margin-bottom: 0.5%;
@@ -80,14 +86,19 @@ small {
   color:#737373;  
 }
 
-.tabbable > .nav > li > a[data-value='Personal'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 150px;}
-.tabbable > .nav > li[class=active]    > a[data-value='Personal'] {background-color:#008cc3;   color:white; border-bottom: 1px solid #D7DBDD; width: 150px;}
+.tabbable > .nav > li > a[data-value='Personal'] {
+  background-color: white;
+  color:#008cc3;
+  border: 1.1px solid #D7DBDD;
+  width: 150px;
+}
+
+.tabbable > .nav > li[class=active] > a[data-value='Personal'] {
+  background-color:#008cc3;
+  color:white; border-bottom: 1px solid #D7DBDD; width: 150px;}
 
 .tabbable > .nav > li > a[data-value='Residence'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 150px; margin-left:10px;}
 .tabbable > .nav > li[class=active]    > a[data-value='Residence'] {background-color:#008cc3;   color:white; border-bottom: 1px solid #D7DBDD;width: 150px; margin-left:10px;}
-
-.tabbable > .nav > li > a[data-value='General'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 150px;}
-.tabbable > .nav > li[class=active]    > a[data-value='General'] {background-color: #FF9966;   color:white; border: 1.1px solid #D7DBDD; width: 150px;}
 
 .tabbable > .nav > li > a[data-value='Swiss'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 150px; margin-left:10px;}
 .tabbable > .nav > li[class=active]    > a[data-value='Swiss'] {background-color:#FF9966;   color:white; border: 1.1px solid #D7DBDD;width: 150px; margin-left:10px;}

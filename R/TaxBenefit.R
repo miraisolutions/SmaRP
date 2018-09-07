@@ -20,18 +20,19 @@
 #'  * BerufsauslagenTarif, BerufsauslagenMax, BerufsauslagenMin
 #'
 #' @family swisstax
-
-#' @param Income scalar numeric
-#' @param rate_group character
-#' @param Age scalar numeric
-#' @param NKids scalar numeric
-#' @param postalcode character
-#' @param churchtax character Y/N
+#' @param Income Annual salary. `Numeric` scalar.
+#' @param rate_group TODO-Gabriel. `Character`.
+#' @param Age Age of the person. `Numeric`
+#' @param NKids number of children
+#' @param postalcode zip code
+#' @param churchtax TODO-Gabriel
 #' @import dplyr
+#' @return Tax Amount
 #'
 #' @examples
 #' \dontrun{
-#' getTaxAmount(Income = 200000, rate_group = "C", Age = 32, NKids = 5, postalcode = 8400, churchtax = "Y")
+#' getTaxAmount(Income = 200000, rate_group = "C", Age = 32, 
+#'              NKids = 5, postalcode = 8400, churchtax = "Y")
 #' }
 #' @export
 getTaxAmount <- function(Income,
@@ -123,12 +124,12 @@ getTaxAmount <- function(Income,
 
 
 #' Returns the tax amount to be paid given one income.
-#'
+#' @description TODO-Gabriel
 #' @family swisstax
-#'
-#' @param Income
-#' @param Tabelle
-#' @param CivilStatus
+#' @param Income annual stipend
+#' @param Tabelle TODO-Gabriel
+#' @param CivilStatus marital status
+#' @return tax amount to be paid
 #' @examples
 #' \dontrun{
 #' lookupTaxAmount(Income = 100000, Tabelle = BundessteueTabelle, CivilStatus = "A")
@@ -156,26 +157,17 @@ lookupTaxAmount <- function(Income, Tabelle, CivilStatus) {
 #' @details
 #' All inputs are scalars. Builds a data frame as long as the years to retirement.
 #' Calls 'getTaxAmount()' through 'calcTaxBenefitSwiss()', therefore, it assumes objects on the global enviornment.
-#'
-#' @seealso [calcTaxBenefitSwiss()]
-#' @seealso [getTaxAmount()]
 #' @family swisstax
-#'
-#' @param birthday
-#' @param TypePurchase
-#' @param P2purchase
-#' @param P3purchase
-#' @param returnP3
-#' @param Salary
-#' @param SalaryGrowthRate
-#' @param postalcode
-#' @param NKids
-#' @param churchtax
-#' @param rate_group
-#' @param givenday
-#' @param RetirementAge
+#' @template given_bday
+#' @param TypePurchase TODO-Gabriel
+#' @param P2purchase Pillar II purchase
+#' @param P3purchase Pillar III purchase
+#' @param returnP3 TODO-Gabriel
+#' @template salary
+#' @inheritParams getTaxAmount
+#' @param RetirementAge age of retirement
 #' @import dplyr
-#'
+#' @return TODO-Gabriel
 #' @examples
 #' \dontrun{buildTaxBenefits(
 #'  birthday,
@@ -229,20 +221,16 @@ buildTaxBenefits <- function(birthday,
   return(TaxBenefitsPath)
 }
 
-
-#' Calculates the tax benefit as a difference of the taxes paid with and without retirement contributions.
-#'
+#' Calculate Tax Benefit Swiss
+#' 
+#' @description Calculates the tax benefit as a difference of the taxes paid with and without retirement contributions.
 #' Calls 'getTaxAmount()', therefore, it assumes objects in the global environment.
 #' @seealso [getTaxAmount()]
 #' @family swisstax
-#'
 #' @param ExpectedSalaryPath vector length equals year to retirement
 #' @param TaxableIncome vector length equals year to retirement
-#' @param rate_group
-#' @param Age vector length equals year to retirement
-#' @param NKids
-#' @param postalcode
-#' @param churchtax
+#' @inheritParams getTaxAmount
+#' @return TODO-Gabriel
 #' @examples
 #' \dontrun{
 #'   calcTaxBenefitSwiss(ExpectedSalaryPath = seq(90000, 100000, 1000),

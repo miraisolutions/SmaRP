@@ -6,3 +6,4 @@
 Dockerfile
 cloudbuild.yaml
 smarp-service.yaml
+man-roxygen
