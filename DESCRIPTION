@@ -8,7 +8,7 @@ Authors@R: c(person("Gabriel", "Foix", role = c("aut", "cre"),
              person("Mirai Solutions GmbH", role = c("ctb", "cph"),
                     email = "info@mirai-solutions.com"))
 Description: Shiny App to calculate total pension fund.
-Depends: R (>= 3.4.0)
+Depends: R (>= 3.5.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

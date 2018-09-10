@@ -1,4 +1,4 @@
-FROM rocker/r-ver:3.4.4
+FROM rocker/r-ver:3.5.1
 
 MAINTAINER Nicola Lambiase "nicola.lambiase@mirai-solutions.com"
 
