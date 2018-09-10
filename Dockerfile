@@ -22,6 +22,7 @@ RUN install2.r --error \
     ggplot2 \
     googleVis \
     kableExtra \
+    knitr \
     lubridate \
     magrittr \
     pander \
@@ -29,7 +30,8 @@ RUN install2.r --error \
     rmarkdown \
     shiny \
     shinyBS \
-    shinythemes \
+    shinydashboardPlus \
+    shinyWidgets \
     webshot
     
 # install PhantomJS

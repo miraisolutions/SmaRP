@@ -18,8 +18,9 @@ Imports:
     dplyr,
     ggplot2,
     googleVis,
-    knitr,
+    htmltools,
     kableExtra,
+    knitr,
     lubridate,
     magrittr,
     pander,
@@ -27,6 +28,8 @@ Imports:
     rmarkdown,
     shiny,
     shinyBS,
+    shinydashboardPlus,
+    shinyWidgets,
     webshot
 Suggests: testthat, roxygen2
 VignetteBuilder: knitr

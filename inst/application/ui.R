@@ -3,18 +3,15 @@
 # #189bce background header
 # #ea8b5b title orange
 
-library(shiny)
-library(shinydashboard)
-library(shinydashboardPlus)
-library(shinyWidgets)
 Sys.setlocale("LC_TIME", "C")
 
 bsTooltip <- shinyBS::bsTooltip # info windows
+boxPlus <- shinydashboardPlus::boxPlus
 
 # fluidPage UI
 fluidPage(
   
-  useShinydashboardPlus(),
+  shinyWidgets::useShinydashboardPlus(),
   
   # Style  ----
   theme = "style.css",
