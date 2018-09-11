@@ -81,7 +81,7 @@ fluidPage(
                 )
               )
             ),
-            style = "margin-left: 8%;"
+            style = "margin-left: 11%;"
           )
         ), # end fluidRow
         
