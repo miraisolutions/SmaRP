@@ -1,10 +1,3 @@
-# provides all the information displayed on SmarRP in info boxes
-# VM <- UI_Messages()$VM
-# save(VM, file = "data/VM.rda")
-# # load("data/VM.rda")
-
-
-
 #' IB and VM list
 #' @description list of variables within Ibfo Box and Validity Message lists
 #' @return Ib and VM list

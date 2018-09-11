@@ -103,9 +103,9 @@ function(input, output, session) {
   })
   
   observe({
-    y <- which(PLZGemeinden$PLZ == input$postalcode)
-    z <- PLZGemeinden$GDENAME[y]
-    updateSelectInput(session, "gemeinden", selected = z)
+    idxPLZ <- which(PLZGemeinden$PLZ == input$postalcode)
+    selGDEName <- PLZGemeinden$GDENAME[idxPLZ]
+    updateSelectInput(session, "gemeinden", selected = selGDEName)
     
   })
   
@@ -117,13 +117,13 @@ function(input, output, session) {
   })
   
   observe({
-    b <- which(PLZGemeinden$GDENAME == gemeinden())
-    if (length(b) > 1) {
-      c <- PLZGemeinden$PLZ[b][1]
+    idxGDEName <- which(PLZGemeinden$GDENAME == gemeinden())
+    if (length(idxGDEName) > 1) {
+      selPLZ <- PLZGemeinden$PLZ[idxGDEName][1]
     } else {
-      c <- PLZGemeinden$PLZ[b]
+      selPLZ <- PLZGemeinden$PLZ[idxGDEName]
     }
-    updateSelectInput(session, "postalcode", selected = c)
+    updateSelectInput(session, "postalcode", selected = selPLZ)
     
   })
   

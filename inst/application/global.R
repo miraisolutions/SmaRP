@@ -43,7 +43,7 @@ Rate_group.list <- list(
 
 church_tax.list <- list(
   "Church Affilitation" = "A",
-  "No church Affilitation" = "B"
+  "No Church Affilitation" = "B"
 )
 
 Purchase.list <- list(

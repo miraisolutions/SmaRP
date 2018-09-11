@@ -23,9 +23,9 @@
 #' @param Income Annual salary. `Numeric` scalar.
 #' @param rate_group TODO-Gabriel. `Character`.
 #' @param Age Age of the person. `Numeric`
-#' @param NKids number of children
-#' @param postalcode zip code
-#' @param churchtax TODO-Gabriel
+#' @param NKids number of children `Numeric` scalar.
+#' @param postalcode zip code `Character`
+#' @param churchtax TODO-Gabriel `Character` Y/N
 #' @import dplyr
 #' @return Tax Amount
 #'

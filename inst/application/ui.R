@@ -74,7 +74,7 @@ fluidPage(
               condition = 'input.provideRetirementAge==""',
               fluidRow(
                 radioButtons("genre",
-                             label = h5("Gender affiliation"),
+                             label = h5("Gender Affiliation"),
                              inline = TRUE,
                              choices = list("Male" = "M", "Female" = "F"),
                              selected = "M"
@@ -123,7 +123,7 @@ fluidPage(
           column(
             3,
             selectInput("gemeinden",
-                        label = h5("Gemeinden"),
+                        label = h5("Municipality"),
                         choices = GDENAMEvec,
                         selected = "Zürich"
             )
@@ -168,7 +168,7 @@ fluidPage(
         fluidRow(
           id = "head2",
           radioButtons("churchtax",
-                       label = h5("Church affiliation"),
+                       label = h5("Church Affiliation"),
                        inline = TRUE,
                        choices = church_tax.list,
                        selected = "A"
@@ -221,7 +221,7 @@ fluidPage(
             ),
             column(5,
                    numericInput("CurrentP2",
-                                label = h5("Current BVG assets"),
+                                label = h5("Current BVG Assets"),
                                 value = 100000,
                                 step = 1000,
                                 min = 0
@@ -248,7 +248,7 @@ fluidPage(
           fluidRow(
             column(11,
                    numericInput("P2purchase",
-                                label = h5("Voluntary purchases"),
+                                label = h5("Voluntary Purchases"),
                                 value = 0,
                                 step = 500,
                                 min = 0
@@ -290,7 +290,7 @@ fluidPage(
           fluidRow(
             column(11,
                    numericInput("CurrentP3",
-                                label = h5("Current assets"),
+                                label = h5("Current Assets"),
                                 value = 50000,
                                 step = 1000,
                                 min = 0
@@ -305,7 +305,7 @@ fluidPage(
           fluidRow(
             column(11,
                    numericInput("P3purchase",
-                                label = h5("Annual contribution"),
+                                label = h5("Annual Contribution"),
                                 value = 0,
                                 step = 500,
                                 min = 0
