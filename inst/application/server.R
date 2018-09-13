@@ -11,7 +11,7 @@ function(input, output, session) {
   # Birthday
   Birthdate <- reactive({
     validate(need(input$Birthdate, VM$Birthdate))
-    validate(need((input$Birthdate - 65) > 0, VM$Birthdate2))
+    validate(need(calcAge(input$Birthdate) < RetirementAge(), VM$Birthdate2))
     input$Birthdate
   })
   
