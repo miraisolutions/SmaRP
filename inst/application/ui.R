@@ -112,20 +112,11 @@ fluidPage(
         fluidRow(
           id = "head2",
           column(
-            5,
-            selectInput("postalcode",
-                        label = h5("Postal Code"),
-                        choices = PLZvec,
-                        selected = "8001"
-            )
-          ),
-          column(1),
-          column(
-            3,
-            selectInput("gemeinden",
-                        label = h5("Municipality"),
-                        choices = GDENAMEvec,
-                        selected = "Zürich"
+            12,
+            selectInput("plzgemeinden",
+                        label = h5("Postal Code / Municipality"),
+                        choices = PLZGemeinden$PLZGDENAME,
+                        selected = with(PLZGemeinden, PLZGDENAME[match(8001, PLZ)])
             )
           )
         ),
