@@ -1,8 +1,8 @@
 #' Buildt
-#' @description TODO-Gabriel
+#' @description Build a annual path from a today (or given day) until the retirement day. 
 #' @template given_bday
 #' @param RetirementAge age of retirement
-#' @return TODO-Gabriel 
+#' @return vector of dates until retirement. 
 #' @examples
 #' \dontrun{
 #' buildt("1981-08-12")
@@ -45,7 +45,9 @@ getRetirementday <- function(birthday, RetirementAge = 65) {
 }
 
 #' Obtain Retirement Calendar
-#' @description TODO-Gabriel
+#' @description Calculate the annual retirement path.
+#' SmarP assumes that the user will get retired the day that turns 65 or its desired retirement age.
+#' For the current year, if birthday is later than the calculation day, there will be 2 dates.  
 #' @inheritParams buildt 
 #' @importFrom lubridate today ymd years year month day
 #' @return retirement calendar
@@ -69,15 +71,15 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 }
 
 #' Build Contribution Pillar II Path
-#' @description TODO-Gabriel
+#' @description Gather all the required information to project the annual contributions to the occupational pension fund.
 #' @inheritParams buildt 
 #' @template salary
 #' @template P2
-#' @param TypePurchase TODO-Gabriel
+#' @param TypePurchase AnnualP2 if the purchase on the pillar II gets repeated every year until retirement.
 #' @param rate male or female
 #' @import dplyr
 #' @importFrom magrittr '%<>%'
-#' @return TODO-Gabriel
+#' @return data frame with annual different contributions to the Pillar II.  
 #' @examples
 #' \dontrun{
 #' buildContributionP2Path(
@@ -131,9 +133,9 @@ buildContributionP2Path <- function(birthday,
 }
 
 #' Calculate Expected Salary Path
-#' @description calculate whether salary will increase or decrease and by how much
+#' @description calculate whether the salary will increase/decrease and by how much.
 #' @template salary
-#' @param ncp TODO-Gabriel
+#' @template ncp 
 #' @return expected salary path
 #' @examples
 #' \dontrun{
@@ -150,7 +152,7 @@ calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
 #' @description TODO-Gabriel
 #' @param TypePurchase type of purchase
 #' @param P2purchase TODO-Gabriel
-#' @param ncp TODO-Gabriel
+#' @template ncp
 #' @return BVG purchase
 #' @examples
 #' \dontrun{
