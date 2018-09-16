@@ -38,7 +38,12 @@ BVGcontriburionratesPath <- data.frame(
 Rate_group.list <- list(
   "Single" = "A",
   "Married" = "B",
-  "Married Double Income" = "C"
+  "Married 2x Income" = "C"
+)
+
+church_tax.list <- list(
+  "Church Affilitation" = "A",
+  "No Church Affilitation" = "B"
 )
 
 Purchase.list <- list(
@@ -48,7 +53,8 @@ Purchase.list <- list(
 
 # PLZGemeinden <- readRDS("inst/application/data/PLZGemeinden.rds")
 PLZGemeinden <- readRDS(system.file("application", "data", "PLZGemeinden.rds", package = "SmaRP"))
-PLZ.list <- stats::setNames(PLZGemeinden$PLZ, PLZGemeinden$PLZ)
+PLZvec <- unique(stats::setNames(PLZGemeinden$PLZ, PLZGemeinden$PLZ))
+GDENAMEvec <- unique(stats::setNames(PLZGemeinden$GDENAME, PLZGemeinden$GDENAME))
 kantons <- unique(PLZGemeinden$Kanton)
 
 # BundessteueTabelle <- readRDS("inst/application/data/BundessteueTabelle.rds")

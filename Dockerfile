@@ -1,4 +1,4 @@
-FROM rocker/r-ver:3.4.4
+FROM rocker/r-ver:3.5.1
 
 MAINTAINER Nicola Lambiase "nicola.lambiase@mirai-solutions.com"
 
@@ -22,6 +22,7 @@ RUN install2.r --error \
     ggplot2 \
     googleVis \
     kableExtra \
+    knitr \
     lubridate \
     magrittr \
     pander \
@@ -29,7 +30,8 @@ RUN install2.r --error \
     rmarkdown \
     shiny \
     shinyBS \
-    shinythemes \
+    shinydashboardPlus \
+    shinyWidgets \
     webshot
     
 # install PhantomJS

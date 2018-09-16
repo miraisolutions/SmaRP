@@ -16,11 +16,11 @@ calcTaxBenefitSwiss(ExpectedSalaryPath, TaxableIncome, rate_group, Age,
 
 \item{Age}{Age of the person. \code{Numeric}}
 
-\item{NKids}{number of children}
+\item{NKids}{number of children \code{Numeric} scalar.}
 
-\item{postalcode}{zip code}
+\item{postalcode}{zip code \code{Character}}
 
-\item{churchtax}{TODO-Gabriel}
+\item{churchtax}{TODO-Gabriel \code{Character} Y/N}
 }
 \value{
 TODO-Gabriel

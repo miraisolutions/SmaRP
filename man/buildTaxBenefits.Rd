@@ -23,11 +23,11 @@ buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
 
 \item{SalaryGrowthRate}{rate at which the salary increases/decreases}
 
-\item{postalcode}{zip code}
+\item{postalcode}{zip code \code{Character}}
 
-\item{NKids}{number of children}
+\item{NKids}{number of children \code{Numeric} scalar.}
 
-\item{churchtax}{TODO-Gabriel}
+\item{churchtax}{TODO-Gabriel \code{Character} Y/N}
 
 \item{rate_group}{TODO-Gabriel. \code{Character}.}
 
