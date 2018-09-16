@@ -1,2 +1,2 @@
-#' @param CurrentP2 TODO-Gabriel
-#' @param P2purchase TODO-Gabriel
+#' @param CurrentP2 value of the current assets in the Occupational Pension Fund.
+#' @param P2purchase annual voluntary contribution to the Occupational Pension Fund.
