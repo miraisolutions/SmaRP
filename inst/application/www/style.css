@@ -8,7 +8,7 @@ body {
   background-repeat: repeat-x;
   background-position: center center;
   background-size: cover;
-  margin-bottom:0.5%;
+  margin-bottom: 0.5%;
 }
 
 hr {border-top: 1px solid #000000;}
@@ -16,24 +16,24 @@ hr {border-top: 1px solid #000000;}
 h5 {
   font-family:Arial;
   font-size: 12px;
-  color:black;
+  color: black;
 }
 
 h4 {
-  font-family:Arial;
+  font-family: Arial;
   font-size: 13px;
-  color:black;
+  color: black;
   font-weight: bold;
 }
 
 #head2 {
-  font-family:Arial;
+  font-family: Arial;
   font-size: 12px;
-  color:black;
+  color: black;
 }
 
 #disclaimer{
-  font-family:Arial;
+  font-family: Arial;
   color: #737373;
   font-size: 12px;
   text-align: left;
@@ -43,7 +43,7 @@ h4 {
 }
 
 #Totals{
-  font-family:Arial;
+  font-family: Arial;
   color: #008cc3;
   font-size: 18px;
   text-align: center;
@@ -54,7 +54,7 @@ h4 {
 }
                                   
 h2 {
-  font-family:Arial;
+  font-family: Arial;
   color: #ea8b5b;
   font-size: 30px;
   text-align: left;
@@ -63,7 +63,7 @@ h2 {
 }
 
 h3 {
-  font-family:Arial;
+  font-family: Arial;
   color: #000000;
   font-size: 18px;
   text-align: left;
@@ -73,7 +73,7 @@ h3 {
 }
 
 a {
-  font-family:Arial;
+  font-family: Arial;
   font-size: 14px;
   color:#008cc3;
   text-align: left;
@@ -81,14 +81,14 @@ a {
 }
 
 small {
-  font-family:Arial;
+  font-family: Arial;
   font-size: 12px;
-  color:#737373;  
+  color: #737373;  
 }
 
 .tabbable > .nav > li > a[data-value='Personal'] {
   background-color: white;
-  color:#008cc3;
+  color: #008cc3;
   border: 1.1px solid #D7DBDD;
   width: 150px;
 }

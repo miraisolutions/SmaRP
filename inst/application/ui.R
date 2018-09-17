@@ -70,8 +70,9 @@ fluidPage(
           column(2),
           column(
             5,
-            conditionalPanel(
-              condition = 'input.provideRetirementAge==""',
+            # conditionalPanel(
+            #   # condition = 'input.provideRetirementAge==""', 
+            #   condition ='',
               fluidRow(
                 radioButtons("genre",
                              label = h5("Gender Affiliation"),
@@ -79,7 +80,7 @@ fluidPage(
                              choices = list("Male" = "M", "Female" = "F"),
                              selected = "M"
                 )
-              )
+              # )
             ),
             style = "margin-left: 11%;"
           )
@@ -339,8 +340,6 @@ fluidPage(
       7,
       fluidRow(
         tabsetPanel(
-          # type = "pills",
-          
           # Plot  ----
           tabPanel(
             title = "Plot",
