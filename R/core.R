@@ -75,7 +75,7 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 #' @inheritParams buildt 
 #' @template salary
 #' @template P2
-#' @param TypePurchase AnnualP2 if the purchase on the pillar II gets repeated every year until retirement.
+#' @template TypePurchase
 #' @param rate male or female
 #' @import dplyr
 #' @importFrom magrittr '%<>%'
@@ -148,10 +148,10 @@ calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
   res <- cumprod(c(Salary, rep(1 + SalaryGrowthRate, nrise), 1))
 }
 
-#' Calculate BVG Purchase
-#' @description TODO-Gabriel
-#' @param TypePurchase type of purchase
-#' @param P2purchase TODO-Gabriel
+#' Calculate Purchase Pilar II
+#' @description Calculate the path of purchases to the Pilar II (Occupational pension fund, BVG) 
+#' @template  TypePurchase
+#' @template P2purchase
 #' @template ncp
 #' @return BVG purchase
 #' @examples
@@ -168,11 +168,11 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
 }
 
 #' Build Contribution Pillar III Path
-#' @description Build the contribution path for a standard pension fund, called Pillar 3 in Switzerland.
+#' @description Build the contribution path for a standard pension fund, called Pillar III in Switzerland.
 # Based on 'calcAnnuityAcumPath()'
 #' @inheritParams buildt 
 #' @template P3
-#' @return TODO-Gabriel
+#' @return data frame with annual different contributions to the Pillar III.
 #' @examples
 #' \dontrun{
 #' buildContributionP3path(
@@ -208,12 +208,12 @@ buildContributionP3path <- function(birthday,
   return(ContributionP3Path)
 }
 
-#' TODO-Gabriel
-#' @description TODO-Gabriel
-#' @param contributions TODO-Gabriel
-#' @param t TODO-Gabriel
-#' @param rate male or female
-#' @return TODO-Gabriel
+#' Calculate annuity accumative path
+#' @description  Calculate the future value of a certain annuity (contributions) at a give periodicity (t). 
+#' @param contributions vector of contributions (annuities)
+#' @param t vector of time intervals corresponding to the constributions
+#' @param rate interest rate
+#' @return vector of accumulated annuitites
 #' @examples
 #' \dontrun{
 #' calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000), 
@@ -240,7 +240,7 @@ returnPLZKanton <- function(plz) {
 }
 
 #' Print Currency
-#' @description TODO-Gabriel  
+#' @description print values as monetary on a given currency.  
 #' @template print_currency
 #' @return currency
 #' @examples
@@ -257,10 +257,10 @@ printCurrency <- function(value, digits = 0, sep = ",", decimal = ".") { # curre
 }
 
 #' Make Table
-#' @description TODO-Gabriel
-#' @param Road2Retirement TODO-Gabriel
-#' @param moncols TODO-Gabriel
-#' @return TODO-Gabriel
+#' @description Utility function to display main results on the table tab.
+#' @param Road2Retirement Main data frame where main results are displayed.
+#' @param moncols Columns to prit out on the table
+#' @return Table to print out
 #' @examples
 #' \dontrun{
 #' makeTable(Road2Retirement)
@@ -269,7 +269,7 @@ printCurrency <- function(value, digits = 0, sep = ",", decimal = ".") { # curre
 #' @importFrom lubridate year month
 #' @export
 makeTable <- function(Road2Retirement, moncols = c("DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")) { # , currency=""
-  # moncols <-
+  # TODO-Gabriel: Rename headers 
   TableMonetary <- Road2Retirement[, c("calendar", moncols)] %>%
     mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-"))
   TableMonetary[, moncols] <- sapply(TableMonetary[, moncols], printCurrency) # , currency
@@ -307,10 +307,10 @@ isnotAvailableReturnZero <- function(inputValue, fallback = 0) {
 }
 
 #' Need Not Zero
-#' @description TODO-Gabriel
+#' @description Utility function to display a message in case a non zero value is needed.
 #' @param  input zero, nothing or null
 #' @param inputname name of input
-#' @return TODO-Gabriel
+#' @return warning message or nothing
 #' @export
 need_not_zero <- function(input, inputname) {
   if (input == 0 | input == "" | is.null(input)) {
@@ -324,7 +324,7 @@ need_not_zero <- function(input, inputname) {
 # Format Percentage ----
 #' Change to Percentage
 #' @description from decimal to percentage value
-#' @param df TODO-Gabriel
+#' @param df given data frame
 #' @return percentage value
 #' @export
 changeToPercentage <- function(df) {

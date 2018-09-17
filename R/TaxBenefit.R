@@ -159,7 +159,7 @@ lookupTaxAmount <- function(Income, Tabelle, CivilStatus) {
 #' Calls 'getTaxAmount()' through 'calcTaxBenefitSwiss()', therefore, it assumes objects on the global enviornment.
 #' @family swisstax
 #' @template given_bday
-#' @param TypePurchase TODO-Gabriel
+#' @template TypePurchase
 #' @param P2purchase Pillar II purchase
 #' @param P3purchase Pillar III purchase
 #' @param returnP3 TODO-Gabriel
