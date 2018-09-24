@@ -103,21 +103,21 @@ buildContributionP2Path <- function(birthday,
                                     rate = BVGMindestzinssatz,
                                     givenday = today("UTC"),
                                     RetirementAge) {
-
+  
   # build BVG rates from global input
   BVGRatesPath <- BVGcontriburionratesPath %>%
     filter(years <= RetirementAge)
-
+  
   # calc contributions P2 Path
   ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge)) %>%
     mutate(AgePath = sapply(calendar, calcAge, birthday = birthday) %>%
-      as.integer()) %>%
+             as.integer()) %>%
     left_join(BVGRatesPath, by = c("AgePath" = "years")) %>%
     mutate(BVGcontriburionrates = if_else(is.na(BVGcontriburionrates), 0, BVGcontriburionrates))
-
+  
   ncp <- nrow(ContributionP2Path)
   isPurchase <- c(0, rep(1, ncp - 1))
-
+  
   ContributionP2Path %<>% within({
     ExpectedSalaryPath <- calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
     BVGpurchase <- calcBVGpurchase(TypePurchase, P2purchase, ncp)
@@ -128,7 +128,7 @@ buildContributionP2Path <- function(birthday,
     DirectP2 <- cumsum(BVGDirect)
     ReturnP2 <- TotalP2 - DirectP2
   })
-
+  
   return(ContributionP2Path)
 }
 
@@ -192,9 +192,9 @@ buildContributionP3path <- function(birthday,
                                     givenday = today("UTC"),
                                     RetirementAge) {
   ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge))
-
+  
   ncp <- nrow(ContributionP3Path)
-
+  
   ContributionP3Path <- ContributionP3Path %>%
     mutate(
       P3purchase = c(0, rep(P3purchase, ncp - 2), 0),
@@ -204,35 +204,51 @@ buildContributionP3path <- function(birthday,
       DirectP3 = cumsum(P3ContributionPath),
       ReturnP3 = TotalP3 - DirectP3
     )
-
+  
   return(ContributionP3Path)
 }
 
 #' Calculate annuity accumative path
-#' @description  Calculate the future value of a certain annuity (contributions) at a give periodicity (t). 
+#' @description  Calculate future value of an annuity with periodic contributions. 
+#' * Based on continuous compounding interest in annual basis.
+#' * Payments occur at the beginning of each period.
 #' @param contributions vector of contributions (annuities)
-#' @param t vector of time intervals corresponding to the constributions
-#' @param rate interest rate
-#' @return vector of accumulated annuitites
+#' @param t vector of time intervals between contributions. 
+#' * Irregular time intervals are allowed. 
+#' * For frequency bellow annual, enter t as proportion of a year.
+#' @param rate interests rate on annual basis. Assumes constant interest rates.
+#' @return vector of accumulated benefits given a set of contributions.
 #' @examples
 #' \dontrun{
-#' calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000), 
+#' calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000),
 #'                                 t = c(0.284931, 1, 1, 1, 0), rate = 0.01)
-#' }
+#'}
 #' @export
 calcAnnuityAcumPath <- function(contributions, t, rate) {
-  # set a default TODO-Gabriel
-  res <- contributions
-  for (i in 2:length(contributions)) {
-    res[i] <- res[i - 1] * exp(rate * t[i - 1]) + contributions[i]
+  
+  assertthat::are_equal(length(contributions), length(t))
+  assertthat::is.scalar(rate)
+  
+  # Set the first period
+  res <- vector()
+  res[1] <- contributions[1]
+  
+  if(length(contributions) == 1) {
+    message("Single contribution. Since payments happen at the beginning of the period, there is no accumulation.")
+    return(res)
   }
-  res
+  
+  # Accumulated compound interest 
+  for(i in 2:length(contributions)) {
+    res[i] <- res[i-1]* exp(rate * t[i-1])  + contributions[i]
+  }
+  return(res)
 }
 
 #' Return Postal Code Kanton
-#' @description Return in which canton the person is retiring
-#' @param plz canton's zip code
-#' @return canton's zip code
+#' @description Return in which canton the person is retiring.
+#' @param plz canton's zip code.
+#' @return canton's zip code.
 #' @export
 returnPLZKanton <- function(plz) {
   Kanton <- PLZGemeinden$Kanton[PLZGemeinden$PLZ == as.numeric(plz)]
@@ -269,10 +285,11 @@ printCurrency <- function(value, digits = 0, sep = ",", decimal = ".") { # curre
 #' @importFrom lubridate year month
 #' @export
 makeTable <- function(Road2Retirement, moncols = c("DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")) { # , currency=""
-  # TODO-Gabriel: Rename headers 
+  
   TableMonetary <- Road2Retirement[, c("calendar", moncols)] %>%
     mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-"))
-  TableMonetary[, moncols] <- sapply(TableMonetary[, moncols], printCurrency) # , currency
+  TableMonetary[, moncols] <- sapply(TableMonetary[, moncols], printCurrency) 
+  
   return(TableMonetary)
 }
 
