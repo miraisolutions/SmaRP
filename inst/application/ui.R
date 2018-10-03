@@ -24,7 +24,7 @@ fluidPage(
       target = "_blank",
       img(
         id = "sticker-header",
-        src = "SmaRPStiker.png",
+        src = "SmaRPSticker.png",
         height = "100px"
 
       )
