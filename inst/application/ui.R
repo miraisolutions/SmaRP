@@ -30,19 +30,7 @@ fluidPage(
       )
     ),
     h2("SmaRP"),
-    h3("Smart Retirement Planning"),
-    checkboxInput(
-      "xx",
-      "Desired Retirement Age (optional)",
-      FALSE
-    ),
-    bsTooltip("xx",
-              IB$RetirementAgeOptional,
-              placement = "right",
-              options = list(container = "body")
-    )
-
-
+    h3("Smart Retirement Planning")
   ), # end Header fluidRow
 
   # Main  ----
