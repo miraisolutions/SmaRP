@@ -1,0 +1,9 @@
+^Meta$
+^doc$
+^.*\.Rproj$
+^\.Rproj\.user$
+
+Dockerfile
+cloudbuild.yaml
+smarp-service.yaml
+man-roxygen

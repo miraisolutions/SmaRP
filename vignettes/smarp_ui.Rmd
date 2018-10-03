@@ -1,0 +1,148 @@
+---
+title: "SmaRP_ui"
+author: "Nikki"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SmaRP_ui}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(shiny)
+```
+## Introduction
+
+Smart Retirement Planning (SmaRP) is an internal Mirai Solutions project aimed at creating a retirement plan for people working and planning on staying in Switzerland. 
+
+This vignette describes UI components and their inner-workings. It is programmed exclusively using Shiny basic package and intended to be used with the mere support of a web browser. In addition to theoretical explanations, simplified versions of code are included; however, for the full version please consult the ui.R file.  
+
+## Outline
+
+The UI is divided into three main sections: Personal Info, Pillar II - III and plots and table. Additional components include SmaRP, GitHub and Mirai logo as well as a disclaimer message. 
+
+The whole interface is wrapped around a `fluiPage`, which includes a `fluidRow` for the three main sections and individual others for the additional components. Within each `fluidRow`, objects are organized as a combination of `fluidRow`, `column` or `splitLayout`. 
+
+## Logo 
+
+At the beginning of the page, a first set objects is present: a long, blue bar with the SmaRP logo and a title. A snippet of the panel's outline can be found below.
+
+![](/home/mirai_user/RStudioProjects/SmaRP/vignettes/SmaRP_logo.png "SmaRP_logo")
+
+Within the code, these three objects are wrapped inside a `fluidRow` and divided into two columns: one containing the logo and the blue bar and the other the title. The blue bar and the logo are then wrapped again together into a `fluidRow`, the former being dragged from the Mirai Solutions website in the form of a URL and the latter as a .png image. A sample of the code is shown below:
+
+```{r}
+# fluidRow(
+#   column(
+#     width,
+#     url_to_blue_bar,
+#     logo.png
+#   ),
+#   style = "margin-top: 10%; margin-bottom: 10%;",
+#   column(
+#     width=1,
+#     title
+#   ),
+#   style = "margin-left: 0%; margin-right: 0%;"
+# ) # end of FluidRow / Header
+```
+Two additional features are shown in the code above: width and style. The first represents the width of the column, which can range between 1 and 12. The second is the style, which determines where objects should be located:
+
+e.g. 
+
+```{r}
+style = "margin-top: 10%;"
+```
+This line of code places a set object 10% away from the beginning of the panel.
+
+## Personal Info
+
+The personal Info gathers the user's personal data, which will then be transferred to the server to perform calculations: e.g. birthday to calculate retirement age, marital status to project income, etc. 
+
+A snippet of the panel's outline can be found below
+
+![](/home/mirai_user/RStudioProjects/SmaRP/vignettes/SmaRP_personal_info.png "SmaRP_personal_info")
+
+From a code standpoint, this panel is wrapped around a `fluidRow`, with each component having also its own. In many cases, components' `fluidRow`s are split into two columns: one for the esthetics and the other for more explanation. With regards to the esthetics portion, the bullet points below explain how the current version was achieved:
+
+* Personal Info: text object with `h4` dimensions
+* Birthday: `dateInput` object with date-month-year format. The user can either select a date form the calendar or manually type it
+* Desired retirement age: optional `checkbox` object. If selected, it will show additional objects to be filled in
+* PLZ and Kids: 
+    * PLZ: `selectInput` object. The user can either select a date from the drop-down menu or manually type it
+    * Kids: `numericInput` object. The user can either increase/decrease the number with the arrows or enter it manually; by default this will be zero
+* Church affiliation and gender: 
+    * church affiliation: optional `checkbox` object
+    * gender: programmed with `radioButtons`, the user can only select one choice
+* Rate Group: also programmed with `radioButtons`. 
+
+Even though most components are self explanatory, it is still useful to provide more information regarding what each object does. For this reason, `bsTooltip`s were added in separate columns. `bsTooltip` is a shiny tool used to add information. In practice, when the user places the cursor on a specific object, a black box appears showing a more detailed description of the component. A sample of the code is shown below:
+
+```{r}
+# fluidRow(
+#   fluidRow(
+#     column(
+#       width,
+#       dateInput("Birthdate", ...
+#       ),
+#       bsTooltip("Birthdate", ...
+#       )
+#     )
+#   )
+# )
+
+```
+
+
+## Pillar II and III
+
+The second main section of SmaRP is divided in two pillars. Pillar II is intended for the case that the user has an occupational pension whereas Pillar III is the case of a private pension fund. 
+
+A snippet of the panel's outline can be found below
+
+![](/home/mirai_user/RStudioProjects/SmaRP/vignettes/SmaRP_pillars.png "SmaRP_pillars")
+
+From a programming standpoint, this split look was obtained globalizing both pillars into a `splitLayout` with two columns. Within each column, each Pillar was grouped into a `fluidRow` and all components programmed using the `numericInput` tool and, in the isolated case of the Type of purchase, with two `radioButtons`. In addition, this section also includes `bsTooltip`s for all objects. A sample of the code is shown below:
+
+```{r}
+
+# splitLayout(
+#   column(
+#     width,
+#     fluidRow(
+#       fluidRow(
+#         numericInput("Salary"
+#         ),
+#         bsTooltip("Salary"
+#         )
+#       )
+#     )
+#   )
+# )
+
+```
+
+## Plots and table
+
+On the right side, the ui has two interchangeable parts: two plots and a table. One of these can be shown at a time by clicking on the respective tab on the top-center. 
+
+The first graph shows how much the retirement fund will increase over the course of the years. It is interactive thanks to googleVis package, etter explained in the server vignette. On the other hand, the second plot shows the contribution of each pillar in percentage.
+
+The table reports a series of output values including: calendar, DirectP2, ReturnP2, TotalP2, DirectP3,...
+
+## Additional components
+
+GitHub and Mirai logos were imported using urls, whereas the disclaimer message with the `verbatimTextOutput` function as shown below:
+
+```{r}
+# fluidRow(
+#   style = "margin-left: 60%; margin-bottom: 0.1%;",
+#   verbatimTextOutput("disclaimer")
+# )
+```

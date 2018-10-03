@@ -1,18 +1,26 @@
 Package: SmaRP
 Title: SmaRP: Smart Retirement Planning
-Version: 0.0.0.9000
-Authors@R: person("Francesca", "Vitalini", email = "francesca.vitalini@mirai-solutions.com", role = c("aut", "cre"))
+Version: 0.0.2
+Authors@R: c(person("Gabriel", "Foix", role = c("aut", "cre"),
+                    email = "gabriel.foix@mirai-solutions.com"),
+             person("Francesca", "Vitalini", role = c("aut"),
+                    email = "francesca.vitalini@mirai-solutions.com"),
+             person("Mirai Solutions GmbH", role = c("ctb", "cph"),
+                    email = "info@mirai-solutions.com"))
 Description: Shiny App to calculate total pension fund.
-Depends: R (>= 3.4.3)
-License: What license is it under?
+Depends: R (>= 3.5.0)
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+Roxygen: list(markdown = TRUE)
 Imports:
+    assertthat,
     dplyr,
     ggplot2,
     googleVis,
+    htmltools,
     kableExtra,
+    knitr,
     lubridate,
     magrittr,
     pander,
@@ -20,6 +28,9 @@ Imports:
     rmarkdown,
     shiny,
     shinyBS,
-    shinythemes,
+    shinydashboardPlus,
+    shinyWidgets,
     webshot
-Suggests: testthat
+Suggests: testthat, roxygen2
+VignetteBuilder: knitr
+RoxygenNote: 6.1.0
