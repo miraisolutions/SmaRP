@@ -14,10 +14,9 @@ list of variables within Ibfo Box and Validity Message lists
 }
 \examples{
 \dontrun{
-  # After edits, update the data e.g. by running: 
-  VM <- UI_Messages()$VM
+  # After edits, update the data e.g. by running:
+  VM <- SmaRP:::UI_Messages()$VM
   save(VM, file = "data/VM.rda")
   # load("data/VM.rda")
 }
-#' @export
 }
