@@ -307,8 +307,8 @@ function(input, output, session) {
         legend = "none",
         colors = miraiColors,
         dataOpacity = 0.3,
+        bar = "{groupWidth: '100%'}",
         annotations = "{highContrast: 'false', textStyle: {bold: true}}"
-        # TODO: bar height 100% => help(gvisBarChart)
 
       )
     )
