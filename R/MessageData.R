@@ -12,6 +12,7 @@
 UI_Messages <- function() {
   # Info Box
   IB <- list(
+    Birthdate = "Date of birth.",
     CurrentP3 = "Current retirement assets in your Private Pension Fund.",
     CurrentP2 = "Current retirement assets in your Occupational Pension Fund.",
     P3purchase = "Annual contributions into your Private Pension Fund. Note that SmaRP assumes that the same contributions repeats every year until the retirement.",

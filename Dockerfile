@@ -18,9 +18,11 @@ RUN apt-get update && apt-get install -y \
 
 # Install needed packages
 RUN install2.r --error \
+    bsplus \
     dplyr \
     ggplot2 \
     googleVis \
+    htmltools \
     kableExtra \
     knitr \
     lubridate \
@@ -29,7 +31,6 @@ RUN install2.r --error \
     reshape2 \
     rmarkdown \
     shiny \
-    shinyBS \
     shinydashboardPlus \
     shinyWidgets \
     webshot
