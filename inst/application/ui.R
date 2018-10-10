@@ -63,7 +63,7 @@ fluidPage(
                           value = "1980-12-30",
                           format = "dd-mm-yyyy"
                 ) %>% 
-              bs_embed_tooltip(title = "Date of Birth", placement = "center")
+                  bs_embed_tooltip(title = IB$Birthdate, placement = "right")
               ),
               column(
                 6,
@@ -85,7 +85,7 @@ fluidPage(
                   "Desired Retirement Age (optional)",
                   FALSE
                 ) %>% 
-            bs_embed_tooltip(title = IB$RetirementAgeOptional, placement = "center") 
+                  bs_embed_tooltip(title = IB$RetirementAgeOptional, placement = "right") 
               ),
               column(
                 6,
@@ -101,7 +101,7 @@ fluidPage(
                     max = 70
                   )
                 ) %>% 
-            bs_embed_tooltip(title = IB$RetirementAge, placement = "right")
+                  bs_embed_tooltip(title = IB$RetirementAge, placement = "right")
               )
             ),
             
@@ -127,7 +127,7 @@ fluidPage(
                              choices = Rate_group.list,
                              selected = "A"
                 ) %>% 
-                  bs_embed_tooltip(title = IB$rate_group, placement = "center")
+                  bs_embed_tooltip(title = IB$rate_group, placement = "right")
               ),
               column(
                 6,
