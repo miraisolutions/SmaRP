@@ -1,8 +1,8 @@
 #' Buildt
-#' @description TODO-Gabriel
+#' @description Build a annual path from a today (or given day) until the retirement day. 
 #' @template given_bday
 #' @param RetirementAge age of retirement
-#' @return TODO-Gabriel 
+#' @return vector of dates until retirement. 
 #' @examples
 #' \dontrun{
 #' buildt("1981-08-12")
@@ -45,7 +45,9 @@ getRetirementday <- function(birthday, RetirementAge = 65) {
 }
 
 #' Obtain Retirement Calendar
-#' @description TODO-Gabriel
+#' @description Calculate the annual retirement path.
+#' SmarP assumes that the user will get retired the day that turns 65 or its desired retirement age.
+#' For the current year, if birthday is later than the calculation day, there will be 2 dates.  
 #' @inheritParams buildt 
 #' @importFrom lubridate today ymd years year month day
 #' @return retirement calendar
@@ -69,15 +71,15 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 }
 
 #' Build Contribution Pillar II Path
-#' @description TODO-Gabriel
+#' @description Gather all the required information to project the annual contributions to the occupational pension fund.
 #' @inheritParams buildt 
 #' @template salary
 #' @template P2
-#' @param TypePurchase TODO-Gabriel
+#' @template TypePurchase
 #' @param rate male or female
 #' @import dplyr
 #' @importFrom magrittr '%<>%'
-#' @return TODO-Gabriel
+#' @return data frame with annual different contributions to the Pillar II.  
 #' @examples
 #' \dontrun{
 #' buildContributionP2Path(
@@ -101,21 +103,21 @@ buildContributionP2Path <- function(birthday,
                                     rate = BVGMindestzinssatz,
                                     givenday = today("UTC"),
                                     RetirementAge) {
-
+  
   # build BVG rates from global input
   BVGRatesPath <- BVGcontriburionratesPath %>%
     filter(years <= RetirementAge)
-
+  
   # calc contributions P2 Path
   ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge)) %>%
     mutate(AgePath = sapply(calendar, calcAge, birthday = birthday) %>%
-      as.integer()) %>%
+             as.integer()) %>%
     left_join(BVGRatesPath, by = c("AgePath" = "years")) %>%
     mutate(BVGcontriburionrates = if_else(is.na(BVGcontriburionrates), 0, BVGcontriburionrates))
-
+  
   ncp <- nrow(ContributionP2Path)
   isPurchase <- c(0, rep(1, ncp - 1))
-
+  
   ContributionP2Path %<>% within({
     ExpectedSalaryPath <- calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
     BVGpurchase <- calcBVGpurchase(TypePurchase, P2purchase, ncp)
@@ -126,14 +128,14 @@ buildContributionP2Path <- function(birthday,
     DirectP2 <- cumsum(BVGDirect)
     ReturnP2 <- TotalP2 - DirectP2
   })
-
+  
   return(ContributionP2Path)
 }
 
 #' Calculate Expected Salary Path
-#' @description calculate whether salary will increase or decrease and by how much
+#' @description calculate whether the salary will increase/decrease and by how much.
 #' @template salary
-#' @param ncp TODO-Gabriel
+#' @template ncp 
 #' @return expected salary path
 #' @examples
 #' \dontrun{
@@ -146,11 +148,11 @@ calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
   res <- cumprod(c(Salary, rep(1 + SalaryGrowthRate, nrise), 1))
 }
 
-#' Calculate BVG Purchase
-#' @description TODO-Gabriel
-#' @param TypePurchase type of purchase
-#' @param P2purchase TODO-Gabriel
-#' @param ncp TODO-Gabriel
+#' Calculate Purchase Pilar II
+#' @description Calculate the path of purchases to the Pilar II (Occupational pension fund, BVG) 
+#' @template  TypePurchase
+#' @template P2purchase
+#' @template ncp
 #' @return BVG purchase
 #' @examples
 #' \dontrun{
@@ -166,11 +168,11 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
 }
 
 #' Build Contribution Pillar III Path
-#' @description Build the contribution path for a standard pension fund, called Pillar 3 in Switzerland.
+#' @description Build the contribution path for a standard pension fund, called Pillar III in Switzerland.
 # Based on 'calcAnnuityAcumPath()'
 #' @inheritParams buildt 
 #' @template P3
-#' @return TODO-Gabriel
+#' @return data frame with annual different contributions to the Pillar III.
 #' @examples
 #' \dontrun{
 #' buildContributionP3path(
@@ -190,9 +192,9 @@ buildContributionP3path <- function(birthday,
                                     givenday = today("UTC"),
                                     RetirementAge) {
   ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge))
-
+  
   ncp <- nrow(ContributionP3Path)
-
+  
   ContributionP3Path <- ContributionP3Path %>%
     mutate(
       P3purchase = c(0, rep(P3purchase, ncp - 2), 0),
@@ -202,35 +204,51 @@ buildContributionP3path <- function(birthday,
       DirectP3 = cumsum(P3ContributionPath),
       ReturnP3 = TotalP3 - DirectP3
     )
-
+  
   return(ContributionP3Path)
 }
 
-#' TODO-Gabriel
-#' @description TODO-Gabriel
-#' @param contributions TODO-Gabriel
-#' @param t TODO-Gabriel
-#' @param rate male or female
-#' @return TODO-Gabriel
+#' Calculate annuity accumative path
+#' @description  Calculate future value of an annuity with periodic contributions. 
+#' * Based on continuous compounding interest in annual basis.
+#' * Payments occur at the beginning of each period.
+#' @param contributions vector of contributions (annuities)
+#' @param t vector of time intervals between contributions. 
+#' * Irregular time intervals are allowed. 
+#' * For frequency bellow annual, enter t as proportion of a year.
+#' @param rate interests rate on annual basis. Assumes constant interest rates.
+#' @return vector of accumulated benefits given a set of contributions.
 #' @examples
 #' \dontrun{
-#' calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000), 
+#' calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000),
 #'                                 t = c(0.284931, 1, 1, 1, 0), rate = 0.01)
-#' }
+#'}
 #' @export
 calcAnnuityAcumPath <- function(contributions, t, rate) {
-  # set a default TODO-Gabriel
-  res <- contributions
-  for (i in 2:length(contributions)) {
-    res[i] <- res[i - 1] * exp(rate * t[i - 1]) + contributions[i]
+  
+  assertthat::are_equal(length(contributions), length(t))
+  assertthat::is.scalar(rate)
+  
+  # Set the first period
+  res <- vector()
+  res[1] <- contributions[1]
+  
+  if(length(contributions) == 1) {
+    message("Single contribution. Since payments happen at the beginning of the period, there is no accumulation.")
+    return(res)
   }
-  res
+  
+  # Accumulated compound interest 
+  for(i in 2:length(contributions)) {
+    res[i] <- res[i-1]* exp(rate * t[i-1])  + contributions[i]
+  }
+  return(res)
 }
 
 #' Return Postal Code Kanton
-#' @description Return in which canton the person is retiring
-#' @param plz canton's zip code
-#' @return canton's zip code
+#' @description Return in which canton the person is retiring.
+#' @param plz canton's zip code.
+#' @return canton's zip code.
 #' @export
 returnPLZKanton <- function(plz) {
   Kanton <- PLZGemeinden$Kanton[PLZGemeinden$PLZ == as.numeric(plz)]
@@ -238,7 +256,7 @@ returnPLZKanton <- function(plz) {
 }
 
 #' Print Currency
-#' @description TODO-Gabriel  
+#' @description print values as monetary on a given currency.  
 #' @template print_currency
 #' @return currency
 #' @examples
@@ -255,10 +273,10 @@ printCurrency <- function(value, digits = 0, sep = ",", decimal = ".") { # curre
 }
 
 #' Make Table
-#' @description TODO-Gabriel
-#' @param Road2Retirement TODO-Gabriel
-#' @param moncols TODO-Gabriel
-#' @return TODO-Gabriel
+#' @description Utility function to display main results on the table tab.
+#' @param Road2Retirement Main data frame where main results are displayed.
+#' @param moncols Columns to prit out on the table
+#' @return Table to print out
 #' @examples
 #' \dontrun{
 #' makeTable(Road2Retirement)
@@ -267,10 +285,11 @@ printCurrency <- function(value, digits = 0, sep = ",", decimal = ".") { # curre
 #' @importFrom lubridate year month
 #' @export
 makeTable <- function(Road2Retirement, moncols = c("DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")) { # , currency=""
-  # moncols <-
+  
   TableMonetary <- Road2Retirement[, c("calendar", moncols)] %>%
     mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-"))
-  TableMonetary[, moncols] <- sapply(TableMonetary[, moncols], printCurrency) # , currency
+  TableMonetary[, moncols] <- sapply(TableMonetary[, moncols], printCurrency) 
+  
   return(TableMonetary)
 }
 
@@ -305,10 +324,10 @@ isnotAvailableReturnZero <- function(inputValue, fallback = 0) {
 }
 
 #' Need Not Zero
-#' @description TODO-Gabriel
+#' @description Utility function to display a message in case a non zero value is needed.
 #' @param  input zero, nothing or null
 #' @param inputname name of input
-#' @return TODO-Gabriel
+#' @return warning message or nothing
 #' @export
 need_not_zero <- function(input, inputname) {
   if (input == 0 | input == "" | is.null(input)) {
@@ -322,7 +341,7 @@ need_not_zero <- function(input, inputname) {
 # Format Percentage ----
 #' Change to Percentage
 #' @description from decimal to percentage value
-#' @param df TODO-Gabriel
+#' @param df given data frame
 #' @return percentage value
 #' @export
 changeToPercentage <- function(df) {

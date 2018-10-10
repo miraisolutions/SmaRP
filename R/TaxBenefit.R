@@ -21,11 +21,11 @@
 #'
 #' @family swisstax
 #' @param Income Annual salary. `Numeric` scalar.
-#' @param rate_group TODO-Gabriel. `Character`.
+#' @param rate_group A (Single), B (Married), C (Married Double income) `Character`.
 #' @param Age Age of the person. `Numeric`
 #' @param NKids number of children `Numeric` scalar.
 #' @param postalcode zip code `Character`
-#' @param churchtax TODO-Gabriel `Character` Y/N
+#' @param churchtax Y/N `Character` Y/N
 #' @import dplyr
 #' @return Tax Amount
 #'
@@ -124,10 +124,10 @@ getTaxAmount <- function(Income,
 
 
 #' Returns the tax amount to be paid given one income.
-#' @description TODO-Gabriel
+#' @description Search the tax amount to be paig given one income on the tax tables.
 #' @family swisstax
 #' @param Income annual stipend
-#' @param Tabelle TODO-Gabriel
+#' @param Tabelle Income - Tax rate table at Federal level.
 #' @param CivilStatus marital status
 #' @return tax amount to be paid
 #' @examples
@@ -159,15 +159,15 @@ lookupTaxAmount <- function(Income, Tabelle, CivilStatus) {
 #' Calls 'getTaxAmount()' through 'calcTaxBenefitSwiss()', therefore, it assumes objects on the global enviornment.
 #' @family swisstax
 #' @template given_bday
-#' @param TypePurchase TODO-Gabriel
-#' @param P2purchase Pillar II purchase
-#' @param P3purchase Pillar III purchase
-#' @param returnP3 TODO-Gabriel
+#' @template TypePurchase
+#' @template P2purchase
+#' @template P3purchase
+#' @template returnP3
 #' @template salary
 #' @inheritParams getTaxAmount
 #' @param RetirementAge age of retirement
 #' @import dplyr
-#' @return TODO-Gabriel
+#' @return data.frame tax benefit path.
 #' @examples
 #' \dontrun{buildTaxBenefits(
 #'  birthday,
@@ -230,7 +230,7 @@ buildTaxBenefits <- function(birthday,
 #' @param ExpectedSalaryPath vector length equals year to retirement
 #' @param TaxableIncome vector length equals year to retirement
 #' @inheritParams getTaxAmount
-#' @return TODO-Gabriel
+#' @return Single tax benefit of one contribution.
 #' @examples
 #' \dontrun{
 #'   calcTaxBenefitSwiss(ExpectedSalaryPath = seq(90000, 100000, 1000),

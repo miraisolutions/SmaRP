@@ -2,14 +2,13 @@
 #' @description list of variables within Ibfo Box and Validity Message lists
 #' @return Ib and VM list
 #'
-#' @examples 
+#' @examples
 #' \dontrun{
-#'   # After edits, update the data e.g. by running: 
-#'   VM <- UI_Messages()$VM
+#'   # After edits, update the data e.g. by running:
+#'   VM <- SmaRP:::UI_Messages()$VM
 #'   save(VM, file = "data/VM.rda")
 #'   # load("data/VM.rda")
 #' }
-#' #' @export
 UI_Messages <- function() {
   # Info Box
   IB <- list(
@@ -42,8 +41,7 @@ UI_Messages <- function() {
     CurrentP3_notZero = "Private Pension Fund.",
     CurrentP3_CurrentP2_Salary_Purchases_notZero = "either Salary, Private Pension Fund, Occupational Pension Fund or funds purchases.",
     returnP3_notzero = "Private Pension Fund return.",
-    postalcode = "Provide a valid postalcode.",
-    gemeinden = "Provide a valide gemeinden.",
+    plzgemeinden = "Provide a valid postal code / municipality.",
     rate_group = "Provide a valid civil status.",
     Salary = "Provide a non-zero Income.",
     TypePurchase = "Provide a valid Occupational Pension Fund purchase type.",

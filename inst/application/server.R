@@ -7,25 +7,25 @@ options(shiny.sanitize.errors = TRUE)
 
 function(input, output, session) {
   # Validate inputs and set defaults ----
-  
+
   # Birthday
   Birthdate <- reactive({
     validate(need(input$Birthdate, VM$Birthdate))
     validate(need(calcAge(input$Birthdate) < RetirementAge(), VM$Birthdate2))
     input$Birthdate
   })
-  
+
   # Gender
   genre <- reactive({
     validate(need(input$genre, VM$genre))
     input$genre
   })
-  
+
   # Mirai Colors
   miraiColors <- reactive({
     "['#008cc3', '#FF9966', '#13991c']"
   })
-  
+
   # Retirement Age
   RetirementAge <- reactive({
     if (input$provideRetirementAge) {
@@ -39,13 +39,13 @@ function(input, output, session) {
       }
     }
   })
-  
+
   # Pillar III ----
   # defaut option 0
   CurrentP3_notZero <- reactive({
     isnotAvailableReturnZero(input$CurrentP3)
   })
-  
+
   CurrentP3 <- reactive({
     if (P3purchase() == 0 &
         Salary() == 0 & CurrentP2() == 0 & P2purchase() == 0) {
@@ -60,15 +60,15 @@ function(input, output, session) {
       CurrentP3_notZero()
     }
   })
-  
+
   P3purchase <- reactive({
     isnotAvailableReturnZero(input$P3purchase)
   })
-  
+
   returnP3_notzero <- reactive({
     isnotAvailableReturnZero(input$returnP3 / 100)
   })
-  
+
   returnP3 <- reactive({
     if (CurrentP3() == 0 &
         P3purchase() == 0 &
@@ -84,8 +84,8 @@ function(input, output, session) {
       returnP3_notzero()
     }
   })
-  
-  
+
+
   # Tax info ----
   TaxRelief <- reactive({
     if (input$rate_group == "C") {
@@ -95,49 +95,29 @@ function(input, output, session) {
     }
   })
   
-  # Postal Code --> Gemeinden
-  
+  # Postal Code / Gemeinden
+  selPLZGemeinden <- reactive({
+    validate(need(input$plzgemeinden, VM$plzgemeinden))
+    PLZGemeinden[match(input$plzgemeinden, PLZGemeinden$PLZGDENAME), ]
+  })
   postalcode <- reactive({
-    validate(need(input$postalcode, VM$postalcode))
-    input$postalcode
+    selPLZGemeinden()$PLZ
   })
-  
-  observe({
-    idxPLZ <- which(PLZGemeinden$PLZ == input$postalcode)
-    selGDEName <- PLZGemeinden$GDENAME[idxPLZ]
-    updateSelectInput(session, "gemeinden", selected = selGDEName)
-    
-  })
-  
-  # Gemeinden --> Postal Code
-  
   gemeinden <- reactive({
-    validate(need(input$gemeinden, VM$gemeinden))
-    input$gemeinden
+    selPLZGemeinden()$GDENAME
   })
-  
-  observe({
-    idxGDEName <- which(PLZGemeinden$GDENAME == gemeinden())
-    if (length(idxGDEName) > 1) {
-      selPLZ <- PLZGemeinden$PLZ[idxGDEName][1]
-    } else {
-      selPLZ <- PLZGemeinden$PLZ[idxGDEName]
-    }
-    updateSelectInput(session, "postalcode", selected = selPLZ)
-    
-  })
-  
+
   # Number of kids (max = 9)
   NKids <- reactive({
     min(isnotAvailableReturnZero(input$NKids), 9)
   })
-  
+
   # Tariff
   rate_group <- reactive({
     validate(need(input$rate_group, VM$rate_group))
     input$rate_group
   })
-  
+
   # Church taxes
   churchtax <- reactive({
     if (input$churchtax == TRUE) {
@@ -146,22 +126,22 @@ function(input, output, session) {
       "N"
     }
   })
-  
+
   # Salary
   Salary <- reactive({
     validate(need(input$Salary, VM$Salary))
     input$Salary
   })
-  
+
   SalaryGrowthRate <- reactive({
     isnotAvailableReturnZero(input$SalaryGrowthRate / 100)
   })
-  
+
   # Pillar II
   CurrentP2 <- reactive({
     isnotAvailableReturnZero(input$CurrentP2)
   })
-  
+
   P2interestRate <- reactive({
     if (isnotAvailable(input$P2interestRate)) {
       BVGMindestzinssatz
@@ -169,17 +149,17 @@ function(input, output, session) {
       input$P2interestRate / 100
     }
   })
-  
+
   P2purchase <- reactive({
     isnotAvailableReturnZero(input$P2purchase)
   })
-  
+
   TypePurchase <- reactive({
     validate(need(input$TypePurchase, VM$TypePurchase))
     input$TypePurchase
   })
-  
-  
+
+
   # calc P2 fund ----
   ContributionP2Path <- reactive({
     buildContributionP2Path(
@@ -194,7 +174,7 @@ function(input, output, session) {
       RetirementAge = RetirementAge()
     )
   })
-  
+
   # calc P3 fund ----
   ContributionP3path <- reactive({
     buildContributionP3path(
@@ -205,7 +185,7 @@ function(input, output, session) {
       RetirementAge = RetirementAge()
     )
   })
-  
+
   # calc Tax benefits ----
   ContributionTaxpath <- reactive({
     buildTaxBenefits(
@@ -224,7 +204,7 @@ function(input, output, session) {
       RetirementAge = RetirementAge()
     )
   })
-  
+
   # build Road2Retirement ----
   Road2Retirement <- reactive({
     ContributionP2Path() %>%
@@ -232,13 +212,13 @@ function(input, output, session) {
       left_join(ContributionTaxpath(), by = c("calendar", "t")) %>%
       mutate(Total = TotalP2 + TotalP3 + TotalTax)
   })
-  
+
   # Table ----
   output$table <- renderTable({
     makeTable(Road2Retirement = Road2Retirement())
   }, digits = 0)
-  
-  
+
+
   # T series plot ----
   TserieGraphData <- reactive({
     Road2Retirement() %>%
@@ -251,7 +231,7 @@ function(input, output, session) {
              TaxBenefits) %>%
       .[, colSums(. != 0, na.rm = TRUE) > 0]
   })
-  
+
   output$plot1 <- renderGvis({
     gvisAreaChart(
       chartid = "plot1",
@@ -267,7 +247,7 @@ function(input, output, session) {
       )
     )
   })
-  
+
   # Bar plot -----
   FotoFinish <- reactive({
     Road2Retirement() %>%
@@ -280,8 +260,8 @@ function(input, output, session) {
       select_if(function(x)
         x != 0)
   })
-  
-  
+
+
   BarGraphData <- reactive({
     cbind(FotoFinish(), FotoFinish()) %>%
       set_colnames(c(colnames(FotoFinish()), paste0(
@@ -291,7 +271,7 @@ function(input, output, session) {
       changeToPercentage() %>%
       .[, order(colnames(.))]
   })
-  
+
   output$plot2 <- renderGvis({
     gvisBarChart(
       chartid = "plot2",
@@ -310,24 +290,24 @@ function(input, output, session) {
       )
     )
   })
-  
+
   # build Totals statement ----
   retirementdate <- reactive({
     getRetirementday(Birthdate(), RetirementAge())
   })
-  
+
   retirementfund <- reactive({
     Road2Retirement()[, "Total"] %>%
       tail(1) %>%
       as.integer()
   })
-  
+
   lastSalary <- reactive({
     Road2Retirement()[, "ExpectedSalaryPath"] %>%
       tail(1) %>%
       as.integer()
   })
-  
+
   percentageLastSalary <- reactive({
     if (lastSalary() != 0) {
       numTimes <- retirementfund() / lastSalary()
@@ -337,7 +317,7 @@ function(input, output, session) {
       ""
     }
   })
-  
+
   output$Totals <- renderText({
     paste(
       "Total retirement fund as of",
@@ -355,8 +335,8 @@ function(input, output, session) {
       sep = " "
     )
   })
-  
-  
+
+
   # Disclaimer ----
   output$disclaimer <- renderText({
     paste(
@@ -366,9 +346,9 @@ function(input, output, session) {
       sep = "\n"
     )
   })
-  
+
   # Output Report ----
-  
+
   # params list to be passed to the output
   params <- reactive(
     list(
@@ -407,9 +387,9 @@ function(input, output, session) {
       Verheiratet = Verheiratet
     )
   )
-  
-  
-  
+
+
+
   # output report
   output$report <- downloadHandler(
     filename = "report.pdf",
@@ -424,7 +404,7 @@ function(input, output, session) {
       file.copy(output, file)
     }
   ) # end of downloadHandler
-  
+
   # refresh inputs ----
   # Refresh plz-gemeinde correspondance
   # when the value of input$refreshButton becomes out of date
@@ -432,23 +412,9 @@ function(input, output, session) {
   refreshText <- eventReactive(input$refreshButton, {
     downloadInputs(refresh = TRUE)
   })
-  
+
   output$refreshText <- renderText({
     paste(as.character(refreshText()))
   })
-  
-  
-  # Conditional Retirement age input ----
-  output$conditionalRetirementAge <- renderUI({
-    if (input$provideRetirementAge) {
-      numericInput(
-        "RetirementAge",
-        label = h5("Desired Retirement Age"),
-        value = 65,
-        step = 1,
-        min = 55,
-        max = 70
-      )
-    }
-  })
+
 }
