@@ -15,6 +15,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 Imports:
     assertthat,
+    bsplus,
     dplyr,
     ggplot2,
     googleVis,
@@ -27,7 +28,6 @@ Imports:
     reshape2,
     rmarkdown,
     shiny,
-    shinyBS,
     shinydashboardPlus,
     shinyWidgets,
     webshot

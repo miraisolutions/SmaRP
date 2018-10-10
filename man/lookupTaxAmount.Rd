@@ -9,7 +9,7 @@ lookupTaxAmount(Income, Tabelle, CivilStatus)
 \arguments{
 \item{Income}{annual stipend}
 
-\item{Tabelle}{TODO-Gabriel}
+\item{Tabelle}{Income - Tax rate table at Federal level.}
 
 \item{CivilStatus}{marital status}
 }
@@ -17,7 +17,7 @@ lookupTaxAmount(Income, Tabelle, CivilStatus)
 tax amount to be paid
 }
 \description{
-TODO-Gabriel
+Search the tax amount to be paig given one income on the tax tables.
 }
 \examples{
 \dontrun{

@@ -2,22 +2,22 @@
 % Please edit documentation in R/core.R
 \name{calcBVGpurchase}
 \alias{calcBVGpurchase}
-\title{Calculate BVG Purchase}
+\title{Calculate Purchase Pilar II}
 \usage{
 calcBVGpurchase(TypePurchase, P2purchase, ncp)
 }
 \arguments{
-\item{TypePurchase}{type of purchase}
+\item{TypePurchase}{AnnualP2 if the purchase on the pillar II gets repeated every year until retirement.}
 
-\item{P2purchase}{TODO-Gabriel}
+\item{P2purchase}{annual voluntary contribution to the Occupational Pension Fund.}
 
-\item{ncp}{TODO-Gabriel}
+\item{ncp}{length contribution path to retirement}
 }
 \value{
 BVG purchase
 }
 \description{
-TODO-Gabriel
+Calculate the path of purchases to the Pilar II (Occupational pension fund, BVG)
 }
 \examples{
 \dontrun{

@@ -16,6 +16,8 @@ inst/doc
 # RStudio files
 .Rproj.user/
 *.Rproj
+# personal file with auxiliary commands for development
+command_list.R
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf

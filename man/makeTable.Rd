@@ -9,15 +9,15 @@ makeTable(Road2Retirement, moncols = c("DirectP2", "ReturnP2", "TotalP2",
   "Total"))
 }
 \arguments{
-\item{Road2Retirement}{TODO-Gabriel}
+\item{Road2Retirement}{Main data frame where main results are displayed.}
 
-\item{moncols}{TODO-Gabriel}
+\item{moncols}{Columns to prit out on the table}
 }
 \value{
-TODO-Gabriel
+Table to print out
 }
 \description{
-TODO-Gabriel
+Utility function to display main results on the table tab.
 }
 \examples{
 \dontrun{

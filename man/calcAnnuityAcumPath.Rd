@@ -2,26 +2,34 @@
 % Please edit documentation in R/core.R
 \name{calcAnnuityAcumPath}
 \alias{calcAnnuityAcumPath}
-\title{TODO-Gabriel}
+\title{Calculate annuity accumative path}
 \usage{
 calcAnnuityAcumPath(contributions, t, rate)
 }
 \arguments{
-\item{contributions}{TODO-Gabriel}
+\item{contributions}{vector of contributions (annuities)}
 
-\item{t}{TODO-Gabriel}
+\item{t}{vector of time intervals between contributions.
+\itemize{
+\item Irregular time intervals are allowed.
+\item For frequency bellow annual, enter t as proportion of a year.
+}}
 
-\item{rate}{male or female}
+\item{rate}{interests rate on annual basis. Assumes constant interest rates.}
 }
 \value{
-TODO-Gabriel
+vector of accumulated benefits given a set of contributions.
 }
 \description{
-TODO-Gabriel
+Calculate future value of an annuity with periodic contributions.
+\itemize{
+\item Based on continuous compounding interest in annual basis.
+\item Payments occur at the beginning of each period.
+}
 }
 \examples{
 \dontrun{
-calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000), 
+calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000),
                                 t = c(0.284931, 1, 1, 1, 0), rate = 0.01)
 }
 }

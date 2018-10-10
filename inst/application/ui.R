@@ -5,17 +5,21 @@
 
 Sys.setlocale("LC_TIME", "C")
 
-bsTooltip <- shinyBS::bsTooltip # info windows
+bs_embed_tooltip <- bsplus::bs_embed_tooltip # info windows
 boxPlus <- shinydashboardPlus::boxPlus
 
 # fluidPage UI
 fluidPage(
-  
+
   shinyWidgets::useShinydashboardPlus(),
-  
+
+  # indirectly covered by the above (shinydashboard -> bootstrap), but should
+  # stay for clarity and cleanliness!
+  tags$head(bsplus::use_bs_tooltip()),
+
   # Style  ----
   theme = "style.css",
-  
+
   # Header  ----
   fluidRow(
     id = "header",
@@ -26,23 +30,23 @@ fluidPage(
         id = "sticker-header",
         src = "SmaRPSticker.png",
         height = "100px"
-        
+
       )
     ),
     h2("SmaRP"),
     h3("Smart Retirement Planning")
   ), # end Header fluidRow
-  
+
   # Main  ----
   div(
     id = "main",
-    
+
     fluidRow(
-      
+
       # Sidebar  ----
       column(
         4,
-        
+
         # Personal Info  ----
         fluidRow(
           boxPlus(
@@ -53,7 +57,7 @@ fluidPage(
             closable = FALSE,
             dropdown_icon = NULL,
             enable_dropdown = TRUE,
-            
+
             # > Birthdate and gender ----
             fluidRow(
               column(
@@ -62,12 +66,8 @@ fluidPage(
                           label = "Birthdate",
                           value = "1980-12-30",
                           format = "dd-mm-yyyy"
-                ),
-                bsTooltip("Birthdate",
-                          IB$Birthdate,
-                          placement = "center",
-                          options = list(container = "body")
-                )
+                ) %>%
+                  bs_embed_tooltip(title = IB$Birthdate, placement = "right")
               ),
               column(
                 6,
@@ -79,7 +79,7 @@ fluidPage(
                 )
               )
             ),
-            
+
             # > Desired retirement age conditional panel ----
             fluidRow(
               column(
@@ -88,12 +88,8 @@ fluidPage(
                   "provideRetirementAge",
                   "Desired Retirement Age (optional)",
                   FALSE
-                ),
-                bsTooltip("provideRetirementAge",
-                          IB$RetirementAgeOptional,
-                          placement = "right",
-                          options = list(container = "body")
-                )
+                ) %>%
+                  bs_embed_tooltip(title = IB$RetirementAgeOptional, placement = "right")
               ),
               column(
                 6,
@@ -107,16 +103,12 @@ fluidPage(
                     step = 1,
                     min = 55,
                     max = 70
-                  )
-                ),
-                bsTooltip("RetirementAge",
-                          IB$RetirementAge,
-                          placement = "right",
-                          options = list(container = "body")
+                  ) %>%
+                    bs_embed_tooltip(title = IB$RetirementAge, placement = "right")
                 )
               )
             ),
-            
+
             # > PLZ / Gemeinde ----
             fluidRow(
               column(
@@ -128,7 +120,7 @@ fluidPage(
                 )
               )
             ),
-            
+
             # > Rate Group and number of children ----
             fluidRow(
               column(
@@ -138,12 +130,8 @@ fluidPage(
                              inline = TRUE,
                              choices = Rate_group.list,
                              selected = "A"
-                ),
-                bsTooltip("rate_group",
-                          IB$rate_group,
-                          placement = "center",
-                          options = list(container = "body")
-                )
+                ) %>%
+                  bs_embed_tooltip(title = IB$rate_group, placement = "right")
               ),
               column(
                 6,
@@ -152,15 +140,11 @@ fluidPage(
                              value = 0,
                              min = 0,
                              max = 9
-                ),
-                bsTooltip("NKids",
-                          IB$NKids,
-                          placement = "right",
-                          options = list(container = "body")
-                )
+                ) %>%
+                  bs_embed_tooltip(title = IB$NKids, placement = "right")
               )
             ),
-            
+
             # > Church tax ----
             fluidRow(
               column(
@@ -173,13 +157,13 @@ fluidPage(
                 )
               )
             ),
-            
+
             NULL
-            
+
           ) # end Personal Info boxPlus
         ), # end  Personal Info fluidRow
-        
-        
+
+
         # Pillar II  -------
         fluidRow(
           boxPlus(
@@ -199,24 +183,16 @@ fluidPage(
                              value = 100000,
                              step = 1000,
                              min = 0
-                ),
-                bsTooltip("Salary",
-                          IB$Salary,
-                          placement = "right",
-                          options = list(container = "body")
-                ),
+                ) %>%
+                  bs_embed_tooltip(title = IB$Salary, placement = "right"),
                 numericInput("SalaryGrowthRate",
                              label = "Expected Salary Growth Rate %",
                              value = 0.5,
                              step = 0.1,
                              min = 0,
                              max = 100
-                ),
-                bsTooltip("SalaryGrowthRate",
-                          IB$SalaryGrowthRate,
-                          placement = "right",
-                          options = list(container = "body")
-                )
+                ) %>%
+                  bs_embed_tooltip(title = IB$SalaryGrowthRate, placement = "right")
               ),
               column(
                 6,
@@ -225,24 +201,16 @@ fluidPage(
                              value = 100000,
                              step = 1000,
                              min = 0
-                ),
-                bsTooltip("CurrentP2",
-                          IB$CurrentP2,
-                          placement = "right",
-                          options = list(container = "body")
-                ),
+                ) %>%
+                  bs_embed_tooltip(title = IB$CurrentP2, placement = "right"),
                 numericInput("P2interestRate",
                              label = "Interest Rate % (optional)",
                              value = 100 * BVGMindestzinssatz,
                              step = 1,
                              min = 100 * BVGMindestzinssatz,
                              max = 100
-                ),
-                bsTooltip("P2interestRate",
-                          IB$P2interestRate,
-                          placement = "right",
-                          options = list(container = "body")
-                )
+                ) %>%
+                  bs_embed_tooltip(title = IB$P2interestRate, placement = "right")
               )
             ),
             fluidRow(
@@ -253,12 +221,8 @@ fluidPage(
                              value = 0,
                              step = 500,
                              min = 0
-                ),
-                bsTooltip("P2purchase",
-                          IB$P2purchase,
-                          placement = "right",
-                          options = list(container = "body")
-                )
+                ) %>%
+                  bs_embed_tooltip(title = IB$P2purchase, placement = "right")
               ),
               column(
                 6,
@@ -266,17 +230,13 @@ fluidPage(
                              label = br(), # empty placeholder for alignment
                              inline = TRUE,
                              choices = Purchase.list
-                ),
-                bsTooltip("TypePurchase",
-                          IB$TypePurchase,
-                          placement = "right",
-                          options = list(container = "body")
-                )
+                ) %>%
+                  bs_embed_tooltip(title = IB$TypePurchase, placement = "right")
               )
             ) # end fluidRow
           ) # end boxPlus
         ), # end fluidRow
-        
+
         # Pillar III  -------
         fluidRow(
           boxPlus(
@@ -296,12 +256,8 @@ fluidPage(
                              value = 50000,
                              step = 1000,
                              min = 0
-                ),
-                bsTooltip("CurrentP3",
-                          IB$CurrentP3,
-                          placement = "right",
-                          options = list(container = "body")
-                )
+                ) %>%
+                  bs_embed_tooltip(title = IB$CurrentP3, placement = "right")
               )
             ),
             fluidRow(
@@ -312,42 +268,34 @@ fluidPage(
                              value = 0,
                              step = 500,
                              min = 0
-                ),
-                bsTooltip("P3purchase",
-                          IB$P3purchase,
-                          placement = "right",
-                          options = list(container = "body")
-                ),
+                ) %>%
+                  bs_embed_tooltip(title = IB$P3purchase, placement = "right"),
                 numericInput("returnP3",
                              label = "Expected Return %",
                              value = BVGMindestzinssatz * 100,
                              step = 0.1,
                              min = 0,
                              max = 100
-                ),
-                bsTooltip("returnP3",
-                          IB$returnP3,
-                          placement = "right",
-                          options = list(container = "body")
-                )
+                ) %>%
+                  bs_embed_tooltip(title = IB$returnP3, placement = "right")
               )
             )
           ) # end Pillar III boxPlus
         ), # end Pillar III fluidRow
-        
+
         NULL
-        
+
       ), # end first Sidebar column
-      
+
       # Main Panel -----
       column(
         8,
-        
+
         fluidRow(
           column(
             12,
             tabsetPanel(
-              
+
               # > Plot  ----
               tabPanel(
                 title = "Plot",
@@ -358,7 +306,7 @@ fluidPage(
                   htmlOutput("plot2")
                 )
               ), # end tabPanel Plot
-              
+
               # > Table ----
               tabPanel(
                 title = "Table",
@@ -371,9 +319,9 @@ fluidPage(
             ) # end tabsetPanel
           ) # end column
         ), # end fluidRow
-        
+
         br(),
-        
+
         fluidRow(
           column(
             12,
@@ -382,13 +330,13 @@ fluidPage(
                            class = "btn-smarp")
           )
         ), # end FluidRow
-        
+
         NULL
-        
+
       ) # end Main Panel column
-      
+
     ), # end fluidRow
-    
+
     # Disclaimer
     fluidRow(
       verbatimTextOutput("disclaimer")
@@ -397,7 +345,7 @@ fluidPage(
   # Footer  ----
   fluidRow(
     id = "footer",
-    
+
     a(
       id = "git-footer",
       href = "https://github.com/miraisolutions/SmaRP.git",

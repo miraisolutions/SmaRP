@@ -11,13 +11,13 @@ calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
 
 \item{SalaryGrowthRate}{rate at which the salary increases/decreases}
 
-\item{ncp}{TODO-Gabriel}
+\item{ncp}{length contribution path to retirement}
 }
 \value{
 expected salary path
 }
 \description{
-calculate whether salary will increase or decrease and by how much
+calculate whether the salary will increase/decrease and by how much.
 }
 \examples{
 \dontrun{
