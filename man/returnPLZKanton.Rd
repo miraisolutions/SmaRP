@@ -7,11 +7,11 @@
 returnPLZKanton(plz)
 }
 \arguments{
-\item{plz}{canton's zip code}
+\item{plz}{canton's zip code.}
 }
 \value{
-canton's zip code
+canton's zip code.
 }
 \description{
-Return in which canton the person is retiring
+Return in which canton the person is retiring.
 }

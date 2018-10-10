@@ -7,7 +7,7 @@
 changeToPercentage(df)
 }
 \arguments{
-\item{df}{TODO-Gabriel}
+\item{df}{given data frame}
 }
 \value{
 percentage value

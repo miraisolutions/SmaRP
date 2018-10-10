@@ -18,7 +18,9 @@ getRetirementCalendar(birthday, givenday = today("UTC"),
 retirement calendar
 }
 \description{
-TODO-Gabriel
+Calculate the annual retirement path.
+SmarP assumes that the user will get retired the day that turns 65 or its desired retirement age.
+For the current year, if birthday is later than the calculation day, there will be 2 dates.
 }
 \examples{
 \dontrun{

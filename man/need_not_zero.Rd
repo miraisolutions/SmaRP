@@ -12,8 +12,8 @@ need_not_zero(input, inputname)
 \item{inputname}{name of input}
 }
 \value{
-TODO-Gabriel
+warning message or nothing
 }
 \description{
-TODO-Gabriel
+Utility function to display a message in case a non zero value is needed.
 }

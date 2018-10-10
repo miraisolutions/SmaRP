@@ -11,13 +11,13 @@ buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
 \arguments{
 \item{birthday}{date of birth ("YYYY-MM-DD").}
 
-\item{TypePurchase}{TODO-Gabriel}
+\item{TypePurchase}{AnnualP2 if the purchase on the pillar II gets repeated every year until retirement.}
 
-\item{P2purchase}{Pillar II purchase}
+\item{P2purchase}{annual voluntary contribution to the Occupational Pension Fund.}
 
-\item{P3purchase}{Pillar III purchase}
+\item{P3purchase}{annual voluntary contribution to the Private Pension Fund (Pillar 3).}
 
-\item{returnP3}{TODO-Gabriel}
+\item{returnP3}{annual expected return on the Private Pension Fund.}
 
 \item{Salary}{stipend}
 
@@ -27,16 +27,22 @@ buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
 
 \item{NKids}{number of children \code{Numeric} scalar.}
 
-\item{churchtax}{TODO-Gabriel \code{Character} Y/N}
+\item{churchtax}{Y/N \code{Character} Y/N}
 
-\item{rate_group}{TODO-Gabriel. \code{Character}.}
+\item{rate_group}{A (Single), B (Married), C (Married Double income) \code{Character}.}
 
 \item{givenday}{date at which the age is computed ("YYYY-MM-DD").}
 
 \item{RetirementAge}{age of retirement}
+
+\item{CurrentP2}{value of the current assets in the Occupational Pension Fund.}
+
+\item{CurrentP3}{value of the current assets in the Private Pension Fund (Pillar 3).}
+
+\item{ncp}{length contribution path to retirement}
 }
 \value{
-TODO-Gabriel
+data.frame tax benefit path.
 }
 \description{
 Builds a data frame with the tax benefits path
