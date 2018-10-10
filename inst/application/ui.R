@@ -10,12 +10,12 @@ boxPlus <- shinydashboardPlus::boxPlus
 
 # fluidPage UI
 fluidPage(
-
+  
   shinyWidgets::useShinydashboardPlus(),
-
+  
   # Style  ----
   theme = "style.css",
-
+  
   # Header  ----
   fluidRow(
     id = "header",
@@ -26,23 +26,23 @@ fluidPage(
         id = "sticker-header",
         src = "SmaRPSticker.png",
         height = "100px"
-
+        
       )
     ),
     h2("SmaRP"),
     h3("Smart Retirement Planning")
   ), # end Header fluidRow
-
+  
   # Main  ----
   div(
     id = "main",
-
+    
     fluidRow(
-
+      
       # Sidebar  ----
       column(
         4,
-
+        
         # Personal Info  ----
         fluidRow(
           boxPlus(
@@ -53,7 +53,7 @@ fluidPage(
             closable = FALSE,
             dropdown_icon = NULL,
             enable_dropdown = TRUE,
-
+            
             # > Birthdate and gender ----
             fluidRow(
               column(
@@ -71,18 +71,15 @@ fluidPage(
               ),
               column(
                 6,
-                conditionalPanel(
-                  condition = '!input.provideRetirementAge',
-                  radioButtons("genre",
-                               label = "Gender Affiliation",
-                               inline = TRUE,
-                               choices = list("Male" = "M", "Female" = "F"),
-                               selected = "M"
-                  )
+                radioButtons("genre",
+                             label = "Gender Affiliation",
+                             inline = TRUE,
+                             choices = list("Male" = "M", "Female" = "F"),
+                             selected = "M"
                 )
               )
             ),
-
+            
             # > Desired retirement age conditional panel ----
             fluidRow(
               column(
@@ -119,7 +116,7 @@ fluidPage(
                 )
               )
             ),
-
+            
             # > PLZ / Gemeinde ----
             fluidRow(
               column(
@@ -131,7 +128,7 @@ fluidPage(
                 )
               )
             ),
-
+            
             # > Rate Group and number of children ----
             fluidRow(
               column(
@@ -163,7 +160,7 @@ fluidPage(
                 )
               )
             ),
-
+            
             # > Church tax ----
             fluidRow(
               column(
@@ -176,13 +173,13 @@ fluidPage(
                 )
               )
             ),
-
+            
             NULL
-
+            
           ) # end Personal Info boxPlus
         ), # end  Personal Info fluidRow
-
-
+        
+        
         # Pillar II  -------
         fluidRow(
           boxPlus(
@@ -279,7 +276,7 @@ fluidPage(
             ) # end fluidRow
           ) # end boxPlus
         ), # end fluidRow
-
+        
         # Pillar III  -------
         fluidRow(
           boxPlus(
@@ -337,20 +334,20 @@ fluidPage(
             )
           ) # end Pillar III boxPlus
         ), # end Pillar III fluidRow
-
+        
         NULL
-
+        
       ), # end first Sidebar column
-
+      
       # Main Panel -----
       column(
         8,
-
+        
         fluidRow(
           column(
             12,
             tabsetPanel(
-
+              
               # > Plot  ----
               tabPanel(
                 title = "Plot",
@@ -361,7 +358,7 @@ fluidPage(
                   htmlOutput("plot2")
                 )
               ), # end tabPanel Plot
-
+              
               # > Table ----
               tabPanel(
                 title = "Table",
@@ -374,9 +371,9 @@ fluidPage(
             ) # end tabsetPanel
           ) # end column
         ), # end fluidRow
-
+        
         br(),
-
+        
         fluidRow(
           column(
             12,
@@ -385,13 +382,13 @@ fluidPage(
                            class = "btn-smarp")
           )
         ), # end FluidRow
-
+        
         NULL
-
+        
       ) # end Main Panel column
-
+      
     ), # end fluidRow
-
+    
     # Disclaimer
     fluidRow(
       verbatimTextOutput("disclaimer")
@@ -400,7 +397,7 @@ fluidPage(
   # Footer  ----
   fluidRow(
     id = "footer",
-
+    
     a(
       id = "git-footer",
       href = "https://github.com/miraisolutions/SmaRP.git",
