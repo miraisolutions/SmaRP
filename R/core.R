@@ -75,7 +75,6 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 #' @inheritParams buildt 
 #' @template salary
 #' @template P2
-#' @template TypePurchase
 #' @param rate male or female
 #' @import dplyr
 #' @importFrom magrittr '%<>%'
@@ -135,7 +134,6 @@ buildContributionP2Path <- function(birthday,
 #' Calculate Expected Salary Path
 #' @description calculate whether the salary will increase/decrease and by how much.
 #' @template salary
-#' @template ncp 
 #' @return expected salary path
 #' @examples
 #' \dontrun{
@@ -150,9 +148,8 @@ calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
 
 #' Calculate Purchase Pilar II
 #' @description Calculate the path of purchases to the Pilar II (Occupational pension fund, BVG) 
-#' @template  TypePurchase
-#' @template P2purchase
-#' @template ncp
+#' @inheritParams calcExpectedSalaryPath
+#' @inheritParams buildContributionP2Path
 #' @return BVG purchase
 #' @examples
 #' \dontrun{
@@ -171,6 +168,7 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
 #' @description Build the contribution path for a standard pension fund, called Pillar III in Switzerland.
 # Based on 'calcAnnuityAcumPath()'
 #' @inheritParams buildt 
+#' @inheritParams calcExpectedSalaryPath
 #' @template P3
 #' @return data frame with annual different contributions to the Pillar III.
 #' @examples

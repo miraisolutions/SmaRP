@@ -14,10 +14,10 @@ buildt(birthday, givenday = today("UTC"), RetirementAge = 65)
 \item{RetirementAge}{age of retirement}
 }
 \value{
-TODO-Gabriel
+vector of dates until retirement.
 }
 \description{
-TODO-Gabriel
+Build a annual path from a today (or given day) until the retirement day.
 }
 \examples{
 \dontrun{

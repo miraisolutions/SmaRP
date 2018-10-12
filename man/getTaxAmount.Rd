@@ -9,7 +9,7 @@ getTaxAmount(Income, rate_group, Age, NKids, postalcode, churchtax)
 \arguments{
 \item{Income}{Annual salary. \code{Numeric} scalar.}
 
-\item{rate_group}{TODO-Gabriel. \code{Character}.}
+\item{rate_group}{A (Single), B (Married), C (Married Double income) \code{Character}.}
 
 \item{Age}{Age of the person. \code{Numeric}}
 
@@ -17,7 +17,7 @@ getTaxAmount(Income, rate_group, Age, NKids, postalcode, churchtax)
 
 \item{postalcode}{zip code \code{Character}}
 
-\item{churchtax}{TODO-Gabriel \code{Character} Y/N}
+\item{churchtax}{Y/N \code{Character} Y/N}
 }
 \value{
 Tax Amount

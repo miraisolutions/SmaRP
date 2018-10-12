@@ -19,7 +19,7 @@ printCurrency(value, digits = 0, sep = ",", decimal = ".")
 currency
 }
 \description{
-TODO-Gabriel
+print values as monetary on a given currency.
 }
 \examples{
 \dontrun{

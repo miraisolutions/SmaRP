@@ -15,23 +15,25 @@ buildContributionP2Path(birthday, Salary, SalaryGrowthRate, CurrentP2,
 
 \item{SalaryGrowthRate}{rate at which the salary increases/decreases}
 
-\item{CurrentP2}{TODO-Gabriel}
+\item{CurrentP2}{value of the current assets in the Occupational Pension Fund.}
 
-\item{P2purchase}{TODO-Gabriel}
+\item{P2purchase}{annual voluntary contribution to the Occupational Pension Fund.}
 
-\item{TypePurchase}{TODO-Gabriel}
+\item{TypePurchase}{AnnualP2 if the purchase on the pillar II gets repeated every year until retirement.}
 
 \item{rate}{male or female}
 
 \item{givenday}{date at which the age is computed ("YYYY-MM-DD").}
 
 \item{RetirementAge}{age of retirement}
+
+\item{ncp}{length contribution path to retirement}
 }
 \value{
-TODO-Gabriel
+data frame with annual different contributions to the Pillar II.
 }
 \description{
-TODO-Gabriel
+Gather all the required information to project the annual contributions to the occupational pension fund.
 }
 \examples{
 \dontrun{

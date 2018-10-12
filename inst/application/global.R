@@ -53,8 +53,7 @@ Purchase.list <- list(
 
 # PLZGemeinden <- readRDS("inst/application/data/PLZGemeinden.rds")
 PLZGemeinden <- readRDS(system.file("application", "data", "PLZGemeinden.rds", package = "SmaRP"))
-PLZvec <- unique(stats::setNames(PLZGemeinden$PLZ, PLZGemeinden$PLZ))
-GDENAMEvec <- unique(stats::setNames(PLZGemeinden$GDENAME, PLZGemeinden$GDENAME))
+PLZGemeinden$PLZGDENAME <- with(PLZGemeinden, paste(PLZ, GDENAME))
 kantons <- unique(PLZGemeinden$Kanton)
 
 # BundessteueTabelle <- readRDS("inst/application/data/BundessteueTabelle.rds")

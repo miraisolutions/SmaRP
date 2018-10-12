@@ -92,37 +92,17 @@ function(input, output, session) {
       MaxContrTax
     }
   })
-
-  # Postal Code --> Gemeinden
-
+  
+  # Postal Code / Gemeinden
+  selPLZGemeinden <- reactive({
+    validate(need(input$plzgemeinden, VM$plzgemeinden))
+    PLZGemeinden[match(input$plzgemeinden, PLZGemeinden$PLZGDENAME), ]
+  })
   postalcode <- reactive({
-    validate(need(input$postalcode, VM$postalcode))
-    input$postalcode
+    selPLZGemeinden()$PLZ
   })
-
-  observe({
-    idxPLZ <- which(PLZGemeinden$PLZ == input$postalcode)
-    selGDEName <- PLZGemeinden$GDENAME[idxPLZ]
-    updateSelectInput(session, "gemeinden", selected = selGDEName)
-
-  })
-
-  # Gemeinden --> Postal Code
-
   gemeinden <- reactive({
-    validate(need(input$gemeinden, VM$gemeinden))
-    input$gemeinden
-  })
-
-  observe({
-    idxGDEName <- which(PLZGemeinden$GDENAME == gemeinden())
-    if (length(idxGDEName) > 1) {
-      selPLZ <- PLZGemeinden$PLZ[idxGDEName][1]
-    } else {
-      selPLZ <- PLZGemeinden$PLZ[idxGDEName]
-    }
-    updateSelectInput(session, "postalcode", selected = selPLZ)
-
+    selPLZGemeinden()$GDENAME
   })
 
   # Number of kids (max = 9)
@@ -440,18 +420,4 @@ function(input, output, session) {
     paste(as.character(refreshText()))
   })
 
-  
-  # Conditional Retirement age input ----
-  output$conditionalRetirementAge <- renderUI({
-    if (input$provideRetirementAge) {
-      numericInput(
-        "RetirementAge",
-        label = h5("Desired Retirement Age"),
-        value = 65,
-        step = 1,
-        min = 55,
-        max = 70
-      )
-    }
-  })
 }

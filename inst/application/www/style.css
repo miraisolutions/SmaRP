@@ -1,39 +1,68 @@
+
 body {
   background-color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  color: black;
 }
 
-#head1 {
+#header {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 25px;
+  padding-right: 25px;
+  margin-bottom: 10px;
   background-color: #009edb;
   background-image: url("illu-header-data.png");
   background-repeat: repeat-x;
   background-position: center center;
-  background-size: cover;
-  margin-bottom:0.5%;
+  background-size: auto 400px;
 }
 
-hr {border-top: 1px solid #000000;}
+#sticker-header {
+  float: left;
+  margin-right: 15px;
+  height: 90px;
+}
+
+#footer {
+  padding-top: 15px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  margin-top: 25px;
+  border-top: 1px solid #000000;
+}
+
+#git-footer {
+  float: left;
+}
+
+#mirai-footer {
+  float: right;
+  height: 32px;
+}
+
+#main{
+  padding: 0;
+}
+
 
 h5 {
-  font-family:Arial;
+  font-family: inherit;
   font-size: 12px;
-  color:black;
+  color: black;
 }
 
 h4 {
-  font-family:Arial;
+  font-family: inherit;
   font-size: 13px;
-  color:black;
   font-weight: bold;
-}
-
-#head2 {
-  font-family:Arial;
-  font-size: 12px;
-  color:black;
+  color: black;
 }
 
 #disclaimer{
-  font-family:Arial;
+  font-family: inherit;
   color: #737373;
   font-size: 12px;
   text-align: left;
@@ -43,7 +72,7 @@ h4 {
 }
 
 #Totals{
-  font-family:Arial;
+  font-family: inherit;
   color: #008cc3;
   font-size: 18px;
   text-align: center;
@@ -52,9 +81,9 @@ h4 {
   margin-top: 2%;
   margin-bottom: 0.5%;
 }
-                                  
+
 h2 {
-  font-family:Arial;
+  font-family: inherit;
   color: #ea8b5b;
   font-size: 30px;
   text-align: left;
@@ -63,7 +92,7 @@ h2 {
 }
 
 h3 {
-  font-family:Arial;
+  font-family: inherit;
   color: #000000;
   font-size: 18px;
   text-align: left;
@@ -73,43 +102,150 @@ h3 {
 }
 
 a {
-  font-family:Arial;
   font-size: 14px;
-  color:#008cc3;
+  color: #008cc3;
   text-align: left;
   font-weight: normal;
 }
 
 small {
-  font-family:Arial;
   font-size: 12px;
-  color:#737373;  
+  color: #737373;
 }
 
-.tabbable > .nav > li > a[data-value='Personal'] {
+
+label {
+  font-weight: normal;
+}
+
+/* fix inline radio multiline spacing */
+.form-control, .selectize-input {
+  padding: 7px 10px;
+  font: inherit;
+  border-radius: 3px;
+}
+
+.datepicker {
+  font: inherit; /* inherit from body */
+}
+
+
+/* fix inline radio multiline spacing */
+.radio-inline+.radio-inline {
+  margin-left: 0;
+}
+.radio-inline {
+  padding-right: 15px;
+}
+
+/* vertical radio/checkbox alignment to text */
+input[type=checkbox], input[type=radio] {
+  margin: 1px 0 0;
+  border: 10px solid red;
+}
+
+.checkbox, .radio {
+  margin: 0;
+}
+
+
+/* boxPlus (collapsible) panels */
+.box {
+/*
+  padding: 0;
+  border: 1px solid;
+  border-radius: 3px;
+  border-top: 3px solid;
+  box-shadow: 0 1px 1px rgba(0,0,0,.1);
+*/
+}
+.box.box-primary {
+  border-color: #FF9966;
+/*
+  border-color: #008cc3;
+*/
+}
+.box-header, .box-body {
+/*
+  padding: 8px 15px;
+*/
+}
+.box-header .box-title {
+  color: black;
+  font-size: 13px;
+  font-weight: bold;
+}
+.box-header > .box-tools {
+  /* collapse icons vertical position */
+  top: 3px;
+}
+
+
+/* button style same as box panels */
+/*
+.btn-smarp {
+  font-size: 13px;
+  font-weight: bold;
+  border-radius: 3px;
+  border: 1px solid #008cc3;
+  border-top: 3px solid #008cc3;
+  box-shadow: 0 1px 1px rgba(0,0,0,.1);
+}
+.btn.btn-smarp: hover, .btn.btn-smarp: active, .btn.btn-smarp: focus {
+  border-color: #008cc3;
+}
+*/
+
+/* tabsetPanel style */
+.nav-tabs {
+  border-bottom: 1px solid #FF9966;
+/*
+  border-bottom: 0 solid #008cc3;
+*/
+}
+.tab-content {
+/*
+  padding: 6px 12px;
+  border: 1px solid #008cc3;
+  border-radius: 3px;
+  border-top-left-radius: 0;
+  box-shadow: 0 1px 1px rgba(0,0,0,.1);
+*/
+}
+.tabbable > .nav > li > a {
+  margin-left: 20px;
+  min-width: 100px;
+/*
+  font-size: 13px;
+  font-weight: bold;
   background-color: white;
-  color:#008cc3;
-  border: 1.1px solid #D7DBDD;
-  width: 150px;
+  padding: 8px 15px;
+  min-width: 100px;
+  margin-right: 2px;
+  border-radius: 3px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+*/
 }
-
-.tabbable > .nav > li[class=active] > a[data-value='Personal'] {
-  background-color:#008cc3;
-  color:white; border-bottom: 1px solid #D7DBDD; width: 150px;}
-
-.tabbable > .nav > li > a[data-value='Residence'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 150px; margin-left:10px;}
-.tabbable > .nav > li[class=active]    > a[data-value='Residence'] {background-color:#008cc3;   color:white; border-bottom: 1px solid #D7DBDD;width: 150px; margin-left:10px;}
-
-.tabbable > .nav > li > a[data-value='Swiss'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 150px; margin-left:10px;}
-.tabbable > .nav > li[class=active]    > a[data-value='Swiss'] {background-color:#FF9966;   color:white; border: 1.1px solid #D7DBDD;width: 150px; margin-left:10px;}
-
-.tabbable > .nav > li > a[data-value='Plot'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 100px; margin-left:20px;}
-.tabbable > .nav > li[class=active]    > a[data-value='Plot'] {background-color: #FF9966;   color:white; border: 1.1px solid #D7DBDD; width: 100px; margin-left:20px;}
-
-.tabbable > .nav > li > a[data-value='Table'] {background-color: white;  color:#008cc3; border: 1.1px solid #D7DBDD; width: 100px;margin-left:10px;}
-.tabbable > .nav > li[class=active]    > a[data-value='Table'] {background-color:#FF9966;   color:white; border: 1.1px solid #D7DBDD; width: 100px;margin-left:10px;}
-
-.tabbable > .nav > li > a                  {background-color: white;  color:#008cc3}
-.tabbable > .nav > li[class=active]    > a {background-color: #008cc3;   color:white}
-
-
+.tabbable > .nav > li[class=active] > a {
+  color: white;
+  background-color: #FF9966;
+  border-color: #FF9966;
+/*
+  color: inherit;
+  border: 1px solid #008cc3;
+  border-bottom: 1px solid white;
+  border-top: 3px solid #008cc3;
+*/
+}
+.tabbable > .nav > li:not([class=active]) > a {
+  border-top: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+  border-left: 1px solid #DDD;
+/*
+  color: #666666;
+  border: 1px solid #D7DBDD;
+  border-bottom: 1px solid #008cc3;
+  border-top: 3px solid #D7DBDD;
+*/
+}
