@@ -100,7 +100,7 @@ Road2Retirement_to_print <- params$Road2Retirement %>%
   filter(Y %in% unique(c(Y[1], Y[!Y%%1], Y[length(Y)])) ) 
 ```
 
-The total retirement fund as of `r params$retirementdate` is `r printCurrency(params$retirementfund)` `r  params$percentageLastSalary`.
+The total retirement fund as of `r format(params$retirementdate, "%d-%m-%Y") ` is `r printCurrency(params$retirementfund)` `r  params$percentageLastSalary`.
 
 This plot represents the time-evolution of the different contributions to the total retirement fund.
 
