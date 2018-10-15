@@ -30,3 +30,5 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 .Rproj.user
+# data files created through `configure`
+data/*.rda
