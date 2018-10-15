@@ -45,6 +45,7 @@ VM <- list(
   TaxRateSwiss = "Provide a valid Tax Rate"
 )
 
+dir.create("data")
 save(IB, file = "data/IB.rda")
 save(VM, file = "data/VM.rda")
 
