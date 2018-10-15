@@ -22,9 +22,7 @@ function(input, output, session) {
   })
 
   # Mirai Colors
-  miraiColors <- reactive({
-    "['#008cc3', '#FF9966', '#13991c']"
-  })
+  miraiColors <- "['#008cc3', '#FF9966', '#13991c']"
 
   # Retirement Age
   RetirementAge <- reactive({
@@ -241,9 +239,10 @@ function(input, output, session) {
       options = list(
         width = 800,
         height = 400,
+        chartArea = "{left: 150, width: 550}",
         isStacked = TRUE,
         legend = "bottom",
-        colors = miraiColors()
+        colors = miraiColors
       )
     )
   })
@@ -279,14 +278,18 @@ function(input, output, session) {
       xvar = "contribution",
       yvar = colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
       options = list(
-        width = 600,
+        width = 800,
         height = 130,
+        chartArea = "{left: 150, width: 550, height: 50}",
         isStacked = TRUE,
         vAxes = "[{minValue:0}]",
+        hAxis = "{format:'#,###%'}",
         legend = "none",
-        colors = miraiColors(),
-        opacity = 0.3,
-        hAxis = "{format:'#,###%'}"
+        colors = miraiColors,
+        dataOpacity = 0.3,
+        bar = "{groupWidth: '100%'}",
+        annotations = "{highContrast: 'false', textStyle: {bold: true}}"
+
       )
     )
   })
