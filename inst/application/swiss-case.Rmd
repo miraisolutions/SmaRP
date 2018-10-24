@@ -1,8 +1,6 @@
-# Case specific information
+# The basics of the Swiss retirement system
 
-The Swiss case has been selected.
-
-The Swiss social security system is based on a three-pillar regime. 
+The Swiss social retirement system is based on a three-pillar regime. A nice summary can be found [here](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland).
 
 \begin{center}
 \includegraphics[width=0.4\textwidth]{www/SwissRetirementSystem.png}
@@ -28,8 +26,6 @@ An ulterior contribution to the kantonal tax is given by the optional affiliatio
 The retirement age can either be explicitedly provided as an input, or can be inferred from the genere.
 
 ## Swiss-case specific assumptions and limitations
-
-If married double-income, SmaRP assumes that all the inputs correspond to the aggregated amounts and a 50% income distribution is assumed. 
 
 In certain kantons there is a different church tax based on the type of church the user belongs to (Evangelische Kirche and Roeman-katolische Kirche). SmaRP does not make such distinction and always assumes the highest of the values.
 Moreover, when the church-tax depends on the kantonal tax rate (in stead of being a fixed factor), an approximation is made and treated as the maximum possible factor (relevant for kantons: VS, BS, BL).
