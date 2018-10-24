@@ -81,7 +81,7 @@ Kinder <- format(round(params$Kinder, 2), nsmall = 2)
 ```
 
 
-SmaRP, **Sma**rt **R**etirement **P**lanning has been designed and developed by [Mirai Solutions GmbH](www.mirai-solutions.com) to support users in an educated decision-making process towards their retirement.
+SmaRP, **Sma**rt **R**etirement **P**lanning has been designed and developed by [Mirai Solutions GmbH](www.mirai-solutions.com) to support people living in Switzerlan in an educated decision-making process towards their retirement.
 
 The SmaRP code is available on [GitHub](https://github.com/miraisolutions/SmaRP.git).
 
@@ -100,9 +100,9 @@ Road2Retirement_to_print <- params$Road2Retirement %>%
   filter(Y %in% unique(c(Y[1], Y[!Y%%1], Y[length(Y)])) ) 
 ```
 
-The total retirement fund as of `r format(params$retirementdate, "%d-%m-%Y") ` is `r printCurrency(params$retirementfund)` `r  params$percentageLastSalary`.
+The total retirement fund as of `r format(params$retirementdate, "%d-%m-%Y") ` is `r printCurrency(params$retirementfund)` swiss francs `r  params$percentageLastSalary`.
 
-This plot represents the time-evolution of the different contributions to the total retirement fund.
+The two plots bellow represent the time-evolution of the different funds and their contribution to the total retirement fund at retirement. 
 
 ```{r timeSeriesPlot, echo = FALSE}
 tserieGraphData.columns <- setdiff(names(params$TserieGraphData), "calendar")
@@ -127,7 +127,6 @@ ggplot(tserieGraphData.long, aes(x = calendar, y = value, fill = variable)) +
   )
 ```
 
-This plot represents the percentage of  each contribution to the total retirement fund.
 
 ```{r barPlot, echo = FALSE}
 barGraphData.columns <- setdiff(names(params$BarGraphData), "contribution")
@@ -159,7 +158,6 @@ ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variabl
 
 # Assumptions and limitations
 
-SmaRP is based on the Swiss retirement system. Most of the functionalities are generic, but the basic configuration and parameters are specific of Switzerland.
 
 SmaRP applies only to employees, i.e. persons whose main income is a salary. Self-employed people are not considered.
 
@@ -182,14 +180,13 @@ The taxable income is computed  by detracting from the gross salary the followin
 
 In case of voluntary contributions to pension funds, those contributions are deducted as well.
 
-The input and output values are expressed in monetary units and assumed to be of the same currency. No currency conversion is applied in SmaRP. 
 
 
 ```{r swissOrGeneralCase, child = if (show_text) 'swiss-case.Rmd' else 'general-case.Rmd'} 
 ``` 
 
 
-# Results
+# Appendix 2: Detailed Results
 
 The time-dependent data is shown in the following tables.
 
