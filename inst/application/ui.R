@@ -20,6 +20,9 @@ fluidPage(
   # Style  ----
   theme = "style.css",
 
+  # Pop up before leaving page ----
+  tags$script('window.onbeforeunload = function(event) {return "";};'),
+  
   # Header  ----
   fluidRow(
     id = "header",
