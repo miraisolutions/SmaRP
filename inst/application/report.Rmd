@@ -35,6 +35,7 @@ params:
       TaxRate: NA
       retirementfund: NA
       percentageLastSalary: NA
+      PLZGemeinden: NA
       AHL: NA
       ALV: NA
       VersicherungsL: NA

@@ -380,6 +380,7 @@ function(input, output, session) {
       TaxRate = NULL,
       retirementfund = retirementfund(),
       percentageLastSalary = percentageLastSalary(),
+      PLZGemeinden = PLZGemeinden,
       AHL = AHL,
       ALV = ALV,
       VersicherungsL = VersicherungsL,
