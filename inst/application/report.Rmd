@@ -151,7 +151,8 @@ ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variabl
     aspect.ratio = 0.1,
     panel.background = element_rect(fill = NA),
     panel.grid.major = element_line(colour = NA),
-    panel.ontop = FALSE
+    panel.ontop = FALSE,
+    legend.position = "none"
   )
 ```
 
@@ -208,7 +209,7 @@ if (params$churchtax == "N"){
 }
 ```
 
-* The user's declares to have `r churchaffiliation` church affiliation. [^1]
+* The user declares to have `r churchaffiliation` church affiliation. [^1]
 
 
 
@@ -226,8 +227,8 @@ In case of married and double-income couples, the aggregated amonunt of all vari
 When calculating the tax savings, a proxy of the taxable income is used. [^2] 
 The taxable income is computed  by detracting from the gross salary the following deductions: [^3]
 
-* Old-age and survivor's insurance (AHV/AVS): `r AHL/100`%.
-* Unemployment, accident and invalidity insurance (ALV): `r ALV/100`%.
+* Old-age and survivor's insurance (AHV/AVS).
+* Unemployment, accident and invalidity insurance (ALV).
 * Deductions for:
   + Health insurance
   + Civil status: Married, Married double income or singles.
@@ -279,7 +280,6 @@ https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-64228.
 
 [Swiss Tax System - ](https://www.estv.admin.ch/estv/de/home/allgemein/steuerinformationen/dienstleistungen/publikationen-und-formulare-bestellen.html)
 https://www.estv.admin.ch/estv/de/home/allgemein/steuerinformationen/dienstleistungen/publikationen-und-formulare-bestellen.html
-
 
 
 [^1]: In certain kantons there is a different church tax based on the type of church the user belongs to (Evangelische Kirche and Roeman-katolische Kirche). SmaRP does not make such distinction and always assumes the highest of the values. Moreover, when the church-tax depends on the kantonal tax rate (instead of being a fixed factor), an approximation is made and treated as the maximum possible factor (relevant for kantons: VS, BS, BL). 

@@ -402,7 +402,7 @@ function(input, output, session) {
     content = function(file) {
       output <- rmarkdown::render(
         input = "report.Rmd",
-        output_file = reportname,
+        output_file = reportname(),
         output_format = "pdf_document",
         # output_format = "html_document",
         params = params()
