@@ -367,6 +367,7 @@ function(input, output, session) {
       CurrentP3 = CurrentP3(),
       returnP3 = returnP3(),
       postalcode = postalcode(),
+      gemeinden = gemeinden(),
       Kanton = returnPLZKanton(postalcode()),
       NKids = NKids(),
       churchtax = churchtax(),
@@ -379,7 +380,6 @@ function(input, output, session) {
       TaxRate = NULL,
       retirementfund = retirementfund(),
       percentageLastSalary = percentageLastSalary(),
-      PLZGemeinden = PLZGemeinden,
       AHL = AHL,
       ALV = ALV,
       VersicherungsL = VersicherungsL,
@@ -391,17 +391,20 @@ function(input, output, session) {
     )
   )
 
+  # build report name
+  reportname <- reactive(
+    paste("SmaRPreport", postalcode(), gsub("-", "", Sys.Date()), "pdf", sep= ".")
+  )
 
-
-  # output report
+  # generate output report
   output$report <- downloadHandler(
     filename = "report.pdf",
     content = function(file) {
       output <- rmarkdown::render(
         input = "report.Rmd",
-        output_file = "report.pdf",
+        output_file = reportname,
         output_format = "pdf_document",
-        #        output_format = "html_document",
+        # output_format = "html_document",
         params = params()
       )
       file.copy(output, file)

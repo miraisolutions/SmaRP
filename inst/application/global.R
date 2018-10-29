@@ -99,7 +99,7 @@ VersicherungsL <- 1700 # übrige mit Vorsorge
 VersicherungsV <- 3500 # Verheitatete mit Vorsorge
 VersicherungsK <- 700
 DOV <- 13400 # assumption: always max
-Kinder <- 6500
+Kinder <- 6500 #federal Abzug
 Verheiratet <- 2600
 BerufsauslagenTarif <- 0.03
 BerufsauslagenMax <- 4000
