@@ -171,7 +171,11 @@ Input parameters are:
 
 * With a retirement age of `r params$RetirementAge`, the retirement year is `r params$retirementdate`.
 
-* The current salary is `r params$Salary` CHF, with a growth rate of `r params$SalaryGrowthRate/100`%, which is assumed constant until retirement.
+```{r, echo=FALSE}
+SalaryGrowthRate <-  params$SalaryGrowthRate * 100
+```
+
+* The current salary is `r params$Salary` CHF, with a growth rate of `r SalaryGrowthRate` % , which is assumed constant until retirement.
 
 * The occupational pension fund (Pillar II) has a current amount of `r params$CurrentP2` CHF.
 
@@ -184,11 +188,11 @@ if(is.null(params$P2purchase)){
 ```
 * `r msgP2`.
 
-* The interest rate of of the Pillar II is given by `r params$rate/100`%, and we ensure that the amount considered in the calculation is always higher than the minimum required by law.
+* The interest rate of of the Pillar II is given by `r params$rate*100` %, and we ensure that the amount considered in the calculation is always higher than the minimum required by law.
 
 * The private pension fund (Pillar III) has a current amount of `r params$CurrentP3` CHF.
 
-* The annual contribution to the Pillar III is of `r params$P3purchase` CHF, with an expected return of `r params$returnP3/100`%.
+* The annual contribution to the Pillar III is of `r params$P3purchase` CHF, with an expected return of `r params$returnP3*100` %.
 
 ```{r maritallabel, echo=FALSE}
 if(params$rate_group == "A"){
@@ -287,6 +291,7 @@ https://www.estv.admin.ch/estv/de/home/allgemein/steuerinformationen/dienstleist
 [^2]: Tax on assets are not considered.
 [^3]: Although most of those parameters can vary a bit depending on the kanton, we use the federal values as proxy.
 
+\newpage
 
 # Appendix 1: Methodology
 
@@ -362,7 +367,7 @@ The kantonal tax at year $t$ is computed as:
 
 $$ KantonalTax(t) = \sum_{t_0}^T(Income(t) *  KantonalTaxRate) * (F_{kanton} + F_{municipality} + F_{church)} $$
 
-where $Income(t)$ is the income at time $t$, $KantonalTaxRate$ is a factor based on the civil status and family structure,  $F_{kanton}$ is a kanton-dependent multiplication factor, $F_{municipality}$ is a municipality-dependent  multiplication factor and $F_{church}$ is a curch affiliation dependent multiplication factor.
+where $Income(t)$ is the income at time $t$, $KantonalTaxRate$ is a factor based on the civil status and family structure,  $F_{kanton}$ is a kanton-dependent multiplication factor, $F_{municipality}$ is a municipality-dependent  multiplication factor and $F_{church}$ is a church affiliation dependent multiplication factor.
 
 <!-- The Kantonal tax rate for kanton `r params$Kanton` can be looked up in the following table. -->
 
@@ -376,9 +381,9 @@ fkirche <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "Fact
 
 The kanton-dependent multiplication factor for kanton `r params$Kanton` is `r fkanton`.
 
-The municipality-dependent multiplication factor for municipality `r gemeinde_name` is `r fgemeinde`.
+The municipality-dependent multiplication factor for municipality  `r gemeinde_name`  is  `r fgemeinde`.
 
-The curch affiliation dependent multiplication factor for municipality `r gemeinde_name` is `r fkirche`. If there is no church affiliation this factor is ```0```.
+The curch affiliation dependent multiplication factor for municipality `r gemeinde_name` is `r fkirche`. If there is no church affiliation this factor is  `0`.
 
 [^4]: AHV salary: 2350 month, 28200 year.
 [^5]: 831.40. Bundesgesetz über die berufliche Alters-, Hinterlassenen- und Invalidenvorsorge (Art.16)

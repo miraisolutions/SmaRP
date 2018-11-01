@@ -399,7 +399,7 @@ function(input, output, session) {
 
   # generate output report
   output$report <- downloadHandler(
-    filename = "report.pdf",
+    filename = reportname(),
     content = function(file) {
       output <- rmarkdown::render(
         input = "report.Rmd",
