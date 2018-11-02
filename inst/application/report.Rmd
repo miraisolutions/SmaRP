@@ -88,6 +88,8 @@ The SmaRP code is available on [GitHub](https://github.com/miraisolutions/SmaRP.
 
 The SmaRP app is available online at http://mirai-solutions.ch/apps/smarp/.
 
+\newline
+\newline
 # 1. Main Results
 
 
@@ -101,9 +103,10 @@ Road2Retirement_to_print <- params$Road2Retirement %>%
   filter(Y %in% unique(c(Y[1], Y[!Y%%1], Y[length(Y)])) ) 
 ```
 
-The total retirement fund as of `r format(params$retirementdate, "%d-%m-%Y") ` is `r printCurrency(params$retirementfund)` swiss francs `r  params$percentageLastSalary`.
+The total retirement fund as of `r format(params$retirementdate, "%d-%m-%Y") ` is **`r printCurrency(params$retirementfund)` swiss francs** `r  params$percentageLastSalary`.
 
 The two plots bellow represent the time-evolution of the different funds and their contribution to the total retirement fund at retirement. 
+\newline
 
 ```{r timeSeriesPlot, echo = FALSE}
 tserieGraphData.columns <- setdiff(names(params$TserieGraphData), "calendar")
@@ -157,6 +160,7 @@ ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variabl
   )
 ```
 
+\newline
 # 2. Parameters
 
 ```{r, echo = FALSE}
@@ -217,7 +221,7 @@ if (params$churchtax == "N"){
 * The user declares to have `r churchaffiliation` church affiliation. [^1]
 
 
-
+\newline
 # 3. Assumptions and limitations
 
 
@@ -241,15 +245,17 @@ The taxable income is computed  by detracting from the gross salary the followin
 
 In case of voluntary contributions to pension funds, those contributions are deducted as well.
 
-
+\newline
 # 4. The basics of the Swiss retirement system
 
 
 The Swiss social retirement system is based on a three-pillar regime. A nice summary can be found [here](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland).
 
+\newline
 \begin{center}
 \includegraphics[width=0.4\textwidth]{www/SwissRetirementSystem.png}
 \end{center}
+\newline
 
 The first Pillar is a state- run pay-as-you-earn system with minimum benefits. It is law and salary dependent only and it is not expliciedly considered in SmaRP.
 
@@ -259,9 +265,11 @@ The voluntary contribution (Pillar III) is a privately-run, tax-deductible insur
 
 Since the tax benefits are always a key factor of a smart retirement project, SmaRP takes them into consideration and are implemented as an additional fund.
 
+\newline
 \begin{center}
 \includegraphics[width=0.6\textwidth]{www/TaxBenefits.png}
 \end{center}
+\newline
 
 The taxation is  municipality-dependent. It can either be provided as an input or inferred from the user provided inputs.
 If inferred, it is computed as two parts: the federal tax that is the same for all kantons, and kantonal tax that depends on the kanton. 
@@ -270,7 +278,7 @@ An ulterior contribution to the kantonal tax is given by the optional affiliatio
 
 The retirement age can either be explicitedly provided as an input, or can be inferred from the genere.
 
-
+\newline
 # 5. Sources
 
 
@@ -390,7 +398,7 @@ The church affiliation dependent multiplication factor for municipality `r gemei
 [^6]: Minimum interest rate on the retirement assets as of. 01.01.2017
 [^7]: The taxable income does not correspond to the net or gross salary. Social insurance contributions and a wide range of other deductions are substracted from the gross salary. The amount remaining is the taxable income, the base to calculate your tax bill.
 
-
+\newpage
 # Appendix 2: Detailed Results
 
 The time-dependent data is shown in the following tables.
