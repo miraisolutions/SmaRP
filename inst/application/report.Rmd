@@ -127,8 +127,7 @@ ggplot(tserieGraphData.long, aes(x = calendar, y = value, fill = variable)) +
     aspect.ratio = 0.6,
     panel.background = element_rect(fill = NA),
     panel.grid.major = element_line(colour = "grey80"),
-    panel.ontop = FALSE,
-    legend.position = "none"
+    panel.ontop = FALSE
   )
 ```
 
@@ -156,7 +155,8 @@ ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variabl
     aspect.ratio = 0.1,
     panel.background = element_rect(fill = NA),
     panel.grid.major = element_line(colour = NA),
-    panel.ontop = FALSE
+    panel.ontop = FALSE,
+    legend.position = "none"
   )
 ```
 
