@@ -124,8 +124,7 @@ ggplot(tserieGraphData.long, aes(x = calendar, y = value, fill = variable)) +
     aspect.ratio = 0.6,
     panel.background = element_rect(fill = NA),
     panel.grid.major = element_line(colour = "grey80"),
-    panel.ontop = FALSE,
-    legend.position = "none"
+    panel.ontop = FALSE
   )
 ```
 
@@ -153,7 +152,8 @@ ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variabl
     aspect.ratio = 0.1,
     panel.background = element_rect(fill = NA),
     panel.grid.major = element_line(colour = NA),
-    panel.ontop = FALSE
+    panel.ontop = FALSE,
+    legend.position = "none"
   )
 ```
 
@@ -165,12 +165,7 @@ TypePurchase <- ifelse(params$TypePurchase =="SingleP2", "single purchase", "ann
 
 Input parameters are:
 
-```{r, echo = FALSE}
-Gemeinde <- chartr("äöü", "aeo", params$gemeinden)
-
-```
-
-* Residence in `r Gemeinde`, `r params$Kanton`, postal code `r params$postalcode`.
+* Residence in `r params$gemeinden`, `r params$Kanton`, postal code `r params$postalcode`.
 
 * The date of birth provided as input is `r params$birthday`.
 
@@ -379,15 +374,16 @@ where $Income(t)$ is the income at time $t$, $KantonalTaxRate$ is a factor based
 
 ```{r taxRates, echo = FALSE}
 fkanton <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "FactorKanton"]
+gemeinde_name <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "GDENAME"]
 fgemeinde <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "FactorGemeinde"]
 fkirche <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "FactorKirche"]
 ```
 
 The kanton-dependent multiplication factor for kanton `r params$Kanton` is `r fkanton`.
 
-The municipality-dependent multiplication factor for municipality  `r Gemeinde`  is  `r fgemeinde`.
+The municipality-dependent multiplication factor for municipality  `r gemeinde_name`  is  `r fgemeinde`.
 
-The church affiliation dependent multiplication factor for municipality `r Gemeinde` is `r fkirche`. If there is no church affiliation this factor is  `0`.
+The church affiliation dependent multiplication factor for municipality `r gemeinde_name` is `r fkirche`. If there is no church affiliation this factor is  `0`.
 
 [^4]: AHV salary: 2350 month, 28200 year.
 [^5]: 831.40. Bundesgesetz Ã¼ber die berufliche Alters-, Hinterlassenen- und Invalidenvorsorge (Art.16)
