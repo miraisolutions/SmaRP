@@ -249,7 +249,7 @@ The taxable income is computed  by detracting from the gross salary the followin
 
 In case of voluntary contributions to pension funds, those contributions are deducted as well.
 
-<br>
+\newpage
 
 # 4. The basics of the Swiss retirement system
 
