@@ -257,7 +257,7 @@ In case of voluntary contributions to pension funds, those contributions are ded
 The Swiss social retirement system is based on a three-pillar regime. A nice summary can be found [here](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland).
 
 
-\vspace{10pt}
+\vspace{12pt}
 
 
 \begin{center}
@@ -265,7 +265,7 @@ The Swiss social retirement system is based on a three-pillar regime. A nice sum
 \end{center}
 
 
-\vspace{10pt}
+\vspace{12pt}
 
 
 The first Pillar is a state- run pay-as-you-earn system with minimum benefits. It is law and salary dependent only and it is not expliciedly considered in SmaRP.
@@ -277,7 +277,7 @@ The voluntary contribution (Pillar III) is a privately-run, tax-deductible insur
 Since the tax benefits are always a key factor of a smart retirement project, SmaRP takes them into consideration and are implemented as an additional fund.
 
 
-<br>
+\vspace{12pt}
 
 
 \begin{center}
@@ -285,7 +285,7 @@ Since the tax benefits are always a key factor of a smart retirement project, Sm
 \end{center}
 
 
-<br>
+\vspace{12pt}
 
 
 The taxation is  municipality-dependent. It can either be provided as an input or inferred from the user provided inputs.
