@@ -1,15 +1,17 @@
 #' IB list
-#' \describe{
-#'   \item{IB}{Info Box}
-#'   }
+#'
+#' Info Box tooltip text for the various inputs of the SmaRP web app.
+#'
+#' @format Named `list` of Info Box tooltip text.
+#'
 #' @docType data
-#' @format IB list
 "IB"
 
 #' VM list
-#' \describe{
-#'   \item{VM}{Validity Message}
-#'   }
+#'
+#' Validity Messages for the various inputs of the SmaRP web app.
+#'
+#' @format Named `list` of Validity Messages.
+#'
 #' @docType data
-#' @format VM list
 "VM"

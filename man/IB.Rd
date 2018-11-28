@@ -3,18 +3,12 @@
 \docType{data}
 \name{IB}
 \alias{IB}
-\title{IB list
-\describe{
-\item{IB}{Info Box}
-}}
-\format{IB list}
+\title{IB list}
+\format{Named \code{list} of Info Box tooltip text.}
 \usage{
 IB
 }
 \description{
-IB list
-\describe{
-\item{IB}{Info Box}
-}
+Info Box tooltip text for the various inputs of the SmaRP web app.
 }
 \keyword{datasets}

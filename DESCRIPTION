@@ -35,7 +35,7 @@ Imports:
     shinydashboardPlus,
     shinyWidgets,
     webshot
-Suggests: testthat, roxygen2
+Suggests: testthat, roxygen2 (>= 6.1.1)
 VignetteBuilder: knitr
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Biarch: TRUE

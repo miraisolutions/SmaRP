@@ -3,18 +3,12 @@
 \docType{data}
 \name{VM}
 \alias{VM}
-\title{VM list
-\describe{
-\item{VM}{Validity Message}
-}}
-\format{VM list}
+\title{VM list}
+\format{Named \code{list} of Validity Messages.}
 \usage{
 VM
 }
 \description{
-VM list
-\describe{
-\item{VM}{Validity Message}
-}
+Validity Messages for the various inputs of the SmaRP web app.
 }
 \keyword{datasets}
