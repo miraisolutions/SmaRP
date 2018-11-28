@@ -33,7 +33,7 @@ The whole interface is wrapped around a `fluiPage`, which includes a `fluidRow` 
 
 At the beginning of the page, a first set objects is present: a long, blue bar with the SmaRP logo and a title. A snippet of the panel's outline can be found below.
 
-![](/home/mirai_user/RStudioProjects/SmaRP/vignettes/SmaRP_logo.png "SmaRP_logo")
+![](SmaRP_logo.png "SmaRP_logo")
 
 Within the code, these three objects are wrapped inside a `fluidRow` and divided into two columns: one containing the logo and the blue bar and the other the title. The blue bar and the logo are then wrapped again together into a `fluidRow`, the former being dragged from the Mirai Solutions website in the form of a URL and the latter as a .png image. A sample of the code is shown below:
 
@@ -67,7 +67,7 @@ The personal Info gathers the user's personal data, which will then be transferr
 
 A snippet of the panel's outline can be found below
 
-![](/home/mirai_user/RStudioProjects/SmaRP/vignettes/SmaRP_personal_info.png "SmaRP_personal_info")
+![](SmaRP_personal_info.png "SmaRP_personal_info")
 
 From a code standpoint, this panel is wrapped around a `fluidRow`, with each component having also its own. In many cases, components' `fluidRow`s are split into two columns: one for the esthetics and the other for more explanation. With regards to the esthetics portion, the bullet points below explain how the current version was achieved:
 
@@ -106,7 +106,7 @@ The second main section of SmaRP is divided in two pillars. Pillar II is intende
 
 A snippet of the panel's outline can be found below
 
-![](/home/mirai_user/RStudioProjects/SmaRP/vignettes/SmaRP_pillars.png "SmaRP_pillars")
+![](SmaRP_pillars.png "SmaRP_pillars")
 
 From a programming standpoint, this split look was obtained globalizing both pillars into a `splitLayout` with two columns. Within each column, each Pillar was grouped into a `fluidRow` and all components programmed using the `numericInput` tool and, in the isolated case of the Type of purchase, with two `radioButtons`. In addition, this section also includes `bsTooltip`s for all objects. A sample of the code is shown below:
 
