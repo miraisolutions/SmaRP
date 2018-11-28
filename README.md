@@ -1,82 +1,103 @@
+---
+# The Swiss social security system, considered as one of the most robust, is based on a three-pillar regime.
+# The first Pillar, common to most developed countries, is a state-run pay-as-you-earn system with minimum benefits.
+# The voluntary contribution (Pillar III) is a privately-run, tax-deductible insurance fund.
+# At the heart of the Swiss system is the so-called Pillar II, a compulsory, tax-deductible company occupational pension insurance fund.
+# Voluntary additional Pillar II buy-ins are regulated but allow for benefits improvement at retirement age while reducing the tax burden during the working career.
+# The complexity is further increased by a municipality-dependent taxation.
+# Altogether this calls for an early-stage conscious approach towards retirement planning.
+# However, it is not straight-forward to assess effects of elements such as early retirement, moving to a different canton or applying a different voluntary pension schema.
+# SmaRP, Smart Retirement Planning, supports the users in an educated decision-making process.
+---
+
 <img src="inst/application/www/SmaRPSticker.png" align="right" width="15%" height="15%"/>
 
-
 # SmaRP: Smart Retirement Planning
-Smart Retirement Planning (SmaRP) is a [Mirai Solutions](https://mirai-solutions.ch/) initiative designed to guide people working in Switzerland towards a strategic decision-making process for their retirement.
 
-SmaRP is based on the Swiss Pension System and parameterized to reflect the complexity of its legal framework.
+Smart Retirement Planning (**SmaRP**) is a [Mirai Solutions](https://mirai-solutions.ch/) initiative designed to guide people working in Switzerland towards a strategic decision-making process for their retirement.
+
+**SmaRP** is based on the [Swiss pension system](Swiss pension system) and reflects the complexity of its legal framework.
+It is implemented as an  [R Shiny](https://shiny.rstudio.com/) pension calculator web app, developed as part of an R package.
+The app features a flexible yet intuitive user interface with detailed personalization parameters and options.
+This allows to interactively compute and display the evolution of the retirement funds over time, split into its contributing components.
+A downloadable report can also be produced, including details about the calculation methodology and approximation.
+
+Thanks to the open-source nature of the project, the underlying assumptions and calculations are fully disclosed.
+Unlike other pension calculators, this makes results transparent, comparable, and reproducible.
 
 
-### Public version of the source code
+## Using SmaRP
 
-This report qualitatively describes the source code for SmaRP, whose functionalities are built in R. The application is based on the Shiny package and can be run locally or on a server.
+The **SmaRP** Shiny app is deployed to Google Cloud Platform (using [docker
+containers](https://www.docker.com/resources/what-container)) and can be
+accessed at https://mirai-solutions.ch/apps/smarp/.
 
-If you got this far, we assume that you are familiar with the basics of R and can independently install a shiny app. 
-
-The project is completely open-sourced. Core calculations are in [SmaRP/R/core.R](https://github.com/miraisolutions/SmaRP/blob/master/R/core.R) and [SmaRP/R/TaxBenefits.R](https://github.com/miraisolutions/SmaRP/blob/master/R/TaxBenefit.R) whereas UI scripts can be found in [SmaRP/inst/application](https://github.com/miraisolutions/SmaRP/blob/master/inst/application). To open the app, it is sufficient to type the following code in the root directory:
-
-``` r 
-shiny::runApp()
+The (development version of) **SmaRP** can also be served locally by installing the package from GitHub
+``` r
+devtools::install_github("miraisolutions/SmaRP", build_vignettes = TRUE)
+```
+and running
+``` r
+SmaRP::launch_application(launch.browser = TRUE)
 ```
 
-The app has been deployed using [docker containers](https://www.docker.com/resources/what-container) on Google cloud and can viewed by clicking on the following URL:
 
-https://mirai-solutions.ch/apps/smarp/ 
+## Details and key features
 
-
-While our developers worked under the outmost care and diligence, Mirai Solutions does not guarantee that it is error free. In addition, please keep in mind that SmaRP is based on some assumptions and projections (explained in the third section of this document) and thus all figures reported in SmaRP should be understood as general references.
-
-
-### SmaRP key features
-
-SmaRP projects the value of the occupational pension fund (Pillar II), the private pension fund (Pillar III) and the tax relief derived from their contributions at the desired retirement age.
+The evolution of the total retirement fund over time is computed in **SmaRP** by projecting the value of the occupational pension fund (Pillar II), the private pension fund (Pillar III) and the tax relief, thus deriving their contributions at the desired retirement age.
 
 *Contributions to Pillar II* are calculated from the salary and any additional voluntary purchases.
 
 *Contributions to Pillar III* are fully voluntary and repeated every year until retirement.
 
-*Tax savings* are built as an additional fund where tax relives from a certain year are used as contributions for the next. Tax relieves are calculated using an approximation of the given gross salary and other factors including: residence, civil status, number on kids, etc. 
+*Tax savings* are built as an additional fund where tax relieves from a certain year are used as contributions for the next. Tax relieves are calculated using an approximation of the given gross salary and other factors like residence, civil status, number on kids, etc. 
 
-**Results are displayed in 3 different ways**:
+The **results** of the calculation are available in **SmaRP** in 3 different ways:
 
-1. a graph showing the projected funds over time until retirement
-2. a table with the more detailed amounts 
-3. a downloadable report in PDF where the user can find a more accurate and detailed explanation of the inputs and methodology implemented. 
+1. a **graph** showing the projected funds over time until retirement
+2. a **table** with details about projected quantities (also available for download)
+3. a downloadable **PDF report** including a detailed explanation of the calculation methodology and inputs.
+
 
 ### Assumptions and limitations
 
-- [Continuous compounding interest](https://en.wikipedia.org/wiki/Compound_interest) is annually based. 
-
-- Constant interest rates are present throughout the working life.
-
-- Inflation is not taken into account, although a variable exists to project the average salary increase which can play as proxy.
-
-- This plan is valid only for employees, i.e. persons whose main income is a salary. Self-employed people do not belong to this category.
-
-- The state-run Pay-as-you-go system (Pillar I) is not considered.
-
-- SmaRP assumes that  all tax benefits generated are 100% reinvested as an additional fund. The return of these tax benefits is assumed to be the same as those of the private pension fund.
-
-- In case of married and double-income couples, the aggregated amount of all variables should be entered and a 50% income distribution is assumed.
+- Projected funds are computed using [continuously compounded returns](https://en.wikipedia.org/wiki/Compound_interest#Continuous_compounding) on annual basis.
+- Constant interest rates are assumed throughout the working life.
+- Inflation is not taken into account, although it can be proxied using the salary growth rate input.
+- The retirement plan is valid for employees only, i.e. persons whose main income is a salary. Self-employed people do not belong to this category.
+- The publicly managed pay-as-you-go system (Pillar I) is not considered.
+- All generated tax benefits are 100% reinvested as an additional fund, assuming the same return as the private pension fund.
+- In case of married couples with double-income, the combined amount of all variables should be entered, and a 50% income distribution is assumed.
 
 
-### Data sources
+### Source code
 
-SmaRP reflects the Swiss pension system and therefore uses legal parameters and tables. You can find an overview of these components here:
+The core calculation behind the Shiny app os implemented via several functions inside the **SmaRP** R package, collected in the main source files [SmaRP/R/core.R](https://github.com/miraisolutions/SmaRP/blob/master/R/core.R) and [SmaRP/R/TaxBenefits.R](https://github.com/miraisolutions/SmaRP/blob/master/R/TaxBenefit.R).
 
-https://en.wikipedia.org/wiki/Pension_system_in_Switzerland
-
-And a more detailed explanation here:
-
-https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ueberblick.html
-
-Within SmaR legal parameters are stored in [SmaRP/inst/application/global.R](https://github.com/miraisolutions/SmaRP/blob/master/inst/application/global.R) and tables in  [SmaRP/inst/application/data](https://github.com/miraisolutions/SmaRP/blob/master/inst/application/data).
+Documentation for the relevant exported functions used in the app is also provided and can be browsed via
+``` r
+help(package = "SmaRP")
+```
+On a functional level, the code is covered by extensive [unit tests](https://github.com/miraisolutions/SmaRP/tree/master/tests/testthat).
 
 
-### Testing
+The source code for the app itself is available under  [SmaRP/inst/application](https://github.com/miraisolutions/SmaRP/blob/master/inst/application).
 
-On a functional level, SmaRP has undergone standard tests. [See tests](https://github.com/miraisolutions/SmaRP/tree/master/tests/testthat)
 
-On an app level (integration test), SmaRP has been checked against other online free sources for Pillar II and III and tax calculators.
+### Data sources and references
 
-However, since the best test is always the real usage, we encourage you to try it out and get back to us! Feedback is always highly appreciated. Please use the issue tracker on GitHub to suggest enhancements or report problems and send us an email at info@mirai-solutions.com for any questions and comments.
+**SmaRP** reflects the Swiss pension system and uses corresponding legal parameters and data.
+An overview of these components can be found at e.g. https://en.wikipedia.org/wiki/Pension_system_in_Switzerland.
+A more detailed explanation is available on the Swiss [Federal Social Insurance Office](https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ueberblick.html) website (in German).
+
+
+Legal parameters in **SmaRP** are defined in [SmaRP/inst/application/global.R](https://github.com/miraisolutions/SmaRP/blob/master/inst/application/global.R), whereas data is stored under  [SmaRP/inst/application/data](https://github.com/miraisolutions/SmaRP/blob/master/inst/application/data).
+
+
+### Accuracy
+
+While **SmaRP** was developed under the utmost care and diligence, Mirai Solutions does not guarantee for its accuracy and correctness. In addition, **SmaRP** is based on assumptions and projections (explained above and in the generated PDF reports) and as such the computed figures should be understood as general references and do not have any legal value.
+
+Besides standard unit tests at the function level, **SmaRP** results from the web app have been checked against other online free sources for Pillar II and III and tax calculators.
+
+To keep testing and improving **SmaRP** based on its real usage, we encourage users get back to us! Feedback is highly appreciated: You can use the issue tracker on GitHub to suggest enhancements or report problems, and reach out via email at info@mirai-solutions.com for any questions and comments.
