@@ -15,7 +15,7 @@
 
 Smart Retirement Planning (**SmaRP**) is a [Mirai Solutions](https://mirai-solutions.ch/) initiative designed to guide people working in Switzerland towards a strategic decision-making process for their retirement.
 
-**SmaRP** is based on the [Swiss pension system](Swiss pension system) and reflects the complexity of its legal framework.
+**SmaRP** is based on the [Swiss pension system](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland) and reflects the complexity of its legal framework.
 It is implemented as an  [R Shiny](https://shiny.rstudio.com/) pension calculator web app, developed as part of an R package.
 The app features a flexible yet intuitive user interface with detailed personalization parameters and options.
 This allows to interactively compute and display the evolution of the retirement funds over time, split into its contributing components.
@@ -71,7 +71,7 @@ The **results** of the calculation are available in **SmaRP** in 3 different way
 
 ### Source code
 
-The core calculation behind the Shiny app os implemented via several functions inside the **SmaRP** R package, collected in the main source files [SmaRP/R/core.R](https://github.com/miraisolutions/SmaRP/blob/master/R/core.R) and [SmaRP/R/TaxBenefits.R](https://github.com/miraisolutions/SmaRP/blob/master/R/TaxBenefit.R).
+The core calculation behind the Shiny app has been implemented via several functions inside the **SmaRP** R package, collected in the main source files [SmaRP/R/core.R](https://github.com/miraisolutions/SmaRP/blob/master/R/core.R) and [SmaRP/R/TaxBenefits.R](https://github.com/miraisolutions/SmaRP/blob/master/R/TaxBenefit.R).
 
 Documentation for the relevant exported functions used in the app is also provided and can be browsed via
 ``` r
