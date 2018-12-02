@@ -1,8 +1,8 @@
 #' Buildt
-#' @description Build a annual path from today (or given day) until the retirement day. 
+#' @description Build annual path from today (or given day) until the retirement day. 
 #' @template given_bday
-#' @param RetirementAge age of retirement
-#' @return vector of dates until retirement. 
+#' @param RetirementAge Age of retirement
+#' @return Vector of dates until retirement. 
 #' @examples
 #' \dontrun{
 #' buildt("1981-08-12")
@@ -19,7 +19,7 @@ buildt <- function(birthday, givenday = today("UTC"), RetirementAge = 65) {
 #' Calculate Age
 #' @description Function to calculate person's age at a specific point in time.
 #' @inheritParams buildt 
-#' @return calculated age in years
+#' @return calculated age in years.
 #' @details Calculated as the difference between current date and birthday.
 #' @importFrom lubridate today duration interval
 #' @export
@@ -79,7 +79,7 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 #' @template P2
 #' @import dplyr
 #' @importFrom magrittr '%<>%'
-#' @return data frame with annual different contributions to the Pillar II.  
+#' @return All contributions to the Pillar II in annual basis.  
 #' @examples
 #' \dontrun{
 #' buildContributionP2Path(
@@ -133,9 +133,9 @@ buildContributionP2Path <- function(birthday,
 }
 
 #' Calculate Expected Salary Path
-#' @description calculate whether the salary will increase/decrease and by how much.
+#' @description Calculate whether the salary will increase/decrease and by how much.
 #' @template salary
-#' @return expected salary path
+#' @return Expected salary path.
 #' @examples
 #' \dontrun{
 #' calcExpectedSalaryPath(90000, 0.02, 20)
@@ -171,7 +171,7 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
 #' @inheritParams buildt 
 #' @inheritParams calcExpectedSalaryPath
 #' @template P3
-#' @return data frame with annual different contributions to the Pillar III.
+#' @return All contributions to the Pillar III in annual basis.
 #' @examples
 #' \dontrun{
 #' buildContributionP3path(
