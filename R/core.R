@@ -1,5 +1,5 @@
 #' Buildt
-#' @description Build a annual path from a today (or given day) until the retirement day. 
+#' @description Build a annual path from today (or given day) until the retirement day. 
 #' @template given_bday
 #' @param RetirementAge age of retirement
 #' @return vector of dates until retirement. 
@@ -37,6 +37,7 @@ calcAge <- function(birthday, givenday = today("UTC")) {
 #' @return day at which retirement begins
 #' @examples
 #'  getRetirementday("1981-08-12")
+#'  getRetirementday("1981-08-12", RetirementAge = 60)
 #' @importFrom lubridate ymd years
 #' @export
 getRetirementday <- function(birthday, RetirementAge = 65) {
@@ -54,6 +55,7 @@ getRetirementday <- function(birthday, RetirementAge = 65) {
 #' @examples
 #' \dontrun{
 #' getRetirementCalendar("1981-08-12")
+#' getRetirementCalendar("1981-08-12", as.Date("2018-12-02"), RetirementAge = 62)
 #' }
 #' @importFrom lubridate today year ymd month day 
 #' @export
@@ -75,7 +77,6 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 #' @inheritParams buildt 
 #' @template salary
 #' @template P2
-#' @param rate male or female
 #' @import dplyr
 #' @importFrom magrittr '%<>%'
 #' @return data frame with annual different contributions to the Pillar II.  
@@ -214,7 +215,7 @@ buildContributionP3path <- function(birthday,
 #' @param t vector of time intervals between contributions. 
 #' * Irregular time intervals are allowed. 
 #' * For frequency bellow annual, enter t as proportion of a year.
-#' @param rate interests rate on annual basis. Assumes constant interest rates.
+#' @template P2
 #' @return vector of accumulated benefits given a set of contributions.
 #' @examples
 #' \dontrun{

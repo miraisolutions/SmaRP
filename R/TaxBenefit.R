@@ -23,8 +23,8 @@
 #' @param Income Annual salary. `Numeric` scalar.
 #' @param rate_group A (Single), B (Married), C (Married Double income) `Character`.
 #' @param Age Age of the person. `Numeric`
-#' @param NKids number of children `Numeric` scalar.
-#' @param postalcode zip code `Character`
+#' @param NKids Number of children. `Numeric` scalar.
+#' @param postalcode Zip code `Character`
 #' @param churchtax Y/N `Character` Y/N
 #' @import dplyr
 #' @return Tax Amount
@@ -225,10 +225,10 @@ buildTaxBenefits <- function(birthday,
 #' Calls 'getTaxAmount()', therefore, it assumes objects in the global environment.
 #' @seealso [getTaxAmount()]
 #' @family swisstax
-#' @param ExpectedSalaryPath vector length equals year to retirement
-#' @param TaxableIncome vector length equals year to retirement
+#' @param ExpectedSalaryPath Vector of annual salaries until retirement.
+#' @param TaxableIncome Vector of annual taxable income until retirement.
 #' @inheritParams getTaxAmount
-#' @return Single tax benefit of one contribution.
+#' @return Single tax benefit (tax relief) of one contribution.
 #' @examples
 #' \dontrun{
 #'   calcTaxBenefitSwiss(ExpectedSalaryPath = seq(90000, 100000, 1000),
