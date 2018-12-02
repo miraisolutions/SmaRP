@@ -13,9 +13,9 @@ getTaxAmount(Income, rate_group, Age, NKids, postalcode, churchtax)
 
 \item{Age}{Age of the person. \code{Numeric}}
 
-\item{NKids}{number of children \code{Numeric} scalar.}
+\item{NKids}{Number of children. \code{Numeric} scalar.}
 
-\item{postalcode}{zip code \code{Character}}
+\item{postalcode}{Zip code \code{Character}}
 
 \item{churchtax}{Y/N \code{Character} Y/N}
 }

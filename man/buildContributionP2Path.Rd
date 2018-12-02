@@ -9,28 +9,28 @@ buildContributionP2Path(birthday, Salary, SalaryGrowthRate, CurrentP2,
   givenday = today("UTC"), RetirementAge)
 }
 \arguments{
-\item{birthday}{date of birth ("YYYY-MM-DD").}
+\item{birthday}{Date of birth ("YYYY-MM-DD").}
 
-\item{Salary}{stipend}
+\item{Salary}{Stipend}
 
-\item{SalaryGrowthRate}{rate at which the salary increases/decreases}
+\item{SalaryGrowthRate}{Rate at which the salary increases/decreases}
 
-\item{CurrentP2}{value of the current assets in the Occupational Pension Fund.}
+\item{CurrentP2}{Value of the current assets in the Occupational Pension Fund.}
 
-\item{P2purchase}{annual voluntary contribution to the Occupational Pension Fund.}
+\item{P2purchase}{Annual voluntary contribution to the Occupational Pension Fund.}
 
 \item{TypePurchase}{AnnualP2 if the purchase on the pillar II gets repeated every year until retirement.}
 
-\item{rate}{male or female}
+\item{rate}{Interests rate on annual basis. Constant interest rates are assumed.}
 
-\item{givenday}{date at which the age is computed ("YYYY-MM-DD").}
+\item{givenday}{Date at which the age is computed ("YYYY-MM-DD").}
 
-\item{RetirementAge}{age of retirement}
+\item{RetirementAge}{Age of retirement}
 
-\item{ncp}{length contribution path to retirement}
+\item{ncp}{Length contribution path to retirement}
 }
 \value{
-data frame with annual different contributions to the Pillar II.
+All contributions to the Pillar II in annual basis.
 }
 \description{
 Gather all the required information to project the annual contributions to the occupational pension fund.

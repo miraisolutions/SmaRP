@@ -8,11 +8,11 @@ getRetirementCalendar(birthday, givenday = today("UTC"),
   RetirementAge = 65)
 }
 \arguments{
-\item{birthday}{date of birth ("YYYY-MM-DD").}
+\item{birthday}{Date of birth ("YYYY-MM-DD").}
 
-\item{givenday}{date at which the age is computed ("YYYY-MM-DD").}
+\item{givenday}{Date at which the age is computed ("YYYY-MM-DD").}
 
-\item{RetirementAge}{age of retirement}
+\item{RetirementAge}{Age of retirement}
 }
 \value{
 retirement calendar
@@ -25,5 +25,6 @@ For the current year, if birthday is later than the calculation day, there will 
 \examples{
 \dontrun{
 getRetirementCalendar("1981-08-12")
+getRetirementCalendar("1981-08-12", as.Date("2018-12-02"), RetirementAge = 62)
 }
 }

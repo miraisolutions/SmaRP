@@ -7,12 +7,12 @@
 calcAge(birthday, givenday = today("UTC"))
 }
 \arguments{
-\item{birthday}{date of birth ("YYYY-MM-DD").}
+\item{birthday}{Date of birth ("YYYY-MM-DD").}
 
-\item{givenday}{date at which the age is computed ("YYYY-MM-DD").}
+\item{givenday}{Date at which the age is computed ("YYYY-MM-DD").}
 }
 \value{
-calculated age in years
+calculated age in years.
 }
 \description{
 Function to calculate person's age at a specific point in time.

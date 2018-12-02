@@ -9,37 +9,39 @@ buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
   givenday = today("UTC"), RetirementAge)
 }
 \arguments{
-\item{birthday}{date of birth ("YYYY-MM-DD").}
+\item{birthday}{Date of birth ("YYYY-MM-DD").}
 
 \item{TypePurchase}{AnnualP2 if the purchase on the pillar II gets repeated every year until retirement.}
 
-\item{P2purchase}{annual voluntary contribution to the Occupational Pension Fund.}
+\item{P2purchase}{Annual voluntary contribution to the Occupational Pension Fund.}
 
-\item{P3purchase}{annual voluntary contribution to the Private Pension Fund (Pillar 3).}
+\item{P3purchase}{Annual voluntary contribution to the Private Pension Fund (Pillar 3).}
 
-\item{returnP3}{annual expected return on the Private Pension Fund.}
+\item{returnP3}{Annual expected return on the Private Pension Fund.}
 
-\item{Salary}{stipend}
+\item{Salary}{Stipend}
 
-\item{SalaryGrowthRate}{rate at which the salary increases/decreases}
+\item{SalaryGrowthRate}{Rate at which the salary increases/decreases}
 
-\item{postalcode}{zip code \code{Character}}
+\item{postalcode}{Zip code \code{Character}}
 
-\item{NKids}{number of children \code{Numeric} scalar.}
+\item{NKids}{Number of children. \code{Numeric} scalar.}
 
 \item{churchtax}{Y/N \code{Character} Y/N}
 
 \item{rate_group}{A (Single), B (Married), C (Married Double income) \code{Character}.}
 
-\item{givenday}{date at which the age is computed ("YYYY-MM-DD").}
+\item{givenday}{Date at which the age is computed ("YYYY-MM-DD").}
 
 \item{RetirementAge}{age of retirement}
 
-\item{CurrentP2}{value of the current assets in the Occupational Pension Fund.}
+\item{CurrentP2}{Value of the current assets in the Occupational Pension Fund.}
 
-\item{CurrentP3}{value of the current assets in the Private Pension Fund (Pillar 3).}
+\item{rate}{Interests rate on annual basis. Constant interest rates are assumed.}
 
-\item{ncp}{length contribution path to retirement}
+\item{CurrentP3}{Value of the current assets in the Private Pension Fund (Pillar 3).}
+
+\item{ncp}{Length contribution path to retirement}
 }
 \value{
 data.frame tax benefit path.

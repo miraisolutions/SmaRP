@@ -7,9 +7,9 @@
 getRetirementday(birthday, RetirementAge = 65)
 }
 \arguments{
-\item{birthday}{date of birth ("YYYY-MM-DD").}
+\item{birthday}{Date of birth ("YYYY-MM-DD").}
 
-\item{RetirementAge}{age of retirement}
+\item{RetirementAge}{Age of retirement}
 }
 \value{
 day at which retirement begins
@@ -19,4 +19,5 @@ Calculate day of retirement assuming the person can retire at the age of 65
 }
 \examples{
  getRetirementday("1981-08-12")
+ getRetirementday("1981-08-12", RetirementAge = 60)
 }

@@ -7,17 +7,17 @@
 buildt(birthday, givenday = today("UTC"), RetirementAge = 65)
 }
 \arguments{
-\item{birthday}{date of birth ("YYYY-MM-DD").}
+\item{birthday}{Date of birth ("YYYY-MM-DD").}
 
-\item{givenday}{date at which the age is computed ("YYYY-MM-DD").}
+\item{givenday}{Date at which the age is computed ("YYYY-MM-DD").}
 
-\item{RetirementAge}{age of retirement}
+\item{RetirementAge}{Age of retirement}
 }
 \value{
-vector of dates until retirement.
+Vector of dates until retirement.
 }
 \description{
-Build a annual path from a today (or given day) until the retirement day.
+Build annual path from today (or given day) until the retirement day.
 }
 \examples{
 \dontrun{

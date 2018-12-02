@@ -7,17 +7,17 @@
 calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
 }
 \arguments{
-\item{Salary}{stipend}
+\item{Salary}{Stipend}
 
-\item{SalaryGrowthRate}{rate at which the salary increases/decreases}
+\item{SalaryGrowthRate}{Rate at which the salary increases/decreases}
 
-\item{ncp}{length contribution path to retirement}
+\item{ncp}{Length contribution path to retirement}
 }
 \value{
-expected salary path
+Expected salary path.
 }
 \description{
-calculate whether the salary will increase/decrease and by how much.
+Calculate whether the salary will increase/decrease and by how much.
 }
 \examples{
 \dontrun{

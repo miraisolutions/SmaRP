@@ -8,22 +8,22 @@ calcTaxBenefitSwiss(ExpectedSalaryPath, TaxableIncome, rate_group, Age,
   NKids, postalcode, churchtax)
 }
 \arguments{
-\item{ExpectedSalaryPath}{vector length equals year to retirement}
+\item{ExpectedSalaryPath}{Vector of annual salaries until retirement.}
 
-\item{TaxableIncome}{vector length equals year to retirement}
+\item{TaxableIncome}{Vector of annual taxable income until retirement.}
 
 \item{rate_group}{A (Single), B (Married), C (Married Double income) \code{Character}.}
 
 \item{Age}{Age of the person. \code{Numeric}}
 
-\item{NKids}{number of children \code{Numeric} scalar.}
+\item{NKids}{Number of children. \code{Numeric} scalar.}
 
-\item{postalcode}{zip code \code{Character}}
+\item{postalcode}{Zip code \code{Character}}
 
 \item{churchtax}{Y/N \code{Character} Y/N}
 }
 \value{
-Single tax benefit of one contribution.
+Single tax benefit (tax relief) of one contribution.
 }
 \description{
 Calculates the tax benefit as a difference of the taxes paid with and without retirement contributions.

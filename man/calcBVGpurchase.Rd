@@ -9,9 +9,9 @@ calcBVGpurchase(TypePurchase, P2purchase, ncp)
 \arguments{
 \item{TypePurchase}{AnnualP2 if the purchase on the pillar II gets repeated every year until retirement.}
 
-\item{P2purchase}{annual voluntary contribution to the Occupational Pension Fund.}
+\item{P2purchase}{Annual voluntary contribution to the Occupational Pension Fund.}
 
-\item{ncp}{length contribution path to retirement}
+\item{ncp}{Length contribution path to retirement}
 }
 \value{
 BVG purchase
