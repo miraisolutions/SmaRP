@@ -38,7 +38,7 @@
 getTaxAmount <- function(Income,
                          rate_group,
                          Age,
-                         NKids,
+                         NChildren,
                          postalcode,
                          churchtax) {
 

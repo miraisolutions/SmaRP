@@ -4,7 +4,7 @@
 \alias{getTaxAmount}
 \title{Calculates the tax amount (federal, kantonal and local)}
 \usage{
-getTaxAmount(Income, rate_group, Age, NKids, postalcode, churchtax)
+getTaxAmount(Income, rate_group, Age, NChildren, postalcode, churchtax)
 }
 \arguments{
 \item{Income}{Annual salary. \code{Numeric} scalar.}
@@ -13,11 +13,11 @@ getTaxAmount(Income, rate_group, Age, NKids, postalcode, churchtax)
 
 \item{Age}{Age of the person. \code{Numeric}}
 
+\item{NChildren}{Number of children. \code{Numeric} scalar.}
+
 \item{postalcode}{Zip code \code{Character}}
 
 \item{churchtax}{Y/N \code{Character} Y/N}
-
-\item{NChildren}{Number of children. \code{Numeric} scalar.}
 }
 \value{
 Tax Amount
