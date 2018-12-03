@@ -21,7 +21,7 @@ library(shiny)
 
 Smart Retirement Planning (SmaRP) is an internal Mirai Solutions project aimed at creating a retirement plan for people working and planning on staying in Switzerland. 
 
-This vignette describes UI components and their inner-workings. It is programmed exclusively using Shiny basic package and intended to be used with the mere support of a web browser. In addition to theoretical explanations, simplified versions of code are included; however, for the full version please consult the ui.R file.  
+This vignette describes UI components and their inner-workings. It is programmed exclusively using Shiny basic package and intended to be used with the mere support of a web browser. In addition to theoretical explanations, simplified versions of code are included; for the full version please check the ui.R file.  
 
 ## Outline
 

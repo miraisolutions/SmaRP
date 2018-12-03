@@ -5,7 +5,7 @@
 \title{Builds a data frame with the tax benefits path}
 \usage{
 buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
-  Salary, SalaryGrowthRate, postalcode, NKids, churchtax, rate_group,
+  Salary, SalaryGrowthRate, postalcode, NChildren, churchtax, rate_group,
   givenday = today("UTC"), RetirementAge)
 }
 \arguments{
@@ -25,7 +25,7 @@ buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
 
 \item{postalcode}{Zip code \code{Character}}
 
-\item{NKids}{Number of children. \code{Numeric} scalar.}
+\item{NChildren}{Number of children. \code{Numeric} scalar.}
 
 \item{churchtax}{Y/N \code{Character} Y/N}
 
@@ -63,7 +63,7 @@ Calls 'getTaxAmount()' through 'calcTaxBenefitSwiss()', therefore, it assumes ob
  Salary,
  SalaryGrowthRate,
  postalcode,
- NKids,
+ NChildren,
  churchtax,
  rate_group,
  MaxContrTax,

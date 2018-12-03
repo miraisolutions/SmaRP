@@ -23,7 +23,7 @@
 #' @param Income Annual salary. `Numeric` scalar.
 #' @param rate_group A (Single), B (Married), C (Married Double income) `Character`.
 #' @param Age Age of the person. `Numeric`
-#' @param NKids Number of children. `Numeric` scalar.
+#' @param NChildren Number of children. `Numeric` scalar.
 #' @param postalcode Zip code `Character`
 #' @param churchtax Y/N `Character` Y/N
 #' @import dplyr
@@ -32,7 +32,7 @@
 #' @examples
 #' \dontrun{
 #' getTaxAmount(Income = 200000, rate_group = "C", Age = 32, 
-#'              NKids = 5, postalcode = 8400, churchtax = "Y")
+#'              NChildren = 5, postalcode = 8400, churchtax = "Y")
 #' }
 #' @export
 getTaxAmount <- function(Income,
@@ -49,8 +49,8 @@ getTaxAmount <- function(Income,
 
   # Get Tarif
   Tarif <- ifelse(rate_group == "C", "DOPMK",
-    ifelse(rate_group == "A" & NKids == 0, "Ledig",
-      ifelse(rate_group == "B" & NKids == 0, "VOK", "VMK")
+    ifelse(rate_group == "A" & NChildren == 0, "Ledig",
+      ifelse(rate_group == "B" & NChildren == 0, "VOK", "VMK")
     )
   )
 
@@ -77,11 +77,11 @@ getTaxAmount <- function(Income,
     filter(years == Age) %>%
     transmute(AjustBVGContri = (0.05 - BVGcontriburionrates) * (min(Income, MaxBVG) - MinBVG))
 
-  # 2. NKids ajustment (only for VMK and DOPMK)
+  # 2. NChildren ajustment (only for VMK and DOPMK)
   # Tax burden based on 2 kids. Therefore, an adjustment factor is applied accordingly.
   if (Tarif %in% c("DOPMK", "VMK")) {
     OriKinderabzugKG <- sum(KinderabzugKG[row.names(KinderabzugKG) == Kanton, 1:2])
-    AjustKinderabzug <- OriKinderabzugKG - sum(KinderabzugKG[row.names(KinderabzugKG) == Kanton, 1:NKids])
+    AjustKinderabzug <- OriKinderabzugKG - sum(KinderabzugKG[row.names(KinderabzugKG) == Kanton, 1:NChildren])
   } else {
     AjustKinderabzug <- 0
   }
@@ -110,13 +110,13 @@ getTaxAmount <- function(Income,
       NBU = min(DOfactor * maxNBU, Income * NBU),
       NetSalary = Income - BVG - AHL - ALV - NBU,
       Verheiratet = ifelse(Tarif == "Ledig", 0, Verheiratet),
-      Versicherung = ifelse(Tarif == "Ledig", VersicherungsL, VersicherungsV + NKids * VersicherungsK),
+      Versicherung = ifelse(Tarif == "Ledig", VersicherungsL, VersicherungsV + NChildren * VersicherungsK),
       Beruf = max(DOfactor * BerufsauslagenMin, min(DOfactor * BerufsauslagenMax, NetSalary * BerufsauslagenTarif)),
-      Kids = NKids * Kinder
+      Kids = NChildren * Kinder
     ) %>%
     transmute(AjustSalary = NetSalary - Verheiratet - Versicherung - DO - Beruf - Kids)
 
-  TaxAmountFederal <- max(0, lookupTaxAmount(TaxableIncomeFederal, BundessteueTabelle, rate_group) - 251 * NKids)
+  TaxAmountFederal <- max(0, lookupTaxAmount(TaxableIncomeFederal, BundessteueTabelle, rate_group) - 251 * NChildren)
   TaxAmount <- TaxAmountFederal + TaxAmountKGC
 
   return(TaxAmount)
@@ -176,7 +176,7 @@ lookupTaxAmount <- function(Income, Tabelle, CivilStatus) {
 #'  Salary,
 #'  SalaryGrowthRate,
 #'  postalcode,
-#'  NKids,
+#'  NChildren,
 #'  churchtax,
 #'  rate_group,
 #'  MaxContrTax,
@@ -192,7 +192,7 @@ buildTaxBenefits <- function(birthday,
                              Salary,
                              SalaryGrowthRate,
                              postalcode,
-                             NKids,
+                             NChildren,
                              churchtax,
                              rate_group,
                              givenday = today("UTC"),
@@ -208,7 +208,7 @@ buildTaxBenefits <- function(birthday,
       ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp),
       TaxableIncome = pmax(ExpectedSalaryPath - pmin(TotalContr, MaxContrTax), 0),
       AgePath = as.integer(sapply(calendar, calcAge, birthday = birthday)),
-      TaxBenefits = calcTaxBenefitSwiss(ExpectedSalaryPath, TaxableIncome, rate_group, AgePath, NKids, postalcode, churchtax),
+      TaxBenefits = calcTaxBenefitSwiss(ExpectedSalaryPath, TaxableIncome, rate_group, AgePath, NChildren, postalcode, churchtax),
       t = buildt(birthday, givenday, RetirementAge = RetirementAge),
       TotalTax = calcAnnuityAcumPath(TaxBenefits, t, returnP3),
       ReturnTax = TotalTax - cumsum(TaxBenefits),
@@ -235,7 +235,7 @@ buildTaxBenefits <- function(birthday,
 #'                     TaxableIncome = seq(88000, 98000, 1000),
 #'                     rate_group = "A",
 #'                     Age = seq(55, 65),
-#'                     NKids = 0,
+#'                     NChildren = 0,
 #'                     postalcode = 8400,
 #'                     churchtax = "Y")
 #' }
@@ -244,17 +244,17 @@ calcTaxBenefitSwiss <- function(ExpectedSalaryPath,
                                 TaxableIncome,
                                 rate_group,
                                 Age,
-                                NKids,
+                                NChildren,
                                 postalcode,
                                 churchtax) {
   assertthat::are_equal(length(ExpectedSalaryPath), length(TaxableIncome))
 
   TaxAmountGrossIncome <- sapply(seq_along(ExpectedSalaryPath), function(i) {
-    getTaxAmount(ExpectedSalaryPath[i], rate_group, Age[i], NKids, postalcode, churchtax)
+    getTaxAmount(ExpectedSalaryPath[i], rate_group, Age[i], NChildren, postalcode, churchtax)
   })
 
   TaxAmountTaxableIncome <- sapply(seq_along(ExpectedSalaryPath), function(i) {
-    getTaxAmount(TaxableIncome[i], rate_group, Age[i], NKids, postalcode, churchtax)
+    getTaxAmount(TaxableIncome[i], rate_group, Age[i], NChildren, postalcode, churchtax)
   })
 
   TaxBenefits <- TaxAmountGrossIncome - TaxAmountTaxableIncome

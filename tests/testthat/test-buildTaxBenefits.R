@@ -13,7 +13,7 @@ test_that("Test Tax Benefits Zurich",{
     Salary = 800000,
     SalaryGrowthRate = 0.01, 
     postalcode = 8001, 
-    NKids = 1,
+    NChildren = 1,
     churchtax = "N",
     rate_group = "A", 
     givenday = as.Date("2018-05-25"), 

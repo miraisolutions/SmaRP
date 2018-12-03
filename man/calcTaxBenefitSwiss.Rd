@@ -5,7 +5,7 @@
 \title{Calculate Tax Benefit Swiss}
 \usage{
 calcTaxBenefitSwiss(ExpectedSalaryPath, TaxableIncome, rate_group, Age,
-  NKids, postalcode, churchtax)
+  NChildren, postalcode, churchtax)
 }
 \arguments{
 \item{ExpectedSalaryPath}{Vector of annual salaries until retirement.}
@@ -16,7 +16,7 @@ calcTaxBenefitSwiss(ExpectedSalaryPath, TaxableIncome, rate_group, Age,
 
 \item{Age}{Age of the person. \code{Numeric}}
 
-\item{NKids}{Number of children. \code{Numeric} scalar.}
+\item{NChildren}{Number of children. \code{Numeric} scalar.}
 
 \item{postalcode}{Zip code \code{Character}}
 
@@ -35,7 +35,7 @@ Calls 'getTaxAmount()', therefore, it assumes objects in the global environment.
                     TaxableIncome = seq(88000, 98000, 1000),
                     rate_group = "A",
                     Age = seq(55, 65),
-                    NKids = 0,
+                    NChildren = 0,
                     postalcode = 8400,
                     churchtax = "Y")
 }

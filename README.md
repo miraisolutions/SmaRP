@@ -16,7 +16,7 @@
 Smart Retirement Planning (**SmaRP**) is a [Mirai Solutions](https://mirai-solutions.ch/) initiative designed to guide people working in Switzerland towards a strategic decision-making process for their retirement.
 
 **SmaRP** is based on the [Swiss pension system](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland) and reflects the complexity of its legal framework.
-It is implemented as an  [R Shiny](https://shiny.rstudio.com/) pension calculator web app, in the form of an R package.
+It is implemented as an [R Shiny](https://shiny.rstudio.com/) pension calculator web app, in the form of an R package.
 The app features a flexible yet intuitive user interface with detailed personalization parameters and options.
 This allows to interactively compute and display the evolution of the retirement funds over time, split into its contributing components.
 A downloadable report including details regarding calculation methodology and approximations can also be produced.

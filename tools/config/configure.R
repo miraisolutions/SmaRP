@@ -17,7 +17,7 @@ IB <- list(
   TaxRelief = "Maximum amount you can deduct from your taxable income via voluntary contributions to retirement funds",
   TaxRateOptional = "Possibility to enter marginal tax rate manually",
   TaxRate = "Enter here your marginal tax rate",
-  NKids = "Number of children under 18",
+  NChildren = "Number of children under 18",
   Salary = "Gross salary. In case of married-double income, enter the aggregated amount",
   SalaryGrowthRate = "Annual expected salary growth rate. Note that this growth rate keeps constant during the full career",
   TypePurchase = "Single: one-off purchase; Annual: constant annual purchase",

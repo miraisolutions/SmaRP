@@ -138,13 +138,13 @@ fluidPage(
               ),
               column(
                 6,
-                numericInput("NKids",
+                numericInput("NChildren",
                              label = "# Children",
                              value = 0,
                              min = 0,
                              max = 9
                 ) %>%
-                  bs_embed_tooltip(title = IB$NKids, placement = "right")
+                  bs_embed_tooltip(title = IB$NChildren, placement = "right")
               )
             ),
 

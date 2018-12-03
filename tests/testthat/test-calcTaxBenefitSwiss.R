@@ -8,7 +8,7 @@ test_that("Test high income calcTaxBenefitSwiss",{
                               TaxableIncome = seq(930000, 1080000, 10000),
                               rate_group = "A",
                               Age = seq(50, 65),
-                              NKids = 0,
+                              NChildren = 0,
                               postalcode = 8400,
                               churchtax = "Y")
   
@@ -23,7 +23,7 @@ test_that("Test low income calcTaxBenefitSwiss",{
                               TaxableIncome = seq(8500, 14000, 500),
                               rate_group = "A",
                               Age = seq(50, 61),
-                              NKids = 0,
+                              NChildren = 0,
                               postalcode = 9000,
                               churchtax = "Y")
   

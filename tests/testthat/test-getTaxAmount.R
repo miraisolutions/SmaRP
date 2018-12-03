@@ -7,7 +7,7 @@ test_that("Test case Zurich1 (testthat/resources/testZurich1.pdf)",{
                             rate_group = "C",
                             postalcode = 8002,
                             Age = 40,
-                            NKids = 2,
+                            NChildren = 2,
                             churchtax = "N")
 
   expect_lt(abs(TaxAmount - 21320) / TaxAmount, 0.05)
@@ -19,7 +19,7 @@ test_that("Test case St.Gallen1 (testthat/resources/testStGallen1.pdf)",{
                             rate_group = "A",
                             postalcode = 9000,
                             Age = 40,
-                            NKids = 0,
+                            NChildren = 0,
                             churchtax = "N")
 
   expect_lt(abs(TaxAmount - 30779) / TaxAmount, 0.05)
@@ -31,7 +31,7 @@ test_that("Test case Bern1 (testthat/resources/testStBern1.pdf)",{
                             rate_group = "C",
                             postalcode = 3010,
                             Age = 32,
-                            NKids = 3,
+                            NChildren = 3,
                             churchtax = "Y")
 
   expect_lt(abs(TaxAmount - 10308) / TaxAmount, 0.05)
@@ -43,7 +43,7 @@ test_that("Test case Luzern1 (testthat/resources/testLuzern1.pdf)",{
                             rate_group = "B",
                             postalcode = 6003,
                             Age = 27,
-                            NKids = 0,
+                            NChildren = 0,
                             churchtax = "N")
 
   expect_lt(abs(TaxAmount - 4188) / TaxAmount, 0.05)
@@ -55,7 +55,7 @@ test_that("Test case Geneve1 (testthat/resources/testGeneve1.pdf)",{
                             rate_group = "B",
                             postalcode = 1208,
                             Age = 40,
-                            NKids = 2,
+                            NChildren = 2,
                             churchtax = "Y")
 
   expect_lt(abs(TaxAmount - 4116) / TaxAmount, 0.05)

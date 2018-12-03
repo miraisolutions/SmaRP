@@ -106,8 +106,8 @@ function(input, output, session) {
   })
 
   # Number of kids (max = 9)
-  NKids <- reactive({
-    min(isnotAvailableReturnZero(input$NKids), 9)
+  NChildren <- reactive({
+    min(isnotAvailableReturnZero(input$NChildren), 9)
   })
 
   # Tariff
@@ -195,7 +195,7 @@ function(input, output, session) {
       Salary = Salary(),
       SalaryGrowthRate = SalaryGrowthRate(),
       postalcode = postalcode(),
-      NKids = NKids(),
+      NChildren = NChildren(),
       churchtax = churchtax(),
       rate_group = rate_group(),
       givenday = lubridate::today("UTC"),
@@ -369,7 +369,7 @@ function(input, output, session) {
       postalcode = postalcode(),
       gemeinden = gemeinden(),
       Kanton = returnPLZKanton(postalcode()),
-      NKids = NKids(),
+      NChildren = NChildren(),
       churchtax = churchtax(),
       rate_group = rate_group(),
       MaxContrTax = TaxRelief(),

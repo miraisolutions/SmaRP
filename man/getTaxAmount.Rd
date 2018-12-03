@@ -13,11 +13,11 @@ getTaxAmount(Income, rate_group, Age, NKids, postalcode, churchtax)
 
 \item{Age}{Age of the person. \code{Numeric}}
 
-\item{NKids}{Number of children. \code{Numeric} scalar.}
-
 \item{postalcode}{Zip code \code{Character}}
 
 \item{churchtax}{Y/N \code{Character} Y/N}
+
+\item{NChildren}{Number of children. \code{Numeric} scalar.}
 }
 \value{
 Tax Amount
@@ -46,7 +46,7 @@ This function assumes the following objects on the global enviornment
 \examples{
 \dontrun{
 getTaxAmount(Income = 200000, rate_group = "C", Age = 32, 
-             NKids = 5, postalcode = 8400, churchtax = "Y")
+             NChildren = 5, postalcode = 8400, churchtax = "Y")
 }
 }
 \seealso{
