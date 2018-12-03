@@ -315,7 +315,7 @@ function(input, output, session) {
     if (lastSalary() != 0) {
       numTimes <- retirementfund() / lastSalary()
       numTimes %<>% formatC(format = "f", digits = 2)
-      paste0("which is ", numTimes, " times your last salary")
+      paste0("which is ", numTimes, " times the last salary")
     } else {
       ""
     }

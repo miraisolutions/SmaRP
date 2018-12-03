@@ -24,7 +24,7 @@ params:
       postalcode: NA
       gemeinden: NA
       Kanton: NA
-      NKids: NA
+      NChildren: NA
       churchtax: NA
       rate_group: NA
       MaxContrTax: NA
@@ -80,13 +80,29 @@ AHL <- format(round(params$AHL, 2), nsmall = 0)
 Kinder <- format(round(params$Kinder, 2), nsmall = 0)
 
 ```
+\newpage
 
+# Table of Contents
 
-SmaRP, **Sma**rt **R**etirement **P**lanning has been designed and developed by [Mirai Solutions GmbH](www.mirai-solutions.com) to support people living in Switzerlan in an educated decision-making process towards their retirement.
+## Introduction............................................................................................3
+## 1. Main Results.....................................................................................3
+## 2. Parameters.........................................................................................3
+## 3. Assumptions and limitations.........................................................4
+## 4. The basics of the Swiss retirement system................................5
+## 5. Bibliography......................................................................................6
+## Appendix 1: Methodology..................................................................7
+## Appendix 2: Detailed results.............................................................9
+## Disclaimer...............................................................................................9
 
-The SmaRP code is available on [GitHub](https://github.com/miraisolutions/SmaRP.git).
+\newpage
 
-The SmaRP app is available online at http://mirai-solutions.ch/apps/smarp/.
+# Introduction
+
+Smart Retirement Planning (**SmaRP**) is a [Mirai Solutions](https://mirai-solutions.ch/) initiative designed to guide people working in Switzerland towards a strategic decision-making process for their retirement.
+
+**SmaRP** is based on the [Swiss pension system](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland) and reflects the complexity of its legal framework.
+
+It is implemented as an [R Shiny](https://shiny.rstudio.com/) pension calculator web app, in the form of an R package. The source code is available on [GitHub](https://github.com/miraisolutions/SmaRP.git) and the app itself online at http://mirai-solutions.ch/apps/smarp/.
 
 <br>
 
@@ -103,9 +119,9 @@ Road2Retirement_to_print <- params$Road2Retirement %>%
   filter(Y %in% unique(c(Y[1], Y[!Y%%1], Y[length(Y)])) ) 
 ```
 
-The total retirement fund as of `r format(params$retirementdate, "%d-%m-%Y") ` is **`r printCurrency(params$retirementfund)` swiss francs** `r  params$percentageLastSalary`.
+The total retirement fund as of `r format(params$retirementdate, "%d-%m-%Y") ` is **`r printCurrency(params$retirementfund)` CHF**, `r  params$percentageLastSalary`.
 
-The two plots bellow represent the time-evolution of the different funds and their contribution to the total retirement fund at retirement. 
+The two plots below represent the time evolution of the different funds and their contribution to the total retirement fund at retirement, respectively. 
 
 <br>
 
@@ -170,36 +186,36 @@ ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variabl
 TypePurchase <- ifelse(params$TypePurchase =="SingleP2", "single purchase", "annual purchase")
 ```
 
-Input parameters are:
+Here is a list of all inputs:
 
-* Residence in `r params$gemeinden`, `r params$Kanton`, postal code `r params$postalcode`.
+* Residence is in `r params$gemeinden`, `r params$Kanton`, postal code `r params$postalcode`.
 
-* The date of birth provided as input is `r params$birthday`.
+* The date of birth is `r params$birthday`.
 
-* With a retirement age of `r params$RetirementAge`, the retirement year is `r params$retirementdate`.
+* At the age of `r params$RetirementAge`, the retirement year is `r params$retirementdate`.
 
 ```{r, echo=FALSE}
 SalaryGrowthRate <-  params$SalaryGrowthRate * 100
 ```
 
-* The current salary is `r params$Salary` CHF, with a growth rate of `r SalaryGrowthRate` %, which is assumed constant until retirement.
+* The current salary is `r params$Salary` CHF, with a growth rate of `r SalaryGrowthRate`%, which is assumed constant until retirement.
 
-* The occupational pension fund (Pillar II) has a current amount of `r params$CurrentP2` CHF.
+* The occupational pension fund (Pillar II) is of `r params$CurrentP2` CHF.
 
 ```{r msgP2, echo=FALSE}
-if(is.null(params$P2purchase)){
+if(is.null(params$P2purchase) || params$P2purchase == 0){
   msgP2 <- "No voluntary contributions to the Pillar II"
 } else {
-  msgP2 <- paste0("The voluntary contribution to the Pillar II is of ", params$P2purchase, " CHF, and is purchased as a ", TypePurchase, ".")
+  msgP2 <- paste0("The voluntary contribution to Pillar II is of ", params$P2purchase, " CHF and is made as a ", TypePurchase, ".")
 }
 ```
 * `r msgP2`.
 
-* The interest rate of of the Pillar II is given by `r params$rate*100` %, and we ensure that the amount considered in the calculation is always higher than the minimum required by law.
+* Pillar II has an interest rate of `r params$rate*100`%. We ensure that the amount considered in the calculation is always higher than the minimum required by law.
 
-* The private pension fund (Pillar III) has a current amount of `r params$CurrentP3` CHF.
+* The private pension fund (Pillar III) is of `r params$CurrentP3` CHF.
 
-* The annual contribution to the Pillar III is of `r params$P3purchase` CHF, with an expected return of `r params$returnP3*100` %.
+* The annual contribution to the Pillar III is of `r params$P3purchase` CHF, with an expected return of `r params$returnP3*100`%.
 
 ```{r maritallabel, echo=FALSE}
 if(params$rate_group == "A"){
@@ -211,7 +227,7 @@ if(params$rate_group == "A"){
 }
 ```
 
-* The user's marital status is `r maritallabel`, with  `r params$NKids`  children.
+* Civil status is `r maritallabel` with  `r params$NChildren`  children.
 
 ```{r churchaffiliation, echo = FALSE}
 if (params$churchtax == "N"){
@@ -221,7 +237,7 @@ if (params$churchtax == "N"){
 }
 ```
 
-* The user declares to have `r churchaffiliation` church affiliation. [^1]
+* `r churchaffiliation` church affiliation. [^1]
 
 
 <br>
@@ -229,32 +245,30 @@ if (params$churchtax == "N"){
 # 3. Assumptions and limitations
 
 
-SmaRP applies only to employees, i.e. persons whose main income is a salary. Self-employed people are not considered.
+SmaRP is valid for employees only, i.e. persons whose main income is a salary. Self-employed people do not belong to this category.
 
-SmaRP takes into account ONLY the occupational pension fund (Pillar II in Switzerland) and a private fund (Pillar III in Switzerland), those where one can make decisions during the working career. The state-run pay-as-you-earn system (Pillar I) is law and salary dependent only, meaning there is no active decision-making from the employee which could affect it. Therefore, it is not explicitly considered in SmaRP.
+SmaRP takes into account ONLY the occupational pension fund (Pillar II) and a private fund (Pillar III). The state-run pay-as-you-earn system (Pillar I) is law and salary dependent only, meaning there is no active decision-making from the employee's side. Therefore, it is not explicitly considered.
 
-SmaRP takes into consideration the tax saving generated by the voluntary retirement contributions, assuming that all tax benefits generated are 100% reinvested as an additional fund. The return of these tax benefits is assumed to be the same as those of the private pension fund.
+SmaRP takes into account the tax saving generated by the voluntary retirement contributions, assuming that all tax benefits generated are 100% reinvested as an additional fund. The return from these tax benefits is assumed to be the same as those of the private pension fund.
 
-In case of married and double-income couples, the aggregated amonunt of all variables should be entered and a 50% income distribution is assumed.  
+SmaRP assumes a 50% income distribution in case of married and double-income couples.
 
-When calculating the tax savings, a proxy of the taxable income is used. [^2] 
-The taxable income is computed  by detracting from the gross salary the following deductions: [^3]
+A proxy of the taxable income is used to calculate tax savings. [^2] 
+The taxable income is computed  by detracting the following deductions from the gross salary: [^3]
 
-* Old-age and survivor's insurance (AHV/AVS).
-* Unemployment, accident and invalidity insurance (ALV).
-* Deductions for:
-  + Health insurance
-  + Civil status: Married, Married double income or singles.
-  + Kids
-
-In case of voluntary contributions to pension funds, those contributions are deducted as well.
+* Old-age and survivor's insurance (AHV/AVS)
+* Unemployment, accident and invalidity insurance (ALV)
+* Health insurance
+* Civil status: Married, Married double income or singles
+* Children
+* Any additional voluntary contributions.
 
 \newpage
 
 # 4. The basics of the Swiss retirement system
 
 
-The Swiss social retirement system is based on a three-pillar regime. A nice summary can be found [here](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland).
+The Swiss social retirement system is based on a three-pillar regime. 
 
 
 \vspace{12pt}
@@ -267,14 +281,14 @@ The Swiss social retirement system is based on a three-pillar regime. A nice sum
 
 \vspace{12pt}
 
+ 
+Pillar I is a state- run pay-as-you-earn system with minimum benefits. It is law and salary dependent only and it is not explicitly considered in this analysis.
 
-The first Pillar is a state- run pay-as-you-earn system with minimum benefits. It is law and salary dependent only and it is not expliciedly considered in SmaRP.
+Pillar II is a compulsory, tax-deductible company occupational pension insurance fund. Voluntary additional Pillar II buy-ins are regulated, but allow for benefits enhancements at retirement age while reducing the tax burden during the working career. 
 
-The Pillar II is a compulsory, tax-deductible company occupational pension insurance fund. Voluntary additional Pillar II buy-ins are regulated, but allow for benefits improvement at retirement age while reducing the tax burden during the working career. 
+Pillar III is a voluntary contribution; it is a privately-run, tax-deductible insurance fund. The private pension fund is modeled as an asset of a given amount ("Current assets"), to which contributions can be added annually (Annual contribution). The annual expected return of such asset is given as an input and assumed constant until the retirement date.
 
-The voluntary contribution (Pillar III) is a privately-run, tax-deductible insurance fund. The private pension fund is modelled as an asset of a given amount ("Current assets"), to which contributions can be added annually (Annual contribution). The annual expected return of such asset is given as an input and assumed constant until the retirement date.
-
-Since the tax benefits are always a key factor of a smart retirement project, SmaRP takes them into consideration and are implemented as an additional fund.
+Tax benefits are always a key factor towards a smart retirement project. SmaRP takes them into consideration and implements them as an additional fund.
 
 
 \vspace{12pt}
@@ -288,34 +302,34 @@ Since the tax benefits are always a key factor of a smart retirement project, Sm
 \vspace{12pt}
 
 
-The taxation is  municipality-dependent. It can either be provided as an input or inferred from the user provided inputs.
-If inferred, it is computed as two parts: the federal tax that is the same for all kantons, and kantonal tax that depends on the kanton. 
-The kantonal tax  is further modulated at municipality level via a factor. 
-An ulterior contribution to the kantonal tax is given by the optional affiliation to a church.
+Taxation is municipality-dependent. It can be either provided as an input or inferred from the user's inputs.
+If inferred, it is computed in two parts: federal tax (same for all cantons) and cantonal tax (different in each canton). 
+A third tax is calculated by multiplying to the cantonal tax with a municipality-specific percentage rate. 
+An additional contribution to the cantonal tax is given by the optional affiliation to a church.
 
-The retirement age can either be explicitedly provided as an input, or can be inferred from the genere.
+Retirement age can be either explicitly provided as an input or inferred from the genre.
 
 <br>
 
-# 5. Sources
+# 5. Bibliography
 
 
 [BVG law - ](https://www.admin.ch/opc/de/classified-compilation/19820152/index.html)
-https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
+Der Bundesratdas Portal Der Schweizer Regierung
+Bundeskanzlei P - https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
 
 [AHV - ](https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-62487.html)
-https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-62487.html
+Der Bundesrat - https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-62487.html
 
 [Mindestzinssatz - ](https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-64228.html)
-https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-64228.html
+Der Bundesrat - https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-64228.html
 
 [Swiss Tax System - ](https://www.estv.admin.ch/estv/de/home/allgemein/steuerinformationen/dienstleistungen/publikationen-und-formulare-bestellen.html)
-https://www.estv.admin.ch/estv/de/home/allgemein/steuerinformationen/dienstleistungen/publikationen-und-formulare-bestellen.html
+Publikationen Und Formulare Bestellen Eidgenössische ESTV - https://www.estv.admin.ch/estv/de/home/allgemein/steuerinformationen/dienstleistungen/publikationen-und-formulare-bestellen.html
 
-
-[^1]: In certain kantons there is a different church tax based on the type of church the user belongs to (Evangelische Kirche and Roeman-katolische Kirche). SmaRP does not make such distinction and always assumes the highest of the values. Moreover, when the church-tax depends on the kantonal tax rate (instead of being a fixed factor), an approximation is made and treated as the maximum possible factor (relevant for kantons: VS, BS, BL). 
+[^1]: Church taxes differ based on the type (Evangelische or Roeman-katolische Kirche) and canton of residence. SmaRP does not make such distinction and always assumes the highest of the values. Moreover, when the church-tax depends on the cantonal tax rate (instead of being a fixed factor), an approximation is made and treated as the maximum possible factor (relevant for cantons: VS, BS, BL). 
 [^2]: Tax on assets are not considered.
-[^3]: Although most of those parameters can vary a bit depending on the kanton, we use the federal values as proxy.
+[^3]: Although most of those parameters can vary a bit depending on the canton, we use the federal values as proxy.
 
 \newpage
 
@@ -324,7 +338,7 @@ https://www.estv.admin.ch/estv/de/home/allgemein/steuerinformationen/dienstleist
 
 ## Pillar II
 
-The savings process for retirement benefits starts on January 1 following the year in which the person turns 24.
+The savings process for retirement benefits starts on January 1st following the year in which the person turns 24.
 
 $$ PensionableSalary(t) = max(Salary(t) - \frac{7}{8} AHV Salary(t), 30 * AHVSalary) $$ [^4]
 
@@ -348,54 +362,90 @@ $$ r = 1\% $$[^6]
 $$ Pillar II = \sum_{t0}^T(Mandatory Contributions + Voluntary Contributions) * \exp^{r*(T-t)} $$
 
 
-## Private pension fund Pillar III
+## Pillar III
 
-The private pension fund ($PillarIII$) at year $t$ is calculated as:
+The private pension fund ($PillarIII$) at year $t$ is calculated as following:
 
 $$ PillarIII (t)=  \sum_{t=t_0}^TVoluntaryContributions * e^{r(T-t)} $$
 
-where $VoluntaryContributions$ is provided as input,  $r$ is the interest rate applied to the private pension fund, $t_0$ is today, and $T$ is the retirement age.
+where,
+
+  $VoluntaryContributions$ is an input  
+  
+  $r$ is the interest rate applied to the private pension fund 
+  
+  $t_0$ is today's date
+  
+  $T$ is the retirement age.
 
 ## Tax Benefit
 
-The tax benefit ($TaxBenefit$) at year $t$, if the marginal tax rate is provided as an input ($TaxRate$), is calculated as:
+Granted that the marginal tax rate ($TaxRate$) is provided as an input, the tax benefit ($TaxBenefit$) at year $t$ is calculated as following:
 
 $$ TaxBenefit(t) = \sum_{t_0}^TVoluntaryContributions(t) *  TaxRate(t) * e^{r(T-t)} $$
 
-where $VoluntaryContributions$ is provided as input, $t_0$ is today, and $T$ is the retirement age.
+where ,
 
-If the tax rate is not provided as an input, the tax benefits are computed as:
+$VoluntaryContributions$ is an input 
+
+$t_0$ is today's date
+
+$T$ is the retirement age.
+
+If the tax rate is not an input, the tax benefits are computed as following:
 
 $$ TaxBenefit(t) = TaxPaid_{Salary}(t) - TaxPaid_{TaxableIncome}(t) $$[^7]
 
-The $TaxPaid$ is a function that calculates the amount of taxes to pay given a certain income. The tax benefit is the difference between the taxes due for the salary and those due once all deductions are considered (taxable income).
+The $TaxPaid$ calculates the amount of taxes to pay given a certain income. The tax benefit is the difference between the taxes due for the salary and those due once all deductions are considered (taxable income).
 
-In SmaRP the taxable income ($TaxableIncome$) at time $t$ is computed as:
+Taxable income ($TaxableIncome$) at time $t$ is computed as following:
 
 $$ TaxableIncome(t) = max(Salary(t) - min(TotalContr, MaxContrTax),0) $$
 
-where $Salary(t)$ is the salary at year $t$, $TotalContr$ is the sum of the Pillar II and Pillar III purchases and $MaxContrTax$ is the maximum deductable amount allowed by law.
+where,
+
+  $Salary(t)$ is the salary at year $t$
+  
+  $TotalContr$ is the sum of the Pillar II and Pillar III purchases 
+  
+  $MaxContrTax$ is the maximum deductible amount allowed by law.
 
 
 ### The TaxPaid function
 
-The $TaxPaid$ function is the sum of the federal and kantonal taxes.
+The $TaxPaid$ function is the sum of the federal and cantonal taxes.
 
-The Federal tax at year $t$ is computed as:
+The Federal tax at year $t$ is computed as following:
 
-$$ FederalTax(t) = \sum_{t_0}^T(Income(t) *  FederalTaxRate) - 251*Nkids $$
+$$ FederalTax(t) = \sum_{t_0}^T(Income(t) *  FederalTaxRate) - 251*NChildren $$
 
-where $Income(t)$ is the income at time $t$, $Nkids$ is the number of kids under 18 and $FederalTaxRate$ is a factor based on the civil status and family structure.
+where,
+
+  $Income(t)$ is the income at time $t$
+  
+  $NChildren$ is the number of kids under 18
+  
+  $FederalTaxRate$ is a factor based on the civil status and family structure.
 
 <!-- The Federal tax rate can be looked up in the following table. -->
 
-The kantonal tax at year $t$ is computed as:
+The cantonal tax at year $t$ is computed as following:
 
 $$ KantonalTax(t) = \sum_{t_0}^T(Income(t) *  KantonalTaxRate) * (F_{kanton} + F_{municipality} + F_{church)} $$
 
-where $Income(t)$ is the income at time $t$, $KantonalTaxRate$ is a factor based on the civil status and family structure,  $F_{kanton}$ is a kanton-dependent multiplication factor, $F_{municipality}$ is a municipality-dependent  multiplication factor and $F_{church}$ is a church affiliation dependent multiplication factor.
+where,
 
-<!-- The Kantonal tax rate for kanton `r params$Kanton` can be looked up in the following table. -->
+  $Income(t)$ is the income at time $t$
+  
+  $KantonalTaxRate$ is a factor based on the civil status and family structure
+  
+  $F_{kanton}$ is a canton-dependent multiplication factor
+  
+  $F_{municipality}$ is a municipality-dependent  multiplication factor 
+  
+  $F_{church}$ is a church affiliation dependent multiplication factor.
+
+<!-- The cantonal tax rate for canton `r params$Kanton` can be looked up in the following table. -->
 
 
 ```{r taxRates, echo = FALSE}
@@ -405,22 +455,22 @@ fgemeinde <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "Fa
 fkirche <- params$PLZGemeinden[params$PLZGemeinden$PLZ==params$postalcode, "FactorKirche"]
 ```
 
-The kanton-dependent multiplication factor for kanton `r params$Kanton` is `r fkanton`.
+The canton-dependent multiplication factor for canton `r params$Kanton` is `r fkanton`.
 
 The municipality-dependent multiplication factor for municipality  `r gemeinde_name`  is  `r fgemeinde`.
 
-The church affiliation dependent multiplication factor for municipality `r gemeinde_name` is `r fkirche`. If there is no church affiliation this factor is  `0`.
+The church affiliation dependent multiplication factor for municipality `r gemeinde_name` is `r fkirche`. If there is no church affiliation, this factor is  `0`.
 
 [^4]: AHV salary: 2350 month, 28200 year.
 [^5]: 831.40. Bundesgesetz über die berufliche Alters-, Hinterlassenen- und Invalidenvorsorge (Art.16)
 [^6]: Minimum interest rate on the retirement assets as of. 01.01.2017
-[^7]: The taxable income does not correspond to the net or gross salary. Social insurance contributions and a wide range of other deductions are substracted from the gross salary. The amount remaining is the taxable income, the base to calculate your tax bill.
+[^7]: The taxable income does not correspond to the net or gross salary. Social insurance contributions and a wide range of other deductions are subtracted from the gross salary. The amount remaining is the taxable income, the base to calculate your tax bill.
 
 \newpage
 
 # Appendix 2: Detailed Results
 
-The time-dependent data is shown in the following tables.
+Detailed results from calculations are shown in the following tables.
 
 ```{r Road2Retirement_to_print_Summarized, echo = FALSE}
 moncols <- c(  "ExpectedSalary", "OccupationalPension", "PrivatePension", "TaxBenefits") 
@@ -465,5 +515,5 @@ pander(Road2Retirement_to_print_TaxBenefit)
 ```
 
 # Disclaimer
-All figures in this report should be understood as general references and are not binding in any case.
-Mirai Solutions offers no guarantees for the completeness or accuracy of the information in this report and declines any responsibility in case of mistakes.
+
+While **SmaRP** was developed under the utmost care and diligence, Mirai Solutions does not guarantee for its accuracy and correctness. In addition, **SmaRP** is based on assumptions and projections (explained in a section above and in the PDF report) and as such computed figures should be understood as general references and do not hold any legal value.
