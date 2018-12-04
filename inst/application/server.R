@@ -118,7 +118,7 @@ function(input, output, session) {
 
   # Church taxes
   churchtax <- reactive({
-    if (input$churchtax == TRUE) {
+    if (input$churchtax == "A") {
       "Y"
     } else {
       "N"
