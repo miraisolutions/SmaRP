@@ -1,6 +1,6 @@
 ---
-title: "SmaRP: Smart Retirement Planning	"
-date: \today
+# title: 
+# date: 
 output: 
     pdf_document:
 #      citation_package: natbib
@@ -81,18 +81,16 @@ Kinder <- format(round(params$Kinder, 2), nsmall = 0)
 
 ```
 \newpage
+\begin{center}
+\large{SmaRP: Smart Retirement Planning}
+\newline
+\normalsize{Mirai Solutions GmbH}
+\newline
+\today
+\end{center}
+\newpage
 
-# Table of Contents
-
-## Introduction............................................................................................3
-## 1. Main Results.....................................................................................3
-## 2. Parameters.........................................................................................3
-## 3. Assumptions and limitations.........................................................4
-## 4. The basics of the Swiss retirement system................................5
-## 5. Bibliography......................................................................................6
-## Appendix 1: Methodology..................................................................7
-## Appendix 2: Detailed results.............................................................9
-## Disclaimer...............................................................................................9
+\tableofcontents
 
 \newpage
 
@@ -188,20 +186,14 @@ TypePurchase <- ifelse(params$TypePurchase =="SingleP2", "single purchase", "ann
 
 Here is a list of all inputs:
 
-* Residence is in `r params$gemeinden`, `r params$Kanton`, postal code `r params$postalcode`.
-
-* The date of birth is `r params$birthday`.
-
-* At the age of `r params$RetirementAge`, the retirement year is `r params$retirementdate`.
-
+* Residence is in `r params$gemeinden`, `r params$Kanton`, postal code `r params$postalcode`
+* The date of birth is `r params$birthday`
+* At the age of `r params$RetirementAge`, the retirement year is `r params$retirementdate`
 ```{r, echo=FALSE}
 SalaryGrowthRate <-  params$SalaryGrowthRate * 100
 ```
-
-* The current salary is `r params$Salary` CHF, with a growth rate of `r SalaryGrowthRate`%, which is assumed constant until retirement.
-
-* The occupational pension fund (Pillar II) is of `r params$CurrentP2` CHF.
-
+* The current salary is `r params$Salary` CHF, with a growth rate of `r SalaryGrowthRate`%, which is assumed constant until retirement
+* The occupational pension fund (Pillar II) is of `r params$CurrentP2` CHF
 ```{r msgP2, echo=FALSE}
 if(is.null(params$P2purchase) || params$P2purchase == 0){
   msgP2 <- "No voluntary contributions to the Pillar II"
@@ -209,14 +201,10 @@ if(is.null(params$P2purchase) || params$P2purchase == 0){
   msgP2 <- paste0("The voluntary contribution to Pillar II is of ", params$P2purchase, " CHF and is made as a ", TypePurchase, ".")
 }
 ```
-* `r msgP2`.
-
-* Pillar II has an interest rate of `r params$rate*100`%. We ensure that the amount considered in the calculation is always higher than the minimum required by law.
-
-* The private pension fund (Pillar III) is of `r params$CurrentP3` CHF.
-
-* The annual contribution to the Pillar III is of `r params$P3purchase` CHF, with an expected return of `r params$returnP3*100`%.
-
+* `r msgP2`
+* Pillar II has an interest rate of `r params$rate*100`%. We ensure that the amount considered in the calculation is always higher than the minimum required by law
+* The private pension fund (Pillar III) is of `r params$CurrentP3` CHF
+* The annual contribution to the Pillar III is of `r params$P3purchase` CHF, with an expected return of `r params$returnP3*100`%
 ```{r maritallabel, echo=FALSE}
 if(params$rate_group == "A"){
   maritallabel <- "Single"
@@ -226,7 +214,6 @@ if(params$rate_group == "A"){
   maritallabel <- "Married double-income"
 }
 ```
-
 * Civil status is `r maritallabel` with  `r params$NChildren`  children.
 
 ```{r churchaffiliation, echo = FALSE}
@@ -342,7 +329,7 @@ The savings process for retirement benefits starts on January 1st following the 
 
 $$ PensionableSalary(t) = max(Salary(t) - \frac{7}{8} AHV Salary(t), 30 * AHVSalary) $$ [^4]
 
-Contribution Rates under Pillar II are defined by law[^5] (art.16)
+Contribution Rates under Pillar II are defined by law[^5] 
 \begin{center}
 \begin{tabular}{ c | c | c | c }
 \hline
@@ -370,13 +357,10 @@ $$ PillarIII (t)=  \sum_{t=t_0}^TVoluntaryContributions * e^{r(T-t)} $$
 
 where,
 
-  $VoluntaryContributions$ is an input  
-  
-  $r$ is the interest rate applied to the private pension fund 
-  
-  $t_0$ is today's date
-  
-  $T$ is the retirement age.
+- $VoluntaryContributions$ is an input
+- $r$ is the interest rate applied to the private pension fund 
+- $t_0$ is today's date
+- $T$ is the retirement age.
 
 ## Tax Benefit
 
@@ -386,11 +370,9 @@ $$ TaxBenefit(t) = \sum_{t_0}^TVoluntaryContributions(t) *  TaxRate(t) * e^{r(T-
 
 where ,
 
-$VoluntaryContributions$ is an input 
-
-$t_0$ is today's date
-
-$T$ is the retirement age.
+- $VoluntaryContributions$ is an input
+- $t_0$ is today's date
+- $T$ is the retirement age.
 
 If the tax rate is not an input, the tax benefits are computed as following:
 
@@ -404,11 +386,9 @@ $$ TaxableIncome(t) = max(Salary(t) - min(TotalContr, MaxContrTax),0) $$
 
 where,
 
-  $Salary(t)$ is the salary at year $t$
-  
-  $TotalContr$ is the sum of the Pillar II and Pillar III purchases 
-  
-  $MaxContrTax$ is the maximum deductible amount allowed by law.
+- $Salary(t)$ is the salary at year $t$
+- $TotalContr$ is the sum of the Pillar II and Pillar III purchases 
+- $MaxContrTax$ is the maximum deductible amount allowed by law.
 
 
 ### The TaxPaid function
@@ -421,11 +401,9 @@ $$ FederalTax(t) = \sum_{t_0}^T(Income(t) *  FederalTaxRate) - 251*NChildren $$
 
 where,
 
-  $Income(t)$ is the income at time $t$
-  
-  $NChildren$ is the number of kids under 18
-  
-  $FederalTaxRate$ is a factor based on the civil status and family structure.
+- $Income(t)$ is the income at time $t$
+- $NChildren$ is the number of kids under 18
+- $FederalTaxRate$ is a factor based on the civil status and family structure.
 
 <!-- The Federal tax rate can be looked up in the following table. -->
 
@@ -435,15 +413,11 @@ $$ KantonalTax(t) = \sum_{t_0}^T(Income(t) *  KantonalTaxRate) * (F_{kanton} + F
 
 where,
 
-  $Income(t)$ is the income at time $t$
-  
-  $KantonalTaxRate$ is a factor based on the civil status and family structure
-  
-  $F_{kanton}$ is a canton-dependent multiplication factor
-  
-  $F_{municipality}$ is a municipality-dependent  multiplication factor 
-  
-  $F_{church}$ is a church affiliation dependent multiplication factor.
+- $Income(t)$ is the income at time $t$
+- $KantonalTaxRate$ is a factor based on the civil status and family structure
+- $F_{kanton}$ is a canton-dependent multiplication factor
+- $F_{municipality}$ is a municipality-dependent  multiplication factor 
+- $F_{church}$ is a church affiliation dependent multiplication factor.
 
 <!-- The cantonal tax rate for canton `r params$Kanton` can be looked up in the following table. -->
 
@@ -514,6 +488,7 @@ Road2Retirement_to_print_TaxBenefit <- Road2Retirement_to_print %>%
 pander(Road2Retirement_to_print_TaxBenefit)
 ```
 
+\newpage
 # Disclaimer
 
 While **SmaRP** was developed under the utmost care and diligence, Mirai Solutions does not guarantee for its accuracy and correctness. In addition, **SmaRP** is based on assumptions and projections (explained in a section above and in the PDF report) and as such computed figures should be understood as general references and do not hold any legal value.
