@@ -7,16 +7,17 @@
 launch_application(...)
 }
 \arguments{
-\item{...}{additional arguments to be passed on to runApp}
+\item{...}{Additional arguments passed on to \code{\link[=runApp]{runApp()}}. Note that
+argument \code{launch.browser} is always passed as \code{TRUE}.}
 }
 \value{
-Side-effecting function. Launches SmaRP application.
+Side-effecting function. Launches the SmaRP app.
 }
 \description{
-function to launch the SmaRP shiny app
+Launch the SmaRP Shiny wep app.
 }
 \examples{
-\dontrun{
-  library(SmaRP); launch_application()
+if (interactive()) {
+  SmaRP::launch_application()
 }
 }

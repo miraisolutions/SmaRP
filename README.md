@@ -37,7 +37,7 @@ devtools::install_github("miraisolutions/SmaRP", build_vignettes = TRUE)
 ```
 and running
 ``` r
-SmaRP::launch_application(launch.browser = TRUE)
+SmaRP::launch_application()
 ```
 
 
