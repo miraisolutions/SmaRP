@@ -401,13 +401,16 @@ function(input, output, session) {
   output$report <- downloadHandler(
     filename = reportname(),
     content = function(file) {
-      rmarkdown::render(
-        input = "report.Rmd",
-        output_file = file,
-        output_format = "pdf_document",
-        # output_format = "html_document",
-        params = params(),
-        envir = new.env(parent = globalenv()) # sharing data only via params
+      withModalSpinner(
+        rmarkdown::render(
+          input = "report.Rmd",
+          output_file = file,
+          output_format = "pdf_document",
+          # output_format = "html_document",
+          params = params(),
+          envir = new.env(parent = globalenv()) # sharing data only via params
+        ),
+        "Generating the report..."
       )
     }
   ) # end of downloadHandler
