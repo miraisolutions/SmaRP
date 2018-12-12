@@ -22,7 +22,7 @@ fluidPage(
 
   # Pop up before leaving page ----
   tags$script('window.onbeforeunload = function(event) {return "";};'),
-  
+
   # Header  ----
   fluidRow(
     id = "header",
@@ -305,8 +305,8 @@ fluidPage(
                 value = "Plot",
                 verticalLayout(
                   verbatimTextOutput("Totals"),
-                  htmlOutput("plot1"),
-                  htmlOutput("plot2")
+                  htmlOutput("plot1", style = "height: 400px; width: 800px"),
+                  htmlOutput("plot2", style = "height: 130px; width: 800px")
                 )
               ), # end tabPanel Plot
 

@@ -92,7 +92,7 @@ function(input, output, session) {
       MaxContrTax
     }
   })
-  
+
   # Postal Code / Gemeinden
   selPLZGemeinden <- reactive({
     validate(need(input$plzgemeinden, VM$plzgemeinden))
@@ -237,8 +237,6 @@ function(input, output, session) {
       xvar = "calendar",
       yvar = colnames(TserieGraphData())[which(colnames(TserieGraphData()) != "calendar")],
       options = list(
-        width = 800,
-        height = 400,
         chartArea = "{left: 150, width: 550}",
         isStacked = TRUE,
         legend = "bottom",
@@ -278,8 +276,6 @@ function(input, output, session) {
       xvar = "contribution",
       yvar = colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
       options = list(
-        width = 800,
-        height = 130,
         chartArea = "{left: 150, width: 550, height: 50}",
         isStacked = TRUE,
         vAxes = "[{minValue:0}]",
