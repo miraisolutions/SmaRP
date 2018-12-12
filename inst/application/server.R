@@ -410,7 +410,7 @@ function(input, output, session) {
           params = params(),
           envir = new.env(parent = globalenv()) # sharing data only via params
         ),
-        "Generating the report..."
+        "Generating the report...", size = "s"
       )
     }
   ) # end of downloadHandler
