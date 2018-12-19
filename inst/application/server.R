@@ -390,21 +390,24 @@ function(input, output, session) {
 
   # build report name
   reportname <- reactive(
-    paste("SmaRPreport", postalcode(), gsub("-", "", Sys.Date()), "pdf", sep= ".")
+    paste("SmaRPreport", postalcode(), format(Sys.Date(), "%Y%m%d"), "pdf", sep= ".")
   )
 
   # generate output report
   output$report <- downloadHandler(
     filename = reportname(),
     content = function(file) {
-      output <- rmarkdown::render(
-        input = "report.Rmd",
-        output_file = reportname(),
-        output_format = "pdf_document",
-        # output_format = "html_document",
-        params = params()
+      withModalSpinner(
+        rmarkdown::render(
+          input = "report.Rmd",
+          output_file = file,
+          output_format = "pdf_document",
+          # output_format = "html_document",
+          params = params(),
+          envir = new.env(parent = globalenv()) # sharing data only via params
+        ),
+        "Generating the report...", size = "s"
       )
-      file.copy(output, file)
     }
   ) # end of downloadHandler
 
