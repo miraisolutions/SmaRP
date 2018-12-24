@@ -1,6 +1,6 @@
 ---
-title: "SmaRP_server"
-author: "Nikki"
+title: "SmaRP-server"
+author: "Nicolleta Farabullini"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
