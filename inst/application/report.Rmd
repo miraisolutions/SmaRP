@@ -207,8 +207,8 @@ if(is.null(params$P2purchase) || params$P2purchase == 0){
 ```
 * `r msgP2`
 * Pillar II has an interest rate of `r params$rate*100`%. We ensure that the amount considered in the calculation is always higher than the minimum required by law
-* The private pension fund (Pillar III) is of `r params$CurrentP3` CHF
-* The annual contribution to the Pillar III is of `r params$P3purchase` CHF, with an expected return of `r params$returnP3*100`%
+* The private pension fund (Pillar III) is of `r printCurrency(params$CurrentP3)` CHF
+* The annual contribution to the Pillar III is of `r printCurrency(params$P3purchase)` CHF, with an expected return of `r params$returnP3*100`%
 ```{r maritallabel, echo=FALSE}
 if(params$rate_group == "A"){
   maritallabel <- "Single"
@@ -222,9 +222,9 @@ if(params$rate_group == "A"){
 
 ```{r churchaffiliation, echo = FALSE}
 if (params$churchtax == "N"){
-  churchaffiliation <- "no"
+  churchaffiliation <- "No"
 } else {
-  churchaffiliation <- "a"
+  churchaffiliation <- "A"
 }
 ```
 
