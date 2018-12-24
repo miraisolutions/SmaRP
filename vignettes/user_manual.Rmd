@@ -1,0 +1,39 @@
+---
+title: "SmaRP-User Manual"
+author: "Nicolleta Farabullini"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{user_manual}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+
+Smart Retirement Planning (SmaRP) is an internal Mirai Solutions project aimed at creating a retirement plan for people working in Switzerland. 
+
+This vignette is guide a through its installation and usage. 
+
+## Installation
+
+From RStudio, click on top right to create a new project according to the following steps: 
+
+New Project -> Version Control -> Git -> paste: https://github.com/miraisolutions/SmaRP in Repository URL box -> Create Project
+
+## Run the App
+
+The app can be run in two ways: 
+
+- From scripts: open server.R or ui.R and click on "Run App" on the top right
+
+- From console:
+
+  - type: getwd() in console to see in which directory you are in:
+  
+    - if in: "/home/mirai_user/RStudioProjects/SmaRP", then type: `runApp('inst/application')`
+    - if in: "/home/mirai_user/RStudioProjects/SmaRP/inst/application", then type: `runApp()` 
+    
+## Usage
+
+Once app window pops up, click on "Open in Browser" on the top, fill out all necessary fields, click on "Generate Report" and check download folder to read the outcome of the analysis.
