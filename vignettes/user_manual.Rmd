@@ -27,7 +27,7 @@ The app can be run in two ways:
 
 - From scripts: open server.R or ui.R and click on "Run App" on the top right
 
-- From console: type `appDir = file.path(getwd(), "inst", "application"), launch.browser = TRUE`
+- From console: type `shiny::runApp(appDir = file.path(getwd(), "inst", "application"), launch.browser = TRUE)`
     
 ## Usage
 
