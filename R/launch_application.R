@@ -1,6 +1,8 @@
-#' SmaRP App Launcher
+#' @title launch_application
+#' 
+#' @rdname launch_application
 #'
-#' Launch the SmaRP Shiny wep app.
+#' @description Launch the SmaRP Shiny wep app.
 #'
 #' @param ... Additional arguments passed on to [runApp()]. Note that
 #'   argument `launch.browser` is always passed as `TRUE`.

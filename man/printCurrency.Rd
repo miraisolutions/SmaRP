@@ -2,7 +2,7 @@
 % Please edit documentation in R/core.R
 \name{printCurrency}
 \alias{printCurrency}
-\title{Print Currency}
+\title{printCurrency}
 \usage{
 printCurrency(value, digits = 0, sep = ",", decimal = ".")
 }
@@ -16,10 +16,10 @@ printCurrency(value, digits = 0, sep = ",", decimal = ".")
 \item{decimal}{dot for decimal separation}
 }
 \value{
-currency
+Currency.
 }
 \description{
-print values as monetary on a given currency.
+Print values as monetary on a given currency.
 }
 \examples{
 \dontrun{

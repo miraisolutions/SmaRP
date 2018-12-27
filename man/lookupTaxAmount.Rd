@@ -2,19 +2,19 @@
 % Please edit documentation in R/TaxBenefit.R
 \name{lookupTaxAmount}
 \alias{lookupTaxAmount}
-\title{Returns the tax amount to be paid given one income.}
+\title{lookupTaxAmount}
 \usage{
 lookupTaxAmount(Income, Tabelle, CivilStatus)
 }
 \arguments{
-\item{Income}{annual stipend}
+\item{Income}{Annual stipend.}
 
 \item{Tabelle}{Income - Tax rate table at Federal level.}
 
-\item{CivilStatus}{marital status}
+\item{CivilStatus}{Marital status.}
 }
 \value{
-tax amount to be paid
+Tax amount to be paid.
 }
 \description{
 Search the tax amount to be paig given one income on the tax tables.
@@ -25,8 +25,5 @@ lookupTaxAmount(Income = 100000, Tabelle = BundessteueTabelle, CivilStatus = "A"
 }
 }
 \seealso{
-Other swisstax: \code{\link{buildTaxBenefits}},
-  \code{\link{calcTaxBenefitSwiss}},
-  \code{\link{getTaxAmount}}
+swisstax
 }
-\concept{swisstax}

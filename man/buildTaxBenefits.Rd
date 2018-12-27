@@ -2,7 +2,7 @@
 % Please edit documentation in R/TaxBenefit.R
 \name{buildTaxBenefits}
 \alias{buildTaxBenefits}
-\title{Builds a data frame with the tax benefits path}
+\title{buildTaxBenefits}
 \usage{
 buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
   Salary, SalaryGrowthRate, postalcode, NChildren, churchtax, rate_group,
@@ -33,7 +33,7 @@ buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
 
 \item{givenday}{Date at which the age is computed ("YYYY-MM-DD").}
 
-\item{RetirementAge}{age of retirement}
+\item{RetirementAge}{Age of retirement.}
 
 \item{CurrentP2}{Value of the current assets in the Occupational Pension Fund.}
 
@@ -47,9 +47,6 @@ buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
 data.frame tax benefit path.
 }
 \description{
-Builds a data frame with the tax benefits path
-}
-\details{
 All inputs are scalars. Builds a data frame as long as the years to retirement.
 Calls 'getTaxAmount()' through 'calcTaxBenefitSwiss()', therefore, it assumes objects on the global enviornment.
 }
@@ -72,7 +69,5 @@ Calls 'getTaxAmount()' through 'calcTaxBenefitSwiss()', therefore, it assumes ob
 }
 }
 \seealso{
-Other swisstax: \code{\link{calcTaxBenefitSwiss}},
-  \code{\link{getTaxAmount}}, \code{\link{lookupTaxAmount}}
+swisstax
 }
-\concept{swisstax}

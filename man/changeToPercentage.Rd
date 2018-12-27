@@ -2,16 +2,16 @@
 % Please edit documentation in R/core.R
 \name{changeToPercentage}
 \alias{changeToPercentage}
-\title{Change to Percentage}
+\title{changeToPercentage}
 \usage{
 changeToPercentage(df)
 }
 \arguments{
-\item{df}{given data frame}
+\item{df}{Given data frame.}
 }
 \value{
-percentage value
+Percentage value.
 }
 \description{
-from decimal to percentage value
+From decimal to percentage value.
 }

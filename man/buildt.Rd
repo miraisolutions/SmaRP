@@ -2,7 +2,7 @@
 % Please edit documentation in R/core.R
 \name{buildt}
 \alias{buildt}
-\title{Buildt}
+\title{buildt}
 \usage{
 buildt(birthday, givenday = today("UTC"), RetirementAge = 65)
 }
@@ -11,7 +11,7 @@ buildt(birthday, givenday = today("UTC"), RetirementAge = 65)
 
 \item{givenday}{Date at which the age is computed ("YYYY-MM-DD").}
 
-\item{RetirementAge}{Age of retirement}
+\item{RetirementAge}{Age of retirement.}
 }
 \value{
 Vector of dates until retirement.

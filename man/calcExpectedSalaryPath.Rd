@@ -2,7 +2,7 @@
 % Please edit documentation in R/core.R
 \name{calcExpectedSalaryPath}
 \alias{calcExpectedSalaryPath}
-\title{Calculate Expected Salary Path}
+\title{calcExpectedSalaryPath}
 \usage{
 calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
 }

@@ -2,15 +2,15 @@
 % Please edit documentation in R/core.R
 \name{returnPLZKanton}
 \alias{returnPLZKanton}
-\title{Return Postal Code Kanton}
+\title{returnPLZKanton}
 \usage{
 returnPLZKanton(plz)
 }
 \arguments{
-\item{plz}{canton's zip code.}
+\item{plz}{Canton's postal code.}
 }
 \value{
-canton's zip code.
+Canton.
 }
 \description{
 Return in which canton the person is retiring.

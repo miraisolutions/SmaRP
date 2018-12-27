@@ -2,16 +2,16 @@
 % Please edit documentation in R/core.R
 \name{isnotAvailable}
 \alias{isnotAvailable}
-\title{Is not Available}
+\title{isnotAvailable}
 \usage{
 isnotAvailable(inputValue)
 }
 \arguments{
-\item{inputValue}{input value}
+\item{inputValue}{Input value.}
 }
 \value{
-TRUE or FALSE
+TRUE or FALSE.
 }
 \description{
-if input value is not available, then return logical TRUE else FALSE
+If input value is not available, then return logical TRUE else FALSE.
 }

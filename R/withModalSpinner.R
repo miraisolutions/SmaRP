@@ -1,6 +1,8 @@
-#' Modal spinner information message
+#' @title withModalSpinner
+#' 
+#' @rdname withModalSpinner 
 #'
-#' Display a modal window with a spinning wheel and an information message
+#' @description Display a modal window with a spinning wheel and an information message
 #' while a (time-consuming) expression is evaluated.
 #'
 #' @param expr The `expression` to be evaluated.

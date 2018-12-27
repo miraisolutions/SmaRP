@@ -2,7 +2,7 @@
 % Please edit documentation in R/core.R
 \name{buildContributionP2Path}
 \alias{buildContributionP2Path}
-\title{Build Contribution Pillar II Path}
+\title{buildContributionP2Path}
 \usage{
 buildContributionP2Path(birthday, Salary, SalaryGrowthRate, CurrentP2,
   P2purchase, TypePurchase, rate = BVGMindestzinssatz,
@@ -25,7 +25,7 @@ buildContributionP2Path(birthday, Salary, SalaryGrowthRate, CurrentP2,
 
 \item{givenday}{Date at which the age is computed ("YYYY-MM-DD").}
 
-\item{RetirementAge}{Age of retirement}
+\item{RetirementAge}{Age of retirement.}
 
 \item{ncp}{Length contribution path to retirement}
 }

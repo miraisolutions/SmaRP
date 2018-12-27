@@ -2,18 +2,18 @@
 % Please edit documentation in R/core.R
 \name{isnotAvailableReturnZero}
 \alias{isnotAvailableReturnZero}
-\title{Is Not Available Return Zero}
+\title{isnotAvailableReturnZero}
 \usage{
 isnotAvailableReturnZero(inputValue, fallback = 0)
 }
 \arguments{
-\item{inputValue}{input value}
+\item{inputValue}{Input value.}
 
-\item{fallback}{zero}
+\item{fallback}{Zero.}
 }
 \value{
-zero or input value
+Zero or input value.
 }
 \description{
-if input value is not available, then return zero else input value
+If input value is not available, then return zero else input value.
 }
