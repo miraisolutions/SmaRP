@@ -6,3 +6,4 @@
 Dockerfile
 cloudbuild.yaml
 man-roxygen
+inst/application/data/taxdata
