@@ -2,7 +2,7 @@
 % Please edit documentation in R/TaxBenefit.R
 \name{calcTaxBenefitSwiss}
 \alias{calcTaxBenefitSwiss}
-\title{Calculate Tax Benefit Swiss}
+\title{calcTaxBenefitSwiss}
 \usage{
 calcTaxBenefitSwiss(ExpectedSalaryPath, TaxableIncome, rate_group, Age,
   NChildren, postalcode, churchtax)
@@ -43,7 +43,5 @@ Calls 'getTaxAmount()', therefore, it assumes objects in the global environment.
 \seealso{
 \code{\link[=getTaxAmount]{getTaxAmount()}}
 
-Other swisstax: \code{\link{buildTaxBenefits}},
-  \code{\link{getTaxAmount}}, \code{\link{lookupTaxAmount}}
+swisstax
 }
-\concept{swisstax}

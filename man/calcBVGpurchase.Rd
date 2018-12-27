@@ -2,7 +2,7 @@
 % Please edit documentation in R/core.R
 \name{calcBVGpurchase}
 \alias{calcBVGpurchase}
-\title{Calculate Purchase Pilar II}
+\title{calcBVGpurchase}
 \usage{
 calcBVGpurchase(TypePurchase, P2purchase, ncp)
 }
@@ -14,10 +14,10 @@ calcBVGpurchase(TypePurchase, P2purchase, ncp)
 \item{ncp}{Length contribution path to retirement}
 }
 \value{
-BVG purchase
+BVG purchase.
 }
 \description{
-Calculate the path of purchases to the Pilar II (Occupational pension fund, BVG)
+Calculate the path of purchases to the Pilar II (Occupational pension fund, BVG).
 }
 \examples{
 \dontrun{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/core.R
 \name{getRetirementCalendar}
 \alias{getRetirementCalendar}
-\title{Obtain Retirement Calendar}
+\title{getRetirementCalendar}
 \usage{
 getRetirementCalendar(birthday, givenday = today("UTC"),
   RetirementAge = 65)
@@ -12,10 +12,10 @@ getRetirementCalendar(birthday, givenday = today("UTC"),
 
 \item{givenday}{Date at which the age is computed ("YYYY-MM-DD").}
 
-\item{RetirementAge}{Age of retirement}
+\item{RetirementAge}{Age of retirement.}
 }
 \value{
-retirement calendar
+Retirement calendar.
 }
 \description{
 Calculate the annual retirement path.

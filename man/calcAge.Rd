@@ -2,7 +2,7 @@
 % Please edit documentation in R/core.R
 \name{calcAge}
 \alias{calcAge}
-\title{Calculate Age}
+\title{calcAge}
 \usage{
 calcAge(birthday, givenday = today("UTC"))
 }
@@ -12,7 +12,7 @@ calcAge(birthday, givenday = today("UTC"))
 \item{givenday}{Date at which the age is computed ("YYYY-MM-DD").}
 }
 \value{
-calculated age in years.
+Calculated age in years.
 }
 \description{
 Function to calculate person's age at a specific point in time.

@@ -2,11 +2,11 @@
 # https://www.estv.admin.ch/estv/de/home/allgemein/steuerstatistiken/fachinformationen/steuerbelastungen/steuerbelastung.html#529360841
 
 # # download and safe
-# url2download <- "https://www.estv.admin.ch/dam/estv/de/dokumente/allgemein/Dokumentation/Zahlen_fakten/Steuerstatistiken/steuerbelastung/2016/SB-NP-alle-Gden_2016.xlsx.download.xlsx/SB-NP-alle-Gden_de-fr_2016.xlsx"
-# filename <- "data//taxdata//Steuerbelastung.xls"
+# url2download <- "https://www.estv.admin.ch/dam/estv/de/dokumente/allgemein/Dokumentation/Zahlen_fakten/Steuerstatistiken/steuerbelastung/2017/SB-NP-alle-Gden_2017.xlsx.download.xlsx/SB-NP-alle-Gden_de-fr_2017.xlsx"
+# filename <- "data//taxdata//Steuerbelastung_2017.xls"
 # download.file(url2download, filename)
 
-wb <- XLConnect::loadWorkbook("inst/application/data//taxdata//Steuerbelastung.xls")
+wb <- XLConnect::loadWorkbook("inst/application/data//taxdata//Steuerbelastung_2017.xls")
 
 
 .readTaxBurden <- function(wb, sheet) {

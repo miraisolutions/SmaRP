@@ -2,7 +2,7 @@
 % Please edit documentation in R/launch_application.R
 \name{launch_application}
 \alias{launch_application}
-\title{SmaRP App Launcher}
+\title{launch_application}
 \usage{
 launch_application(...)
 }

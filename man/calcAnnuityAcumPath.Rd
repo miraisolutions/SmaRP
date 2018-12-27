@@ -2,14 +2,14 @@
 % Please edit documentation in R/core.R
 \name{calcAnnuityAcumPath}
 \alias{calcAnnuityAcumPath}
-\title{Calculate annuity accumative path}
+\title{calcAnnuityAcumPath}
 \usage{
 calcAnnuityAcumPath(contributions, t, rate)
 }
 \arguments{
-\item{contributions}{vector of contributions (annuities)}
+\item{contributions}{Vector of contributions (annuities).}
 
-\item{t}{vector of time intervals between contributions.
+\item{t}{Vector of time intervals between contributions.
 \itemize{
 \item Irregular time intervals are allowed.
 \item For frequency bellow annual, enter t as proportion of a year.
@@ -24,7 +24,7 @@ calcAnnuityAcumPath(contributions, t, rate)
 \item{TypePurchase}{AnnualP2 if the purchase on the pillar II gets repeated every year until retirement.}
 }
 \value{
-vector of accumulated benefits given a set of contributions.
+Vector of accumulated benefits given a set of contributions.
 }
 \description{
 Calculate future value of an annuity with periodic contributions.

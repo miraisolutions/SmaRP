@@ -1,10 +1,12 @@
 
-#' Calculates the tax amount (federal, kantonal and local)
+#' @title getTaxAmount
+#' 
+#' @rdname getTaxAmount
 #'
 #' @description This function uses 2 main sources for tax data.
 #' At Kanton and Gemeinde level, the source is taxburden.list.
 #' At federal level, we use the official taxrate table (BundessteueTabelle) and we try to aproximate the taxable income.
-
+#' 
 #' @details
 #' This function assumes the following objects on the global enviornment
 #'  * PLZGemeinden (includes Kirchensteuer)
@@ -18,15 +20,17 @@
 #'  * ALV, maxALV
 #'  * VersicherungsL, VersicherungsV, VersicherungsK
 #'  * BerufsauslagenTarif, BerufsauslagenMax, BerufsauslagenMin
-#'
-#' @family swisstax
+#' @seealso swisstax
+#' 
 #' @param Income Annual salary. `Numeric` scalar.
 #' @param rate_group A (Single), B (Married), C (Married Double income) `Character`.
 #' @param Age Age of the person. `Numeric`
 #' @param NChildren Number of children. `Numeric` scalar.
 #' @param postalcode Zip code `Character`
 #' @param churchtax Y/N `Character` Y/N
+#' 
 #' @import dplyr
+#' 
 #' @return Tax Amount
 #'
 #' @examples
@@ -123,13 +127,18 @@ getTaxAmount <- function(Income,
 }
 
 
-#' Returns the tax amount to be paid given one income.
+#' @title lookupTaxAmount
+#' 
+#' @rdname lookupTaxAmount
+#' 
 #' @description Search the tax amount to be paig given one income on the tax tables.
-#' @family swisstax
-#' @param Income annual stipend
+#' @seealso swisstax
+#' 
+#' @param Income Annual stipend.
 #' @param Tabelle Income - Tax rate table at Federal level.
-#' @param CivilStatus marital status
-#' @return tax amount to be paid
+#' @param CivilStatus Marital status.
+#' 
+#' @return Tax amount to be paid.
 #' @examples
 #' \dontrun{
 #' lookupTaxAmount(Income = 100000, Tabelle = BundessteueTabelle, CivilStatus = "A")
@@ -152,19 +161,23 @@ lookupTaxAmount <- function(Income, Tabelle, CivilStatus) {
   return(TaxAmount)
 }
 
-#' Builds a data frame with the tax benefits path
+#' @title buildTaxBenefits
+#' 
+#' @rdname buildTaxBenefits
 #'
-#' @details
-#' All inputs are scalars. Builds a data frame as long as the years to retirement.
+#' @description All inputs are scalars. Builds a data frame as long as the years to retirement.
 #' Calls 'getTaxAmount()' through 'calcTaxBenefitSwiss()', therefore, it assumes objects on the global enviornment.
-#' @family swisstax
+#' @seealso swisstax
+#' 
+#' @inheritParams getTaxAmount
+#' @param RetirementAge Age of retirement.
 #' @template given_bday
 #' @template P2
 #' @template P3
 #' @template salary
-#' @inheritParams getTaxAmount
-#' @param RetirementAge age of retirement
+#' 
 #' @import dplyr
+#' 
 #' @return data.frame tax benefit path.
 #' @examples
 #' \dontrun{buildTaxBenefits(
@@ -219,15 +232,19 @@ buildTaxBenefits <- function(birthday,
   return(TaxBenefitsPath)
 }
 
-#' Calculate Tax Benefit Swiss
+#' @title calcTaxBenefitSwiss
+#' 
+#' @rdname calcTaxBenefitSwiss
 #' 
 #' @description Calculates the tax benefit as a difference of the taxes paid with and without retirement contributions.
 #' Calls 'getTaxAmount()', therefore, it assumes objects in the global environment.
 #' @seealso [getTaxAmount()]
-#' @family swisstax
+#' @seealso swisstax
+#' 
 #' @param ExpectedSalaryPath Vector of annual salaries until retirement.
 #' @param TaxableIncome Vector of annual taxable income until retirement.
 #' @inheritParams getTaxAmount
+#' 
 #' @return Single tax benefit (tax relief) of one contribution.
 #' @examples
 #' \dontrun{

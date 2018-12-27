@@ -2,7 +2,7 @@
 % Please edit documentation in R/core.R
 \name{makeTable}
 \alias{makeTable}
-\title{Make Table}
+\title{makeTable}
 \usage{
 makeTable(Road2Retirement, moncols = c("DirectP2", "ReturnP2", "TotalP2",
   "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax",
@@ -11,10 +11,10 @@ makeTable(Road2Retirement, moncols = c("DirectP2", "ReturnP2", "TotalP2",
 \arguments{
 \item{Road2Retirement}{Main data frame where main results are displayed.}
 
-\item{moncols}{Columns to prit out on the table}
+\item{moncols}{Columns to prit out on the table.}
 }
 \value{
-Table to print out
+Table to print out.
 }
 \description{
 Utility function to display main results on the table tab.
@@ -23,4 +23,5 @@ Utility function to display main results on the table tab.
 \dontrun{
 makeTable(Road2Retirement)
 }
+
 }

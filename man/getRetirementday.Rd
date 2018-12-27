@@ -2,20 +2,20 @@
 % Please edit documentation in R/core.R
 \name{getRetirementday}
 \alias{getRetirementday}
-\title{Get Retirement Day}
+\title{getRetirementday}
 \usage{
 getRetirementday(birthday, RetirementAge = 65)
 }
 \arguments{
 \item{birthday}{Date of birth ("YYYY-MM-DD").}
 
-\item{RetirementAge}{Age of retirement}
+\item{RetirementAge}{Age of retirement.}
 }
 \value{
-day at which retirement begins
+Day at which retirement begins.
 }
 \description{
-Calculate day of retirement assuming the person can retire at the age of 65
+Calculate day of retirement assuming the person can retire at the age of 65.
 }
 \examples{
  getRetirementday("1981-08-12")
