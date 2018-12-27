@@ -2,7 +2,7 @@
 % Please edit documentation in R/TaxBenefit.R
 \name{getTaxAmount}
 \alias{getTaxAmount}
-\title{Calculates the tax amount (federal, kantonal and local)}
+\title{getTaxAmount}
 \usage{
 getTaxAmount(Income, rate_group, Age, NChildren, postalcode, churchtax)
 }
@@ -50,8 +50,5 @@ getTaxAmount(Income = 200000, rate_group = "C", Age = 32,
 }
 }
 \seealso{
-Other swisstax: \code{\link{buildTaxBenefits}},
-  \code{\link{calcTaxBenefitSwiss}},
-  \code{\link{lookupTaxAmount}}
+swisstax
 }
-\concept{swisstax}

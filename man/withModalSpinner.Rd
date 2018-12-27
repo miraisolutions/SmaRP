@@ -2,7 +2,7 @@
 % Please edit documentation in R/withModalSpinner.R
 \name{withModalSpinner}
 \alias{withModalSpinner}
-\title{Modal spinner information message}
+\title{withModalSpinner}
 \usage{
 withModalSpinner(expr, info, spinner = icon("spinner", "fa-spin"),
   size = "m")

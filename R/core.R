@@ -1,13 +1,21 @@
-#' Buildt
+#' @title buildt
+#' 
+#' @rdname buildt
+#' 
 #' @description Build annual path from today (or given day) until the retirement day. 
+#' 
 #' @template given_bday
-#' @param RetirementAge Age of retirement
+#' @param RetirementAge Age of retirement.
+#' 
 #' @return Vector of dates until retirement. 
+#' 
 #' @examples
 #' \dontrun{
 #' buildt("1981-08-12")
 #' }
-#' @importFrom lubridate today duration interval
+#' @importFrom lubridate today 
+#' @importFrom lubridate duration
+#' @importFrom lubridate interval
 #' @export
 buildt <- function(birthday, givenday = today("UTC"), RetirementAge = 65) {
   calendar <- getRetirementCalendar(birthday, givenday, RetirementAge + 1)
@@ -16,25 +24,41 @@ buildt <- function(birthday, givenday = today("UTC"), RetirementAge = 65) {
 }
 
 
-#' Calculate Age
+#' @title calcAge
+#' 
+#' @rdname calcAge
+#' 
 #' @description Function to calculate person's age at a specific point in time.
-#' @inheritParams buildt 
-#' @return calculated age in years.
 #' @details Calculated as the difference between current date and birthday.
-#' @importFrom lubridate today duration interval
-#' @export
+#' 
+#' @inheritParams buildt 
+#' 
+#' @return Calculated age in years.
+#' 
 #' @examples
 #'  calcAge("1981-08-12")
+#' @importFrom lubridate today 
+#' @importFrom lubridate duration
+#' @importFrom lubridate interval
+#' @export
 calcAge <- function(birthday, givenday = today("UTC")) {
   age <- interval(start = birthday, end = givenday) / duration(num = 1, units = "year")
   age
 }
 
-#' Get Retirement Day
-#' @description Calculate day of retirement assuming the person can retire at the age of 65
+#' @title getRetirementday
+#' 
+#' @rdname getRetirementday 
+#' 
+#' @description Calculate day of retirement assuming the person can retire at the age of 65.
+#' 
 #' @inheritParams buildt 
-#' @importFrom lubridate ymd years
-#' @return day at which retirement begins
+#' 
+#' @importFrom lubridate ymd 
+#' @importFrom lubridate years
+#' 
+#' @return Day at which retirement begins.
+#' 
 #' @examples
 #'  getRetirementday("1981-08-12")
 #'  getRetirementday("1981-08-12", RetirementAge = 60)
@@ -45,19 +69,27 @@ getRetirementday <- function(birthday, RetirementAge = 65) {
   retirementday
 }
 
-#' Obtain Retirement Calendar
+#' @title getRetirementCalendar
+#' 
+#' @rdname getRetirementCalendar 
+#' 
 #' @description Calculate the annual retirement path.
 #' SmarP assumes that the user will get retired the day that turns 65 or its desired retirement age.
 #' For the current year, if birthday is later than the calculation day, there will be 2 dates.  
+#' 
 #' @inheritParams buildt 
-#' @importFrom lubridate today ymd years year month day
-#' @return retirement calendar
+#' 
+#' @return Retirement calendar.
 #' @examples
 #' \dontrun{
 #' getRetirementCalendar("1981-08-12")
 #' getRetirementCalendar("1981-08-12", as.Date("2018-12-02"), RetirementAge = 62)
 #' }
-#' @importFrom lubridate today year ymd month day 
+#' @importFrom lubridate today 
+#' @importFrom lubridate year 
+#' @importFrom lubridate ymd 
+#' @importFrom lubridate month 
+#' @importFrom lubridate day 
 #' @export
 getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementAge = 65) {
   retirementday <- getRetirementday(birthday, RetirementAge)
@@ -72,14 +104,18 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
   calendar
 }
 
-#' Build Contribution Pillar II Path
+#' @title buildContributionP2Path
+#' 
+#' @rdname buildContributionP2Path 
+#' 
 #' @description Gather all the required information to project the annual contributions to the occupational pension fund.
+#' 
 #' @inheritParams buildt 
 #' @template salary
 #' @template P2
-#' @import dplyr
-#' @importFrom magrittr '%<>%'
+#' 
 #' @return All contributions to the Pillar II in annual basis.  
+#' 
 #' @examples
 #' \dontrun{
 #' buildContributionP2Path(
@@ -93,6 +129,8 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 #'   givenday = as.Date("2018-07-04"),
 #'   RetirementAge = 67)
 #' }
+#' @import dplyr
+#' @importFrom magrittr '%<>%'
 #' @export
 buildContributionP2Path <- function(birthday,
                                     Salary,
@@ -132,9 +170,14 @@ buildContributionP2Path <- function(birthday,
   return(ContributionP2Path)
 }
 
-#' Calculate Expected Salary Path
+#' @title calcExpectedSalaryPath
+#' 
+#' @rdname calcExpectedSalaryPath 
+#' 
 #' @description Calculate whether the salary will increase/decrease and by how much.
+#' 
 #' @template salary
+#' 
 #' @return Expected salary path.
 #' @examples
 #' \dontrun{
@@ -147,11 +190,16 @@ calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
   res <- cumprod(c(Salary, rep(1 + SalaryGrowthRate, nrise), 1))
 }
 
-#' Calculate Purchase Pilar II
-#' @description Calculate the path of purchases to the Pilar II (Occupational pension fund, BVG) 
+#' @title calcBVGpurchase
+#' 
+#' @rdname calcBVGpurchase 
+#' 
+#' @description Calculate the path of purchases to the Pilar II (Occupational pension fund, BVG).
+#'  
 #' @inheritParams calcExpectedSalaryPath
 #' @inheritParams buildContributionP2Path
-#' @return BVG purchase
+#' 
+#' @return BVG purchase.
 #' @examples
 #' \dontrun{
 #' calcBVGpurchase(TypePurchase = "AnnualP2", P2purchase = 2000, ncp = 25) %>% print
@@ -165,12 +213,17 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
   }
 }
 
-#' Build Contribution Pillar III Path
+#' @title buildContributionP3path
+#' 
+#' @rdname buildContributionP3path 
+#' 
 #' @description Build the contribution path for a standard pension fund, called Pillar III in Switzerland.
-# Based on 'calcAnnuityAcumPath()'
+#' Based on 'calcAnnuityAcumPath()'.
+#' 
 #' @inheritParams buildt 
 #' @inheritParams calcExpectedSalaryPath
 #' @template P3
+#' 
 #' @return All contributions to the Pillar III in annual basis.
 #' @examples
 #' \dontrun{
@@ -182,7 +235,9 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
 #'   givenday = as.Date("2015-11-30"),
 #'   RetirementAge = 62)
 #' }
-#' @importFrom dplyr mutate '%>%'
+#' 
+#' @importFrom dplyr mutate 
+#' @importFrom dplyr '%>%'
 #' @export
 buildContributionP3path <- function(birthday,
                                     P3purchase,
@@ -207,16 +262,21 @@ buildContributionP3path <- function(birthday,
   return(ContributionP3Path)
 }
 
-#' Calculate annuity accumative path
-#' @description  Calculate future value of an annuity with periodic contributions. 
+#' @title calcAnnuityAcumPath
+#' 
+#' @rdname calcAnnuityAcumPath
+#' 
+#' @description Calculate future value of an annuity with periodic contributions. 
 #' * Based on continuous compounding interest in annual basis.
 #' * Payments occur at the beginning of each period.
-#' @param contributions vector of contributions (annuities)
-#' @param t vector of time intervals between contributions. 
+#' 
+#' @param contributions Vector of contributions (annuities).
+#' @param t Vector of time intervals between contributions. 
 #' * Irregular time intervals are allowed. 
 #' * For frequency bellow annual, enter t as proportion of a year.
 #' @template P2
-#' @return vector of accumulated benefits given a set of contributions.
+#' 
+#' @return Vector of accumulated benefits given a set of contributions.
 #' @examples
 #' \dontrun{
 #' calcAnnuityAcumPath(contributions = c(50000, 1000, 1000, 1000, 1000),
@@ -244,20 +304,30 @@ calcAnnuityAcumPath <- function(contributions, t, rate) {
   return(res)
 }
 
-#' Return Postal Code Kanton
+#' @title returnPLZKanton
+#' 
+#' @rdname returnPLZKanton 
+#' 
 #' @description Return in which canton the person is retiring.
-#' @param plz canton's zip code.
-#' @return canton's zip code.
+#' 
+#' @param plz Canton's postal code.
+#' 
+#' @return Canton.
 #' @export
 returnPLZKanton <- function(plz) {
   Kanton <- PLZGemeinden$Kanton[PLZGemeinden$PLZ == as.numeric(plz)]
   return(Kanton)
 }
 
-#' Print Currency
-#' @description print values as monetary on a given currency.  
+#' @title printCurrency
+#' 
+#' @rdname printCurrency 
+#' 
+#' @description Print values as monetary on a given currency.  
+#' 
 #' @template print_currency
-#' @return currency
+#' 
+#' @return Currency.
 #' @examples
 #' \dontrun{
 #' printCurrency(123123.334)
@@ -271,17 +341,25 @@ printCurrency <- function(value, digits = 0, sep = ",", decimal = ".") { # curre
   )
 }
 
-#' Make Table
+#' @title makeTable
+#' 
+#' @rdname makeTable
+#' 
 #' @description Utility function to display main results on the table tab.
+#' 
 #' @param Road2Retirement Main data frame where main results are displayed.
-#' @param moncols Columns to prit out on the table
-#' @return Table to print out
+#' @param moncols Columns to prit out on the table.
+#' 
+#' @return Table to print out.
 #' @examples
 #' \dontrun{
 #' makeTable(Road2Retirement)
 #' }
-#' @importFrom dplyr mutate '%>%'
-#' @importFrom lubridate year month
+#' 
+#' @importFrom dplyr mutate 
+#' @importFrom dplyr '%>%'
+#' @importFrom lubridate year 
+#' @importFrom lubridate month
 #' @export
 makeTable <- function(Road2Retirement, moncols = c("DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")) { # , currency=""
   
@@ -295,10 +373,15 @@ makeTable <- function(Road2Retirement, moncols = c("DirectP2", "ReturnP2", "Tota
 
 # Utility functions for validity checks ----
 
-#' Is not Available
-#' @description if input value is not available, then return logical TRUE else FALSE
-#' @param inputValue input value
-#' @return TRUE or FALSE 
+#' @title isnotAvailable
+#' 
+#' @rdname isnotAvailable 
+#' 
+#' @description If input value is not available, then return logical TRUE else FALSE.
+#' 
+#' @param inputValue Input value.
+#' 
+#' @return TRUE or FALSE. 
 #' @export
 isnotAvailable <- function(inputValue) {
   if (inputValue == "" | is.na(inputValue) | is.null(inputValue)) {
@@ -308,11 +391,16 @@ isnotAvailable <- function(inputValue) {
   }
 }
 
-#' Is Not Available Return Zero
-#' @description if input value is not available, then return zero else input value
-#' @param inputValue input value
-#' @param fallback zero
-#' @return zero or input value
+#' @title isnotAvailableReturnZero
+#' 
+#' @rdname isnotAvailableReturnZero 
+#' 
+#' @description If input value is not available, then return zero else input value.
+#' 
+#' @param inputValue Input value.
+#' @param fallback Zero.
+#' 
+#' @return Zero or input value.
 #' @export
 isnotAvailableReturnZero <- function(inputValue, fallback = 0) {
   if (isnotAvailable(inputValue)) {
@@ -322,11 +410,16 @@ isnotAvailableReturnZero <- function(inputValue, fallback = 0) {
   }
 }
 
-#' Need Not Zero
+#' @title need_not_zero
+#' 
+#' @rdname need_not_zero
+#' 
 #' @description Utility function to display a message in case a non zero value is needed.
-#' @param  input zero, nothing or null
-#' @param inputname name of input
-#' @return warning message or nothing
+#' 
+#' @param  input zero, nothing or null.
+#' @param inputname Name of input.
+#' 
+#' @return Warning message or nothing.
 #' @export
 need_not_zero <- function(input, inputname) {
   if (input == 0 | input == "" | is.null(input)) {
@@ -338,10 +431,16 @@ need_not_zero <- function(input, inputname) {
 
 
 # Format Percentage ----
-#' Change to Percentage
-#' @description from decimal to percentage value
-#' @param df given data frame
-#' @return percentage value
+
+#' @title changeToPercentage
+#' 
+#' @rdname changeToPercentage
+#' 
+#' @description From decimal to percentage value.
+#' 
+#' @param df Given data frame.
+#' 
+#' @return Percentage value.
 #' @export
 changeToPercentage <- function(df) {
   colsannotation <- grepl(".annotation", colnames(df))
