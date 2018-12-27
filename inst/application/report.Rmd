@@ -305,7 +305,7 @@ Retirement age can be either explicitly provided as an input or inferred from th
 
 # Bibliography
 
-Der Bundesratdas Portal Der Schweizer RegierungP
+Der Bundesratdas Portal Der Schweizer Regierung
 Bundeskanzlei P - \url{https://www.admin.ch/opc/de/classified-compilation/19820152/index.html}
 
 Der Bundesrat - \url{https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-62487.html}

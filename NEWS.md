@@ -2,7 +2,7 @@
 
 ## Patch release
 
-
+* Report spell check
 
 # SmaRP 1.0.0
 
