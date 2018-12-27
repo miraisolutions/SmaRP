@@ -121,7 +121,7 @@ Road2Retirement_to_print <- params$Road2Retirement %>%
   filter(Y %in% unique(c(Y[1], Y[!Y%%1], Y[length(Y)])) ) 
 ```
 
-The total retirement fund as of `r format(retirementdate(), "%d-%m-%Y")` is **`r printCurrency(params$retirementfund)` CHF**, `r  params$percentageLastSalary`.
+The total retirement fund as of `r format(params$retirementdate, "%d-%m-%Y")` is **`r printCurrency(params$retirementfund)` CHF**, `r  params$percentageLastSalary`.
 
 The two plots below represent the time evolution of the different funds and their contribution to the total retirement fund at retirement, respectively. 
 
@@ -192,7 +192,7 @@ Here is a list of all inputs:
 
 * Residence is in `r params$gemeinden`, `r params$Kanton`, postal code `r params$postalcode`
 * The date of birth is `r params$birthday`
-* At the age of `r params$RetirementAge`, the retirement year is `r format(retirementdate(), "%d-%m-%Y")`
+* At the age of `r params$RetirementAge`, the retirement year is `r format(params$retirementdate, "%d-%m-%Y")`
 ```{r, echo=FALSE}
 SalaryGrowthRate <-  params$SalaryGrowthRate * 100
 ```
