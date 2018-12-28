@@ -1,4 +1,4 @@
-# SmaRP 1.0.0-9000
+# SmaRP 1.0.1
 
 ## Patch release
 
