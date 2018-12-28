@@ -42,13 +42,13 @@ Rate_group.list <- list(
 )
 
 church_tax.list <- list(
-  "Church Affilitation" = "A",
-  "No Church Affilitation" = "B"
+  "Yes" = "A",
+  "None" = "B"
 )
 
 Purchase.list <- list(
-  "Single Purchase" = "SingleP2",
-  "Annual Purchase" = "AnnualP2"
+  "Single" = "SingleP2",
+  "Annual" = "AnnualP2"
 )
 
 # PLZGemeinden <- readRDS("inst/application/data/PLZGemeinden.rds")
