@@ -113,6 +113,8 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 #' @inheritParams buildt 
 #' @template salary
 #' @template P2
+#' @param CurrentP2 Value of the current assets in the Occupational Pension Fund.
+#' @param rate Interests rate on annual basis. Constant interest rates are assumed.
 #' 
 #' @return All contributions to the Pillar II in annual basis.  
 #' 
@@ -143,7 +145,7 @@ buildContributionP2Path <- function(birthday,
                                     RetirementAge) {
   
   # build BVG rates from global input
-  BVGRatesPath <- BVGcontriburionratesPath %>%
+  BVGRatesPath <- BVGcontributionratesPath %>%
     filter(years <= RetirementAge)
   
   # calc contributions P2 Path
@@ -151,7 +153,7 @@ buildContributionP2Path <- function(birthday,
     mutate(AgePath = sapply(calendar, calcAge, birthday = birthday) %>%
              as.integer()) %>%
     left_join(BVGRatesPath, by = c("AgePath" = "years")) %>%
-    mutate(BVGcontriburionrates = if_else(is.na(BVGcontriburionrates), 0, BVGcontriburionrates))
+    mutate(BVGcontributionrates = if_else(is.na(BVGcontributionrates), 0, BVGcontributionrates))
   
   ncp <- nrow(ContributionP2Path)
   isPurchase <- c(0, rep(1, ncp - 1))
@@ -159,7 +161,7 @@ buildContributionP2Path <- function(birthday,
   ContributionP2Path %<>% within({
     ExpectedSalaryPath <- calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp)
     BVGpurchase <- calcBVGpurchase(TypePurchase, P2purchase, ncp)
-    BVGContributions <- if_else(is.na(BVGpurchase + (max(0, ExpectedSalaryPath - MinBVG) * BVGcontriburionrates)), 0, BVGpurchase + (max(0, ExpectedSalaryPath - MinBVG) * BVGcontriburionrates * isPurchase))
+    BVGContributions <- if_else(is.na(BVGpurchase + (max(0, ExpectedSalaryPath - MinBVG) * BVGcontributionrates)), 0, BVGpurchase + (max(0, ExpectedSalaryPath - MinBVG) * BVGcontributionrates * isPurchase))
     BVGDirect <- BVGContributions + c(CurrentP2, rep(0, ncp - 1))
     t <- buildt(birthday, givenday, RetirementAge = RetirementAge)
     TotalP2 <- calcAnnuityAcumPath(BVGDirect, t, rate)
@@ -177,6 +179,7 @@ buildContributionP2Path <- function(birthday,
 #' @description Calculate whether the salary will increase/decrease and by how much.
 #' 
 #' @template salary
+#' @param ncp Length contribution path to retirement.
 #' 
 #' @return Expected salary path.
 #' @examples
@@ -223,6 +226,7 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
 #' @inheritParams buildt 
 #' @inheritParams calcExpectedSalaryPath
 #' @template P3
+#' @param CurrentP3 Value of the current assets in the Private Pension Fund (Pillar 3).
 #' 
 #' @return All contributions to the Pillar III in annual basis.
 #' @examples
@@ -274,7 +278,7 @@ buildContributionP3path <- function(birthday,
 #' @param t Vector of time intervals between contributions. 
 #' * Irregular time intervals are allowed. 
 #' * For frequency bellow annual, enter t as proportion of a year.
-#' @template P2
+#' @param rate Interests rate on annual basis. Constant interest rates are assumed.
 #' 
 #' @return Vector of accumulated benefits given a set of contributions.
 #' @examples

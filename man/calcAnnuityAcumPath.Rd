@@ -16,12 +16,6 @@ calcAnnuityAcumPath(contributions, t, rate)
 }}
 
 \item{rate}{Interests rate on annual basis. Constant interest rates are assumed.}
-
-\item{CurrentP2}{Value of the current assets in the Occupational Pension Fund.}
-
-\item{P2purchase}{Annual voluntary contribution to the Occupational Pension Fund.}
-
-\item{TypePurchase}{AnnualP2 if the purchase on the pillar II gets repeated every year until retirement.}
 }
 \value{
 Vector of accumulated benefits given a set of contributions.

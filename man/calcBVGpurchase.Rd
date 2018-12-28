@@ -11,7 +11,7 @@ calcBVGpurchase(TypePurchase, P2purchase, ncp)
 
 \item{P2purchase}{Annual voluntary contribution to the Occupational Pension Fund.}
 
-\item{ncp}{Length contribution path to retirement}
+\item{ncp}{Length contribution path to retirement.}
 }
 \value{
 BVG purchase.

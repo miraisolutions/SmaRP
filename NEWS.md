@@ -3,6 +3,8 @@
 ## Patch release
 
 * Report spell check (#49)
+* Documentation reviewed (#59)
+* Fixed tooltip automatic disappearing (#54)
 
 # SmaRP 1.0.0
 

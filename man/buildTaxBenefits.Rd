@@ -19,9 +19,9 @@ buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
 
 \item{returnP3}{Annual expected return on the Private Pension Fund.}
 
-\item{Salary}{Stipend}
+\item{Salary}{Stipend.}
 
-\item{SalaryGrowthRate}{Rate at which the salary increases/decreases}
+\item{SalaryGrowthRate}{Rate at which the salary increases/decreases.}
 
 \item{postalcode}{Zip code \code{Character}}
 
@@ -34,14 +34,6 @@ buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
 \item{givenday}{Date at which the age is computed ("YYYY-MM-DD").}
 
 \item{RetirementAge}{Age of retirement.}
-
-\item{CurrentP2}{Value of the current assets in the Occupational Pension Fund.}
-
-\item{rate}{Interests rate on annual basis. Constant interest rates are assumed.}
-
-\item{CurrentP3}{Value of the current assets in the Private Pension Fund (Pillar 3).}
-
-\item{ncp}{Length contribution path to retirement}
 }
 \value{
 data.frame tax benefit path.

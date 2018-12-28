@@ -11,9 +11,9 @@ buildContributionP2Path(birthday, Salary, SalaryGrowthRate, CurrentP2,
 \arguments{
 \item{birthday}{Date of birth ("YYYY-MM-DD").}
 
-\item{Salary}{Stipend}
+\item{Salary}{Stipend.}
 
-\item{SalaryGrowthRate}{Rate at which the salary increases/decreases}
+\item{SalaryGrowthRate}{Rate at which the salary increases/decreases.}
 
 \item{CurrentP2}{Value of the current assets in the Occupational Pension Fund.}
 
@@ -26,8 +26,6 @@ buildContributionP2Path(birthday, Salary, SalaryGrowthRate, CurrentP2,
 \item{givenday}{Date at which the age is computed ("YYYY-MM-DD").}
 
 \item{RetirementAge}{Age of retirement.}
-
-\item{ncp}{Length contribution path to retirement}
 }
 \value{
 All contributions to the Pillar II in annual basis.
