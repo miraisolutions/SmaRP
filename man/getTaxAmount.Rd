@@ -33,7 +33,7 @@ This function assumes the following objects on the global enviornment
 \item PLZGemeinden (includes Kirchensteuer)
 \item taxburden.list
 \item BundessteueTabelle
-\item BVGcontriburionratesPath, BVGcontriburionrates
+\item BVGcontributionratesPath, BVGcontributionrates
 \item MaxBVG, MinBVG
 \item KinderabzugKG
 \item NBU, maxNBU

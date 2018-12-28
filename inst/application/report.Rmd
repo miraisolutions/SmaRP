@@ -113,9 +113,9 @@ It is implemented as an [R Shiny](https://shiny.rstudio.com/) pension calculator
 
 ```{r deduction_percentage, echo = FALSE}
 Road2Retirement_to_print <- params$Road2Retirement %>%
-  select(calendar, ExpectedSalaryPath, BVGcontriburionrates, BVGContributions, BVGpurchase, DirectP2, ReturnP2, TotalP2, P3ContributionPath, P3purchase, DirectP3, ReturnP3, TotalP3, DirectTax, ReturnTax, TotalTax, Total) %>%
+  select(calendar, ExpectedSalaryPath, BVGcontributionrates, BVGContributions, BVGpurchase, DirectP2, ReturnP2, TotalP2, P3ContributionPath, P3purchase, DirectP3, ReturnP3, TotalP3, DirectTax, ReturnTax, TotalTax, Total) %>%
   rename(P2ContributionPath = BVGContributions) %>%
-  rename(P2contriburionrates = BVGcontriburionrates) %>%
+  rename(P2contriburionrates = BVGcontributionrates) %>%
   rename(P2purchase = BVGpurchase) %>%
   mutate(Y = year(calendar)/5)%>%
   filter(Y %in% unique(c(Y[1], Y[!Y%%1], Y[length(Y)])) ) 
@@ -305,7 +305,7 @@ Retirement age can be either explicitly provided as an input or inferred from th
 
 # Bibliography
 
-Der Bundesratdas Portal Der Schweizer RegierungP
+Der Bundesratdas Portal Der Schweizer Regierung
 Bundeskanzlei P - \url{https://www.admin.ch/opc/de/classified-compilation/19820152/index.html}
 
 Der Bundesrat - \url{https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-62487.html}

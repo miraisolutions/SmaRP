@@ -89,10 +89,10 @@ fluidPage(
                 6,
                 checkboxInput(
                   "provideRetirementAge",
-                  "Desired Retirement Age (optional)",
+                  span("Desired Retirement Age (optional)") %>%
+                    bs_embed_tooltip(title = IB$RetirementAgeOptional, placement = "right"),
                   FALSE
-                ) %>%
-                  bs_embed_tooltip(title = IB$RetirementAgeOptional, placement = "right")
+                )
               ),
               column(
                 6,
@@ -129,12 +129,12 @@ fluidPage(
               column(
                 6,
                 radioButtons("rate_group",
-                             label = "Marital Status",
+                             label = span("Marital Status") %>%
+                               bs_embed_tooltip(title = IB$rate_group, placement = "right"),
                              inline = TRUE,
                              choices = Rate_group.list,
                              selected = "A"
-                ) %>%
-                  bs_embed_tooltip(title = IB$rate_group, placement = "right")
+                )
               ),
               column(
                 6,
@@ -230,11 +230,11 @@ fluidPage(
               column(
                 6,
                 radioButtons("TypePurchase",
-                             label = br(), # empty placeholder for alignment
+                             label = span("Purchase Type") %>%
+                               bs_embed_tooltip(title = IB$TypePurchase, placement = "right"),
                              inline = TRUE,
                              choices = Purchase.list
-                ) %>%
-                  bs_embed_tooltip(title = IB$TypePurchase, placement = "right")
+                )
               )
             ) # end fluidRow
           ) # end boxPlus

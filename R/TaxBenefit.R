@@ -12,7 +12,7 @@
 #'  * PLZGemeinden (includes Kirchensteuer)
 #'  * taxburden.list
 #'  * BundessteueTabelle
-#'  * BVGcontriburionratesPath, BVGcontriburionrates
+#'  * BVGcontributionratesPath, BVGcontributionrates
 #'  * MaxBVG, MinBVG
 #'  * KinderabzugKG
 #'  * NBU, maxNBU
@@ -77,9 +77,9 @@ getTaxAmount <- function(Income,
   # Calc adjustIncomeKG
   # 1. Age adjustment because of BVG contributions
   # Tax burden based on the Pensionkassebeitrage from the examples (5%). Therefore, an adjustment factor is applied accordingly.
-  AjustBVGContri <- BVGcontriburionratesPath %>%
+  AjustBVGContri <- BVGcontributionratesPath %>%
     filter(years == Age) %>%
-    transmute(AjustBVGContri = (0.05 - BVGcontriburionrates) * (min(Income, MaxBVG) - MinBVG))
+    transmute(AjustBVGContri = (0.05 - BVGcontributionrates) * (min(Income, MaxBVG) - MinBVG))
 
   # 2. NChildren ajustment (only for VMK and DOPMK)
   # Tax burden based on 2 kids. Therefore, an adjustment factor is applied accordingly.
@@ -104,11 +104,11 @@ getTaxAmount <- function(Income,
   }
 
   # Get Taxable Federal Income
-  TaxableIncomeFederal <- BVGcontriburionratesPath %>%
+  TaxableIncomeFederal <- BVGcontributionratesPath %>%
     filter(years == Age) %>%
     mutate(
       DO = ifelse(Tarif == "DOPMK", DOV, 0),
-      BVG = DOfactor * (BVGcontriburionrates * (min(Income, MaxBVG) - MinBVG)),
+      BVG = DOfactor * (BVGcontributionrates * (min(Income, MaxBVG) - MinBVG)),
       AHL = Income * AHL,
       ALV = min(DOfactor * maxALV, Income * ALV),
       NBU = min(DOfactor * maxNBU, Income * NBU),

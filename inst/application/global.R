@@ -22,16 +22,16 @@ BVGMindestzinssatz <- 0.01
 MaxContrTax <- 6768
 
 # https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
-BVGcontriburionrates <- data.frame(
+BVGcontributionrates <- data.frame(
   lowerbound = c(18, 25, 35, 45, 55),
   upperbound = c(24, 34, 44, 54, 70),
-  BVGcontriburionrates = c(0.00, 0.07, 0.10, 0.15, 0.18)
+  BVGcontributionrates = c(0.00, 0.07, 0.10, 0.15, 0.18)
 )
-# BVGcontriburionrates path
-BVGcontriburionratesPath <- data.frame(
-  years = seq(BVGcontriburionrates$lowerbound[1], BVGcontriburionrates$upperbound[nrow(BVGcontriburionrates)]),
-  BVGcontriburionrates = rep(BVGcontriburionrates$BVGcontriburionrates,
-    times = BVGcontriburionrates$upperbound - BVGcontriburionrates$lowerbound + 1
+# BVGcontributionrates path
+BVGcontributionratesPath <- data.frame(
+  years = seq(BVGcontributionrates$lowerbound[1], BVGcontributionrates$upperbound[nrow(BVGcontributionrates)]),
+  BVGcontributionrates = rep(BVGcontributionrates$BVGcontributionrates,
+    times = BVGcontributionrates$upperbound - BVGcontributionrates$lowerbound + 1
   )
 )
 
@@ -42,13 +42,13 @@ Rate_group.list <- list(
 )
 
 church_tax.list <- list(
-  "Church Affilitation" = "A",
-  "No Church Affilitation" = "B"
+  "Yes" = "A",
+  "None" = "B"
 )
 
 Purchase.list <- list(
-  "Single Purchase" = "SingleP2",
-  "Annual Purchase" = "AnnualP2"
+  "Single" = "SingleP2",
+  "Annual" = "AnnualP2"
 )
 
 # PLZGemeinden <- readRDS("inst/application/data/PLZGemeinden.rds")
@@ -57,7 +57,7 @@ PLZGemeinden$PLZGDENAME <- with(PLZGemeinden, paste(PLZ, GDENAME))
 kantons <- unique(PLZGemeinden$Kanton)
 
 # BundessteueTabelle <- readRDS("inst/application/data/BundessteueTabelle.rds")
-# taxburden.list <- readRDS("inst/application/data/taxburden.list.rds")
+# taxburden_2016.list <- readRDS("inst/application/data/taxburden.list.rds")
 BundessteueTabelle <- readRDS(system.file("application", "data", "BundessteueTabelle.rds", package = "SmaRP"))
 taxburden.list <- readRDS(system.file("application", "data", "taxburden.list.rds", package = "SmaRP"))
 
