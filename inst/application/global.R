@@ -59,7 +59,7 @@ kantons <- unique(PLZGemeinden$Kanton)
 # BundessteueTabelle <- readRDS("inst/application/data/BundessteueTabelle.rds")
 # taxburden_2016.list <- readRDS("inst/application/data/taxburden.list.rds")
 BundessteueTabelle <- readRDS(system.file("application", "data", "BundessteueTabelle.rds", package = "SmaRP"))
-taxburden.list <- readRDS(system.file("application", "data", "taxburden.list.rds", package = "SmaRP"))
+taxburden.list <- readRDS(system.file("application", "data", "taxburden_2017.list.rds", package = "SmaRP"))
 
 # Kinderabzuge table
 # https://www.estv.admin.ch/dam/estv/de/dokumente/allgemein/Dokumentation/Publikationen/steuermaeppchen/KinderabzugE_de-fr.pdf.download.pdf/KinderabzugE_de-fr.pdf
