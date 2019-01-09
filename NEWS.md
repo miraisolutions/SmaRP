@@ -3,6 +3,7 @@
 * Retirement age automatically resets to 70 if a higher number is inserted (#27)
 * Updated legal parameters (#55) 
 * Removed unnecessary user_manual.Rmd vignette created with #60
+* Placed version number in app (half of #57)
 
 # SmaRP 1.0.1
 
