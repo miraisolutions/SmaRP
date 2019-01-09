@@ -2,13 +2,13 @@
 % Please edit documentation in R/get_SmaRP_version.R
 \name{get_SmaRP_version}
 \alias{get_SmaRP_version}
-\title{get_SmaRP_version}
+\title{SmaRP version}
 \usage{
 get_SmaRP_version()
 }
 \value{
-Current SmaRP version.
+The version of SmaRP as character string.
 }
 \description{
-Automatically update SmaRP version.
+Returns the version of the installed SmaRP package and app.
 }
