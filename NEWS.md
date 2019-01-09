@@ -3,6 +3,7 @@
 ## Patch release
 
 * Retirement age automatically resets to 70 if a higher number is inserted (#27)
+* Updated legal paramenters (#55) 
 
 # SmaRP 1.0.1
 
