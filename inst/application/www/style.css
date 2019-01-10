@@ -47,6 +47,14 @@ body {
   padding: 0;
 }
 
+#title{
+  margin-top: 20px;
+}
+
+#subtitle{
+  margin-top: 3px;
+  margin-bottom: 10px;
+}
 
 h5 {
   font-family: inherit;
@@ -87,8 +95,14 @@ h2 {
   color: #ea8b5b;
   font-size: 30px;
   text-align: left;
-  margin-left: 2%;
   font-weight: bold;
+  display: inline;
+}
+
+#version {
+  font-family: inherit;
+  color: #000000;
+  font-size: 12px;
 }
 
 h3 {
@@ -96,9 +110,8 @@ h3 {
   color: #000000;
   font-size: 18px;
   text-align: left;
-  margin-left: 2%;
-  margin-top: 0.1%;
   font-weight: bold;
+  display: inline;
 }
 
 a {

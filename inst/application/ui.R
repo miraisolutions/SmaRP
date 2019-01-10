@@ -36,8 +36,9 @@ fluidPage(
 
       )
     ),
-    h2("SmaRP"),
-    h3("Smart Retirement Planning")
+    div(id = "title", h2("SmaRP"), span(id = "version", get_SmaRP_version())),
+    div(id = "subtitle", h3("Smart Retirement Planning"))
+
   ), # end Header fluidRow
 
   # Main  ----

@@ -80,6 +80,9 @@ AHL <- format(round(params$AHL, 2), nsmall = 0)
 Kinder <- format(round(params$Kinder, 2), nsmall = 0)
 
 ```
+
+\def\SmaRPVersion{`r get_SmaRP_version()`}
+
 \newpage
 
 \vspace*{7cm}
