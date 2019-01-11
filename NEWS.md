@@ -10,6 +10,7 @@
 ## Patch release
 
 * Report spell check (#49)
+* Retirement age automatically resets to 70 if a higher number is inserted (#27)
 * Documentation reviewed (#59)
 * Fixed tooltip automatic disappearing (#54)
 

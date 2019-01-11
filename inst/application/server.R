@@ -37,9 +37,15 @@ function(input, output, session) {
       }
     }
   })
+  
+  observeEvent(input$RetirementAge, {
+    if (input$RetirementAge > 70) {
+      updateNumericInput(session, "RetirementAge", value = 70)
+    } 
+  })
 
   # Pillar III ----
-  # defaut option 0
+  # default option 0
   CurrentP3_notZero <- reactive({
     isnotAvailableReturnZero(input$CurrentP3)
   })
@@ -109,6 +115,12 @@ function(input, output, session) {
   NChildren <- reactive({
     min(isnotAvailableReturnZero(input$NChildren), 9)
   })
+  
+  observeEvent(input$NChildren, {
+    if (input$NChildren > 9) {
+      updateNumericInput(session, "NChildren", value = 9)
+    }
+  })
 
   # Tariff
   rate_group <- reactive({
@@ -131,6 +143,12 @@ function(input, output, session) {
     input$Salary
   })
 
+  observeEvent(input$Salary, {
+    if (input$Salary > 1e+08) {
+      updateNumericInput(session, "Salary", value = 1e+08)
+    } 
+  })
+  
   SalaryGrowthRate <- reactive({
     isnotAvailableReturnZero(input$SalaryGrowthRate / 100)
   })
