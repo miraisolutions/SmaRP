@@ -37,11 +37,19 @@ function(input, output, session) {
       }
     }
   })
-  
+
   observeEvent(input$RetirementAge, {
     if (input$RetirementAge > 70) {
       updateNumericInput(session, "RetirementAge", value = 70)
-    } 
+    }
+  })
+
+  observeEvent(input$genre, {
+    if (genre() == "F") {
+      updateNumericInput(session, "RetirementAge", value = 64)
+    } else {
+      updateNumericInput(session, "RetirementAge", value = 65)
+    }
   })
 
   # Pillar III ----
@@ -115,7 +123,7 @@ function(input, output, session) {
   NChildren <- reactive({
     min(isnotAvailableReturnZero(input$NChildren), 9)
   })
-  
+
   observeEvent(input$NChildren, {
     if (input$NChildren > 9) {
       updateNumericInput(session, "NChildren", value = 9)
@@ -146,9 +154,9 @@ function(input, output, session) {
   observeEvent(input$Salary, {
     if (input$Salary > 1e+08) {
       updateNumericInput(session, "Salary", value = 1e+08)
-    } 
+    }
   })
-  
+
   SalaryGrowthRate <- reactive({
     isnotAvailableReturnZero(input$SalaryGrowthRate / 100)
   })
