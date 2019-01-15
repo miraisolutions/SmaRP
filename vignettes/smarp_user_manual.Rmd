@@ -1,0 +1,27 @@
+---
+title: "User Manual"
+author: "Nicoletta Farabullini"
+date: "January 15, 2019"
+output: html_document
+---
+## Introduction
+
+Smart Retirement Planning (SmaRP) is an internal Mirai Solutions project aimed at creating a retirement plan for people working in Switzerland. 
+
+This vignette describes how to use each panel in the app. 
+
+## Personal Info
+
+The following is a list of all components in the first panel and a description. All fields are mandatory except with the Desired Retirement Age. They are pre-filled thus it is advisable to check all values before downloading the report.
+
+- **Birthdate** can be inserted by either typing or using the calendar that appears when clicking on the box.
+- **Gender Affiliation** is pre-selected to Male and can be changed to Female, however one field has to be chosen.
+- **Desired Retirement Age** is not mandatory but can be specified in case that it is different from the standard values (65 for males and 64 for females).
+- **Postal Code / Municipality** is the one of residence.
+- **Marital Status** has three options and one needs to be chosen.
+- **# Children** can be filled by either typing or using the arrows that appears when clicking on the box. The maximum value is 9.
+- **Church Affiliation** only requires a yes or no answer. No spefication is requested.
+
+## Occupational Pension Fund- Pillar II
+
+## Private Pension FUnd- Pillar III
