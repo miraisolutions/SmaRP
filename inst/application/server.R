@@ -37,11 +37,11 @@ function(input, output, session) {
       }
     }
   })
-  
+
   observeEvent(input$RetirementAge, {
     if (input$RetirementAge > 70) {
       updateNumericInput(session, "RetirementAge", value = 70)
-    } 
+    }
   })
 
   # Pillar III ----
@@ -115,7 +115,7 @@ function(input, output, session) {
   NChildren <- reactive({
     min(isnotAvailableReturnZero(input$NChildren), 9)
   })
-  
+
   observeEvent(input$NChildren, {
     if (input$NChildren > 9) {
       updateNumericInput(session, "NChildren", value = 9)
@@ -146,9 +146,9 @@ function(input, output, session) {
   observeEvent(input$Salary, {
     if (input$Salary > 1e+08) {
       updateNumericInput(session, "Salary", value = 1e+08)
-    } 
+    }
   })
-  
+
   SalaryGrowthRate <- reactive({
     isnotAvailableReturnZero(input$SalaryGrowthRate / 100)
   })
@@ -233,7 +233,6 @@ function(input, output, session) {
   output$table <- renderTable({
     makeTable(Road2Retirement = Road2Retirement())
   }, digits = 0)
-
 
   # T series plot ----
   TserieGraphData <- reactive({
@@ -360,6 +359,7 @@ function(input, output, session) {
       "Disclaimer:",
       "The results of these calculations do not have any legal value.",
       "To check the details of the calculations, parameters and assumptions, please download the report.",
+      "Mirai Solutions GmbH does not store any information provided while using SmaRP.",
       sep = "\n"
     )
   })
@@ -426,6 +426,19 @@ function(input, output, session) {
         ),
         "Generating the report...", size = "s"
       )
+    }
+  ) # end of downloadHandler
+
+  # build report name
+  dataname <- reactive(
+    paste("SmaRP", "data", "pdf", sep= ".")
+  )
+
+  # generate output data
+  output$data_download <- downloadHandler(
+    filename = dataname(),
+    content = function(file) {
+      write.csv(makeTable(Road2Retirement = Road2Retirement()), file)
     }
   ) # end of downloadHandler
 
