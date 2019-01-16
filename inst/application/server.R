@@ -36,10 +36,24 @@ function(input, output, session) {
         FRetirementAge
       }
     }
+  }) %>% debounce(millis = 100)
+
+  observeEvent(input$RetirementAge, ignoreNULL = TRUE, {
+    if (!is.na(input$RetirementAge) && input$RetirementAge > 70) {
+      updateNumericInput(session, "RetirementAge", value = 70)
+    }
+  })
+
+  observeEvent(input$genre, {
+    if (genre() == "F") {
+      updateNumericInput(session, "RetirementAge", value = 64)
+    } else {
+      updateNumericInput(session, "RetirementAge", value = 65)
+    }
   })
 
   # Pillar III ----
-  # defaut option 0
+  # default option 0
   CurrentP3_notZero <- reactive({
     isnotAvailableReturnZero(input$CurrentP3)
   })
@@ -107,8 +121,12 @@ function(input, output, session) {
 
   # Number of kids (max = 9)
   NChildren <- reactive({
-    min(isnotAvailableReturnZero(input$NChildren), 9)
-  })
+    val <- max(min(isnotAvailableReturnZero(input$NChildren), 9), 0)
+    if (!is.na(input$NChildren) && input$NChildren != val) {
+      updateNumericInput(session, "NChildren", value = val)
+    }
+    val
+  }) %>% debounce(millis = 100)
 
   # Tariff
   rate_group <- reactive({
@@ -129,6 +147,12 @@ function(input, output, session) {
   Salary <- reactive({
     validate(need(input$Salary, VM$Salary))
     input$Salary
+  })
+
+  observeEvent(input$Salary, {
+    if (input$Salary > 1e+08) {
+      updateNumericInput(session, "Salary", value = 1e+08)
+    }
   })
 
   SalaryGrowthRate <- reactive({

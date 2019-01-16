@@ -110,10 +110,11 @@ fluidPage(
                   numericInput(
                     "RetirementAge",
                     label = NULL, # "Desired Retirement Age",
-                    value = 65,
+                    value = 64,
                     step = 1,
                     min = 55,
-                    max = 70
+                    max = 70 # note this doesn't prevent or warn users entering
+                    # larger numbers manually (see e.g. https://github.com/rstudio/shiny/issues/1022#issuecomment-282305308)
                   ) %>%
                     bs_embed_tooltip(title = IB$RetirementAge, placement = "right")
                 )
