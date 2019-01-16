@@ -4,6 +4,7 @@
 * Updated legal paramenters (#55)
 * Removed unnecessary user_manual.Rmd vignette created with #60
 * SmaRP version shown in the app and the report (#57)
+* Updated taxes tests after updating tax parameters for 2017 (#68)
 
 # SmaRP 1.0.1
 
