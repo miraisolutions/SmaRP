@@ -1,9 +1,14 @@
 ---
-title: "User Manual"
+title: "SmaRP User Manual"
 author: "Nicoletta Farabullini"
-date: "January 15, 2019"
-output: html_document
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{User manual}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
+
 ## Introduction
 
 Smart Retirement Planning (SmaRP) is an internal Mirai Solutions project aimed at creating a retirement plan for people working in Switzerland. 

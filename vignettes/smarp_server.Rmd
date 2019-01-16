@@ -1,10 +1,10 @@
 ---
-title: "SmaRP-server"
-author: "Nicolleta Farabullini"
+title: "SmaRP Server"
+author: "Nicoletta Farabullini"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{SmaRP_server}
+  %\VignetteIndexEntry{SmaRP server}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

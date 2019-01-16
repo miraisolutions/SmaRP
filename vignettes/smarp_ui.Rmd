@@ -1,10 +1,10 @@
 ---
-title: "SmaRP-ui"
+title: "SmaRP UI"
 author: "Nicoletta Farabullini"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{SmaRP_ui}
+  %\VignetteIndexEntry{SmaRP UI}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
