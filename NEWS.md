@@ -5,6 +5,7 @@
 * Removed unnecessary user_manual.Rmd vignette created with #60
 * SmaRP version shown in the app and the report (#57)
 * Retirement age changes depending on the selected genre (#72)
+* App does not crush when number of children and desired retirement age do not have an input value (#28)
 
 # SmaRP 1.0.1
 
