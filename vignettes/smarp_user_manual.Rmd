@@ -11,7 +11,8 @@ vignette: >
 
 ## Introduction
 
-Smart Retirement Planning (SmaRP) is an internal Mirai Solutions project aimed at creating a retirement plan for people working in Switzerland. 
+```{r child = 'children/short-intro.Rmd'}
+```
 
 This vignette describes how to use each panel in the app. 
 
