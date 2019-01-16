@@ -29,6 +29,9 @@ This vignette describes the UI components and their inner-workings. It is progra
 
 The ui script is wrapped inside a `fluiPage` divided into different `fluidRow`s, one for each component: header, Personal Info, Pillar II - III and plots and table. Every component is then organized into a combination of other `fluidRow`s and `column`s. 
 
+<!-- The section gets "header" as id, we need to override the css style
+centering #header -->
+<style type="text/css">#header {text-align: left;}</style>
 ## Header
 
 The header is the first object starting from the top of the page and it includes a long, blue bar with the SmaRP logo and a title. 
