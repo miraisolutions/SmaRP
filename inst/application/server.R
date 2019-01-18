@@ -231,7 +231,7 @@ function(input, output, session) {
   Road2Retirement <- reactive({
     ContributionP2Path() %>%
       left_join(ContributionP3path(), by = c("calendar", "t")) %>%
-      left_join(ContributionTaxpath(), by = c("calendar", "t")) %>%
+      left_join(ContributionTaxpath(), by = c("calendar", "t", "AgePath")) %>%
       mutate(Total = TotalP2 + TotalP3 + TotalTax)
   })
 
@@ -239,7 +239,6 @@ function(input, output, session) {
   output$table <- renderTable({
     makeTable(Road2Retirement = Road2Retirement())
   }, digits = 0)
-
 
   # T series plot ----
   TserieGraphData <- reactive({
@@ -366,6 +365,7 @@ function(input, output, session) {
       "Disclaimer:",
       "The results of these calculations do not have any legal value.",
       "To check the details of the calculations, parameters and assumptions, please download the report.",
+      "Mirai Solutions GmbH does not store any information provided while using SmaRP.",
       sep = "\n"
     )
   })
@@ -432,6 +432,19 @@ function(input, output, session) {
         ),
         "Generating the report...", size = "s"
       )
+    }
+  ) # end of downloadHandler
+
+  # build report name
+  dataname <- reactive(
+    paste("SmaRPdata", postalcode(), format(Sys.Date(), "%Y%m%d"), "csv", sep= ".")
+  )
+
+  # generate output data
+  output$data_download <- downloadHandler(
+    filename = dataname(),
+    content = function(file) {
+      write.csv((Road2Retirement = Road2Retirement()), file, row.names = FALSE)
     }
   ) # end of downloadHandler
 
