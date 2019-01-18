@@ -225,7 +225,7 @@ function(input, output, session) {
   Road2Retirement <- reactive({
     ContributionP2Path() %>%
       left_join(ContributionP3path(), by = c("calendar", "t")) %>%
-      left_join(ContributionTaxpath(), by = c("calendar", "t")) %>%
+      left_join(ContributionTaxpath(), by = c("calendar", "t", "AgePath")) %>%
       mutate(Total = TotalP2 + TotalP3 + TotalTax)
   })
 
@@ -431,14 +431,14 @@ function(input, output, session) {
 
   # build report name
   dataname <- reactive(
-    paste("SmaRP", "data", "pdf", sep= ".")
+    paste("SmaRPdata", postalcode(), format(Sys.Date(), "%Y%m%d"), "csv", sep= ".")
   )
 
   # generate output data
   output$data_download <- downloadHandler(
     filename = dataname(),
     content = function(file) {
-      write.csv(makeTable(Road2Retirement = Road2Retirement()), file)
+      write.csv((Road2Retirement = Road2Retirement()), file, row.names = FALSE)
     }
   ) # end of downloadHandler
 

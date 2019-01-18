@@ -4,6 +4,7 @@
 * Updated legal paramenters (#55)
 * Removed unnecessary user_manual.Rmd vignette created with #60
 * SmaRP version shown in the app and the report (#57)
+* Added sentence about not storing information in disclaimer, created "Download Data" button when table is displayed  (#67)
 
 # SmaRP 1.0.1
 

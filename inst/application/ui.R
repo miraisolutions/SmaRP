@@ -326,7 +326,7 @@ fluidPage(
                 title = "Table",
                 value = "Table",
                 div(
-                  style = "width:800px; overflow-x: scroll",
+                  style = "width:1000px; overflow-x: scroll",
                   htmlOutput("table")
                 ),
                 br(),
