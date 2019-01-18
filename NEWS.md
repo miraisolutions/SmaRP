@@ -1,10 +1,13 @@
 # SmaRP 1.0.1-9000
 
 * Retirement age automatically resets to 70 if a higher number is inserted (#27)
-* Updated legal paramenters (#55)
+* Updated legal parameters (#55)
 * Removed unnecessary user_manual.Rmd vignette created with #60
 * SmaRP version shown in the app and the report (#57)
 * Added sentence about not storing information in disclaimer, created "Download Data" button when table is displayed  (#67)
+* Updated taxes tests after updating tax parameters for 2017 (#68)
+* Retirement age changes depending on the selected genre (#72)
+* App does not crush when number of children and desired retirement age do not have an input value (#28)
 
 # SmaRP 1.0.1
 

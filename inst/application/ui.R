@@ -103,7 +103,7 @@ fluidPage(
                   numericInput(
                     "RetirementAge",
                     label = NULL, # "Desired Retirement Age",
-                    value = 65,
+                    value = 64,
                     step = 1,
                     min = 55,
                     max = 70 # note this doesn't prevent or warn users entering

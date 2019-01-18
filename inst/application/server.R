@@ -36,11 +36,19 @@ function(input, output, session) {
         FRetirementAge
       }
     }
+  }) %>% debounce(millis = 100)
+
+  observeEvent(input$RetirementAge, ignoreNULL = TRUE, {
+    if (!is.na(input$RetirementAge) && input$RetirementAge > 70) {
+      updateNumericInput(session, "RetirementAge", value = 70)
+    }
   })
 
-  observeEvent(input$RetirementAge, {
-    if (input$RetirementAge > 70) {
-      updateNumericInput(session, "RetirementAge", value = 70)
+  observeEvent(input$genre, {
+    if (genre() == "F") {
+      updateNumericInput(session, "RetirementAge", value = 64)
+    } else {
+      updateNumericInput(session, "RetirementAge", value = 65)
     }
   })
 
@@ -113,14 +121,12 @@ function(input, output, session) {
 
   # Number of kids (max = 9)
   NChildren <- reactive({
-    min(isnotAvailableReturnZero(input$NChildren), 9)
-  })
-
-  observeEvent(input$NChildren, {
-    if (input$NChildren > 9) {
-      updateNumericInput(session, "NChildren", value = 9)
+    val <- max(min(isnotAvailableReturnZero(input$NChildren), 9), 0)
+    if (!is.na(input$NChildren) && input$NChildren != val) {
+      updateNumericInput(session, "NChildren", value = val)
     }
-  })
+    val
+  }) %>% debounce(millis = 100)
 
   # Tariff
   rate_group <- reactive({
