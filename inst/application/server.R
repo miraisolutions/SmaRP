@@ -230,8 +230,8 @@ function(input, output, session) {
   # build Road2Retirement ----
   Road2Retirement <- reactive({
     ContributionP2Path() %>%
-      left_join(ContributionP3path(), by = c("calendar", "t")) %>%
-      left_join(ContributionTaxpath(), by = c("calendar", "t", "AgePath")) %>%
+      left_join(ContributionP3path(), by = c("Calendar", "t")) %>%
+      left_join(ContributionTaxpath(), by = c("Calendar", "t", "AgePath")) %>%
       mutate(Total = TotalP2 + TotalP3 + TotalTax)
   })
 
@@ -246,7 +246,7 @@ function(input, output, session) {
       mutate(TaxBenefits = TotalTax) %>%
       mutate(Occupational_Pension = DirectP2 + ReturnP2) %>%
       mutate(Private_Pension = DirectP3 + ReturnP3) %>%
-      select(calendar,
+      select(Calendar,
              Occupational_Pension,
              Private_Pension,
              TaxBenefits) %>%
@@ -257,8 +257,8 @@ function(input, output, session) {
     gvisAreaChart(
       chartid = "plot1",
       data = TserieGraphData(),
-      xvar = "calendar",
-      yvar = colnames(TserieGraphData())[which(colnames(TserieGraphData()) != "calendar")],
+      xvar = "Calendar",
+      yvar = colnames(TserieGraphData())[which(colnames(TserieGraphData()) != "Calendar")],
       options = list(
         chartArea = "{left: 150, width: 550}",
         isStacked = TRUE,
@@ -362,11 +362,9 @@ function(input, output, session) {
   # Disclaimer ----
   output$disclaimer <- renderText({
     paste(
-      "Disclaimer:",
-      "The results of these calculations do not have any legal value.",
-      "To check the details of the calculations, parameters and assumptions, please download the report.",
-      "Mirai Solutions GmbH does not store any information provided while using SmaRP.",
-      sep = "\n"
+      "<b>Disclaimer</b>", "<br>",
+      "The content of the report does not hold any legal value and its correctness is not guaranteed.", "<br>",
+      "Mirai Solutions GmbH does not store any information provided while using SmaRP."
     )
   })
 

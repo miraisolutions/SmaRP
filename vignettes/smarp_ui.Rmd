@@ -106,7 +106,7 @@ On the right side, the ui has two interchangeable parts: two plots and a table. 
 
 The first graph shows how much the retirement fund will increase over time, whereas the second displays percentage contributions from each pillar.
 
-The table reports many output values including: calendar, DirectP2, ReturnP2, TotalP2, DirectP3,...
+The table reports many output values including: Calendar, DirectP2, ReturnP2, TotalP2, DirectP3,...
 
 ## Additional components
 

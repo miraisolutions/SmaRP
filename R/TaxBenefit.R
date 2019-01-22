@@ -1,12 +1,12 @@
 
 #' @title getTaxAmount
-#' 
+#'
 #' @rdname getTaxAmount
 #'
 #' @description This function uses 2 main sources for tax data.
 #' At Kanton and Gemeinde level, the source is taxburden.list.
 #' At federal level, we use the official taxrate table (BundessteueTabelle) and we try to aproximate the taxable income.
-#' 
+#'
 #' @details
 #' This function assumes the following objects on the global enviornment
 #'  * PLZGemeinden (includes Kirchensteuer)
@@ -21,21 +21,21 @@
 #'  * VersicherungsL, VersicherungsV, VersicherungsK
 #'  * BerufsauslagenTarif, BerufsauslagenMax, BerufsauslagenMin
 #' @seealso swisstax
-#' 
+#'
 #' @param Income Annual salary. `Numeric` scalar.
 #' @param rate_group A (Single), B (Married), C (Married Double income) `Character`.
 #' @param Age Age of the person. `Numeric`
 #' @param NChildren Number of children. `Numeric` scalar.
 #' @param postalcode Zip code `Character`
 #' @param churchtax Y/N `Character` Y/N
-#' 
+#'
 #' @import dplyr
-#' 
+#'
 #' @return Tax Amount
 #'
 #' @examples
 #' \dontrun{
-#' getTaxAmount(Income = 200000, rate_group = "C", Age = 32, 
+#' getTaxAmount(Income = 200000, rate_group = "C", Age = 32,
 #'              NChildren = 5, postalcode = 8400, churchtax = "Y")
 #' }
 #' @export
@@ -128,16 +128,16 @@ getTaxAmount <- function(Income,
 
 
 #' @title lookupTaxAmount
-#' 
+#'
 #' @rdname lookupTaxAmount
-#' 
+#'
 #' @description Search the tax amount to be paig given one income on the tax tables.
 #' @seealso swisstax
-#' 
+#'
 #' @param Income Annual stipend.
 #' @param Tabelle Income - Tax rate table at Federal level.
 #' @param CivilStatus Marital status.
-#' 
+#'
 #' @return Tax amount to be paid.
 #' @examples
 #' \dontrun{
@@ -162,22 +162,22 @@ lookupTaxAmount <- function(Income, Tabelle, CivilStatus) {
 }
 
 #' @title buildTaxBenefits
-#' 
+#'
 #' @rdname buildTaxBenefits
 #'
 #' @description All inputs are scalars. Builds a data frame as long as the years to retirement.
 #' Calls 'getTaxAmount()' through 'calcTaxBenefitSwiss()', therefore, it assumes objects on the global enviornment.
 #' @seealso swisstax
-#' 
+#'
 #' @inheritParams getTaxAmount
 #' @param RetirementAge Age of retirement.
 #' @template given_bday
 #' @template P2
 #' @template P3
 #' @template salary
-#' 
+#'
 #' @import dplyr
-#' 
+#'
 #' @return data.frame tax benefit path.
 #' @examples
 #' \dontrun{buildTaxBenefits(
@@ -210,7 +210,7 @@ buildTaxBenefits <- function(birthday,
                              rate_group,
                              givenday = today("UTC"),
                              RetirementAge) {
-  TaxBenefitsPath <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge))
+  TaxBenefitsPath <- data.frame(Calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge))
   ncp <- nrow(TaxBenefitsPath)
 
   TaxBenefitsPath <- TaxBenefitsPath %>%
@@ -220,7 +220,7 @@ buildTaxBenefits <- function(birthday,
       TotalContr = BVGpurchase + P3purchase,
       ExpectedSalaryPath = calcExpectedSalaryPath(Salary, SalaryGrowthRate, ncp),
       TaxableIncome = pmax(ExpectedSalaryPath - pmin(TotalContr, MaxContrTax), 0),
-      AgePath = as.integer(sapply(calendar, calcAge, birthday = birthday)),
+      AgePath = as.integer(sapply(Calendar, calcAge, birthday = birthday)),
       TaxBenefits = calcTaxBenefitSwiss(ExpectedSalaryPath, TaxableIncome, rate_group, AgePath, NChildren, postalcode, churchtax),
       t = buildt(birthday, givenday, RetirementAge = RetirementAge),
       TotalTax = calcAnnuityAcumPath(TaxBenefits, t, returnP3),
@@ -233,18 +233,18 @@ buildTaxBenefits <- function(birthday,
 }
 
 #' @title calcTaxBenefitSwiss
-#' 
+#'
 #' @rdname calcTaxBenefitSwiss
-#' 
+#'
 #' @description Calculates the tax benefit as a difference of the taxes paid with and without retirement contributions.
 #' Calls 'getTaxAmount()', therefore, it assumes objects in the global environment.
 #' @seealso [getTaxAmount()]
 #' @seealso swisstax
-#' 
+#'
 #' @param ExpectedSalaryPath Vector of annual salaries until retirement.
 #' @param TaxableIncome Vector of annual taxable income until retirement.
 #' @inheritParams getTaxAmount
-#' 
+#'
 #' @return Single tax benefit (tax relief) of one contribution.
 #' @examples
 #' \dontrun{

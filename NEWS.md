@@ -9,6 +9,7 @@
 * Updated taxes tests after updating tax parameters for 2017 (#68)
 * Support responsive embedding via iframe-resizer (#69)
 * Retirement age changes depending on the selected genre (#72)
+* Made "c" in "calendar" capital, added tooltip to "Generate Report" button, made "Disclaimer" bold, rephrased first sentence, and removed second (#77)
 
 # SmaRP 1.0.1
 

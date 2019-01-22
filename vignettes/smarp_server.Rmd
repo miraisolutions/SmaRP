@@ -71,8 +71,8 @@ They are both rendered using the `renderGvis` function from the googleVis packag
     gvisAreaChart(
       chartid = "plot1",
       data = TserieGraphData(),
-      xvar = "calendar",
-      yvar = colnames(TserieGraphData())[which(colnames(TserieGraphData()) != "calendar")],
+      xvar = "Calendar",
+      yvar = colnames(TserieGraphData())[which(colnames(TserieGraphData()) != "Calendar")],
       options = list(
         width = 800,
         height = 400,
