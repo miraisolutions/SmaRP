@@ -11,6 +11,13 @@ boxPlus <- shinydashboardPlus::boxPlus
 # fluidPage UI
 fluidPage(
 
+  tags$head(
+    tags$script(
+      type = "text/javascript",
+      src = "https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.3/iframeResizer.contentWindow.min.js"
+    )
+  ),
+
   shinyWidgets::useShinydashboardPlus(),
 
   # indirectly covered by the above (shinydashboard -> bootstrap), but should
