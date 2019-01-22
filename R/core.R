@@ -18,8 +18,8 @@
 #' @importFrom lubridate interval
 #' @export
 buildt <- function(birthday, givenday = today("UTC"), RetirementAge = 65) {
-  calendar <- getRetirementCalendar(birthday, givenday, RetirementAge + 1)
-  t <- c(as.vector(diff(calendar) / 365))
+  Calendar <- getRetirementCalendar(birthday, givenday, RetirementAge + 1)
+  t <- c(as.vector(diff(Calendar) / 365))
   return(t)
 }
 
@@ -100,8 +100,8 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
   } else {
     nextbirthday <- ymd(paste(year(givenday), month(birthday), day(birthday), sep = "-"))
   }
-  calendar <- c(givenday, seq.Date(from = as.Date(nextbirthday), to = as.Date(retirementday), by = "year"))
-  calendar
+  Calendar <- c(givenday, seq.Date(from = as.Date(nextbirthday), to = as.Date(retirementday), by = "year"))
+  Calendar
 }
 
 #' @title buildContributionP2Path
@@ -149,8 +149,8 @@ buildContributionP2Path <- function(birthday,
     filter(years <= RetirementAge)
 
   # calc contributions P2 Path
-  ContributionP2Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge)) %>%
-    mutate(AgePath = sapply(calendar, calcAge, birthday = birthday) %>%
+  ContributionP2Path <- data.frame(Calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge)) %>%
+    mutate(AgePath = sapply(Calendar, calcAge, birthday = birthday) %>%
              as.integer()) %>%
     left_join(BVGRatesPath, by = c("AgePath" = "years")) %>%
     mutate(BVGcontributionrates = if_else(is.na(BVGcontributionrates), 0, BVGcontributionrates))
@@ -249,7 +249,7 @@ buildContributionP3path <- function(birthday,
                                     returnP3,
                                     givenday = today("UTC"),
                                     RetirementAge) {
-  ContributionP3Path <- data.frame(calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge))
+  ContributionP3Path <- data.frame(Calendar = getRetirementCalendar(birthday, givenday, RetirementAge = RetirementAge))
 
   ncp <- nrow(ContributionP3Path)
 
@@ -367,12 +367,13 @@ printCurrency <- function(value, digits = 0, sep = ",", decimal = ".") { # curre
 #' @export
 makeTable <- function(Road2Retirement, moncols = c("DirectP2", "ReturnP2", "TotalP2", "DirectP3", "ReturnP3", "TotalP3", "DirectTax", "ReturnTax", "TotalTax", "Total")) { # , currency=""
 
-  TableMonetary <- Road2Retirement[, c("calendar", moncols)] %>%
-    mutate(calendar = paste(year(calendar), month(calendar, label = TRUE), sep = "-"))
+  TableMonetary <- Road2Retirement[, c("Calendar", moncols)] %>%
+    mutate(Calendar = paste(year(Calendar), month(Calendar, label = TRUE), sep = "-"))
   TableMonetary[, moncols] <- sapply(TableMonetary[, moncols], printCurrency)
 
   return(TableMonetary)
 }
+
 
 
 # Utility functions for validity checks ----

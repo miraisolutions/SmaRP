@@ -25,7 +25,8 @@ IB <- list(
   P2interestRate = "Interest Rate on the Occupational Pension Fund return. If not provided, the minimum by low is used",
   git = "Redirect to git repository",
   RetirementAge = "Enter desired retirement age",
-  RetirementAgeOptional = "Possibility to enter desired retirement age manually"
+  RetirementAgeOptional = "Possibility to enter desired retirement age manually",
+  GenerateReport = "Access calculations, parameters assumptions, and results"
 )
 
 # Validity Message

@@ -322,7 +322,8 @@ fluidPage(
                   column(
                     12,
                     # Add button to download report
-                    downloadButton("report", "Generate report",
+                    downloadButton("report", span("Generate report") %>%
+                                     bs_embed_tooltip(title = IB$GenerateReport, placement = "right"),
                                    class = "btn-smarp")
                   )
                 )
@@ -358,13 +359,12 @@ fluidPage(
 
     # Disclaimer
     fluidRow(
-      verbatimTextOutput("disclaimer")
+      htmlOutput("disclaimer")
     )
   ),
   # Footer  ----
   fluidRow(
     id = "footer",
-
     a(
       id = "git-footer",
       href = "https://github.com/miraisolutions/SmaRP.git",

@@ -116,11 +116,11 @@ It is implemented as an [R Shiny](https://shiny.rstudio.com/) pension calculator
 
 ```{r deduction_percentage, echo = FALSE}
 Road2Retirement_to_print <- params$Road2Retirement %>%
-  select(calendar, ExpectedSalaryPath, BVGcontributionrates, BVGContributions, BVGpurchase, DirectP2, ReturnP2, TotalP2, P3ContributionPath, P3purchase, DirectP3, ReturnP3, TotalP3, DirectTax, ReturnTax, TotalTax, Total) %>%
+  select(Calendar, ExpectedSalaryPath, BVGcontributionrates, BVGContributions, BVGpurchase, DirectP2, ReturnP2, TotalP2, P3ContributionPath, P3purchase, DirectP3, ReturnP3, TotalP3, DirectTax, ReturnTax, TotalTax, Total) %>%
   rename(P2ContributionPath = BVGContributions) %>%
   rename(P2contriburionrates = BVGcontributionrates) %>%
   rename(P2purchase = BVGpurchase) %>%
-  mutate(Y = year(calendar)/5)%>%
+  mutate(Y = year(Calendar)/5)%>%
   filter(Y %in% unique(c(Y[1], Y[!Y%%1], Y[length(Y)])) ) 
 ```
 
@@ -132,16 +132,16 @@ The two plots below represent the time evolution of the different funds and thei
 
 
 ```{r timeSeriesPlot, echo = FALSE}
-tserieGraphData.columns <- setdiff(names(params$TserieGraphData), "calendar")
+tserieGraphData.columns <- setdiff(names(params$TserieGraphData), "Calendar")
 
 tserieGraphData.long <- melt(params$TserieGraphData,
-                             id = "calendar",
+                             id = "Calendar",
                              measure = tserieGraphData.columns)
 tserieGraphData.long$variable <- factor(tserieGraphData.long$variable,
                                         levels = sort(unique(tserieGraphData.long$variable),
                                                       decreasing = TRUE))
 
-ggplot(tserieGraphData.long, aes(x = calendar, y = value, fill = variable)) +
+ggplot(tserieGraphData.long, aes(x = Calendar, y = value, fill = variable)) +
   scale_fill_manual(NULL, values = c("Occupational_Pension" = "#008cc3", "Private_Pension" = "#FF9966", "TaxBenefits" = "#13991c")) +
   scale_y_continuous(labels = scales::comma) +
   labs(x = NULL, y = NULL) +
@@ -458,7 +458,7 @@ Road2Retirement_to_print_Summarized <- Road2Retirement_to_print %>%
   mutate(Occupational_Pension = DirectP2 + ReturnP2) %>%
   mutate(Private_Pension = DirectP3 + ReturnP3) %>%
   rename(ExpectedSalary = ExpectedSalaryPath) %>%
-  select(calendar,ExpectedSalary, Occupational_Pension, Private_Pension, TaxBenefits) %>%
+  select(Calendar,ExpectedSalary, Occupational_Pension, Private_Pension, TaxBenefits) %>%
   makeTable(moncols)
 pander(Road2Retirement_to_print_Summarized)
 ```
@@ -468,7 +468,7 @@ if (show_text){
 moncols <- c(  "P2ContributionPath", "P2purchase", "DirectP2", "ReturnP2", "TotalP2") 
 set.caption('Detailed Occupational Pension Fund Contribution')
 Road2Retirement_to_print_Pillar2 <- Road2Retirement_to_print %>%
-  select(calendar,  P2ContributionPath, P2purchase, DirectP2, ReturnP2, TotalP2) %>%
+  select(Calendar,  P2ContributionPath, P2purchase, DirectP2, ReturnP2, TotalP2) %>%
   makeTable(moncols)
 pander(Road2Retirement_to_print_Pillar2)
 }
@@ -478,7 +478,7 @@ pander(Road2Retirement_to_print_Pillar2)
 moncols <- c(  "P3ContributionPath", "P3purchase", "DirectP3", "ReturnP3", "TotalP3") 
 set.caption('Detailed Provate Pension Fund Contribution')
 Road2Retirement_to_print_Pillar3 <- Road2Retirement_to_print %>%
-  select(calendar,  P3ContributionPath, P3purchase, DirectP3, ReturnP3, TotalP3) %>%
+  select(Calendar,  P3ContributionPath, P3purchase, DirectP3, ReturnP3, TotalP3) %>%
   makeTable(moncols)
 pander(Road2Retirement_to_print_Pillar3)
 ```
@@ -487,7 +487,7 @@ pander(Road2Retirement_to_print_Pillar3)
 moncols <- c(  "DirectTax", "ReturnTax", "TotalTax") 
 set.caption('Detailed Tax Benefit Contribution')
 Road2Retirement_to_print_TaxBenefit <- Road2Retirement_to_print %>%
-  select(calendar, DirectTax, ReturnTax, TotalTax)%>%
+  select(Calendar, DirectTax, ReturnTax, TotalTax)%>%
   makeTable(moncols)
 pander(Road2Retirement_to_print_TaxBenefit)
 ```
