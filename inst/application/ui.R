@@ -351,7 +351,17 @@ fluidPage(
 
     # Disclaimer
     fluidRow(
-      htmlOutput("disclaimer")
+      # Disclaimer ----
+      column(
+        8, offset = 4,
+        div(id = "disclaimer",
+            HTML(
+              "<b>Disclaimer</b>", "<br>",
+              "The content of the report does not hold any legal value and its correctness is not guaranteed.", "<br>",
+              "Mirai Solutions GmbH does not store any information provided while using SmaRP."
+            )
+        )
+      )
     )
   ),
   # Footer  ----

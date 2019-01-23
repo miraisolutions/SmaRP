@@ -359,15 +359,6 @@ function(input, output, session) {
   })
 
 
-  # Disclaimer ----
-  output$disclaimer <- renderText({
-    paste(
-      "<b>Disclaimer</b>", "<br>",
-      "The content of the report does not hold any legal value and its correctness is not guaranteed.", "<br>",
-      "Mirai Solutions GmbH does not store any information provided while using SmaRP."
-    )
-  })
-
   # Output Report ----
 
   # params list to be passed to the output
