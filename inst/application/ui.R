@@ -315,17 +315,12 @@ fluidPage(
                 verticalLayout(
                   verbatimTextOutput("Totals"),
                   htmlOutput("plot1", style = "height: 400px; width: 800px"),
-                  htmlOutput("plot2", style = "height: 130px; width: 800px")
-                ),
-                br(),
-                fluidRow(
-                  column(
-                    12,
-                    # Add button to download report
-                    downloadButton("report", span("Generate report") %>%
-                                     bs_embed_tooltip(title = IB$GenerateReport, placement = "right"),
-                                   class = "btn-smarp")
-                  )
+                  htmlOutput("plot2", style = "height: 130px; width: 800px"),
+                  br(),
+                  # Add button to download report
+                  downloadButton("report", span("Generate report") %>%
+                                   bs_embed_tooltip(title = IB$GenerateReport, placement = "right"),
+                                 class = "btn-smarp")
                 )
               ), # end tabPanel Plot
 
@@ -333,18 +328,15 @@ fluidPage(
               tabPanel(
                 title = "Table",
                 value = "Table",
-                div(
-                  style = "width:1000px; overflow-x: scroll",
-                  htmlOutput("table")
-                ),
-                br(),
-                fluidRow(
-                  column(
-                    12,
-                    # Add button to download report
-                    downloadButton("data_download", "Download Data",
-                                   class = "btn-smarp")
-                  )
+                verticalLayout(
+                  htmlOutput(
+                    "table",
+                    style = "width: 1000px; overflow-x: scroll"
+                  ),
+                  br(),
+                  # Add button to download report
+                  downloadButton("data_download", "Download Data",
+                                 class = "btn-smarp")
                 )
               ) # end tabPanel Table
             ) # end tabsetPanel
