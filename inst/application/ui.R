@@ -330,8 +330,7 @@ fluidPage(
                 value = "Table",
                 verticalLayout(
                   htmlOutput(
-                    "table",
-                    style = "width: 1000px; overflow-x: scroll"
+                    "table"
                   ),
                   br(),
                   # Add button to download report

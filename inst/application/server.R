@@ -238,7 +238,7 @@ function(input, output, session) {
   # Table ----
   output$table <- renderTable({
     makeTable(Road2Retirement = Road2Retirement())
-  }, digits = 0)
+  }, digits = 0, align = "r")
 
   # T series plot ----
   TserieGraphData <- reactive({
