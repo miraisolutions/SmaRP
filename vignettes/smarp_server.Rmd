@@ -35,14 +35,14 @@ The server includes: reactive variables, Mirai Solutions colors definition, plot
 All inputs from the ui are then used to perform calculations, draw plots and write statements. Because these values are different for each user, the app will have to be constantly updated, thus the need for reactive statements. A simple example of a reactive statement used in the server can be found below:
 
 ```{r, eval = FALSE} 
-genre <- reactive({
-  validate(need(input$genre, VM$genre))
-  input$genre
+gender <- reactive({
+  validate(need(input$gender, VM$gender))
+  input$gender
 })
 ```
 where,
 
-need is a shiny function that takes in an expression (`input$genre`) and a string (`VM$genre`). If the expression is not valid, the string is used as an error message
+need is a shiny function that takes in an expression (`input$gender`) and a string (`VM$gender`). If the expression is not valid, the string is used as an error message
 validate throws a specific type of error that stops the reactive expression execution in case of an error
 
 Other reactive expressions include: if statements, minimum values and specific SmaRP functions such as isnotAvailableReturnZero:
