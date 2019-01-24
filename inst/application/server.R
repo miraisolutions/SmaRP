@@ -16,9 +16,9 @@ function(input, output, session) {
   })
 
   # Gender
-  genre <- reactive({
-    validate(need(input$genre, VM$genre))
-    input$genre
+  gender <- reactive({
+    validate(need(input$gender, VM$gender))
+    input$gender
   })
 
   # Mirai Colors
@@ -30,7 +30,7 @@ function(input, output, session) {
       validate(need(input$RetirementAge, VM$RetirementAge))
       min(70, input$RetirementAge)
     } else {
-      if (genre() == "M") {
+      if (gender() == "M") {
         MRetirementAge
       } else {
         FRetirementAge
@@ -44,8 +44,8 @@ function(input, output, session) {
     }
   })
 
-  observeEvent(input$genre, {
-    if (genre() == "F") {
+  observeEvent(input$gender, {
+    if (gender() == "F") {
       updateNumericInput(session, "RetirementAge", value = 64)
     } else {
       updateNumericInput(session, "RetirementAge", value = 65)
