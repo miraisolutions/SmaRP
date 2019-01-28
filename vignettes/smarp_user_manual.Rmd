@@ -14,7 +14,7 @@ vignette: >
 ```{r child = 'children/short-intro.Rmd'}
 ```
 
-This vignette describes how to use each panel in the app. 
+This vignette describes how to use each panel in the app and how to interpret the results. 
 
 ## Personal Info
 
@@ -30,20 +30,40 @@ The following is a list of all components in the first panel and a description. 
 
 ## Occupational Pension Fund- Pillar II
 
-This section includes all the fields related to the occupational pension fund. 
+The second panel contains the fields required to calculate the occupational pension fund. 
 
 - **Current Annual Salary** in gross terms, before tax. 
-- **Current BVG Assets** is the amount alredy invested on the Occupational pension fund. 
-- **Expected Salary Growth Rate %**
-- **Interest Rate % (optional)**
-- **Voluntary Purchases**
-- **Purchase Type**
+
+- **Current BVG Assets** is the amount alredy invested on the Occupational pension fund. Can be found on the annual report of the Pension Fund.
+
+- **Expected Salary Growth Rate %** should be entered as percentage and it is constant during the full working life. Therefore, an assumption/simplification about the future should be made. Note that since all values are in nominal terms, the salary growth rate input can be used as a proxi of the inflation or the general economic growth. Find some references about historical values [here](https://tradingeconomics.com/switzerland/wage-growth)  
+
+- **Interest Rate % (optional)** like the Salary growth rate, it is constant during the working life and an assumption about the general investment return on the long term should be made as well. By default, the [minimum interest rate](https://www.swissstaffing-bvg.ch/en/key_data_investments/interest_yield.php) defined by law it's used.     
+
+- **Voluntary Purchases** is the amount of non mandatory contributions per year.
+
+- **Purchase Type** refers to the previous voluntary purchases and indicates whether it's a single contributions or the intention is to contribute with that amount for the full working life. In this second case, again, the purchase is constant and implies a simplification that the user should take into account. 
+
+**In case of married couples with double income**, the following considerations should be taken into account.
+The pension funds are individual (no familiar). However, the tax rates are familiar, i.e. number of kids and marital status are considered. That implies that the user can perform two calculations, both with some level of inaccuracy.
+On one hand, the user can simply enter all the information individually, without taking into account his partner. It that case, most likely, the tax rate will be underestimated and the return of his contributions as well.  
+On the other hand, if the user wants to be accurate on the tax return, the combined amount of all variables (Salary, current assets and purchases) should be entered. In that case, however, note that two simplifications have been taken into account: A 50% of all variables is assumed and the couple are the same age and therefore will retire together.
+Since these results can vary a lot depending on particular cases, it's higly recomendable to perfom both options to get a full understanding and a more accurate assessment.
 
 ## Private Pension FUnd- Pillar III
 
 - **Current Assets**
 - **Annual Contribution**
 - **Expected Return %**
+
+## Results
+
+### Plot tab
+
+### Table tab
+
+### Downloadable report
+
 
 ## Main drivers of the pension fund
 
