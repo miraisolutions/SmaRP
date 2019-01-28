@@ -82,7 +82,7 @@ fluidPage(
               ),
               column(
                 6,
-                radioButtons("genre",
+                radioButtons("gender",
                              label = "Gender Affiliation",
                              inline = TRUE,
                              choices = list("Male" = "M", "Female" = "F"),

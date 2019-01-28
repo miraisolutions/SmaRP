@@ -298,7 +298,7 @@ If inferred, it is computed in two parts: federal tax (same for all cantons) and
 A third tax is calculated by multiplying to the cantonal tax with a municipality-specific percentage rate. 
 An additional contribution to the cantonal tax is given by the optional affiliation to a church.
 
-Retirement age can be either explicitly provided as an input or inferred from the genre.
+Retirement age can be either explicitly provided as an input or inferred from the gender.
 
 [^1]: Church taxes differ based on the type (Evangelische or Roeman-katolische Kirche) and canton of residence. SmaRP does not make such distinction and always assumes the highest of the values. Moreover, when the church-tax depends on the cantonal tax rate (instead of being a fixed factor), an approximation is made and treated as the maximum possible factor (relevant for cantons: VS, BS, BL). 
 [^2]: Tax on assets are not considered.
