@@ -145,15 +145,12 @@ function(input, output, session) {
 
   # Salary
   Salary <- reactive({
-    validate(need(input$Salary, VM$Salary))
-    input$Salary
-  })
-
-  observeEvent(input$Salary, {
-    if (input$Salary > 1e+08) {
-      updateNumericInput(session, "Salary", value = 1e+08)
+    val <- max(min(isnotAvailableReturnZero(input$Salary), 1e+08), 0)
+    if (!is.na(input$Salary) && input$Salary != val) {
+      updateNumericInput(session, "Salary", value = val)
     }
-  })
+    val
+  }) %>% debounce(millis = 100)
 
   SalaryGrowthRate <- reactive({
     isnotAvailableReturnZero(input$SalaryGrowthRate / 100)
