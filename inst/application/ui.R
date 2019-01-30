@@ -314,8 +314,8 @@ fluidPage(
                 value = "Plot",
                 verticalLayout(
                   verbatimTextOutput("Totals"),
-                  htmlOutput("plot1", style = "height: 400px; width: 800px"),
-                  htmlOutput("plot2", style = "height: 130px; width: 800px")
+                  htmlOutput("plot_t"),
+                  htmlOutput("plot_final")
                 ),
                 br(),
                 fluidRow(

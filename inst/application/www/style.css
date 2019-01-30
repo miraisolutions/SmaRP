@@ -270,3 +270,57 @@ input[type=checkbox], input[type=radio] {
   border-top: 3px solid #D7DBDD;
 */
 }
+
+
+/*
+Plots
+  * limit the width to 100%
+  * adjust the height depending on the browser size
+*/
+
+#plot_t {
+  width: 800px;
+  height: 400px;
+  max-width: 100%;
+}
+#plot_final {
+  width: 800px;
+  height: 130px;
+  max-width: 100%;
+}
+@media(max-width: 1099px) { /* standard Bootstrap's media size */
+  #plot_t {
+    height: calc(400px * 0.9);
+  }
+  #plot_final {
+    height: calc(130px * 0.9);
+  }
+}
+@media(max-width: 991px) { /* standard Bootstrap's media size */
+  #plot_t {
+    height: calc(400px * 0.8);
+  }
+  #plot_final {
+    height: calc(130px * 0.8);
+  }
+}
+@media(max-width: 767px) { /* standard Bootstrap's media size */
+  /* all vertical */
+  #plot_t {
+    height: calc(400px * 0.8);
+  }
+  #plot_final {
+    height: calc(130px * 0.8);
+  }
+}
+@media(max-width: 511px) { /* custom media size */
+  /* tiny all vertical */
+  #plot_t {
+    height: calc(400px * 0.65);
+  }
+  #plot_final {
+    height: calc(130px * 0.65);
+  }
+}
+
+
