@@ -13,6 +13,7 @@
 * Changed "genre" to "gender" (#79)
 * In report: changed multiplication symbol * to \cdot, reviewed disclaimer, fixed typos, church types translated to English, fixed tables columns names (no underscore, leave space between words), date of birth in Parameters section changed in the form: dd-mm-yyyy (#82)
 * Fixed numeric input so that it doesn't crash when no value is inserted (#81)
+* Dynamic plot size and improved labels (no underscore, space between words) in the Shiny app (#85)
 
 fixes #82
 
