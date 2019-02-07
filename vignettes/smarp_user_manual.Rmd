@@ -28,7 +28,7 @@ The following is a list of all components in the first panel and a description. 
 
 - **Postal Code / Municipality** is the one of residence.
 
-- **Marital Status** has three options and one needs to be chosen. In case of "Married 2x Income", please, read the Appendix 1 section at the end of this document.
+- **Marital Status** has three options and one needs to be chosen. In case of "Married 2x Income", please, read the Appendix 1 at the end of this document.
 
 - **# Children** can be filled by either typing or using the arrows that appears when clicking on the box. The maximum value is 9.
 
@@ -123,15 +123,15 @@ Besides all mentioned above, it's important to be aware that time plays an impor
 In case of married couples with double income, the following considerations should be taken into account.
 The pension funds are individual (no familiar). However, the tax rates are familiar, i.e. number of kids and marital status are considered. That implies that the user can perform two calculations, both with some level of inaccuracy.
 
-1. On one hand, the user can simply enter all the information individually, without taking into account his partner. It that case, most likely, the tax rate will be underestimated and accordingly the tax benefit generated.
+1. On one hand, the user can simply enter all the information individually, without taking into account his partner. It that case, most likely, the tax rate will be underestimated and as a consequence the tax benefit generated.
 
 2. On the other hand, if the user wants to be accurate on the tax return, the combined amount of all variables (Salary, current assets and purchases) should be entered. In that case, however, note that two simplifications have been taken into account.
 
-- A 50% of all variables is assumed.
+    - A 50% split of all mometary variables is assumed.
 
-- Both members of the couple are the same age and therefore will retire together.
+    - Both members of the couple are the same age and therefore will retire together.
 
-Given that those assumptions are quite strong and unrealistic, we advise to run SmaRP as in option 1. Nonetheless, since these results can vary a lot depending on particular cases, it's highly recommendable to perform both options to get a full understanding and a more accurate assessment. 
+Given that those assumptions are quite strong and unrealistic, we advise the married users with double income to run SmaRP as in option 1. Nonetheless, since these results can vary a lot depending on particular cases, it is desirable to perform both options to get a full understanding and a more accurate assessment. 
 
 
 
