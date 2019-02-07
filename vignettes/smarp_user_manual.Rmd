@@ -14,19 +14,26 @@ vignette: >
 ```{r child = 'children/short-intro.Rmd'}
 ```
 
-This vignette describes how to use each panel in the app and how to interpret the results. 
+This vignette describes how to use each panel in the app and how to interpret the results.
 
 ## Personal Info
 
 The following is a list of all components in the first panel and a description. All fields are mandatory except with the Desired Retirement Age. They are pre-filled thus it is advisable to check all values before downloading the report. For those fields where there is a maximun, in case the users types is a higher number, the appilcation caps it to maximum.
 
 - **Birthdate** can be inserted by either typing or using the calendar that appears when clicking on the box.
+
 - **Gender Affiliation** is pre-selected to Male and can be changed to Female, however one field has to be chosen.
+
 - **Desired Retirement Age** is not mandatory but can be specified in case that it is different from the standard values (65 for males and 64 for females). The maximum retirement age is 70.
+
 - **Postal Code / Municipality** is the one of residence.
-- **Marital Status** has three options and one needs to be chosen.
+
+- **Marital Status** has three options and one needs to be chosen. In case of "Married 2x Income", please, read the Appendix 1 section at the end of this document.
+
 - **# Children** can be filled by either typing or using the arrows that appears when clicking on the box. The maximum value is 9.
+
 - **Church Affiliation** only requires a yes or no answer. No spefication is requested.
+
 
 ## Occupational Pension Fund- Pillar II
 
@@ -34,9 +41,9 @@ The second panel contains the fields required to calculate the occupational pens
 
 - **Current Annual Salary** in gross terms, before tax. 
 
-- **Current BVG Assets** is the amount alredy invested on the Occupational pension fund. Can be found on the annual report of the Pension Fund.
+- **Current BVG Assets** is the amount alredy invested on the Occupational pension fund. Can be found on the annual report of the Pension Fund.[^1]
 
-- **Expected Salary Growth Rate %** should be entered as percentage and it is constant during the full working life. Therefore, an assumption/simplification about the future should be made. Note that since all values are in nominal terms, the salary growth rate input can be used as a proxi of the inflation or the general economic growth. Find some references about historical values [here](https://tradingeconomics.com/switzerland/wage-growth)  
+- **Expected Salary Growth Rate %** should be entered as percentage and it is constant during the full working life. Therefore, an assumption/simplification about the future should be made. Note that since all values are in nominal terms, the salary growth rate input can be used as a proxi of the inflation or the general economic growth. Find some references about historical values [here](https://tradingeconomics.com/switzerland/wage-growth). 
 
 - **Interest Rate % (optional)** like the Salary growth rate, it is constant during the working life and an assumption about the general investment return on the long term should be made as well. By default, the [minimum interest rate](https://www.swissstaffing-bvg.ch/en/key_data_investments/interest_yield.php) defined by law it's used.     
 
@@ -44,35 +51,91 @@ The second panel contains the fields required to calculate the occupational pens
 
 - **Purchase Type** refers to the previous voluntary purchases and indicates whether it's a single contributions or the intention is to contribute with that amount for the full working life. In this second case, again, the purchase is constant and implies a simplification that the user should take into account. 
 
-**In case of married couples with double income**, the following considerations should be taken into account.
-The pension funds are individual (no familiar). However, the tax rates are familiar, i.e. number of kids and marital status are considered. That implies that the user can perform two calculations, both with some level of inaccuracy.
-On one hand, the user can simply enter all the information individually, without taking into account his partner. It that case, most likely, the tax rate will be underestimated and the return of his contributions as well.  
-On the other hand, if the user wants to be accurate on the tax return, the combined amount of all variables (Salary, current assets and purchases) should be entered. In that case, however, note that two simplifications have been taken into account: A 50% of all variables is assumed and the couple are the same age and therefore will retire together.
-Since these results can vary a lot depending on particular cases, it's higly recomendable to perfom both options to get a full understanding and a more accurate assessment.
 
-## Private Pension FUnd- Pillar III
+## Private Pension Fund- Pillar III
 
-- **Current Assets**
-- **Annual Contribution**
-- **Expected Return %**
+The third component of pension system is the private pension fund. It's non compulsory and usually is made of annual contributions. 
+
+- **Current Assets** is the amount alredy invested on the private pension fund.[^2]
+
+- **Annual Contribution** Contribution to the private fund in annual basis. As other parameters, SmaRP assumes that this annual contribution is constant the entire working life.
+
+- **Expected Return %** Average expected return of the private pension fund. Should be entered as percentage and it is constant during the entire working life.[^3]
+
 
 ## Results
 
+The main result of SmaRP is the total pension fund the user will get at the end of his working life. It's stated on top right of SmaRP, above the plots.
+
+The total pension fund can be decomposed in three funds: Occupational fund, Private pension fund and a third one, the tax benefits fund.
+
+**The tax benefit fund** can not be capitalized directly as the other two, but gets generated indirectly through the tax relief of the contributions to the other funds.
+
+There are some important notes to consider about the tax benefit fund.
+
+- The contributions are calculated as the tax relief generated and therefore are related to the marginal tax rate of each individual. The higher the tax rate, the higher the tax relief and thus the tax benefit fund.
+
+- There is a cap on the tax relief defined by the Swiss federal government.
+
+- SmaRP assumes that all tax benefit generated are reinvested and somehow saved until retirement. 
+
+- The average expected return is the same as the private pension fund.
+
+
 ### Plot tab
+
+The evolution on the different funds are shown on the first plot. The evolution on the different funds are shown on the first plot. If the mouse hovers over the graph lines, the date and exact shows up on an informative box.
+
+The bar plot below shows the distribution among funds at the retirement age.
+
+- In case of neither voluntary contributions to the occupational fund nor private pension fund available, only on fund - occupational pension fund - will be displayed.
+
+- If the users makes voluntary contributions to the occupational fund or holds a private fund, the retirement funds gets displayed as well.
 
 ### Table tab
 
+More detailed information of each fund and its distinction between the direct contribution and the return can be checked on table tab. 
+The exact total retirement fund can be found on the bottom right corner of the table. 
+
+
 ### Downloadable report
+
+A detailed report of the simulation and the results can be generated upon request by clicking the “Generate Report” button, located below either the plot or table tab. 
 
 
 ## Main drivers of the pension fund
 
-Which factors does my pension depend on? That's ultimate question SmaRP helps users to assess.
+Which factors does my pension depend on? or, which actions could I take to boost my future pension? That's ultimate question SmaRP helps users to assess. SmaRP can be used to perfom "what-if" scenarios and make decissions accordingly. 
 
-Salary
+- **Salary** Since the occupational pension fund gets funded as a percentage of the salary and usually it's the main contributor, the higher your salary, the higher your future pension. The growth salary rate can be used to project scenarios of future career paths. 
 
-Non compulsory contributions
+- **Non compulsory contributions** have the advantage that the government tops it up with tax relief (up to a certain limits). In that sense, they have double effect, the effect of the direct contribution plus the tax benefit generated.  
 
-Interest rates
+- **Interest rates**  are the most uncertain driver of your pension. Where your pension is invested and which return rate generates can have a huge impact on what you’ll get back when you retire. 
 
-Residence
+- **Residence** The city where you choose to live has an impact on your tax bill and as a consequence, on the tax relief generated by your voluntary contributions. 
+
+Besides all mentioned above, it's important to be aware that time plays an important factor, so the sooner you act, the more you could benefit.
+
+
+## Appendix 1: Notes on Married double income.
+
+In case of married couples with double income, the following considerations should be taken into account.
+The pension funds are individual (no familiar). However, the tax rates are familiar, i.e. number of kids and marital status are considered. That implies that the user can perform two calculations, both with some level of inaccuracy.
+
+1. On one hand, the user can simply enter all the information individually, without taking into account his partner. It that case, most likely, the tax rate will be underestimated and accordingly the tax benefit generated.
+
+2. On the other hand, if the user wants to be accurate on the tax return, the combined amount of all variables (Salary, current assets and purchases) should be entered. In that case, however, note that two simplifications have been taken into account.
+
+- A 50% of all variables is assumed.
+
+- Both members of the couple are the same age and therefore will retire together.
+
+Given that those assumptions are quite strong and unrealistic, we advise to run SmaRP as in option 1. Nonetheless, since these results can vary a lot depending on particular cases, it's highly recommendable to perform both options to get a full understanding and a more accurate assessment. 
+
+
+
+
+[^1]: Note that SmaRP assumes that the current BVG assets haven't generated any tax benefits on the past, meaning that all funds come from the mandatory contributions. 
+[^2]: Note that SmaRP assumes that the current assets on the private pension fund haven't generated any tax benefits on the past. 
+[^3]: SmaRP assumes that the average expected return applies the same for private pension fund as for the tax return.
