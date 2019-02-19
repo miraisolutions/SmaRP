@@ -11,6 +11,13 @@ boxPlus <- shinydashboardPlus::boxPlus
 # fluidPage UI
 fluidPage(
 
+  tags$head(
+    tags$script(
+      type = "text/javascript",
+      src = "https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.3/iframeResizer.contentWindow.min.js"
+    )
+  ),
+
   shinyWidgets::useShinydashboardPlus(),
 
   # indirectly covered by the above (shinydashboard -> bootstrap), but should
@@ -75,7 +82,7 @@ fluidPage(
               ),
               column(
                 6,
-                radioButtons("genre",
+                radioButtons("gender",
                              label = "Gender Affiliation",
                              inline = TRUE,
                              choices = list("Male" = "M", "Female" = "F"),
@@ -103,10 +110,10 @@ fluidPage(
                   numericInput(
                     "RetirementAge",
                     label = NULL, # "Desired Retirement Age",
-                    value = 65,
+                    value = 64,
                     step = 1,
                     min = 55,
-                    max = 70 # note this doesn't prevent or warn users entering 
+                    max = 70 # note this doesn't prevent or warn users entering
                     # larger numbers manually (see e.g. https://github.com/rstudio/shiny/issues/1022#issuecomment-282305308)
                   ) %>%
                     bs_embed_tooltip(title = IB$RetirementAge, placement = "right")
@@ -309,6 +316,16 @@ fluidPage(
                   verbatimTextOutput("Totals"),
                   htmlOutput("plot1", style = "height: 400px; width: 800px"),
                   htmlOutput("plot2", style = "height: 130px; width: 800px")
+                ),
+                br(),
+                fluidRow(
+                  column(
+                    12,
+                    # Add button to download report
+                    downloadButton("report", span("Generate report") %>%
+                                     bs_embed_tooltip(title = IB$GenerateReport, placement = "right"),
+                                   class = "btn-smarp")
+                  )
                 )
               ), # end tabPanel Plot
 
@@ -317,24 +334,22 @@ fluidPage(
                 title = "Table",
                 value = "Table",
                 div(
-                  style = "width:800px; overflow-x: scroll",
+                  style = "width:1000px; overflow-x: scroll",
                   htmlOutput("table")
+                ),
+                br(),
+                fluidRow(
+                  column(
+                    12,
+                    # Add button to download report
+                    downloadButton("data_download", "Download Data",
+                                   class = "btn-smarp")
+                  )
                 )
               ) # end tabPanel Table
             ) # end tabsetPanel
           ) # end column
-        ), # end fluidRow
-
-        br(),
-
-        fluidRow(
-          column(
-            12,
-            # Add button to download report
-            downloadButton("report", "Generate report",
-                           class = "btn-smarp")
-          )
-        ), # end FluidRow
+        ), # end fluidRowm
 
         NULL
 
@@ -344,13 +359,12 @@ fluidPage(
 
     # Disclaimer
     fluidRow(
-      verbatimTextOutput("disclaimer")
+      htmlOutput("disclaimer")
     )
   ),
   # Footer  ----
   fluidRow(
     id = "footer",
-
     a(
       id = "git-footer",
       href = "https://github.com/miraisolutions/SmaRP.git",

@@ -127,7 +127,7 @@ SmaRP can be used to perform "what-if" scenarios and make decisions accordingly 
 
 ```{r deduction_percentage, echo = FALSE}
 Road2Retirement_to_print <- params$Road2Retirement %>%
-  select(calendar, ExpectedSalaryPath, BVGcontributionrates, BVGContributions, BVGpurchase, DirectP2, ReturnP2, TotalP2, P3ContributionPath, P3purchase, DirectP3, ReturnP3, TotalP3, DirectTax, ReturnTax, TotalTax, Total) %>%
+  select(Calendar, ExpectedSalaryPath, BVGcontributionrates, BVGContributions, BVGpurchase, DirectP2, ReturnP2, TotalP2, P3ContributionPath, P3purchase, DirectP3, ReturnP3, TotalP3, DirectTax, ReturnTax, TotalTax, Total) %>%
   rename(P2ContributionPath = BVGContributions) %>%
   rename(P2contriburionrates = BVGcontributionrates) %>%
   rename(P2purchase = BVGpurchase) %>%
@@ -143,16 +143,16 @@ The two plots below represent the time evolution of the different funds and thei
 
 
 ```{r timeSeriesPlot, echo = FALSE}
-tserieGraphData.columns <- setdiff(names(params$TserieGraphData), "calendar")
+tserieGraphData.columns <- setdiff(names(params$TserieGraphData), "Calendar")
 
 tserieGraphData.long <- melt(params$TserieGraphData,
-                             id = "calendar",
+                             id = "Calendar",
                              measure = tserieGraphData.columns)
 tserieGraphData.long$variable <- factor(tserieGraphData.long$variable,
                                         levels = sort(unique(tserieGraphData.long$variable),
                                                       decreasing = TRUE))
 
-ggplot(tserieGraphData.long, aes(x = calendar, y = value, fill = variable)) +
+ggplot(tserieGraphData.long, aes(x = Calendar, y = value, fill = variable)) +
   scale_fill_manual(NULL, values = c("Occupational_Pension" = "#008cc3", "Private_Pension" = "#FF9966", "TaxBenefits" = "#13991c")) +
   scale_y_continuous(labels = scales::comma) +
   labs(x = NULL, y = NULL) +
@@ -332,7 +332,7 @@ Publikationen Und Formulare Bestellen Eidgenössische ESTV - \url{https://www.es
 \newpage
 # Disclaimer
 
-While **SmaRP** was developed under the utmost care and diligence, Mirai Solutions does not guarantee for its accuracy and correctness. In addition, **SmaRP** is based on assumptions and projections (explained in a section above and in the PDF report) and as such computed figures should be understood as general references and do not hold any legal value.
+While **SmaRP** was developed under the utmost care and diligence, Mirai Solutions does not guarantee for its accuracy and correctness. In addition, **SmaRP** is based on assumptions and projections and as such computed figures should be understood as general references and do not hold any legal value.
 
 \newpage
 
@@ -343,7 +343,7 @@ While **SmaRP** was developed under the utmost care and diligence, Mirai Solutio
 
 The savings process for retirement benefits starts on January 1st following the year in which the person turns 24[^4].
 
-$$ PensionableSalary(t) = max(Salary(t) - \frac{7}{8} AHV Salary(t), 30 * AHVSalary) $$
+$$ PensionableSalary(t) = max(Salary(t) - \frac{7}{8} AHV Salary(t), 30 \cdot AHVSalary) $$
 
 Contribution rates under Pillar II are defined by law.[^5][^6]
 \begin{center}
@@ -358,7 +358,7 @@ Contribution rates under Pillar II are defined by law.[^5][^6]
 \end{tabular}
 \end{center}
 
-$$ MandatoryContributions(t) = PensionableSalary(t) * ContributionRate(t) $$
+$$ MandatoryContributions(t) = PensionableSalary(t) \cdot ContributionRate(t) $$
 
 $$ r = 1\% $$
 
@@ -367,15 +367,15 @@ $$ Pillar II = \sum_{t0}^T(Mandatory Contributions + Voluntary Contributions) * 
 
 ## Pillar III
 
-The private pension fund ($PillarIII$) at year $t$ is calculated as following:
+The private pension fund ($PillarIII$) at year $t$ is calculated as:
 
 $$ PillarIII (t)=  \sum_{t=t_0}^TVoluntaryContributions * e^{r(T - t)} $$
 
-where,
+where
 
-- $VoluntaryContributions$ is an input
-- $r$ is the interest rate applied to the private pension fund 
-- $t_0$ is today's date
+- $VoluntaryContributions$ is a voluntary contribution amount,
+- $r$ is the interest rate applied to the private pension fund,
+- $t_0$ is today's date,
 - $T$ is the retirement age.
 
 ## Tax Benefit
@@ -384,10 +384,10 @@ Granted that the marginal tax rate ($TaxRate$) is provided as an input, the tax 
 
 $$ TaxBenefit(t) = \sum_{t_0}^TVoluntaryContributions(t) *  TaxRate(t) * e^{r(T - t)} $$
 
-where ,
+where
 
-- $VoluntaryContributions$ is an input
-- $t_0$ is today's date
+- $VoluntaryContributions$ is an input,
+- $t_0$ is today's date,
 - $T$ is the retirement age.
 
 If the tax rate is not an input, the tax benefits are computed as following[^7]:
@@ -400,10 +400,10 @@ Taxable income ($TaxableIncome$) at time $t$ is computed as following:
 
 $$ TaxableIncome(t) = max(Salary(t) - min(TotalContr, MaxContrTax), 0) $$
 
-where,
+where
 
-- $Salary(t)$ is the salary at year $t$
-- $TotalContr$ is the sum of the Pillar II and Pillar III purchases 
+- $Salary(t)$ is the salary at year $t$,
+- $TotalContr$ is the sum of the Pillar II and Pillar III purchases,
 - $MaxContrTax$ is the maximum deductible amount allowed by law.
 
 
@@ -413,26 +413,26 @@ The $TaxPaid$ function is the sum of the federal and cantonal taxes.
 
 The Federal tax at year $t$ is computed as following:
 
-$$ FederalTax(t) = \sum_{t_0}^T(Income(t) *  FederalTaxRate) - 251*NChildren $$
+$$ FederalTax(t) = \sum_{t_0}^T(Income(t) \cdot FederalTaxRate) - 251 \cdot NChildren $$
 
-where,
+where
 
-- $Income(t)$ is the income at time $t$
-- $NChildren$ is the number of kids under 18
+- $Income(t)$ is the income at time $t$,
+- $NChildren$ is the number of kids under 18,
 - $FederalTaxRate$ is a factor based on the civil status and family structure.
 
 <!-- The Federal tax rate can be looked up in the following table. -->
 
 The cantonal tax at year $t$ is computed as following:
 
-$$ KantonalTax(t) = \sum_{t_0}^T(Income(t) *  KantonalTaxRate) * (F_{kanton} + F_{municipality} + F_{church)} $$
+$$ KantonalTax(t) = \sum_{t_0}^T(Income(t) \cdot  KantonalTaxRate) \cdot (F_{kanton} + F_{municipality} + F_{church)} $$
 
-where,
+where
 
-- $Income(t)$ is the income at time $t$
-- $KantonalTaxRate$ is a factor based on the civil status and family structure
-- $F_{kanton}$ is a canton-dependent multiplication factor
-- $F_{municipality}$ is a municipality-dependent  multiplication factor 
+- $Income(t)$ is the income at time $t$,
+- $KantonalTaxRate$ is a factor based on the civil status and family structure,
+- $F_{kanton}$ is a canton-dependent multiplication factor,
+- $F_{municipality}$ is a municipality-dependent  multiplication factor, 
 - $F_{church}$ is a church affiliation dependent multiplication factor.
 
 <!-- The cantonal tax rate for canton `r params$Kanton` can be looked up in the following table. -->
@@ -452,8 +452,8 @@ The municipality-dependent multiplication factor for municipality  `r gemeinde_n
 The church affiliation dependent multiplication factor for municipality `r gemeinde_name` is `r fkirche`. In case of no church affiliation, this factor is  `0`.
 
 [^4]: AHV salary: 2350 month, 28200 year.
-[^5]: 831.40. Bundesgesetz über die berufliche Alters-, Hinterlassenen- und Invalidenvorsorge (Art.16)
-[^6]: Minimum interest rate on the retirement assets as of. 01.01.2017
+[^5]: 831.40. Bundesgesetz über die berufliche Alters-, Hinterlassenen- und Invalidenvorsorge (Art.16).
+[^6]: Minimum interest rate on the retirement assets as of 01.01.2017.
 [^7]: The taxable income does not correspond to the net or gross salary. Social insurance contributions and a wide range of other deductions are subtracted from the gross salary. The amount remaining is the taxable income, the base to calculate your tax bill.
 
 \newpage
@@ -463,43 +463,56 @@ The church affiliation dependent multiplication factor for municipality `r gemei
 Detailed results from calculations are shown in the following tables.
 
 ```{r Road2Retirement_to_print_Summarized, echo = FALSE}
-moncols <- c("ExpectedSalary", "Occupational_Pension", "Private_Pension", "TaxBenefits") 
+moncols <- c("Salary", "Occupational Pension", "Private Pension", "Tax Benefits") 
 set.caption('Detailed Private Pension Fund Contribution')
 Road2Retirement_to_print_Summarized <- Road2Retirement_to_print %>%
-  mutate(TaxBenefits = TotalTax) %>%
-  mutate(Occupational_Pension = DirectP2 + ReturnP2) %>%
-  mutate(Private_Pension = DirectP3 + ReturnP3) %>%
-  rename(ExpectedSalary = ExpectedSalaryPath) %>%
-  select(calendar,ExpectedSalary, Occupational_Pension, Private_Pension, TaxBenefits) %>%
+  mutate(`Tax Benefits` = TotalTax) %>%
+  mutate(`Occupational Pension` = DirectP2 + ReturnP2) %>%
+  mutate(`Private Pension` = DirectP3 + ReturnP3) %>%
+  rename(`Salary` = ExpectedSalaryPath) %>%
+  select(Calendar, `Salary`, `Occupational Pension`, `Private Pension`, `Tax Benefits`) %>%
   makeTable(moncols)
 pander(Road2Retirement_to_print_Summarized)
 ```
 
 ```{r Road2Retirement_to_print_Pillar2, echo = FALSE, eval = show_text, include = show_text}
 if (show_text){
-moncols <- c("P2ContributionPath", "P2purchase", "DirectP2", "ReturnP2", "TotalP2") 
+moncols <- c("P2 Contribution", "P2 purchase", "Direct P2", "Return P2", "Total P2") 
 set.caption('Detailed Occupational Pension Fund Contribution')
 Road2Retirement_to_print_Pillar2 <- Road2Retirement_to_print %>%
-  select(calendar,  P2ContributionPath, P2purchase, DirectP2, ReturnP2, TotalP2) %>%
+  rename(`P2 Contribution` = P2ContributionPath) %>%
+  rename(`P2 purchase` = P2purchase) %>%
+  rename(`Direct P2` = DirectP2) %>%
+  rename(`Return P2` = ReturnP2) %>%
+  rename(`Total P2` = TotalP2) %>%
+  select(Calendar,  `P2 Contribution`, `P2 purchase`, `Direct P2`, `Return P2`, `Total P2`) %>%
   makeTable(moncols)
 pander(Road2Retirement_to_print_Pillar2)
 }
 ```
 
-```{r Road2Retirement_to_print_Pillar3, echo = FALSE, eval = show_text, include = show_text}
-moncols <- c("P3ContributionPath", "P3purchase", "DirectP3", "ReturnP3", "TotalP3") 
-set.caption('Detailed Provate Pension Fund Contribution')
+```{r Road2Retirement_to_print_Pillar3, echo = FALSE, eval=show_text, include=show_text}
+moncols <- c("P3 Contribution", "P3 purchase", "Direct P3", "Return P3", "Total P3") 
+set.caption('Detailed Private Pension Fund Contribution')
 Road2Retirement_to_print_Pillar3 <- Road2Retirement_to_print %>%
-  select(calendar,  P3ContributionPath, P3purchase, DirectP3, ReturnP3, TotalP3) %>%
+  rename(`P3 Contribution` = P3ContributionPath) %>%
+  rename(`P3 purchase` = P3purchase) %>%
+  rename(`Direct P3` = DirectP3) %>%
+  rename(`Return P3` = ReturnP3) %>%
+  rename(`Total P3` = TotalP3) %>%
+  select(Calendar,  `P3 Contribution`, `P3 purchase`, `Direct P3`, `Return P3`, `Total P3`) %>%
   makeTable(moncols)
 pander(Road2Retirement_to_print_Pillar3)
 ```
 
-```{r Road2Retirement_to_print_TaxBenefit, echo = FALSE, eval = show_tax, include = show_tax}
-moncols <- c("DirectTax", "ReturnTax", "TotalTax") 
+```{r Road2Retirement_to_print_TaxBenefit, echo = FALSE, eval=show_tax, include=show_tax}
+moncols <- c("Direct Tax", "Return Tax", "Total Tax") 
 set.caption('Detailed Tax Benefit Contribution')
 Road2Retirement_to_print_TaxBenefit <- Road2Retirement_to_print %>%
-  select(calendar, DirectTax, ReturnTax, TotalTax) %>%
+  rename(`Direct Tax` = DirectTax) %>%
+  rename(`Return Tax` = ReturnTax) %>%
+  rename(`Total Tax` = TotalTax) %>%
+  select(Calendar, `Direct Tax`, `Return Tax`, `Total Tax`)%>%
   makeTable(moncols)
 pander(Road2Retirement_to_print_TaxBenefit)
 ```

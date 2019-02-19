@@ -13,9 +13,9 @@ test_that("colnames are equal", {
   expect_equal(lapply(taxburden_new.list, colnames), lapply(taxburden_old.list, colnames))
 })
 
-# test_that("bla are equal", {
-#   expect_equal(head(taxburden_new.list[[1]]), head(taxburden_old.list[[1]]))
-# })
+test_that("taxburden does not contain NAs", {
+  expect_true(all(sapply(taxburden_new.list, function(x) {all(!is.na(x))})))
+})
 
 # For comparison
 # all.equal(lapply(taxburden_new.list, head), lapply(taxburden_old.list, head))
