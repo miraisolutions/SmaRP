@@ -39,7 +39,7 @@ The following is a list describing components in the first panel. Unless otherwi
 
 The second panel contains all fields related to the occupational pension fund. 
 
-- **Current Annual Salary** in gross terms, before tax. The maximum value is 100M CHF.  
+- **Current Annual Salary** in gross terms, before tax. This amount is the base to calculate the contributions to the Occupational Pension Fund and also the tax relief generated with the non-mandatory contributions. The maximum value is 100M CHF.  
 
 - **Current BVG Assets** is the amount already invested in the Occupational pension fund and can be found on the annual report of the Pension Fund.[^1]
 
@@ -47,7 +47,7 @@ The second panel contains all fields related to the occupational pension fund.
 
 - **Interest Rate % (optional)** is constant during the working life and an assumption about the general long-term investment return should be made as well. By default, the [minimum interest rate](https://www.swissstaffing-bvg.ch/en/key_data_investments/interest_yield.php) defined by law is used.     
 
-- **Voluntary Purchases** is the amount of non mandatory contributions per year.
+- **Voluntary Purchases** is the amount of non mandatory contributions per year[^2].
 
 - **Purchase Type** refers to previous voluntary purchases and can be made as a single or a constant, multi-year, working life long contribution.
 
@@ -56,16 +56,16 @@ The second panel contains all fields related to the occupational pension fund.
 
 The third panel is the private pension fund. It is non-compulsory and only includes annual contributions. 
 
-- **Current Assets** is the amount already invested in the private pension fund.[^2]
+- **Current Assets** is the amount already invested in the private pension fund.[^3]
 
 - **Annual Contribution** to the private fund on an annual basis is assumed to be constant throughout the entire working life.
 
-- **Expected Return %** is the average expected return from the private pension fund. It should be entered in percentage and is constant throughout the entire working life.[^3]
+- **Expected Return %** is the average expected return from the private pension fund. It should be entered in percentage and is constant throughout the entire working life.[^4]
 
 
 ## Results
 
-The text box above the plots summraizes the total pension fund the user will get at the end of his working life.[^4]
+The text box above the plots summraizes the total pension fund the user will get at the end of his working life.[^5]
 
 The total pension fund can be divided in three components: Occupational pension fund, Private pension fund and tax benefits fund.
 
@@ -118,7 +118,8 @@ Given that those assumptions are quite strong and unrealistic, married users wit
 
 
 
-[^1]: SmaRP assumes that the current BVG assets did not generated any tax benefits in the past, meaning that all funds come from the mandatory contributions. 
-[^2]: SmaRP assumes that the current assets on the private pension fund did not generated any tax benefits in the past. 
-[^3]: SmaRP assumes that the average expected return is the same for private pension fund as for the tax return.
-[^4]: SmaRP does not make any consideration about the usage of the retirement pension funds. For the Occupational pension fund, the Swiss pension law allows retirees to take the full amount as a lump sum, receive their pension in the form of a life annuity, or a mix of both. In the last case, the minimum conversion rate is 6.8% (2018) and can vary depending on the retirement age. The Private fund, however, is always paid as a lump sum.     
+[^1]: SmaRP assumes that the current BVG assets did not generated any tax benefits in the past, meaning that all funds come from the mandatory contributions.
+[^2]: Voluntary contributions to the Occupational Pension Fund are also called "purchases" because represents an ad-hoc "purchase" of pension benefits made by the retiree. Usually they are done to fill gaps in the working life or to cover up previous lower salaries after a wage raise.  
+[^3]: SmaRP assumes that the current assets on the private pension fund did not generated any tax benefits in the past. 
+[^4]: SmaRP assumes that the average expected return is the same for private pension fund as for the tax return.
+[^5]: SmaRP does not make any consideration about the usage of the retirement pension funds. For the Occupational pension fund, the Swiss pension law allows retirees to take the full amount as a lump sum, receive their pension in the form of a life annuity, or a mix of both. In the last case, the minimum conversion rate is 6.8% (2018) and can vary depending on the retirement age. The Private fund, however, is always paid as a lump sum.     
