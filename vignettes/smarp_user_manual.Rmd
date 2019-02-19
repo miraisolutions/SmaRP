@@ -95,11 +95,11 @@ There are some important notes to consider about the tax benefits fund.
 ### Table tab
 
 More detailed information of each fund and its distinction between direct contribution and return can be checked on the **Table** tab; the exact total retirement fund can be found on the bottom right corner. 
-
+A comprehensive set of values calculated can de downloaded as well from bottom of the Table tab by clicking on "DownloadData" button.
 
 ### Downloadable report
 
-A detailed report of the simulation and the results can be generated upon request by clicking on the “Generate Report” button, located below either the plot or table tab. 
+A detailed report of the simulation and the results can be generated upon request by clicking on the “Generate Report” button, located below the plot tab. 
 
 ## Appendix 1: Notes on "Married 2x Income" 
 
