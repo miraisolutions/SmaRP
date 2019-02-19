@@ -131,7 +131,7 @@ Road2Retirement_to_print <- params$Road2Retirement %>%
   rename(P2ContributionPath = BVGContributions) %>%
   rename(P2contriburionrates = BVGcontributionrates) %>%
   rename(P2purchase = BVGpurchase) %>%
-  mutate(Y = year(calendar)/5) %>%
+  mutate(Y = year(Calendar)/5) %>%
   filter(Y %in% unique(c(Y[1], Y[!Y%%1], Y[length(Y)]))) 
 ```
 
