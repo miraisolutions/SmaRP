@@ -4,7 +4,7 @@
 * Updated legal paramenters (#55)
 * Removed unnecessary user_manual.Rmd vignette created with #60
 * SmaRP version shown in the app and the report (#57)
-* Added description of the first panel in the user_manual vignette (partially #65)
+* Added user_manual vignette (#65)
 
 # SmaRP 1.0.1
 
