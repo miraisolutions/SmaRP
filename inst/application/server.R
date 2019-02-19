@@ -433,7 +433,26 @@ function(input, output, session) {
   output$data_download <- downloadHandler(
     filename = dataname(),
     content = function(file) {
-      write.csv((Road2Retirement = Road2Retirement()), file, row.names = FALSE)
+      write.csv((Road2Retirement = Road2Retirement() %>%
+                   select(Calendar,
+                          ExpectedSalaryPath,
+                          BVGcontributionrates,
+                          BVGContributions,
+                          BVGpurchase,
+                          DirectP2,
+                          ReturnP2,
+                          TotalP2,
+                          P3ContributionPath,
+                          P3purchase,
+                          DirectP3,
+                          ReturnP3,
+                          TotalP3,
+                          DirectTax,
+                          ReturnTax,
+                          TotalTax,
+                          Total)),
+                file,
+                row.names = FALSE)
     }
   ) # end of downloadHandler
 
