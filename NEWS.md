@@ -4,6 +4,7 @@
 * App does not crash when number of children or desired retirement age do not have an input value (#28)
 * Updated legal parameters (#55)
 * SmaRP version shown in the app and the report (#57)
+* Added user_manual vignette (#65)
 * Removed unnecessary user_manual.Rmd vignette created with (#60)
 * Added sentence about not storing information in disclaimer, created "Download Data" button when table is displayed (#67)
 * Updated taxes tests after updating tax parameters for 2017 (#68)
@@ -14,8 +15,6 @@
 * In report: changed multiplication symbol * to \cdot, reviewed disclaimer, fixed typos, church types translated to English, fixed tables columns names (no underscore, leave space between words), date of birth in Parameters section changed in the form: dd-mm-yyyy (#82)
 * Fixed numeric input so that it doesn't crash when no value is inserted (#81)
 * Dynamic plot size and improved labels (no underscore, space between words) in the Shiny app (#85)
-
-fixes #82
 
 # SmaRP 1.0.1
 

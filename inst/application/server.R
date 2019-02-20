@@ -235,7 +235,7 @@ function(input, output, session) {
   # Table ----
   output$table <- renderTable({
     makeTable(Road2Retirement = Road2Retirement())
-  }, digits = 0)
+  }, digits = 0, align = "r")
 
   # T series plot ----
   TserieGraphData <- reactive({
@@ -356,15 +356,6 @@ function(input, output, session) {
   })
 
 
-  # Disclaimer ----
-  output$disclaimer <- renderText({
-    paste(
-      "<b>Disclaimer</b>", "<br>",
-      "The content of the report does not hold any legal value and its correctness is not guaranteed.", "<br>",
-      "Mirai Solutions GmbH does not store any information provided while using SmaRP."
-    )
-  })
-
   # Output Report ----
 
   # params list to be passed to the output
@@ -439,7 +430,26 @@ function(input, output, session) {
   output$data_download <- downloadHandler(
     filename = dataname(),
     content = function(file) {
-      write.csv((Road2Retirement = Road2Retirement()), file, row.names = FALSE)
+      write.csv((Road2Retirement = Road2Retirement() %>%
+                   select(Calendar,
+                          ExpectedSalaryPath,
+                          BVGcontributionrates,
+                          BVGContributions,
+                          BVGpurchase,
+                          DirectP2,
+                          ReturnP2,
+                          TotalP2,
+                          P3ContributionPath,
+                          P3purchase,
+                          DirectP3,
+                          ReturnP3,
+                          TotalP3,
+                          DirectTax,
+                          ReturnTax,
+                          TotalTax,
+                          Total)),
+                file,
+                row.names = FALSE)
     }
   ) # end of downloadHandler
 

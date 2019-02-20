@@ -315,17 +315,12 @@ fluidPage(
                 verticalLayout(
                   verbatimTextOutput("Totals"),
                   htmlOutput("plot_t"),
-                  htmlOutput("plot_final")
-                ),
-                br(),
-                fluidRow(
-                  column(
-                    12,
-                    # Add button to download report
-                    downloadButton("report", span("Generate report") %>%
-                                     bs_embed_tooltip(title = IB$GenerateReport, placement = "right"),
-                                   class = "btn-smarp")
-                  )
+                  htmlOutput("plot_final"),
+                  br(),
+                  # Add button to download report
+                  downloadButton("report", span("Generate report") %>%
+                                   bs_embed_tooltip(title = IB$GenerateReport, placement = "right"),
+                                 class = "btn-smarp")
                 )
               ), # end tabPanel Plot
 
@@ -333,18 +328,14 @@ fluidPage(
               tabPanel(
                 title = "Table",
                 value = "Table",
-                div(
-                  style = "width:1000px; overflow-x: scroll",
-                  htmlOutput("table")
-                ),
-                br(),
-                fluidRow(
-                  column(
-                    12,
-                    # Add button to download report
-                    downloadButton("data_download", "Download Data",
-                                   class = "btn-smarp")
-                  )
+                verticalLayout(
+                  htmlOutput(
+                    "table"
+                  ),
+                  br(),
+                  # Add button to download report
+                  downloadButton("data_download", "Download Data",
+                                 class = "btn-smarp")
                 )
               ) # end tabPanel Table
             ) # end tabsetPanel
@@ -359,7 +350,17 @@ fluidPage(
 
     # Disclaimer
     fluidRow(
-      htmlOutput("disclaimer")
+      # Disclaimer ----
+      column(
+        8, offset = 4,
+        div(id = "disclaimer",
+            HTML(
+              "<b>Disclaimer</b>", "<br>",
+              "The content of the report does not hold any legal value and its correctness is not guaranteed.", "<br>",
+              "Mirai Solutions GmbH does not store any information provided while using SmaRP."
+            )
+        )
+      )
     )
   ),
   # Footer  ----

@@ -1,10 +1,10 @@
 ---
-title: "SmaRP-server"
-author: "Nicolleta Farabullini"
+title: "SmaRP Server"
+author: "Nicoletta Farabullini"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{SmaRP_server}
+  %\VignetteIndexEntry{SmaRP server}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,7 +22,8 @@ library(magrittr)
 ```
 ## Introduction
 
-Smart Retirement Planning (SmaRP) is an internal Mirai Solutions project aimed at creating a retirement plan for people working and planning on staying in Switzerland. 
+```{r child = 'children/short-intro.Rmd'}
+```
 
 This vignette describes the server components and their inner-workings. It is programmed using shiny basic package, googleVis, dplyr, magrittr packages and intended to be used with the mere support of a web browser. In addition to theoretical explanations, a few examples of code are included; for the full version please check the server.R file.  
 
@@ -62,7 +63,7 @@ All functions used in this script can be found in the R directory.
 
 The ui displays two plots, one in the form of a graph and the other of a bar, shown below:
 
-![](plots.png "Plots")
+![](figures/plots.png "Plots")
 
 They are both rendered using the `renderGvis` function from the googleVis package, where all specifications are made. Plot 1 is shown below:
 
