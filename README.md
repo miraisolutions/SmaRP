@@ -100,5 +100,3 @@ While **SmaRP** was developed under the utmost care and diligence, Mirai Solutio
 Besides standard unit tests at the functional level, results from the **SmaRP** web app have been checked against other online free sources for Pillar II and III and tax calculators.
 
 To keep testing and improving **SmaRP**, we encourage users to get back to us! Your feedback is always highly appreciated. You can use the issue tracker on GitHub to suggest enhancements or report problems, and reach out via email at info@mirai-solutions.com for any questions and comments.
-
-### Branches
