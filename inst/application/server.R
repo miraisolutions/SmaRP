@@ -240,24 +240,24 @@ function(input, output, session) {
   # T series plot ----
   TserieGraphData <- reactive({
     Road2Retirement() %>%
-      mutate(TaxBenefits = TotalTax) %>%
-      mutate(Occupational_Pension = DirectP2 + ReturnP2) %>%
-      mutate(Private_Pension = DirectP3 + ReturnP3) %>%
+      mutate(`Tax Benefits` = TotalTax) %>%
+      mutate(`Occupational Pension` = DirectP2 + ReturnP2) %>%
+      mutate(`Private Pension` = DirectP3 + ReturnP3) %>%
       select(Calendar,
-             Occupational_Pension,
-             Private_Pension,
-             TaxBenefits) %>%
+             `Occupational Pension`,
+             `Private Pension`,
+             `Tax Benefits`) %>%
       .[, colSums(. != 0, na.rm = TRUE) > 0]
   })
 
-  output$plot1 <- renderGvis({
+  output$plot_t <- renderGvis({
     gvisAreaChart(
-      chartid = "plot1",
+      chartid = "plot_t",
       data = TserieGraphData(),
       xvar = "Calendar",
       yvar = colnames(TserieGraphData())[which(colnames(TserieGraphData()) != "Calendar")],
       options = list(
-        chartArea = "{left: 150, width: 550}",
+        chartArea = "{left: '18.75%', width: '68.75%'}",
         isStacked = TRUE,
         legend = "bottom",
         colors = miraiColors
@@ -268,10 +268,10 @@ function(input, output, session) {
   # Bar plot -----
   FotoFinish <- reactive({
     Road2Retirement() %>%
-      mutate(TaxBenefits = TotalTax) %>%
-      mutate(Occupational_Pension = DirectP2 + ReturnP2) %>%
-      mutate(Private_Pension = DirectP3 + ReturnP3) %>%
-      select(Occupational_Pension, Private_Pension, TaxBenefits) %>%
+      mutate(`Tax Benefits` = TotalTax) %>%
+      mutate(`Occupational Pension` = DirectP2 + ReturnP2) %>%
+      mutate(`Private Pension` = DirectP3 + ReturnP3) %>%
+      select(`Occupational Pension`, `Private Pension`, `Tax Benefits`) %>%
       tail(1) %>%
       prop.table() %>%
       select_if(function(x)
@@ -289,14 +289,14 @@ function(input, output, session) {
       .[, order(colnames(.))]
   })
 
-  output$plot2 <- renderGvis({
+  output$plot_final <- renderGvis({
     gvisBarChart(
-      chartid = "plot2",
+      chartid = "plot_final",
       data = BarGraphData(),
       xvar = "contribution",
       yvar = colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
       options = list(
-        chartArea = "{left: 150, width: 550, height: 50}",
+        chartArea = "{left: '18.75%', width: '68.75%'}",
         isStacked = TRUE,
         vAxes = "[{minValue:0}]",
         hAxis = "{format:'#,###%'}",
