@@ -361,7 +361,7 @@ While **SmaRP** was developed under the utmost care and diligence, Mirai Solutio
 
 The savings process for retirement benefits starts on January 1st following the year in which the person turns 24.
 
-$$ PeS(t) = max(S(t) - \frac{7}{8} S_{AHV}(t), 0}) $$
+$$ PeS(t) = max(S(t) - \frac{7}{8} S_{AHV}(t), 0) $$
 where
 
 - $S(t)$ is the current Salary at year $t$,
@@ -506,7 +506,7 @@ pander(Road2Retirement_to_print_Summarized)
 
 ```{r Road2Retirement_to_print_Pillar2, echo = FALSE, eval = show_text, include = show_text}
 if (show_text){
-moncols <- c("P2 Contribution", "P2 purchase", "Direct P2", "Return P2", "Total P2") 
+moncols <- c("Contribution P2", "Purchase P2", "Direct P2", "Return P2", "Occupational Pension") 
 set.caption('Detailed Occupational Pension Fund Contribution - Pillar 2 (P2)')
 Road2Retirement_to_print_Pillar2 <- Road2Retirement_to_print %>%
   rename(`Contribution P2` = P2ContributionPath) %>%
@@ -521,7 +521,7 @@ pander(Road2Retirement_to_print_Pillar2)
 ```
 
 ```{r Road2Retirement_to_print_Pillar3, echo = FALSE, eval=show_text, include=show_text}
-moncols <- c("P3 Contribution", "P3 purchase", "Direct P3", "Return P3", "Total P3") 
+moncols <- c("Contribution P3", "Purchase P3", "Direct P3", "Return P3", "Private Pension") 
 set.caption('Detailed Private Pension Fund Contribution - Pillar 3 (P3)')
 Road2Retirement_to_print_Pillar3 <- Road2Retirement_to_print %>%
   rename(`Contribution P3` = P3ContributionPath) %>%
