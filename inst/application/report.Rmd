@@ -493,7 +493,7 @@ The church affiliation dependent multiplication factor for municipality `r gemei
 Detailed results from calculations are shown in the following tables.
 
 ```{r Road2Retirement_to_print_Summarized, echo = FALSE}
-moncols <- c("Salary", "Occupational Pension", "Private Pension", "Tax Benefits") 
+moncols <- c("Salary", "Occupational Fund", "Private Fund", "Tax Benefits") 
 set.caption('Detailed Total Pension Fund')
 Road2Retirement_to_print_Summarized <- Road2Retirement_to_print %>%
   mutate(`Tax Benefits` = TotalTax) %>%
