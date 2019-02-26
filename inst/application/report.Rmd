@@ -110,10 +110,10 @@ It is implemented as an [R Shiny](https://shiny.rstudio.com/) pension calculator
 
 **SmaRP** is based on the [Swiss pension system](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland) and reflects the complexity of its legal framework, build on three pillars. A more detailed explanation can be found on the Section "The basis of the Swiss retirement system" of this document.
 
-The focus of this tool are the second and third pillar, the bulk of the retirement income. Besides, they are the ones where employees can actively manage and make decisions impacting their total pension fund at retirement. The first pillar has not been considered because it is a pay-as-you-go universal system which benefits depend on the income earned during the working life as well as the number of year contributed. Therefore, not actionable insight can be taken on it. 
+The focus of this tool are the second and third pillar, the bulk of the retirement income. Besides, they are the ones where employees can actively manage and make decisions impacting their total pension fund at retirement. The first pillar has not been considered because it is a pay-as-you-go universal system which benefits depend on the income earned during the working life as well as the number of years contributed. Therefore, not actionable insight can be taken on it. 
 In addition, since non mandatory contributions are tax favored, SmaRP incorporates an additional fund -Tax benefits fund- to stands out the effect of those tax reliefs on the long run.
 
-SmaRP, as any other tool to simulate particular cases and project future returns, is based on assumptions and brings along also some simplifications. Thus, it is advisable to use SmaRP to perform different "what-if" scenarios and assess their feasibility. Any decision made out of it should take into account a high level of uncertainty.
+SmaRP, as any other tool to simulate particular cases and project future returns, is based on assumptions and brings along also some simplifications. Thus, it is advisable to use SmaRP to perform different "what-if" scenarios and assess their feasibility. Any decision made out of it should take into account a high degree of uncertainty.
 
 Note as well that SmaRP does not make any consideration about the usage of the retirement pension funds.
 
