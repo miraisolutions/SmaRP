@@ -18,7 +18,7 @@ This vignette describes how to use the app and interpret its results.
 
 ## Personal Info
 
-The following is a list describing components in the first panel. Unless otherwise specified, all fields are mandatory. They are pre-filled thus it is advisable to check all values. Some fields only allow for up to a certain amount, consequently in case the user types a higher number, the application resets to its maximum.
+The following is a list describing components in the first panel. Unless otherwise specified, all fields are mandatory; they are pre-filled thus it is advisable to check all values. Some fields only allow for up to a certain amount, consequently in case the user types a higher number, the application resets to its maximum.
 
 - **Birthdate** can be inserted by either typing or using the calendar that appears when clicking on the box.
 
@@ -103,7 +103,7 @@ A detailed report of the simulation and the results can be generated upon reques
 
 ## Appendix 1: Notes on "Married 2x Income" 
 
-In the case of married couples with double income, it is paramount to consider that pension funds are individual, not familiar. However, tax rates are familiar, i.e. number of kids and marital status are considered. That implies that the user can perform two calculations, both with some level of inaccuracy:
+In the case of married couples with double income, it is paramount to consider that pension funds are individual, not familiar. However, tax rates are familiar, i.e. number of children and marital status are considered. That implies that the user can perform two calculations, both with some level of inaccuracy:
 
 1. The user can simply enter all the information individually, without taking into account his partner. In this case, the tax rate will most likely be underestimated and as a consequence the tax benefits generated.
 
@@ -113,7 +113,7 @@ In the case of married couples with double income, it is paramount to consider t
 
     - Both members are the same age and will retire together.
 
-Given that those assumptions are quite strong and unrealistic, married users with double income should run SmaRP individually. Nonetheless, since these results can vary on a case by case basis, it is advisable to run both simulations to get a full understanding and a more accurate assessment. 
+Given that those assumptions are specific to a very distinct scenario, married users with double income should run SmaRP individually. Nonetheless, since these results can vary on a case by case basis, it is advisable to run both simulations to get a full understanding and a more accurate assessment. 
 
 
 
