@@ -1,5 +1,6 @@
 # SmaRP 1.1.0
 
+* Retirement age automatically resets to 70 if a higher number is inserted (#27)
 * Retirement age changes depending on the selected genre (#72)
 * Updated legal parameters (01.01.2019) and tests (#55, #68)
 * Removed user_manual.Rmd vignette created with (#60) and added new one (#65)
@@ -17,7 +18,6 @@
 ## Patch release
 
 * Report spell check (#49)
-* Retirement age automatically resets to 70 if a higher number is inserted (#27)
 * Documentation reviewed (#59)
 * Fixed tooltip automatic disappearing (#54)
 
