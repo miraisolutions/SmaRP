@@ -453,7 +453,7 @@ where
 
 Cantonal tax at year $t$ is computed as:
 
-$$ KanTax(t) = \sum_{t=t_0}^T(I(t) \cdot  KanTR) \cdot (F_{kanton} + F_{municipality} + F_{church)} $$
+$$ KanTax(t) = \sum_{t=t_0}^T(I(t) \cdot  KanTR) \cdot (F_{kanton} + F_{municipality} + F_{church}) $$
 
 where
 
