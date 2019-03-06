@@ -1,4 +1,4 @@
-# SmaRP 1.0.1-9000
+# SmaRP 1.1.0
 
 * Retirement age changes depending on the selected genre (#72)
 * Updated legal parameters (01.01.2019) and tests (#55, #68)
