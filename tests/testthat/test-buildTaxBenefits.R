@@ -20,7 +20,7 @@ test_that("Test Tax Benefits Zurich",{
     RetirementAge = 65)
 
   expect_equal(head(TaxB$TotalTax, 1), 0)
-  expect_lt(tail(TaxB$TotalTax, 1) - 103255.7, 1E-6)
+  expect_lt(tail(TaxB$TotalTax, 1) - 103263.9, 1E-6)
   expect_equal(nrow(TaxB), 30)
   
   

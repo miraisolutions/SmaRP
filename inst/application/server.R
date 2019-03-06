@@ -235,7 +235,7 @@ function(input, output, session) {
   # Table ----
   output$table <- renderTable({
     makeTable(Road2Retirement = Road2Retirement())
-  }, digits = 0)
+  }, digits = 0, align = "r")
 
   # T series plot ----
   TserieGraphData <- reactive({
@@ -250,14 +250,14 @@ function(input, output, session) {
       .[, colSums(. != 0, na.rm = TRUE) > 0]
   })
 
-  output$plot1 <- renderGvis({
+  output$plot_t <- renderGvis({
     gvisAreaChart(
-      chartid = "plot1",
+      chartid = "plot_t",
       data = TserieGraphData(),
       xvar = "Calendar",
       yvar = colnames(TserieGraphData())[which(colnames(TserieGraphData()) != "Calendar")],
       options = list(
-        chartArea = "{left: 150, width: 550}",
+        chartArea = "{left: '18.75%', width: '68.75%'}",
         isStacked = TRUE,
         legend = "bottom",
         colors = miraiColors
@@ -268,10 +268,10 @@ function(input, output, session) {
   # Bar plot -----
   FotoFinish <- reactive({
     Road2Retirement() %>%
-      mutate(TaxBenefits = TotalTax) %>%
-      mutate(Occupational_Pension = DirectP2 + ReturnP2) %>%
-      mutate(Private_Pension = DirectP3 + ReturnP3) %>%
-      select(Occupational_Pension, Private_Pension, TaxBenefits) %>%
+      mutate(`Tax Benefits` = TotalTax) %>%
+      mutate(`Occupational Pension` = DirectP2 + ReturnP2) %>%
+      mutate(`Private Pension` = DirectP3 + ReturnP3) %>%
+      select(`Occupational Pension`, `Private Pension`, `Tax Benefits`) %>%
       tail(1) %>%
       prop.table() %>%
       select_if(function(x)
@@ -289,14 +289,14 @@ function(input, output, session) {
       .[, order(colnames(.))]
   })
 
-  output$plot2 <- renderGvis({
+  output$plot_final <- renderGvis({
     gvisBarChart(
-      chartid = "plot2",
+      chartid = "plot_final",
       data = BarGraphData(),
       xvar = "contribution",
       yvar = colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
       options = list(
-        chartArea = "{left: 150, width: 550, height: 50}",
+        chartArea = "{left: '18.75%', width: '68.75%'}",
         isStacked = TRUE,
         vAxes = "[{minValue:0}]",
         hAxis = "{format:'#,###%'}",
@@ -355,15 +355,6 @@ function(input, output, session) {
     )
   })
 
-
-  # Disclaimer ----
-  output$disclaimer <- renderText({
-    paste(
-      "<b>Disclaimer</b>", "<br>",
-      "The content of the report does not hold any legal value and its correctness is not guaranteed.", "<br>",
-      "Mirai Solutions GmbH does not store any information provided while using SmaRP."
-    )
-  })
 
   # Output Report ----
 
@@ -439,7 +430,26 @@ function(input, output, session) {
   output$data_download <- downloadHandler(
     filename = dataname(),
     content = function(file) {
-      write.csv((Road2Retirement = Road2Retirement()), file, row.names = FALSE)
+      write.csv((Road2Retirement = Road2Retirement() %>%
+                   select(Calendar,
+                          ExpectedSalaryPath,
+                          BVGcontributionrates,
+                          BVGContributions,
+                          BVGpurchase,
+                          DirectP2,
+                          ReturnP2,
+                          TotalP2,
+                          P3ContributionPath,
+                          P3purchase,
+                          DirectP3,
+                          ReturnP3,
+                          TotalP3,
+                          DirectTax,
+                          ReturnTax,
+                          TotalTax,
+                          Total)),
+                file,
+                row.names = FALSE)
     }
   ) # end of downloadHandler
 

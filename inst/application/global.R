@@ -6,20 +6,19 @@ library(SmaRP)
 MRetirementAge <- 65
 FRetirementAge <- 64
 
-# https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
-# https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-62487.html
-MaxAHV <- 2350 * 12
-MinBVG <- MaxAHV * (7 / 8)
-MaxBVG <- MaxAHV * 3
+# https://www.admin.ch/opc/de/classified-compilation/19820152/index.html#a8
+MinBVG <- 24885 # Min Koordinierter Lohn (MinBVG = MaxAHV * (7 / 8))
+MaxBVG <- 85320 # Max Koordinierter Lohn (MaxBVG = MaxAHV * 3)
+MaxAHV <- MaxBVG / 36
+
 MaxBVGfund <- 10 * MaxBVG
 
 # https://www.admin.ch/opc/de/classified-compilation/19840067/index.html#a12
-# https://www.admin.ch/gov/de/start/dokumentation/medienmitteilungen.msg-id-64228.html
 BVGMindestzinssatz <- 0.01
 
 
 # https://www.ch.ch/en/3rd-pillar/
-MaxContrTax <- 6768
+MaxContrTax <- 6826
 
 # https://www.admin.ch/opc/de/classified-compilation/19820152/index.html
 BVGcontributionrates <- data.frame(
