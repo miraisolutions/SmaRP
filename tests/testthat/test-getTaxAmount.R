@@ -58,8 +58,8 @@ test_that("Test case Geneve1 (testthat/resources/testGeneve1.pdf)",{
                             NChildren = 2,
                             churchtax = "Y")
 
-  expect_lt(abs(TaxAmount - 4116) / TaxAmount, 0.06)
-  expect_lt(abs(TaxAmount - 4116) / 110000, 0.005)
+  expect_lt(abs(TaxAmount - 4082) / TaxAmount, 0.06)
+  expect_lt(abs(TaxAmount - 4082) / 110000, 0.005)
 })
 
 test_that("Test case Winterthur1 (testthat/resources/testWinterthur1.pdf)",{
