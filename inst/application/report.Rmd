@@ -126,7 +126,7 @@ The main drivers of the retirement pension fund are:
 
 Note that SmaRP does not make any consideration about the usage of the retirement pension funds.
 
-The main outcome is displayed in the Results section, whereas a more detailed drill down of the formulas is in Appendix 2. In addition, a brief explantation on the Swiss retirement system is provided in the "The basics of the Swiss retirement system" section.
+The main outcome is displayed in the "Results" section with a more detailed drill down in Appendix 2; formulas used to obtain these results are explained in Appendix 1. In addition, a list of assumptiuons and limitations is provided in a separate section as well as a brief explantation of the Swiss retirement system.
 
 <br>
 \newpage
