@@ -400,7 +400,7 @@ function(input, output, session) {
 
   # build report name
   reportname <- reactive(
-    paste("SmaRPreport", postalcode(), format(Sys.Date(), "%Y%m%d"), "pdf", sep= ".")
+    paste("SmaRPreport", format(Sys.Date(), "%Y%m%d"), "pdf", sep= ".")
   )
 
   # generate output report
@@ -423,7 +423,7 @@ function(input, output, session) {
 
   # build report name
   dataname <- reactive(
-    paste("SmaRPdata", postalcode(), format(Sys.Date(), "%Y%m%d"), "csv", sep= ".")
+    paste("SmaRPdata", format(Sys.Date(), "%Y%m%d"), "csv", sep= ".")
   )
 
   # generate output data

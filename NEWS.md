@@ -2,7 +2,7 @@
 
 * Retirement age automatically resets to 70 if a higher number is inserted (#27)
 * App does not crash when number of children or desired retirement age do not have an input value (#28)
-* Updated legal parameters (#55)
+* Updated legal parameters (01.01.2019) (#55)
 * SmaRP version shown in the app and the report (#57)
 * Added user_manual vignette (#65)
 * Removed unnecessary user_manual.Rmd vignette created with (#60)
@@ -14,7 +14,9 @@
 * Changed "genre" to "gender" (#79)
 * In report: changed multiplication symbol * to \cdot, reviewed disclaimer, fixed typos, church types translated to English, fixed tables columns names (no underscore, leave space between words), date of birth in Parameters section changed in the form: dd-mm-yyyy (#82)
 * Fixed numeric input so that it doesn't crash when no value is inserted (#81)
+* Report footer restructured (#53)
 * Dynamic plot size and improved labels (no underscore, space between words) in the Shiny app (#85)
+* Report review and updates (#89)
 
 # SmaRP 1.0.1
 
