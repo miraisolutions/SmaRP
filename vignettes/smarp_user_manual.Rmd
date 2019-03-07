@@ -1,0 +1,125 @@
+---
+title: "SmaRP User Manual"
+author: "Gabriel Foix, Nicoletta Farabullini"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{User manual}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+
+```{r child = 'children/short-intro.Rmd'}
+```
+
+This vignette describes how to use the app and interpret its results.
+
+## Personal Info
+
+The following is a list describing components in the first panel. Unless otherwise specified, all fields are mandatory; they are pre-filled thus it is advisable to check all values. Some fields only allow for up to a certain amount, consequently in case the user types a higher number, the application resets to its maximum.
+
+- **Birthdate** can be inserted by either typing or using the calendar that appears when clicking on the box.
+
+- **Gender Affiliation** is pre-selected to "Male" and can be changed to "Female".
+
+- **Desired Retirement Age** is not mandatory but can be specified in case that it differs from the default ages (65 for males and 64 for females). The maximum is set at 70.
+
+- **Postal Code / Municipality** is the one of residence.
+
+- **Marital Status** has three options and is pre-selected to "Single". Please refer to Appendix 1 for more information regarding "Married 2x Income".
+
+- **# Children** can be filled by either typing or using the arrows that appears when clicking on the box. The maximum value is 9.
+
+- **Church Affiliation** only requires a yes or no answer. No specification regarding which type is requested.
+
+
+## Occupational Pension Fund - Pillar II
+
+The second panel contains all fields related to the occupational pension fund. 
+
+- **Current Annual Salary** is the base to calculate contributions to the Occupational Pension Fund and the tax relief generated with the non-mandatory contributions. It is inserted in gross terms (before tax) with the maximum value set at 100M CHF.  
+
+- **Current BVG Assets** is the amount already invested in the Occupational pension fund and can be found on the annual report of the Pension Fund.[^1]
+
+- **Expected Salary Growth Rate %** should be entered in percentage and is constant during the full working life. Note that since all values are in nominal terms, the salary growth rate can be used as a proxy of the inflation or a general economic growth. References regarding historical values can be found [here](https://tradingeconomics.com/switzerland/wage-growth). 
+
+- **Interest Rate % (optional)** is constant during the working life and an assumption about the general long-term investment return should be made as well. By default, the [minimum interest rate](https://www.swissstaffing-bvg.ch/en/key_data_investments/interest_yield.php) defined by law is used.     
+
+- **Voluntary Purchases** is the amount of non-mandatory contributions per year.[^2]
+
+- **Purchase Type** refers to previous voluntary purchases and can be made as a single or a constant, multi-year, working-life long contribution.
+
+
+## Private Pension Fund - Pillar III
+
+The third panel is the private pension fund. It is non-compulsory and only includes annual contributions. 
+
+- **Current Assets** is the amount already invested in the private pension fund.[^3]
+
+- **Annual Contribution** to the private fund on an annual basis is assumed to be constant throughout the entire working life.
+
+- **Expected Return %** is the average expected return from the private pension fund. It should be entered in percentage and is constant throughout the entire working life.[^4]
+
+
+## Results
+
+The text box above the plots summarizes the total pension fund the user will get at the end of his working life.[^5]
+
+The total pension fund can be divided in three components: Occupational pension fund, Private pension fund and tax benefits fund.
+
+**The tax benefits fund** cannot be directly capitalized as the other two, but is generated indirectly through tax relieves coming from contributions to the other funds.
+
+There are some important notes to consider about the tax benefits fund.
+
+- Contributions are calculated as the tax relief is generated and therefore are related to the marginal tax rate of each individual. The higher the tax rate, the higher the tax relief and thus the tax benefits fund.
+
+- The cap on the tax relief is defined by the Swiss federal government.
+
+- SmaRP assumes that all tax benefits are reinvested and somehow saved until retirement. 
+
+- The average expected return is the same as the private pension fund.
+
+
+### Plot tab
+
+**The evolution of the different funds is shown on the first plot.** Mouseovering the graph lines, date and amount are displayed on an informative box.
+
+**The bar plot below shows the distribution among funds at retirement age.**
+
+- In case that no voluntary contributions to the occupational fund or private fund are available, only the occupational fund will be displayed.
+
+- If the user makes voluntary contributions to the occupational fund or holds a private fund, the retirement fund is displayed as well.
+
+### Table tab
+
+More detailed information of each fund and its distinction between direct contribution and return can be seen in the **Table** tab; the exact total retirement fund can be found on the bottom right corner. 
+A comprehensive set of values calculated can be downloaded as well from bottom of the Table tab by clicking on the "Download Data" button.
+
+### Downloadable report
+
+A detailed report of the simulation and the results can be generated upon request by clicking on the “Generate Report” button, located below the plot tab. 
+
+## Appendix 1: Notes on "Married 2x Income" 
+
+In the case of married couples with double income, it is paramount to consider that pension funds are individual, not familiar. However, tax rates are familiar, i.e. number of children and marital status are considered. That implies that the user can perform two calculations, both with some level of inaccuracy:
+
+1. The user can simply enter all the information individually, without taking into account his partner. In this case, the tax rate will most likely be underestimated and as a consequence the tax benefits generated.
+
+2. The user can enter the combined amount of all variables (salary, current assets and purchases). In this case, SmaRP makes two assumptions:
+
+    - A 50% split on all monetary variables.
+
+    - Both members are the same age and will retire together.
+
+Given that those assumptions are specific to a very distinct scenario, married users with double income should run SmaRP individually. Nonetheless, since these results can vary on a case by case basis, it is advisable to run both simulations to get a full understanding and a more accurate assessment. 
+
+
+
+
+[^1]: SmaRP assumes that the current BVG assets did not generate any tax benefits in the past, meaning that all funds come from mandatory contributions.
+[^2]: Voluntary contributions to the Occupational Pension Fund represent an ad-hoc "purchase" of pension benefits made by the retiree. These purchases are usually made to fill gaps in the working life or to cover up previous lower salaries after a wage raise.  
+[^3]: SmaRP assumes that current assets on the private pension funds did not generate any tax benefits in the past. 
+[^4]: SmaRP assumes that the average expected return is the same for private pension funds as for the tax return.
+[^5]: SmaRP does not make any consideration about the usage of the retirement pension funds. For the Occupational pension fund, the Swiss pension law allows retirees to take the full amount as a lump sum, receive their pension in the form of a life annuity, or a mix of both. In the last case, the minimum conversion rate as of 2018 is 6.8% and can vary depending on the retirement age. The Private fund, however, is always paid as a lump sum.     

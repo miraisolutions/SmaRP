@@ -25,12 +25,13 @@ IB <- list(
   P2interestRate = "Interest Rate on the Occupational Pension Fund return. If not provided, the minimum by low is used",
   git = "Redirect to git repository",
   RetirementAge = "Enter desired retirement age",
-  RetirementAgeOptional = "Possibility to enter desired retirement age manually"
+  RetirementAgeOptional = "Possibility to enter desired retirement age manually",
+  GenerateReport = "Access calculations, parameters assumptions, and results"
 )
 
 # Validity Message
 VM <- list(
-  genre = "Gender is a mandatory input when the date of retirement is not provided",
+  gender = "Gender is a mandatory input when the date of retirement is not provided",
   Birthdate = "Birthdate is a mandatory input",
   Birthdate2 = "You should be retired already",
   RetirementAge = "Provide the desired retirement age",

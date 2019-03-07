@@ -1,10 +1,10 @@
 ---
-title: "SmaRP-server"
-author: "Nicolleta Farabullini"
+title: "SmaRP Server"
+author: "Nicoletta Farabullini"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{SmaRP_server}
+  %\VignetteIndexEntry{SmaRP server}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,7 +22,8 @@ library(magrittr)
 ```
 ## Introduction
 
-Smart Retirement Planning (SmaRP) is an internal Mirai Solutions project aimed at creating a retirement plan for people working and planning on staying in Switzerland. 
+```{r child = 'children/short-intro.Rmd'}
+```
 
 This vignette describes the server components and their inner-workings. It is programmed using shiny basic package, googleVis, dplyr, magrittr packages and intended to be used with the mere support of a web browser. In addition to theoretical explanations, a few examples of code are included; for the full version please check the server.R file.  
 
@@ -35,14 +36,14 @@ The server includes: reactive variables, Mirai Solutions colors definition, plot
 All inputs from the ui are then used to perform calculations, draw plots and write statements. Because these values are different for each user, the app will have to be constantly updated, thus the need for reactive statements. A simple example of a reactive statement used in the server can be found below:
 
 ```{r, eval = FALSE} 
-genre <- reactive({
-  validate(need(input$genre, VM$genre))
-  input$genre
+gender <- reactive({
+  validate(need(input$gender, VM$gender))
+  input$gender
 })
 ```
 where,
 
-need is a shiny function that takes in an expression (`input$genre`) and a string (`VM$genre`). If the expression is not valid, the string is used as an error message
+need is a shiny function that takes in an expression (`input$gender`) and a string (`VM$gender`). If the expression is not valid, the string is used as an error message
 validate throws a specific type of error that stops the reactive expression execution in case of an error
 
 Other reactive expressions include: if statements, minimum values and specific SmaRP functions such as isnotAvailableReturnZero:
@@ -62,7 +63,7 @@ All functions used in this script can be found in the R directory.
 
 The ui displays two plots, one in the form of a graph and the other of a bar, shown below:
 
-![](plots.png "Plots")
+![](figures/plots.png "Plots")
 
 They are both rendered using the `renderGvis` function from the googleVis package, where all specifications are made. Plot 1 is shown below:
 
@@ -71,8 +72,8 @@ They are both rendered using the `renderGvis` function from the googleVis packag
     gvisAreaChart(
       chartid = "plot1",
       data = TserieGraphData(),
-      xvar = "calendar",
-      yvar = colnames(TserieGraphData())[which(colnames(TserieGraphData()) != "calendar")],
+      xvar = "Calendar",
+      yvar = colnames(TserieGraphData())[which(colnames(TserieGraphData()) != "Calendar")],
       options = list(
         width = 800,
         height = 400,

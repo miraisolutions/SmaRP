@@ -16,9 +16,9 @@ function(input, output, session) {
   })
 
   # Gender
-  genre <- reactive({
-    validate(need(input$genre, VM$genre))
-    input$genre
+  gender <- reactive({
+    validate(need(input$gender, VM$gender))
+    input$gender
   })
 
   # Mirai Colors
@@ -30,16 +30,30 @@ function(input, output, session) {
       validate(need(input$RetirementAge, VM$RetirementAge))
       min(70, input$RetirementAge)
     } else {
-      if (genre() == "M") {
+      if (gender() == "M") {
         MRetirementAge
       } else {
         FRetirementAge
       }
     }
+  }) %>% debounce(millis = 100)
+
+  observeEvent(input$RetirementAge, ignoreNULL = TRUE, {
+    if (!is.na(input$RetirementAge) && input$RetirementAge > 70) {
+      updateNumericInput(session, "RetirementAge", value = 70)
+    }
+  })
+
+  observeEvent(input$gender, {
+    if (gender() == "F") {
+      updateNumericInput(session, "RetirementAge", value = 64)
+    } else {
+      updateNumericInput(session, "RetirementAge", value = 65)
+    }
   })
 
   # Pillar III ----
-  # defaut option 0
+  # default option 0
   CurrentP3_notZero <- reactive({
     isnotAvailableReturnZero(input$CurrentP3)
   })
@@ -107,8 +121,12 @@ function(input, output, session) {
 
   # Number of kids (max = 9)
   NChildren <- reactive({
-    min(isnotAvailableReturnZero(input$NChildren), 9)
-  })
+    val <- max(min(isnotAvailableReturnZero(input$NChildren), 9), 0)
+    if (!is.na(input$NChildren) && input$NChildren != val) {
+      updateNumericInput(session, "NChildren", value = val)
+    }
+    val
+  }) %>% debounce(millis = 100)
 
   # Tariff
   rate_group <- reactive({
@@ -127,9 +145,12 @@ function(input, output, session) {
 
   # Salary
   Salary <- reactive({
-    validate(need(input$Salary, VM$Salary))
-    input$Salary
-  })
+    val <- max(min(isnotAvailableReturnZero(input$Salary), 1e+08), 0)
+    if (!is.na(input$Salary) && input$Salary != val) {
+      updateNumericInput(session, "Salary", value = val)
+    }
+    val
+  }) %>% debounce(millis = 100)
 
   SalaryGrowthRate <- reactive({
     isnotAvailableReturnZero(input$SalaryGrowthRate / 100)
@@ -206,38 +227,37 @@ function(input, output, session) {
   # build Road2Retirement ----
   Road2Retirement <- reactive({
     ContributionP2Path() %>%
-      left_join(ContributionP3path(), by = c("calendar", "t")) %>%
-      left_join(ContributionTaxpath(), by = c("calendar", "t")) %>%
+      left_join(ContributionP3path(), by = c("Calendar", "t")) %>%
+      left_join(ContributionTaxpath(), by = c("Calendar", "t", "AgePath")) %>%
       mutate(Total = TotalP2 + TotalP3 + TotalTax)
   })
 
   # Table ----
   output$table <- renderTable({
     makeTable(Road2Retirement = Road2Retirement())
-  }, digits = 0)
-
+  }, digits = 0, align = "r")
 
   # T series plot ----
   TserieGraphData <- reactive({
     Road2Retirement() %>%
-      mutate(TaxBenefits = TotalTax) %>%
-      mutate(Occupational_Pension = DirectP2 + ReturnP2) %>%
-      mutate(Private_Pension = DirectP3 + ReturnP3) %>%
-      select(calendar,
-             Occupational_Pension,
-             Private_Pension,
-             TaxBenefits) %>%
+      mutate(`Tax Benefits` = TotalTax) %>%
+      mutate(`Occupational Pension` = DirectP2 + ReturnP2) %>%
+      mutate(`Private Pension` = DirectP3 + ReturnP3) %>%
+      select(Calendar,
+             `Occupational Pension`,
+             `Private Pension`,
+             `Tax Benefits`) %>%
       .[, colSums(. != 0, na.rm = TRUE) > 0]
   })
 
-  output$plot1 <- renderGvis({
+  output$plot_t <- renderGvis({
     gvisAreaChart(
-      chartid = "plot1",
+      chartid = "plot_t",
       data = TserieGraphData(),
-      xvar = "calendar",
-      yvar = colnames(TserieGraphData())[which(colnames(TserieGraphData()) != "calendar")],
+      xvar = "Calendar",
+      yvar = colnames(TserieGraphData())[which(colnames(TserieGraphData()) != "Calendar")],
       options = list(
-        chartArea = "{left: 150, width: 550}",
+        chartArea = "{left: '18.75%', width: '68.75%'}",
         isStacked = TRUE,
         legend = "bottom",
         colors = miraiColors
@@ -248,10 +268,10 @@ function(input, output, session) {
   # Bar plot -----
   FotoFinish <- reactive({
     Road2Retirement() %>%
-      mutate(TaxBenefits = TotalTax) %>%
-      mutate(Occupational_Pension = DirectP2 + ReturnP2) %>%
-      mutate(Private_Pension = DirectP3 + ReturnP3) %>%
-      select(Occupational_Pension, Private_Pension, TaxBenefits) %>%
+      mutate(`Tax Benefits` = TotalTax) %>%
+      mutate(`Occupational Pension` = DirectP2 + ReturnP2) %>%
+      mutate(`Private Pension` = DirectP3 + ReturnP3) %>%
+      select(`Occupational Pension`, `Private Pension`, `Tax Benefits`) %>%
       tail(1) %>%
       prop.table() %>%
       select_if(function(x)
@@ -269,14 +289,14 @@ function(input, output, session) {
       .[, order(colnames(.))]
   })
 
-  output$plot2 <- renderGvis({
+  output$plot_final <- renderGvis({
     gvisBarChart(
-      chartid = "plot2",
+      chartid = "plot_final",
       data = BarGraphData(),
       xvar = "contribution",
       yvar = colnames(BarGraphData())[!grepl("contribution", colnames(BarGraphData()))],
       options = list(
-        chartArea = "{left: 150, width: 550, height: 50}",
+        chartArea = "{left: '18.75%', width: '68.75%'}",
         isStacked = TRUE,
         vAxes = "[{minValue:0}]",
         hAxis = "{format:'#,###%'}",
@@ -336,16 +356,6 @@ function(input, output, session) {
   })
 
 
-  # Disclaimer ----
-  output$disclaimer <- renderText({
-    paste(
-      "Disclaimer:",
-      "The results of these calculations do not have any legal value.",
-      "To check the details of the calculations, parameters and assumptions, please download the report.",
-      sep = "\n"
-    )
-  })
-
   # Output Report ----
 
   # params list to be passed to the output
@@ -390,7 +400,7 @@ function(input, output, session) {
 
   # build report name
   reportname <- reactive(
-    paste("SmaRPreport", postalcode(), format(Sys.Date(), "%Y%m%d"), "pdf", sep= ".")
+    paste("SmaRPreport", format(Sys.Date(), "%Y%m%d"), "pdf", sep= ".")
   )
 
   # generate output report
@@ -408,6 +418,38 @@ function(input, output, session) {
         ),
         "Generating the report...", size = "s"
       )
+    }
+  ) # end of downloadHandler
+
+  # build report name
+  dataname <- reactive(
+    paste("SmaRPdata", format(Sys.Date(), "%Y%m%d"), "csv", sep= ".")
+  )
+
+  # generate output data
+  output$data_download <- downloadHandler(
+    filename = dataname(),
+    content = function(file) {
+      write.csv((Road2Retirement = Road2Retirement() %>%
+                   select(Calendar,
+                          ExpectedSalaryPath,
+                          BVGcontributionrates,
+                          BVGContributions,
+                          BVGpurchase,
+                          DirectP2,
+                          ReturnP2,
+                          TotalP2,
+                          P3ContributionPath,
+                          P3purchase,
+                          DirectP3,
+                          ReturnP3,
+                          TotalP3,
+                          DirectTax,
+                          ReturnTax,
+                          TotalTax,
+                          Total)),
+                file,
+                row.names = FALSE)
     }
   ) # end of downloadHandler
 

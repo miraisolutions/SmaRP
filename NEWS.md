@@ -1,3 +1,18 @@
+# SmaRP 1.1.0
+
+* Retirement age automatically resets to 70 if a higher number is inserted (#27)
+* Retirement age changes depending on the selected genre (#72)
+* Updated legal parameters (01.01.2019) and tests (#55, #68)
+* Removed user_manual.Rmd vignette created with (#60) and added new one (#65)
+* SmaRP version shown in the app and the report (#57)
+* Report review and updates (#82, #53, #89)
+* Added sentence about not storing information in disclaimer, created "Download Data" button when table is displayed (#67)
+* Made "c" in "calendar" capital, added tooltip to "Generate Report" button, made "Disclaimer" bold, rephrased first sentence and removed second (#77)
+* "genre" changed to "gender" (#79)
+* Fixed numeric input so that it doesn't crash when no value is inserted (#81, #28)
+* Support responsive embedding via iframe-resizer (#69)
+* Dynamic plot size and improved labels (no underscore, space between words) in the Shiny app (#85)
+
 # SmaRP 1.0.1
 
 ## Patch release

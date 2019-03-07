@@ -45,7 +45,7 @@ This function assumes the following objects on the global enviornment
 }
 \examples{
 \dontrun{
-getTaxAmount(Income = 200000, rate_group = "C", Age = 32, 
+getTaxAmount(Income = 200000, rate_group = "C", Age = 32,
              NChildren = 5, postalcode = 8400, churchtax = "Y")
 }
 }

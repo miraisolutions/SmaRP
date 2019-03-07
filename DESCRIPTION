@@ -1,11 +1,11 @@
 Package: SmaRP
 Title: SmaRP: Smart Retirement Planning
-Version: 1.0.1
+Version: 1.1.0
 Authors@R: c(person("Gabriel", "Foix", role = c("aut", "cre"),
                     email = "gabriel.foix@mirai-solutions.com"),
              person("Francesca", "Vitalini", role = c("aut"),
                     email = "francesca.vitalini@mirai-solutions.com"),
-             person("Nicoletta", "Farabullini", role = c("ctb"),
+             person("Nicoletta", "Farabullini", role = c("aut"),
                     email = "nicoletta.farabullini@mirai-solutions.com"),
              person("Riccardo", "Porreca", role = c("ctb"),
                     email = "riccardo.porreca@mirai-solutions.com"),
