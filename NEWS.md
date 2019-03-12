@@ -1,4 +1,5 @@
 # SmaRP 1.1.0-9000
+* Align legend in app and report
 
 # SmaRP 1.1.0
 
