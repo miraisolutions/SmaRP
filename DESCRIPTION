@@ -33,8 +33,7 @@ Imports:
     rmarkdown,
     shiny,
     shinydashboardPlus,
-    shinyWidgets,
-    webshot
+    shinyWidgets
 Suggests: testthat, roxygen2 (>= 6.1.1)
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1

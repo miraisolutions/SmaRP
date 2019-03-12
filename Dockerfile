@@ -32,9 +32,8 @@ RUN install2.r --error \
     rmarkdown \
     shiny \
     shinydashboardPlus \
-    shinyWidgets \
-    webshot
-    
+    shinyWidgets
+
 # install PhantomJS
 RUN R -e "library(webshot); webshot::install_phantomjs()"
 
