@@ -221,3 +221,12 @@ slides > slide {
   margin-top: -50px !important;
   height: 600px !important;
 }
+
+
+/* Container holding the image and the text */
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+  width: 100%;
+}

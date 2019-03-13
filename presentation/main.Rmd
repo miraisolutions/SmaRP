@@ -34,10 +34,10 @@ library(lubridate)
 <!-- ```{r child = 'intro.Rmd'} -->
 <!-- ``` -->
 
-<!-- # Meet SmaRP -->
+# Meet SmaRP
 
-<!-- ```{r child = 'SmaRP.Rmd'} -->
-<!-- ``` -->
+```{r child = 'SmaRP.Rmd'}
+```
 
 <!-- # Give SmaRP a UI -->
 
@@ -54,10 +54,10 @@ library(lubridate)
 <!-- ```{r child = 'SmaRP_report.Rmd'} -->
 <!-- ``` -->
 
-# Summing it all up ...
+<!-- # Summing it all up ... -->
 
-```{r child = 'Conclusions.Rmd'}
-```
+<!-- ```{r child = 'Conclusions.Rmd'} -->
+<!-- ``` -->
 
 <!-- Comments -->
 <!-- Guide -->

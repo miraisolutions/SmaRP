@@ -35,9 +35,13 @@
 <img src="./TaxBenefits.png" height="220px !important;" align="left"/>
 </div>
 
-## Swiss Tax by Municipality
+## Swiss taxes by municipality
 
-Here goes the map of Switzerland
+<div style="margin-top:-20px;">
+<img src="./municipality_taxAmount.png" height="350px !important;"/>
+</div>
+
+`ggplot2` plot made with SmaRP data for a 40-years old person, married, with two childern and affiliated to a church. The boundaries are in a shape file format.
 
 ## |
 
