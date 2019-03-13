@@ -1,0 +1,68 @@
+---
+title: 'Share your R development. <br> The example of <strong>SmaRP</strong>: <br> Smart Retirement Planning'
+author:
+  Francesca Vitalini
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: 
+  ioslides_presentation:
+    logo: mirai.png
+    css: styles.css
+runtime: shiny
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, prompt = FALSE, tidy =  FALSE, collapse = TRUE)
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+set.seed(419)
+library(SmaRP)
+library(ggplot2)
+library(googleVis)
+library(dplyr)
+library(knitr)
+library(pander)
+library(lubridate)
+#library(shiny) automatically loaded for option runtime: shiny in YAML
+```
+
+<script>
+    $(document).ready(function() {
+      $('slide:not(.title-slide, .backdrop, .segue)').append('<footer label=\"© 2019 Mirai Solutions GmbH\"></footer>');    
+    })
+</script>
+
+<!-- ```{r child = 'intro.Rmd'} -->
+<!-- ``` -->
+
+<!-- # Meet SmaRP -->
+
+<!-- ```{r child = 'SmaRP.Rmd'} -->
+<!-- ``` -->
+
+<!-- # Give SmaRP a UI -->
+
+<!-- ```{r child = 'SmaRPUI.Rmd'} -->
+<!-- ``` -->
+
+<!-- # Structure your code & app -->
+
+<!-- ```{r child = 'SmaRP_structure.Rmd'} -->
+<!-- ``` -->
+
+<!-- # Make a report -->
+
+<!-- ```{r child = 'SmaRP_report.Rmd'} -->
+<!-- ``` -->
+
+# Summing it all up ...
+
+```{r child = 'Conclusions.Rmd'}
+```
+
+<!-- Comments -->
+<!-- Guide -->
+<!-- https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html#custom-templates-2 -->
+<!-- Default CSS -->
+<!-- https://github.com/rstudio/rmarkdown/blob/master/inst/rmd/ioslides/ioslides-13.5.1/theme/css/default.css -->
+<!-- DataCamp Tutorial -->
+<!-- https://stackoverflow.com/questions/52081304/using-datacamp-light-exercises-in-an-ioslides-presentation-using-the-tutorial-pa/52117349#52117349 -->

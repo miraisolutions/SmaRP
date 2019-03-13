@@ -1,0 +1,38 @@
+## A Few Words About the Instructor
+
+<div style="margin-top:80px;">
+  Instructor: Francesca Vitalini
+<div>
+
+
+ <div style="margin-top:50px;">
+  * Solutions Consultant @ [Mirai Solutions](https://mirai-solutions.ch)
+  * Physicist by training, PhD Computational Biophysics
+  * Experience in multiple programming languages
+  * > 3 years of experience working with R
+  
+  Contact details: francesca.vitalini@mirai-solutions.com
+ </div>
+
+
+## {#notitle}
+
+<div style="margin-top:50px;">
+  <center><img src="mirai.png" height="70px !important;" /></center>
+</div>
+ 
+<div style="margin-top:100px;">
+- Zurich-based data science company
+- Interdisciplinary team of experienced software engineers, statisticians, quants, economists and scientists
+- Delivering effective solutions to the financial services industry over the past 10 years
+ </div>
+
+
+## Today's Outline
+
+* Meet SmaRP
+* Tips to share your R development. What we did with SmaRP and why
+  - Give SmaRP a UI & make it cool
+  - Structure your development & app
+  - Produce a report
+* Summing it all up
