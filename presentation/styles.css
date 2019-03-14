@@ -230,3 +230,11 @@ slides > slide {
   color: white;
   width: 100%;
 }
+
+
+/*code highlight*/
+.prettyprint {
+  background-color: #efefef;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+}

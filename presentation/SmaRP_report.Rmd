@@ -1,47 +1,18 @@
-## What:
+## Report Findings
 
-<div class="row">
-<div class="column2">
-<div style="margin-top:30px;">
-<img src="./SmaRPSticker.png" height="120px !important;" />
-</div>
-</div>
-<div class="column7">
-**SmaRP: Smart Retirement Planning** is a pension calculator tool, designed to guide people working in Switzerland towards a strategic decision-making process for their retirement.
-</div>
-</div>
+The shiny app is be the perfect environment to try out multiple scenarios.
 
-**SmaRP** is based on the [Swiss pension system](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland) and reflects the complexity of its legal framework.
+However, one might be interested in taking snapshots of the app results with given input combinations.
 
-**User Interface:**
+This can be done by:
 
-* Developed with [R Shiny](https://shiny.rstudio.com/) 
-* Flexible & Intuitive
-* Detailed personalisation parameters
+- downloading data from the app
+- building a report from the app
 
-## Swiss Pension System
-
-<div class="row">
-<div class="column">
-<img src="./SwissRetirementSystem.png" height="220px !important;" align="left"/>
-</div>
-<div class="column6>
-* **Pillar I:** pay-as-you-earn state-run fund.
-* **Pillar II:** compulsory, tax-deductible company occupational pension insurance fund.
-* **Pillar III:** voluntary contribution, privately-run, tax-deductible insurance fund.
-</div>
-</div>
-<div style="margin-top:20px;">
-<img src="./TaxBenefits.png" height="220px !important;" align="left"/>
-</div>
-
-## Swiss Tax by Municipality
-
-Here goes the map of Switzerland
-
+ **SmaRP** has both options integrated
+ 
 ## |
 
-<div class = "extendediframe" >
 ```{r SmaRP-app, echo = FALSE}
 source(system.file("application","global.R", package = "SmaRP"))
 shinyAppDir(
@@ -51,4 +22,84 @@ shinyAppDir(
   )
 )
 ```
-</div>
+
+
+## Downloding Tabular Data
+
+Downloading data in shiny is straight-forward. Shiny provides the `downloadButton` widget and the corresponding reactive function `downloadHandler()` to perform the download.
+
+```{r download-button, echo = TRUE, eval = TRUE}
+downloadButton(outputId = "data_download",
+               label = "Download Data")
+```
+
+```{r download-handler, echo = TRUE, eval = FALSE}
+output$data_download <- downloadHandler(
+  filename = dataname(),
+  content = function(file) {
+    write.csv( Road2Retirement(),
+               file,
+               row.names = FALSE)})
+```
+
+## Building a report
+
+The report is built with as an `rmarkdown` document. 
+The document integrates pre-written text and code that gets evaluated upon report creation. 
+The parameters are passed to the report from the app itself in form of a reactive list `params()`.
+
+```{r report, echo = TRUE, eval = FALSE}
+output$report <- downloadHandler(
+  filename = reportname(),
+  content = function(file) {
+      rmarkdown::render(
+        input = "report.Rmd",
+        output_file = file,
+        output_format = "pdf_document",
+        params = params()
+      )}) 
+```
+
+## Report example
+
+```{r report-out, echo = FALSE, eval = TRUE}
+img(src = "./report.png", align = "center")
+```
+
+
+## Plots in the App vs Report
+
+The plots in the app are generated with `googleVis`, an R package to easily make interactive plots and [Google's chart tools](https://developers.google.com/chart/) outlooks. 
+
+The `googleVis` plots are integrated in the shiny app through the reactive function `renderGvis()`.
+
+```{r bargraph-out, echo = TRUE, eval = FALSE}
+source(system.file("application","global.R", package = "SmaRP"))
+BarGraphData <- loadRDS("../inst/application/BarGraphData.RDS")
+miraiColors <- "['#008cc3', '#FF9966', '#13991c']"
+ui <- fluidPage(
+  htmlOutput("plot_final")
+)
+server <- function(input, output) {
+  output$plot_final <- renderGvis({
+    gvisBarChart(
+      chartid = "plot_final",
+      data = BarGraphData,
+      xvar = "contribution",
+      yvar = colnames(BarGraphData)[!grepl("contribution", colnames(BarGraphData))],
+      options = list(
+        chartArea = "{left: '18.75%', width: '68.75%'}",
+        isStacked = TRUE,
+        vAxes = "[{minValue:0}]",
+        hAxis = "{format:'#,###%'}",
+        legend = "none",
+        colors = miraiColors,
+        dataOpacity = 0.3,
+        bar = "{groupWidth: '100%'}",
+        annotations = "{highContrast: 'false', textStyle: {bold: true}}"
+      )
+    )
+  })
+}
+shinyApp(ui = ui, server = server)
+```

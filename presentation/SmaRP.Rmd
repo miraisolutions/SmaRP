@@ -47,9 +47,9 @@
 `ggplot2` plot made with SmaRP data for a 40-years old person, married, with two childern and affiliated to a church.
 </div>
 </div>
+
 ## |
 
-<div class = "extendediframe" >
 ```{r SmaRP-app, echo = FALSE}
 source(system.file("application","global.R", package = "SmaRP"))
 shinyAppDir(
@@ -59,4 +59,3 @@ shinyAppDir(
   )
 )
 ```
-</div>

@@ -34,24 +34,25 @@ library(lubridate)
 <!-- ```{r child = 'intro.Rmd'} -->
 <!-- ``` -->
 
-# Meet SmaRP
+<!-- # Meet SmaRP -->
 
-```{r child = 'SmaRP.Rmd'}
-```
+<!-- ```{r child = 'SmaRP.Rmd'} -->
+<!-- ``` -->
 
-<!-- # Give SmaRP a UI -->
+<!-- # Interface with SmaRP -->
 
 <!-- ```{r child = 'SmaRPUI.Rmd'} -->
 <!-- ``` -->
 
+# Report app results
+
+```{r child = 'SmaRP_report.Rmd'}
+```
+
+
 <!-- # Structure your code & app -->
 
 <!-- ```{r child = 'SmaRP_structure.Rmd'} -->
-<!-- ``` -->
-
-<!-- # Make a report -->
-
-<!-- ```{r child = 'SmaRP_report.Rmd'} -->
 <!-- ``` -->
 
 <!-- # Summing it all up ... -->

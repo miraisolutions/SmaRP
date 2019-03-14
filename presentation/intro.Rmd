@@ -1,4 +1,4 @@
-## A Few Words About the Instructor
+## A Few Words about Me
 
 <div style="margin-top:80px;">
   Instructor: Francesca Vitalini
@@ -30,9 +30,11 @@
 
 ## Today's Outline
 
-* Meet SmaRP
-* Tips to share your R development. What we did with SmaRP and why
-  - Give SmaRP a UI & make it cool
-  - Structure your development & app
-  - Produce a report
+<div style="margin-top:150px;">
+* Meet **SmaRP**
+* Tips to share your R development. What we did with **SmaRP** and why
+       * Give your code a UI & make it cool
+       * Report app results
+       * Structure your development & app
 * Summing it all up
+ </div>
