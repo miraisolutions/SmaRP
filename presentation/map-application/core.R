@@ -202,17 +202,19 @@ makePlot <- function(d){
                                x = long,
                                y = lat,
                                group = group)) +
-    scale_fill_brewer(palette ="RdYlGn", direction = -1) +
+    scale_fill_brewer(palette ="RdYlGn", direction = -1,
+                      labels = c("0%"," 0.9%", "1.8%", "2.7%", "3.6%", "4.5%", "5.4%", "6.3%", "7.2%", "7.8%", "10%"),
+                      guide = guide_legend(nrow = 1, label.position = "top")) +
     #municipality outline
     geom_path(data = d, aes(x = long,
                             y = lat,
                             group = group),
               color = "grey", size = 0.1) +
     coord_equal() +
-    labs(x="", y="", title="") +
+    labs(x = "", y = "", title = "") +
     theme_map() +
-    theme(legend.position="bottom") +
-    theme(legend.direction= "horizontal")
+    theme(legend.position = "bottom") +
+    theme(legend.direction =  "horizontal")
   return(p)
 }
 
