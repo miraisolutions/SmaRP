@@ -280,8 +280,9 @@ p <- ggplot() +
   labs(x = "", y = "", title = "") +
   theme_map() +
   theme(legend.direction = "horizontal",
-        legend.justification = c(0.2, 0),
-        legend.position = c(0.4, 0))
+        #legend.justification = c(0.2, 0),
+        legend.position = c(0.4, 0),
+        legend.margin = margin(1,0.2,0.2,0.2, "cm"))
 p
 
 ggsave("/home/mirai/Desktop/Rprojects/SmaRP/presentation/municipality_taxAmount.png", p, width = 9, height = 6)
