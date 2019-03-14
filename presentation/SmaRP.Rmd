@@ -37,12 +37,16 @@
 
 ## Swiss taxes by municipality
 
-<div style="margin-top:-20px;">
-<img src="./municipality_taxAmount.png" height="350px !important;"/>
+<div class="row">
+<div class="column6">
+<div style="margin-top:-100px;">
+<img src="./municipality_taxAmount.png" height="550px !important;" align="left"/>
 </div>
-
-`ggplot2` plot made with SmaRP data for a 40-years old person, married, with two childern and affiliated to a church. The boundaries are in a shape file format.
-
+</div>
+<div class="column3", style = "font-size: 12pt;line-height: 1.5;margin-top:370px; margin-left: 60px;">
+`ggplot2` plot made with SmaRP data for a 40-years old person, married, with two childern and affiliated to a church.
+</div>
+</div>
 ## |
 
 <div class = "extendediframe" >

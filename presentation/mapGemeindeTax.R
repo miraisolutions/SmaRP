@@ -267,7 +267,10 @@ p <- ggplot() +
                                            x = long,
                                            y = lat,
                                            group = group)) +
-  scale_fill_brewer(palette = "RdYlGn", direction = -1) +
+  scale_fill_brewer(palette = "RdYlGn", direction = -1, name = "",
+                    labels = c("0%"," 0.9%", "1.8%", "2.7%", "3.6%", "4.5%", "5.4%",
+                               "6.3%", "7.2%", "7.8%", "10%"),
+                    guide = guide_legend(nrow = 1, label.position = "top")) +
   #municipality outline
   geom_path(data = map.gemeinde.df, aes(x = long,
                                         y = lat,
@@ -276,7 +279,9 @@ p <- ggplot() +
   coord_equal() +
   labs(x = "", y = "", title = "") +
   theme_map() +
-  theme(legend.position = "left")
+  theme(legend.direction = "horizontal",
+        legend.justification = c(0.2, 0),
+        legend.position = c(0.4, 0))
 p
 
 ggsave("/home/mirai/Desktop/Rprojects/SmaRP/presentation/municipality_taxAmount.png", p, width = 9, height = 6)
