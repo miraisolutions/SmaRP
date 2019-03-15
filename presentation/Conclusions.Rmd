@@ -2,11 +2,17 @@
 
 Share your R-development with others, even if they are clueless about R.
 
+<div style="line-height: 1.5 !important;">
+
 **Give your development a user interface:**
 
     - tool: R Shiny
-    - extension packages from the community
     - customise the UI
+    - extension packages from the community
+
+**Produce reports from your app**
+
+    - sharing & referencing app status
 
 **Structure app as a package**
 
@@ -14,9 +20,9 @@ Share your R-development with others, even if they are clueless about R.
     - tests
     - reusability
 
-**Produce reports from your app**
+</div>
 
-## Usefull links
+## Useful links
 
 * The **SmaRP** Shiny app is deployed to Google Cloud Platform and can be accessed at https://mirai-solutions.ch/apps/smarp/.
 
@@ -29,6 +35,6 @@ devtools::install_github("miraisolutions/SmaRP",
 
 * Check out the vignettes for more information about SmaRP.
 
-<div style="margin-top:30px; margin-right:30px;">
-<img src="./SmaRPSticker.png" height="200px !important;"  align="right"/>
+<div style="margin-top:20px; margin-right:30px;">
+<img src="./SmaRPSticker.png" height="180px !important;"  align="right"/>
 </div>

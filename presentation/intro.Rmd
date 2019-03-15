@@ -1,7 +1,7 @@
 ## A Few Words about Me
 
 <div style="margin-top:80px;">
-  Instructor: Francesca Vitalini
+  I'm **Francesca Vitalini**
 <div>
 
 
@@ -9,7 +9,7 @@
   * Solutions Consultant @ [Mirai Solutions](https://mirai-solutions.ch)
   * Physicist by training, PhD Computational Biophysics
   * Experience in multiple programming languages
-  * > 3 years of experience working with R
+  * 3+ years of experience working with R
   
   Contact details: francesca.vitalini@mirai-solutions.com
  </div>

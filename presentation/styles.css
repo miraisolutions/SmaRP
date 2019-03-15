@@ -245,3 +245,8 @@ slides > slide {
   overflow: visible !important;
   overflow-y: auto !important;
 }
+
+/*style buttons*/
+input[type=checkbox], input[type=radio] {
+  width: 20px;
+}

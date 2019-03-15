@@ -1,24 +1,3 @@
-## What:
-
-<div class="row">
-<div class="column2">
-<div style="margin-top:30px;">
-<img src="./SmaRPSticker.png" height="120px !important;" />
-</div>
-</div>
-<div class="column7">
-**SmaRP: Smart Retirement Planning** is a pension calculator tool, designed to guide people working in Switzerland towards a strategic decision-making process for their retirement.
-</div>
-</div>
-
-**SmaRP** is based on the [Swiss pension system](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland) and reflects the complexity of its legal framework.
-
-**User Interface:**
-
-* Developed with [R Shiny](https://shiny.rstudio.com/) 
-* Flexible & Intuitive
-* Detailed personalisation parameters
-
 ## Swiss Pension System
 
 <div class="row">
@@ -48,6 +27,38 @@
 </div>
 </div>
 
+## The Problem
+
+People working in Switzerland have a very hard time identifying a strategic and educated decision-making process for their retirement.
+
+* The Swiss pension system is complex
+* Pension fund calculation dependent on multiple parameters to be realistic
+* Currently available tools provide projections without disclosing the methodology and the assumptions
+* No easy way to model different scenario
+
+
+## The Solution
+
+<div class="row">
+<div class="column2">
+<div style="margin-top:30px;">
+<img src="./SmaRPSticker.png" height="120px !important;" />
+</div>
+</div>
+<div class="column7">
+**SmaRP: Smart Retirement Planning** is a pension calculator tool, designed to guide people working in Switzerland towards a strategic decision-making process for their retirement.
+</div>
+</div>
+
+**SmaRP** is based on the [Swiss pension system](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland) and reflects the complexity of its legal framework.
+
+**User Interface:**
+
+* Developed with [R Shiny](https://shiny.rstudio.com/) 
+* Flexible & Intuitive
+* Detailed personalisation parameters
+
+
 ## |
 
 ```{r SmaRP-app1, echo = FALSE}
@@ -55,7 +66,7 @@ source(system.file("application","global.R", package = "SmaRP"))
 shinyAppDir(
   system.file("application", package = "SmaRP"),
   options = list(
-    width = "120%", height = 1000
+    width = "100%", height = 1000
   )
 )
 ```

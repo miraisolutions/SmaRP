@@ -31,34 +31,33 @@ library(lubridate)
     })
 </script>
 
-<!-- ```{r child = 'intro.Rmd'} -->
-<!-- ``` -->
+```{r child = 'intro.Rmd'}
+```
 
-<!-- # Meet SmaRP -->
+# Meet SmaRP
 
-<!-- ```{r child = 'SmaRP.Rmd'} -->
-<!-- ``` -->
+```{r child = 'SmaRP.Rmd'}
+```
 
-<!-- # Interface with SmaRP -->
+# Interface with SmaRP
 
-<!-- ```{r child = 'SmaRPUI.Rmd'} -->
-<!-- ``` -->
+```{r child = 'SmaRPUI.Rmd'}
+```
 
 # Report app results
 
 ```{r child = 'SmaRP_report.Rmd'}
 ```
 
+# Structure your code & app
 
-<!-- # Structure your code & app -->
+```{r child = 'SmaRP_structure.Rmd'}
+```
 
-<!-- ```{r child = 'SmaRP_structure.Rmd'} -->
-<!-- ``` -->
+# Summing it all up ...
 
-<!-- # Summing it all up ... -->
-
-<!-- ```{r child = 'Conclusions.Rmd'} -->
-<!-- ``` -->
+```{r child = 'Conclusions.Rmd'}
+```
 
 <!-- Comments -->
 <!-- Guide -->
