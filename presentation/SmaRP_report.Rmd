@@ -13,7 +13,7 @@ This can be done by:
  
 ## |
 
-```{r SmaRP-app, echo = FALSE}
+```{r SmaRP-app2, echo = FALSE}
 source(system.file("application","global.R", package = "SmaRP"))
 shinyAppDir(
   system.file("application", package = "SmaRP"),
@@ -62,8 +62,18 @@ output$report <- downloadHandler(
 
 ## Report example
 
-```{r report-out, echo = FALSE, eval = TRUE}
-img(src = "./report.png", align = "center")
+<!-- ```{r report-out, echo = FALSE, eval = TRUE} -->
+<!-- img(src = "./report.png", align = "center") -->
+<!-- ``` -->
+
+```{r report-app, echo = FALSE}
+source(system.file("application","global.R", package = "SmaRP"))
+shinyAppDir(
+  "./report-application/",
+  options = list(
+    width = "120%", height = 1000
+  )
+)
 ```
 
 

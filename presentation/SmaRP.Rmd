@@ -50,7 +50,7 @@
 
 ## |
 
-```{r SmaRP-app, echo = FALSE}
+```{r SmaRP-app1, echo = FALSE}
 source(system.file("application","global.R", package = "SmaRP"))
 shinyAppDir(
   system.file("application", package = "SmaRP"),
