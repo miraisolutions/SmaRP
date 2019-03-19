@@ -1,6 +1,6 @@
 ## SmaRP Functionalities
 
-At its core, **SmaRP** is few main functionalities:
+At its core, **SmaRP** consists of few main functionalities:
 
 * evaluate the <font style="color: #008cc3; !important;">contribution & returns for  Pillar II</font> yearly untill retirement (`buildContributionP2Path()`)
 * calculate the <font style="color: #008cc3; !important;">contribution  & returns for Pillar III</font>  yearly untill retirement (`buildContributionP3path()`)
@@ -87,9 +87,9 @@ A shiny app is fundamentally `HTML` based. Therefore it is possible to customise
 tags$head(
   tags$style(HTML("
     a { color: #008cc3;}"))),
-a(id = "git-footer",
-  href = "https://github.com/miraisolutions/SmaRP.git",
-  target = "_blank", icon("github-square", "fa-2x"))
+  a(id = "git-footer",
+    href = "https://github.com/miraisolutions/SmaRP.git",
+    target = "_blank", icon("github-square", "fa-2x"))
 ```
 
 ```{r css-style-out, echo = FALSE}

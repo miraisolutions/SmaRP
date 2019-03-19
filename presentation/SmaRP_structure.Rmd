@@ -71,10 +71,11 @@ This configuration has multiple advantages:
 
 To be consistent with such a structure, it is important to:
 
-- on one hand keep all data manipulations as functions under the `R` folder
-- on the other hand to embed all app related functionalities under `ui.R`, `server.R` and `global.R`
+- keep all data manipulations as functions under the `R` folder
+- embed all app related functionalities under `ui.R`, `server.R` and `global.R`
 
-However, 
+However, <div style="color: #008cc3; !important;"> keeping things perfect is difficult! </div>
 
 - there are data manipulations which are needed solely for the app and would naturally belong in the app itself (i.e. data restructuring for plotting)
 - might be useful to store some app related constructs as functions if they are used in multiple places (e.g. shiny modules) 
+

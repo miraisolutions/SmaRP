@@ -1,6 +1,6 @@
 ## Report Findings
 
-The shiny app is be the perfect environment to try out multiple scenarios.
+The shiny app is the perfect environment to try out multiple scenarios.
 
 However, one might be interested in taking snapshots of the app results with given input combinations.
 
@@ -46,7 +46,7 @@ output$data_download <- downloadHandler(
 
 The report is built with as an `rmarkdown` document. 
 The document integrates pre-written text and code that gets evaluated upon report creation. 
-The parameters are passed to the report from the app itself in form of a reactive list `params()`.
+The parameters are passed to the report from the app itself in the form of a reactive list `params()`.
 
 ```{r report, echo = TRUE, eval = FALSE}
 output$report <- downloadHandler(
@@ -68,6 +68,7 @@ The report is implemented in `rmarkdown` and can integrate `LaTeX`. As a result:
 
 * Easy structure & multiple output formats
 * Explanatory text & in line code evaluation
+* Dynamic file name
 * Mathematical formulas
 * Code blocks and computation
 * Scripted plots & tables

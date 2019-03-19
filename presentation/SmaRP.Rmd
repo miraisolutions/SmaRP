@@ -23,7 +23,7 @@
 </div>
 </div>
 <div class="column3", style = "font-size: 12pt;line-height: 1.5;margin-top:370px; margin-left: 60px;">
-`ggplot2` plot made with SmaRP data for a 40-years old person, married, with two childern and affiliated to a church.
+`ggplot2` plot made with SmaRP data for a 40-years old person, married, with two childern, family income 100K and affiliated to a church.
 </div>
 </div>
 
@@ -34,7 +34,7 @@ People working in Switzerland have a very hard time identifying a strategic and 
 * The Swiss pension system is complex
 * Pension fund calculation dependent on multiple parameters to be realistic
 * Currently available tools provide projections without disclosing the methodology and the assumptions
-* No easy way to model different scenario
+* No easy way to model different scenarios
 
 
 ## The Solution
@@ -46,7 +46,7 @@ People working in Switzerland have a very hard time identifying a strategic and 
 </div>
 </div>
 <div class="column7">
-**SmaRP: Smart Retirement Planning** is a pension calculator tool, designed to guide people working in Switzerland towards a strategic decision-making process for their retirement.
+**SmaRP: Smart Retirement Planning** is a pension calculator tool, developed as an R package and designed to guide people working in Switzerland towards a strategic decision-making process for their retirement.
 </div>
 </div>
 
@@ -56,7 +56,7 @@ People working in Switzerland have a very hard time identifying a strategic and 
 
 * Developed with [R Shiny](https://shiny.rstudio.com/) 
 * Flexible & Intuitive
-* Detailed personalisation parameters
+* Detailed personalising parameters
 
 
 ## |
