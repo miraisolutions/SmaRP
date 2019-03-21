@@ -1,6 +1,6 @@
 # SmaRP 1.1.0-9000
 * Fixed missing bar-plot in the PDF report (#96).
-* Reviewed plots labels.
+* Aligned plots labels to the tables in the report.
 
 # SmaRP 1.1.0
 
