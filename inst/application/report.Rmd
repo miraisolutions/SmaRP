@@ -211,7 +211,7 @@ ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variabl
 
 <br>
 
-The graphs above display the amounts at the end of each year for the Pillar I, Pillar II and Tax Benefit fund. The corresponding formulas are in Appendix 1 of this document and a more detailed break down of the amounts can be found in Appendix 2. A comprehensive set of values calculated can de downloaded as well from the Table tab. 
+The graphs above display the amounts at the end of each year for the Pillar II, Pillar III and Tax Benefit fund. The corresponding formulas are in Appendix 1 of this document and a more detailed break down of the amounts can be found in Appendix 2. A comprehensive set of values calculated can de downloaded as well from the Table tab. 
 
 <br>
 
