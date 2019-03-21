@@ -32,11 +32,8 @@ RUN install2.r --error \
     rmarkdown \
     shiny \
     shinydashboardPlus \
-    shinyWidgets \
-    webshot
-    
-# install PhantomJS
-RUN R -e "library(webshot); webshot::install_phantomjs()"
+    shinyWidgets
+
 
 # copy the app to the image
 RUN mkdir /root/SmaRP
