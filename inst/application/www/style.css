@@ -167,7 +167,6 @@ label {
 /* vertical radio/checkbox alignment to text */
 input[type=checkbox], input[type=radio] {
   margin: 1px 0 0;
-  border: 10px solid red;
 }
 
 .checkbox, .radio {
