@@ -1,6 +1,7 @@
 # SmaRP 1.1.0-9000
 * Fixed missing bar-plot in the PDF report (#96).
 * Aligned plots labels to the tables in the report.
+* Fixed rendering of checkboxes and radio in Safari browser (#102).
 
 # SmaRP 1.1.0
 
