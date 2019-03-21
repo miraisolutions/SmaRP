@@ -18,6 +18,13 @@ knitr::opts_chunk$set(
 library(shiny)
 ```
 
+```{r, echo=FALSE}
+htmltools::img(src = knitr::image_uri("figures/mirai.png"), 
+               alt = 'logo', 
+               style = 'position:absolute; top:0; right:0; padding:10px; margin-right:200px; max-height: 40px;border-style: none;')
+```
+
+
 ## Introduction
 
 ```{r child = 'children/short-intro.Rmd'}
