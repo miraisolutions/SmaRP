@@ -1,5 +1,6 @@
 # SmaRP 1.1.0-9000
-* Align legend in app and report
+* Fixed missing bar-plot in the PDF report (#96).
+* Reviewed plots labels.
 
 # SmaRP 1.1.0
 
