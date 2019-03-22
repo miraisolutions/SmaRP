@@ -1,7 +1,5 @@
 FROM rocker/r-ver:3.5.1
 
-MAINTAINER Nicola Lambiase "nicola.lambiase@mirai-solutions.com"
-
 RUN apt-get update && apt-get install -y \
     sudo \
     pandoc \
