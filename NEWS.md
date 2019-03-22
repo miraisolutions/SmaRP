@@ -1,10 +1,17 @@
 # SmaRP 1.1.1
 
-* Fixed missing bar-plot in the PDF report (#96).
-* Fixed wrong pillars mentioned in the PDF report (#105).
-* Fixed rendering of checkboxes and radio in Safari browser (#102).
-* Aligned plots labels to the tables in the report.
-* Removed unused dependency on package webshot (#97).
+## Patch release
+
+#### Fixes
+
+* Bar-plot missing in the PDF report (#96).
+* PDF report refers to wrong pillars (#105).
+* Checkboxes and radio buttons don't render properly in Safari browser (#102).
+
+#### Maintenance
+
+* Aligned plot labels with table headers in the report.
+* Removed obsolete dependency on package webshot and PhantomJS (#97).
 
 # SmaRP 1.1.0
 
