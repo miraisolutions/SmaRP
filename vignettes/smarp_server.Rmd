@@ -40,7 +40,7 @@ The server includes: reactive variables, Mirai Solutions colors definition, plot
 
 ## Reactive variables 
 
-All inputs from the ui are then used to perform calculations, draw plots and write statements. Because these values are different for each user, the app will have to be constantly updated, thus the need for reactive statements. A simple example of a reactive statement used in the server can be found below:
+All inputs from the ui are then used to perform calculations, draw plots and write statements. Because these values are different for each user, the app will have to be constantly updated, thus the need for reactive statements. A simple example of a reactive statement is the one for the gender:
 
 ```{r, eval = FALSE} 
 gender <- reactive({
@@ -68,11 +68,11 @@ All functions used in this script can be found in the R directory.
 
 ## Plots
 
-The ui displays two plots, one in the form of a graph and the other of a bar, shown below:
+The ui displays two plots, one in the form of a graph and the other of a bar.
 
 ![](figures/plots.png "Plots")
 
-They are both rendered using the `renderGvis` function from the googleVis package, where all specifications are made. Plot 1 is shown below:
+They are both rendered using the `renderGvis` function from the googleVis package, where all specifications are made. The code creating `out$plot1` shows the example for the line plot:
 
 ```{r, eval = FALSE}
  output$plot1 <- renderGvis({
@@ -96,7 +96,7 @@ where,
 
 TserieGraphData is the specific  plot type 
 xvar and yvar are the x and y axis
-options include all of the aesthetically features including the Mirai blue, which is defined as a particular shade as following:
+options include all of the aesthetically features including the Mirai blue, which is defined as a particular shade:
 
 ```{r}
 miraiColors <- "['#008cc3', '#FF9966', '#13991c']"
@@ -104,7 +104,7 @@ miraiColors <- "['#008cc3', '#FF9966', '#13991c']"
 
 ## Statements and report name
 
-The total retirement value text as well as the disclaimer are created using the shiny function renderText. Within the function, the paste command is used to combine set sentences with changing values as shown below:
+The total retirement value text as well as the disclaimer are created using the shiny function renderText. Within the function, the paste command is used to combine set sentences with changing values:
 
 ```{r, eval = FALSE}
 reportname <- reactive(
@@ -118,7 +118,7 @@ Sys.Date is the date the report was created
 
 ## Download button
 
-The download button is rendered using the shiny downloadHandler function. Within this function, all of the specifics of the report are specified (i.e. which Rmd file to compile, the name of the file and the format) as shown below:
+The download button is rendered using the shiny downloadHandler function. Within this function, all of the specifics of the report are specified (i.e. which Rmd file to compile, the name of the file and the format):
 
 ```{r, eval = FALSE}
 output$report <- downloadHandler(
