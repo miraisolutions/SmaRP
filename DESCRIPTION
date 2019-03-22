@@ -1,6 +1,6 @@
 Package: SmaRP
 Title: SmaRP: Smart Retirement Planning
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(person("Gabriel", "Foix", role = c("aut", "cre"),
                     email = "gabriel.foix@mirai-solutions.com"),
              person("Francesca", "Vitalini", role = c("aut"),
@@ -33,8 +33,7 @@ Imports:
     rmarkdown,
     shiny,
     shinydashboardPlus,
-    shinyWidgets,
-    webshot
+    shinyWidgets
 Suggests: testthat, roxygen2 (>= 6.1.1)
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
