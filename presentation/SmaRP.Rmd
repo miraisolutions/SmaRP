@@ -61,12 +61,15 @@ People working in Switzerland have a very hard time identifying a strategic and 
 
 ## |
 
-```{r SmaRP-app1, echo = FALSE}
-source(system.file("application","global.R", package = "SmaRP"))
-shinyAppDir(
-  system.file("application", package = "SmaRP"),
-  options = list(
-    width = "100%", height = 1000
-  )
-)
-```
+<iframe width="800px" height="1000px" class="shiny-frame" src="`r app_url`"></iframe>
+
+<!-- ```{r SmaRP-app1, echo = FALSE} -->
+<!-- # source(system.file("application","global.R", package = "SmaRP")) -->
+<!-- # shinyAppDir( -->
+<!-- #   system.file("application", package = "SmaRP"), -->
+<!-- #   options = list( -->
+<!-- #     width = "800px", height = "1000px" -->
+<!-- #   ) -->
+<!-- # ) -->
+<!-- ``` -->
+

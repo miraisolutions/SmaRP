@@ -8,8 +8,8 @@ output:
     logo: mirai.png
     css: styles.css
 runtime: shiny
+knit: (function(inputFile, encoding) rmarkdown::run(file = inputFile, shiny_args = list(launch.browser = TRUE)))
 ---
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, prompt = FALSE, tidy =  FALSE, collapse = TRUE)
@@ -23,6 +23,13 @@ library(knitr)
 library(pander)
 library(lubridate)
 #library(shiny) automatically loaded for option runtime: shiny in YAML
+
+# runApp(appDir = system.file("application", package = "SmaRP"), launch.browser = FALSE, port = 8000)
+#  R -e 'shiny::runApp(appDir = system.file("application", package = "SmaRP"), launch.browser = FALSE, port = 8000)'
+
+app_url <- "http://127.0.0.1:8000" #http://35.205.198.188/
+
+#rmarkdown::run(file = "./presentation/main.Rmd", shiny_args = list(launch.browser = TRUE))
 ```
 
 <script>

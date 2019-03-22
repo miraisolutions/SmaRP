@@ -68,16 +68,17 @@ In **SmaRP**  multiple types of widgets are used, e.g. `numericInput`, `radioBut
 For a complete overview of shiny widgets have a look at the [Widgets Gallery](https://shiny.rstudio.com/gallery/widget-gallery.html).
 
 ## |
+<iframe width="800px" height="1000px" class="shiny-frame" src="`r app_url`"></iframe>
 
-```{r SmaRP-app2, echo = FALSE}
-source(system.file("application","global.R", package = "SmaRP"))
-shinyAppDir(
-  system.file("application", package = "SmaRP"),
-  options = list(
-    width = "100%", height = 1000
-  )
-)
-```
+<!-- ```{r SmaRP-app2, echo = FALSE} -->
+<!-- source(system.file("application","global.R", package = "SmaRP")) -->
+<!-- shinyAppDir( -->
+<!--   system.file("application", package = "SmaRP"), -->
+<!--   options = list( -->
+<!--     width = "100%", height = 1000 -->
+<!--   ) -->
+<!-- ) -->
+<!-- ``` -->
 
 ## Custom your Shiny App - HTML, CSS
 

@@ -223,6 +223,11 @@ slides > slide {
 }
 
 
+/*iframe for app over 2 columns full page*/
+.iframe .shiny-frame {
+  min-width: 800px !important;
+}
+
 /* Container holding the image and the text */
 .container {
   position: relative;
