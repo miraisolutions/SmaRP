@@ -26,15 +26,16 @@ Share your R-development with others, even if they are clueless about R.
 
 * The **SmaRP** Shiny app is deployed to Google Cloud Platform and can be accessed at https://mirai-solutions.ch/apps/smarp/.
 
-* Package available from GitHub!
+* Package available from GitHub at https://github.com/miraisolutions/SmaRP.git
 
 ``` r
 devtools::install_github("miraisolutions/SmaRP", 
                           build_vignettes = TRUE)
 ```
 
-* Check out the vignettes for more information about SmaRP.
+* Contact me @ francesca.vitalini@mirai-solutions.com
+
 
 <div style="margin-top:20px; margin-right:30px;">
-<img src="./SmaRPSticker.png" height="180px !important;"  align="right"/>
+<a href = "https://github.com/miraisolutions/SmaRP.git"><img src="./SmaRPSticker.png" height="180px !important;"  align="right"/></a>
 </div>

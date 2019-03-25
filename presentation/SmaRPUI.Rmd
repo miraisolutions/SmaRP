@@ -22,48 +22,48 @@ Providing many input parameters and having to post-process the results manually 
 
 <!-- Having a graphical user interface with some basic interpretation of the results (e.g. plots) makes the functionality more accessible. -->
 
-R offers a great tool to add a UI to the code: [R Shiny](https://shiny.rstudio.com/)
+R offers a great tool to add a UI to the code: [R Shiny](https://shiny.rstudio.com/). 
 
 - framework to develop interactive web applications directly in R
 - exploits R computational power
 - no need of knowing any HTML, CSS or JavaScript
+- R package and can be downloaded from [CRAN](https://cran.r-project.org/)
+- developed by RStudio, integrates well with RStudio IDE
 
-<div style="margin-top:30px;margin-right:30px;">
+<div style="margin-top:-90px;margin-right:10px;">
 <img src="shinylogo.png" height="150px !important;" align="right"/>
 </div>
 
-## Shiny
 
-Shiny is an R package and can be downloaded from [CRAN](https://cran.r-project.org/). 
-It is developed by RStudio and integrates well with RStudio IDE.
+<!-- ## Shiny -->
 
-A shiny app presents the following structure:
+<!-- Shiny is an R package and can be downloaded from [CRAN](https://cran.r-project.org/).  -->
+<!-- It is developed by RStudio and integrates well with RStudio IDE. -->
 
-```{r intro-shiny-app-structure, eval = FALSE, echo = TRUE}
-library(shiny)
-ui <- fluidPage(
-  # input and output widgets
-)
-server <- function(input, output) {
-  #Reactive code to produce the results
-}
-shinyApp(ui = ui, server = server)
-```
+<!-- A shiny app presents the following structure: -->
+
+<!-- ```{r intro-shiny-app-structure, eval = FALSE, echo = TRUE} -->
+<!-- library(shiny) -->
+<!-- ui <- fluidPage( -->
+<!--   # input and output widgets -->
+<!-- ) -->
+<!-- server <- function(input, output) { -->
+<!--   #Reactive code to produce the results -->
+<!-- } -->
+<!-- shinyApp(ui = ui, server = server) -->
+<!-- ``` -->
 
 ## Shiny Input Widgets
 
 Shiny provides R code that returns the HTML equivalent of many widgets. For example:
 
 ```{r intro-shiny_ui_as_html1, echo = TRUE, eval = TRUE}
-numericInput(
-  "RetirementAge",
-  label = NULL,
-  value = 64,  step = 1,
-  min = 55,  max = 70 
-)
+numericInput("NChildren",
+             label = "# Children",
+             value = 0, min = 0, max = 9)
 ```
 
-In **SmaRP**  multiple types of widgets are used, e.g. `numericInput`, `radioButton`, `checkboxInput`, `panel` etc.
+In **SmaRP**  multiple types of widgets are used, e.g. `selectInput`, `radioButton`, `checkboxInput`, `panel` etc.
 
 For a complete overview of shiny widgets have a look at the [Widgets Gallery](https://shiny.rstudio.com/gallery/widget-gallery.html).
 
@@ -86,8 +86,7 @@ A shiny app is fundamentally `HTML` based. Therefore it is possible to customise
 
 ```{r css-style-echo, echo = TRUE, eval = FALSE}
 tags$head(
-  tags$style(HTML("
-    a { color: #008cc3;}"))),
+  tags$style(HTML("a { color: #008cc3;}"))),
   a(id = "git-footer",
     href = "https://github.com/miraisolutions/SmaRP.git",
     target = "_blank", icon("github-square", "fa-2x"))

@@ -1,36 +1,24 @@
-## A Few Words about Me
+## |
 
-<div style="margin-top:80px;">
-  I'm **Francesca Vitalini**
-<div>
+**Francesca Vitalini**. Contact: francesca.vitalini@mirai-solutions.com
 
-
- <div style="margin-top:50px;">
-  * Solutions Consultant @ [Mirai Solutions](https://mirai-solutions.ch)
   * Physicist by training, PhD Computational Biophysics
-  * Experience in multiple programming languages
   * 3+ years of experience working with R
-  
-  Contact details: francesca.vitalini@mirai-solutions.com
- </div>
+  * Solutions Consultant @ [Mirai Solutions](https://mirai-solutions.ch)
 
+  <div style = "float:right; margin-right:20px;"><img src="mirai.png" height="50px !important;" /></div>
 
-## {#notitle}
+**Mirai Solutions**
 
-<div style="margin-top:50px;">
-  <center><img src="mirai.png" height="70px !important;" /></center>
-</div>
- 
-<div style="margin-top:100px;">
-- Zurich-based data science company
-- Interdisciplinary team of experienced software engineers, statisticians, quants, economists and scientists
-- Delivering effective solutions to the financial services industry over the past 10 years
- </div>
+  * Zurich-based data science company
+  * Interdisciplinary team of experienced software engineers, statisticians, quants, economists and scientists
+* Delivering effective solutions to the financial services industry over the past 10 years
+
 
 
 ## Today's Outline
 
-<div style="margin-top:150px;">
+<div style="margin-top:100px;">
 * Meet **SmaRP**
 * Tips to share your R development. What we did with **SmaRP** and why
        * Give your code a UI & make it cool

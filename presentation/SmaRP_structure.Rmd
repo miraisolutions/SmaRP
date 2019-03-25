@@ -1,71 +1,77 @@
-## Shiny App Structure
+<!-- ## Shiny App Structure -->
 
-For sharing purposes, standardisation of formats is required. 
+<!-- For sharing purposes, standardisation of formats is required.  -->
 
-A shiny app app can either be:
+<!-- A shiny app app can either be: -->
 
-  - fully contained in a `app.R` file
-  - divided into `server.R`, `ui.R` and  `global.R `.
-  
-All these files should be placed in the same directory.
+<!--   - fully contained in a `app.R` file -->
+<!--   - divided into `server.R`, `ui.R` and  `global.R `. -->
 
-The metadata for the app should be contained in a folder named `www`.
+<!-- All these files should be placed in the same directory. -->
 
-## Share a Shiny App
+<!-- The metadata for the app should be contained in a folder named `www`. -->
 
-A Shiny app is mantained by a computer running R. This can be your own laptop or a web server. 
+<!-- ## Share a Shiny App -->
 
-Examples for sharing your app are:
+<!-- <!-- A Shiny app is mantained by a computer running R. This can be your own laptop or a web server.  --> -->
 
-- Shinyapps.io and Shiny Server, powered by Rstudio, allow you to share your apps online
-- ShinyProxy permits to deploy Shiny apps in an enterprise context
-- On your own server, exploiting docker
+<!-- <!-- Examples for sharing your app are: --> -->
 
-Additionally  <font style="color: #008cc3; !important;"> **a shiny app can be shared as part of a package.** </font>
+<!-- <!-- - Shinyapps.io and Shiny Server, powered by Rstudio, allow you to share your apps online --> -->
+<!-- <!-- - ShinyProxy permits to deploy Shiny apps in an enterprise context --> -->
+<!-- <!-- - On your own server, exploiting docker --> -->
 
-## Shiny App in a Package
+<!-- <!-- Additionally  <font style="color: #008cc3; !important;"> **a shiny app can be shared as part of a package.** </font> --> -->
 
-A package is a structured single entity that can be distributed freely to other users. 
+<!-- <!-- ## Shiny App in a Package --> -->
 
-<div style="color: #008cc3; !important;">
-* Shiny app wrapped in a package, containing only the app:
-</div>
+<!-- A Shiny app is mantained by a computer running R. This can be your own laptop or a web server (.e. Shinyapps.io, Shiny Server, ShinyProxy). -->
 
-<div style="margin-left:100px !important;">
-In such case, the package functionalities are not available outside of the app itself.
-</div>
+<!-- Additionally **a shiny app can be part of a package.** -->
 
-<div style="color: #008cc3; !important;">
-* Package including a shiny app. 
-</div>
+<!-- <!-- A package is a structured single entity that can be distributed freely to other users.  --> -->
 
-<div style="margin-left:100px !important;">
-In such case the app, works as interface for the package and the package functionalities can be accessed independently of the app.
-</div>
+<!-- <div style="color: #008cc3; !important;"> -->
+<!-- * Shiny app wrapped in a package, containing only the app: -->
+<!-- </div> -->
 
-## SmaRP Structure
+<!-- <div style="margin-left:100px !important;"> -->
+<!-- In such case, the package functionalities are not available outside of the app itself. -->
+<!-- </div> -->
 
- **SmaRP** is is implemented as a shiny pension calculator web app, in the form of an R package. 
+<!-- <div style="color: #008cc3; !important;"> -->
+<!-- * Package including a shiny app.  -->
+<!-- </div> -->
 
-* The functions belonging to the package are stored under `R`
-* Data used in the package is made available under `data`
-* The app is stored under `inst` in a typical shiny app folder structure.
-* The `tests` folder contains automatised checks for the package.
-* Code documentation is available under `man`.
-* A user manual is contained in `vignettes`.
-* The files `NAMESPACE` & `DOCUMENTATION` indicate the package dependencies.
-* The `README.md` file provides information about the package
+<!-- <div style="margin-left:100px !important;"> -->
+<!-- In such case the app, works as interface for the package and the package functionalities can be accessed independently of the app. -->
+<!-- </div> -->
+
+<!-- ## SmaRP Structure -->
+
+<!--  **SmaRP** is is implemented as a shiny pension calculator web app, in the form of an R package.  -->
+
+<!-- * The functions belonging to the package are stored under `R` -->
+<!-- * Data used in the package is made available under `data` -->
+<!-- * The app is stored under `inst` in a typical shiny app folder structure. -->
+<!-- * The `tests` folder contains automatised checks for the package. -->
+<!-- * Code documentation is available under `man`. -->
+<!-- * A user manual is contained in `vignettes`. -->
+<!-- * The files `NAMESPACE` & `DESCRIPTION` indicate the package dependencies. -->
+<!-- * The `README.md` file provides information about the package -->
 
 
 ## SmaRP Structure Advantages
 
-This configuration has multiple advantages:
+ **SmaRP** is is implemented as a shiny pension calculator web app, in the form of an R package, which includes a Shiny app. In such case the app, works as interface for the package and the package functionalities can be accessed independently of the app.
+ 
+Advantages:
 
-* The code can be easly <font style="color: #008cc3; !important;">documented</font> via `roxygen` tags
-* <font style="color: #008cc3; !important;">Tests</font> can be be included in the package to check each function independently
-* A user manual can be provided in form of <font style="color: #008cc3; !important;">vignettes</font> 
-* Easy documentation of version changes via `NEWS.md` an release tags
-* Clear identification of dependencies (package won't build if requirements are not met)
+* The code can be easly <font style="color: #008cc3 !important;">documented</font> via `roxygen` tags
+* <font style="color: #008cc3 !important;">Tests</font> can be be included in the package to check each function independently
+* A user manual can be provided in form of <font style="color: #008cc3 !important;">vignettes</font> 
+* Clear identification of <font style="color: #008cc3 !important;">dependencies</font> via `NAMESPACE` & `DESCRIPTION` (package won't build if requirements are not met)
+* Easy documentation of <font style="color: #008cc3 !important;">version</font> changes via `NEWS.md` an release tags
 
 ## SmaRP Structure Disadvantages
 
@@ -74,7 +80,7 @@ To be consistent with such a structure, it is important to:
 - keep all data manipulations as functions under the `R` folder
 - embed all app related functionalities under `ui.R`, `server.R` and `global.R`
 
-However, <div style="color: #008cc3; !important;"> keeping things perfect is difficult! </div>
+However, <div style="color: #008cc3 !important; display: inline-block;"> **keeping things perfect is difficult!** </div>
 
 - there are data manipulations which are needed solely for the app and would naturally belong in the app itself (i.e. data restructuring for plotting)
 - might be useful to store some app related constructs as functions if they are used in multiple places (e.g. shiny modules) 

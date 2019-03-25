@@ -11,9 +11,9 @@ This can be done by:
 
  **SmaRP** has both options integrated.
  
-## |
+<!-- ## | -->
 
-<iframe width="800px" height="1000px" class="shiny-frame" src="`r app_url`"></iframe>
+<!-- <iframe width="800px" height="1000px" class="shiny-frame" src="`r app_url`"></iframe> -->
 
 <!-- ```{r SmaRP-app3, echo = FALSE} -->
 <!-- source(system.file("application","global.R", package = "SmaRP")) -->
@@ -26,23 +26,23 @@ This can be done by:
 <!-- ``` -->
 
 
-## Downloding Tabular Data
+<!-- ## Downloding Tabular Data -->
 
-Downloading data in shiny is straight-forward. Shiny provides the `downloadButton` widget and the corresponding reactive function `downloadHandler()` to perform the download.
+<!-- Downloading data in shiny is straight-forward. Shiny provides the `downloadButton` widget and the corresponding reactive function `downloadHandler()` to perform the download. -->
 
-```{r download-button, echo = TRUE, eval = TRUE}
-downloadButton(outputId = "data_download",
-               label = "Download Data")
-```
+<!-- ```{r download-button, echo = TRUE, eval = TRUE} -->
+<!-- downloadButton(outputId = "data_download", -->
+<!--                label = "Download Data") -->
+<!-- ``` -->
 
-```{r download-handler, echo = TRUE, eval = FALSE}
-output$data_download <- downloadHandler(
-  filename = dataname(),
-  content = function(file) {
-    write.csv( Road2Retirement(),
-               file,
-               row.names = FALSE)})
-```
+<!-- ```{r download-handler, echo = TRUE, eval = FALSE} -->
+<!-- output$data_download <- downloadHandler( -->
+<!--   filename = dataname(), -->
+<!--   content = function(file) { -->
+<!--     write.csv( Road2Retirement(), -->
+<!--                file, -->
+<!--                row.names = FALSE)}) -->
+<!-- ``` -->
 
 ## Building a report
 
@@ -64,7 +64,21 @@ output$report <- downloadHandler(
 
 Used in **SmaRP** to clarify the methodology and the assumptions made.
 
-## Additional Advantages in Report
+## Report example
+<!-- <iframe width="800px" height="1000px" class="shiny-frame" src="`r app_url`"></iframe> -->
+
+
+```{r report-app, echo = FALSE}
+source(system.file("application","global.R", package = "SmaRP"))
+shinyAppDir(
+  "./report-application/",
+  options = list(
+    width = "120%", height = 1000
+  )
+)
+```
+
+## Report Advantages
 
 The report is implemented in `rmarkdown` and can integrate `LaTeX`. As a result:
 
@@ -76,24 +90,13 @@ The report is implemented in `rmarkdown` and can integrate `LaTeX`. As a result:
 * Scripted plots & tables
 * Footnotes & Bibliography
 
-## Report example
-<iframe width="800px" height="1000px" class="shiny-frame" src="`r app_url`"></iframe>
-
-
-<!-- ```{r report-app, echo = FALSE} -->
-<!-- source(system.file("application","global.R", package = "SmaRP")) -->
-<!-- shinyAppDir( -->
-<!--   "./report-application/", -->
-<!--   options = list( -->
-<!--     width = "120%", height = 1000 -->
-<!--   ) -->
-<!-- ) -->
-<!-- ``` -->
-
 
 ## Plots in the App
 
-The plots in the app are generated with `googleVis`, an R package to easily make interactive plots and [Google's chart tools](https://developers.google.com/chart/) outlooks. 
+In the app, plots are generated with `googleVis`, an R package to easily make interactive plots and [Google's chart tools](https://developers.google.com/chart/) outlooks. 
+
+* Pros: Nice outlook, automatic labels and mouseovers.
+* Cons: Does not render outside of a browser.
 
 The `googleVis` plots are integrated in the shiny app through the reactive function `renderGvis()`.
 
@@ -131,18 +134,19 @@ shinyApp(ui = ui, server = server)
 ```
 
 
-* Pros: Nice outlook, automatic labels and mouseovers.
-* Cons: Does not render outside of a browser
-
 ## Plots in the Report
 
-<div style = "position: absolute;  z-index: 1;">
-Report is static and does not need interactive plots.
-Capturing the `googleVis` plots and integrating them in the report is not straightforward.
-Therefore plots are built with `ggplot2`. 
-</div>
 
-<div style = "margin-top:-20px; position: absolute;  z-index: -1;">
+The report is static and does not need interactive plots.
+
+Capturing the `googleVis` plots and integrating them in the report is not straightforward. Therefore plots are built with `ggplot2`. 
+
+* Pros: Detailed customisation.
+* Cons: More verbose code to reach default `googleVis` outlook.
+
+
+
+<div style = "margin-top:-130px; position: absolute;  z-index: -1;">
 ```{r bargraph-out-ggplot, echo = FALSE, eval = TRUE}
 barGraphData.long <- readRDS("../inst/application/barGraphData.long.RDS")
 ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variable, label = value)) +
