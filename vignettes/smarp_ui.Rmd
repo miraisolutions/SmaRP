@@ -69,7 +69,7 @@ style determines where objects should be located.
 
 ## Personal Info
 
-The personal Info panel gathers the user's personal data, later used to perform calculations. A snippet of the panel's outline can be found below
+The personal Info panel gathers the user's personal data, later used to perform calculations. Fields are aligned both vertically and horizontally as shown in the snippet. 
 
 ![](figures/SmaRP_personal_info.png "SmaRP_personal_info")
 

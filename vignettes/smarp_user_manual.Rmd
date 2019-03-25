@@ -92,7 +92,7 @@ There are some important notes to consider about the tax benefits fund.
 
 **The evolution of the different funds is shown on the first plot.** Mouseovering the graph lines, date and amount are displayed on an informative box.
 
-**The bar plot below shows the distribution among funds at retirement age.**
+**The bar plot shows the distribution among funds at retirement age.**
 
 - In case that no voluntary contributions to the occupational fund or private fund are available, only the occupational fund will be displayed.
 
