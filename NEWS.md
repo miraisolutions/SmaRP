@@ -1,5 +1,7 @@
 # SmaRP 1.1.1-9000
 
+* launch_application() exposes the launch.browser argument to shiny::runApp (#108).
+
 # SmaRP 1.1.1
 
 ### Fixes

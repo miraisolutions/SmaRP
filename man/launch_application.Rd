@@ -4,11 +4,15 @@
 \alias{launch_application}
 \title{launch_application}
 \usage{
-launch_application(...)
+launch_application(launch.browser = interactive(), ...)
 }
 \arguments{
-\item{...}{Additional arguments passed on to \code{\link[=runApp]{runApp()}}. Note that
-argument \code{launch.browser} is always passed as \code{TRUE}.}
+\item{launch.browser}{If true, the system's default web browser will be
+launched automatically after the app is started. Defaults to true in
+interactive sessions only. This value of this parameter can also be a
+function to call with the application's URL.}
+
+\item{...}{Additional arguments passed on to \code{\link[=runApp]{runApp()}}.}
 }
 \value{
 Side-effecting function. Launches the SmaRP app.
