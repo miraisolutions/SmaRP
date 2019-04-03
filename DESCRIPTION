@@ -32,7 +32,6 @@ Imports:
     reshape2,
     rmarkdown,
     shiny,
-    shinydashboardPlus,
     shinyWidgets
 Suggests: testthat, roxygen2 (>= 6.1.1)
 VignetteBuilder: knitr
