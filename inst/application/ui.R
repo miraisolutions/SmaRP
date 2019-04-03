@@ -5,7 +5,15 @@
 
 Sys.setlocale("LC_TIME", "C")
 
-bs_embed_tooltip <- bsplus::bs_embed_tooltip # info windows
+# info tooltips
+bs_embed_tooltip_body <- function(..., container = "body") {
+  # Specify container = "body", which is particularly useful to get widr tootips
+  # in the document flow, which is the same as specified in the AdminLTE JS code
+  # formerly loaded via shinyWidgets::useShinydashboardPlus().
+  # See https://getbootstrap.com/docs/3.3/javascript/#tooltips-options,
+  # https://getbootstrap.com/docs/3.3/javascript/#callout-tooltip-groups
+  bsplus::bs_embed_tooltip(container = container, ...)
+}
 
 # fluidPage UI
 fluidPage(
@@ -71,7 +79,7 @@ fluidPage(
                           value = value$birthday,
                           format = "dd-mm-yyyy"
                 ) %>%
-                  bs_embed_tooltip(title = IB$Birthdate, placement = "right")
+                  bs_embed_tooltip_body(title = IB$Birthdate, placement = "right")
               ),
               column(
                 6,
@@ -91,7 +99,7 @@ fluidPage(
                 checkboxInput(
                   "provideRetirementAge",
                   span("Desired Retirement Age (optional)") %>%
-                    bs_embed_tooltip(title = IB$RetirementAgeOptional, placement = "right"),
+                    bs_embed_tooltip_body(title = IB$RetirementAgeOptional, placement = "right"),
                   FALSE
                 )
               ),
@@ -108,7 +116,7 @@ fluidPage(
                     min = value$min_retirement,
                     max = value$max_retirement
                   ) %>%
-                    bs_embed_tooltip(title = IB$RetirementAge, placement = "right")
+                    bs_embed_tooltip_body(title = IB$RetirementAge, placement = "right")
                 )
               )
             ),
@@ -131,7 +139,7 @@ fluidPage(
                 6,
                 radioButtons("rate_group",
                              label = span("Marital Status") %>%
-                               bs_embed_tooltip(title = IB$rate_group, placement = "right"),
+                               bs_embed_tooltip_body(title = IB$rate_group, placement = "right"),
                              inline = TRUE,
                              choices = Rate_group.list,
                              selected = value$rate
@@ -145,7 +153,7 @@ fluidPage(
                              min = 0,
                              max = value$max_children
                 ) %>%
-                  bs_embed_tooltip(title = IB$NChildren, placement = "right")
+                  bs_embed_tooltip_body(title = IB$NChildren, placement = "right")
               )
             ),
 
@@ -180,14 +188,14 @@ fluidPage(
                              step = 1000,
                              min = 0
                 ) %>%
-                  bs_embed_tooltip(title = IB$Salary, placement = "right"),
+                  bs_embed_tooltip_body(title = IB$Salary, placement = "right"),
                 numericInput("SalaryGrowthRate",
                              label = "Expected Salary Growth Rate %",
                              value = value$growth_rate,
                              step = 0.1,
                              min = 0
                 ) %>%
-                  bs_embed_tooltip(title = IB$SalaryGrowthRate, placement = "right")
+                  bs_embed_tooltip_body(title = IB$SalaryGrowthRate, placement = "right")
               ),
               column(
                 6,
@@ -197,14 +205,14 @@ fluidPage(
                              step = 1000,
                              min = 0
                 ) %>%
-                  bs_embed_tooltip(title = IB$CurrentP2, placement = "right"),
+                  bs_embed_tooltip_body(title = IB$CurrentP2, placement = "right"),
                 numericInput("P2interestRate",
                              label = "Interest Rate % (optional)",
                              value = value$min_p2_interest,
                              step = 1,
                              min = value$min_p2_interest
                 ) %>%
-                  bs_embed_tooltip(title = IB$P2interestRate, placement = "right")
+                  bs_embed_tooltip_body(title = IB$P2interestRate, placement = "right")
               )
             ),
             fluidRow(
@@ -216,13 +224,13 @@ fluidPage(
                              step = 500,
                              min = 0
                 ) %>%
-                  bs_embed_tooltip(title = IB$P2purchase, placement = "right")
+                  bs_embed_tooltip_body(title = IB$P2purchase, placement = "right")
               ),
               column(
                 6,
                 radioButtons("TypePurchase",
                              label = span("Purchase Type") %>%
-                               bs_embed_tooltip(title = IB$TypePurchase, placement = "right"),
+                               bs_embed_tooltip_body(title = IB$TypePurchase, placement = "right"),
                              inline = TRUE,
                              choices = Purchase.list
                 )
@@ -244,7 +252,7 @@ fluidPage(
                              step = 1000,
                              min = 0
                 ) %>%
-                  bs_embed_tooltip(title = IB$CurrentP3, placement = "right")
+                  bs_embed_tooltip_body(title = IB$CurrentP3, placement = "right")
               )
             ),
             fluidRow(
@@ -256,14 +264,14 @@ fluidPage(
                              step = 500,
                              min = 0
                 ) %>%
-                  bs_embed_tooltip(title = IB$P3purchase, placement = "right"),
+                  bs_embed_tooltip_body(title = IB$P3purchase, placement = "right"),
                 numericInput("returnP3",
                              label = "Expected Return %",
                              value = value$p3_return,
                              step = 0.1,
                              min = 0
                 ) %>%
-                  bs_embed_tooltip(title = IB$returnP3, placement = "right")
+                  bs_embed_tooltip_body(title = IB$returnP3, placement = "right")
               )
             )
           ), # end Pillar III SmaRPanel
@@ -293,7 +301,7 @@ fluidPage(
                   br(),
                   # Add button to download report
                   downloadButton("report", span("Generate report") %>%
-                                   bs_embed_tooltip(title = IB$GenerateReport, placement = "right"),
+                                   bs_embed_tooltip_body(title = IB$GenerateReport, placement = "right"),
                                  class = "btn-smarp")
                 )
               ), # end tabPanel Plot
