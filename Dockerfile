@@ -29,7 +29,6 @@ RUN install2.r --error \
     reshape2 \
     rmarkdown \
     shiny \
-    shinydashboardPlus \
     shinyWidgets
 
 
