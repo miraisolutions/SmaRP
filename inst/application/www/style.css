@@ -303,6 +303,7 @@ div.panel-heading-smarp {
   padding: 10px;
   background-color: white !important;
   border: 0;
+  min-height: 35px;
 }
 
 div.panel-title-smarp {
@@ -326,7 +327,7 @@ div.panel-body-smarp .shiny-input-container {
 
 /* Collapse / expand button */
 
-.btn-collapse {
+.btn-collapse-smarp {
   font-size: 12px;
   /* top-right position within relative .panel-title-smarp */
   position: absolute;
@@ -340,18 +341,18 @@ div.panel-body-smarp .shiny-input-container {
   color: #97a0b3 !important;
 }
 
-.btn-collapse:hover,
-.btn-collapse:active {
+.btn-collapse-smarp:hover,
+.btn-collapse-smarp:active {
   /* same as boxPlus, but not for focus */
   color: #606c84 !important;
 }
 
 /* collapse icon */
-.btn-collapse:after {
+.btn-collapse-smarp:after {
   font-family: "Font Awesome 5 Free"; font-weight: 900;
   content: "\f068"; /* fa-minus */
 }
 /* expand icon */
-.btn-collapse.collapsed:after {
+.btn-collapse-smarp.collapsed:after {
   content: "\f067"; /* fa-plus */
 }
