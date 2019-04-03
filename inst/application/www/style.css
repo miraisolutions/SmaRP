@@ -174,39 +174,7 @@ input[type=checkbox], input[type=radio] {
 }
 
 
-/* boxPlus (collapsible) panels */
-.box {
-/*
-  padding: 0;
-  border: 1px solid;
-  border-radius: 3px;
-  border-top: 3px solid;
-  box-shadow: 0 1px 1px rgba(0,0,0,.1);
-*/
-}
-.box.box-primary {
-  border-color: #FF9966;
-/*
-  border-color: #008cc3;
-*/
-}
-.box-header, .box-body {
-/*
-  padding: 8px 15px;
-*/
-}
-.box-header .box-title {
-  color: black;
-  font-size: 13px;
-  font-weight: bold;
-}
-.box-header > .box-tools {
-  /* collapse icons vertical position */
-  top: 3px;
-}
-
-
-/* button style same as box panels */
+/* button style same as panels */
 /*
 .btn-smarp {
   font-size: 13px;
@@ -328,3 +296,70 @@ Plots
 }
 
 
+/* Custom collapsible SmaRPanel */
+
+div.panel-smarp {
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  border-top: 3px solid;
+  box-shadow: 0 1px 1px rgba(0,0,0,.1);
+  border-color: #FF9966;
+}
+
+div.panel-heading-smarp {
+  padding: 10px;
+  background-color: white !important;
+  border: 0;
+}
+
+div.panel-title-smarp {
+  position: relative;
+  padding-right: 20px; /* leave space for the collapse icons */
+  color: black;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+div.panel-body-smarp {
+  padding: 10px;
+  margin: 0;
+}
+
+/* Shiny inputs in panels should span full width as in shinydashboard. */
+div.panel-body-smarp .shiny-input-container {
+  width: auto;
+}
+
+
+/* Collapse / expand button */
+
+.btn-collapse {
+  font-size: 12px;
+  /* top-right position within relative .panel-title-smarp */
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 5px;
+  /* remove button border and bg, use !important to apply to pseudo-classes */
+  border: 0 !important;
+  background-color: transparent !important;
+  /* same as boxPlus */
+  color: #97a0b3 !important;
+}
+
+.btn-collapse:hover,
+.btn-collapse:active {
+  /* same as boxPlus, but not for focus */
+  color: #606c84 !important;
+}
+
+/* collapse icon */
+.btn-collapse:after {
+  font-family: "Font Awesome 5 Free"; font-weight: 900;
+  content: "\f068"; /* fa-minus */
+}
+/* expand icon */
+.btn-collapse.collapsed:after {
+  content: "\f067"; /* fa-plus */
+}

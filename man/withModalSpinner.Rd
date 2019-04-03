@@ -54,6 +54,6 @@ if (interactive()) {
     })
   }
   # Run the application
-  shiny::runApp(shiny::shinyApp(ui = ui, server = server), launch.browser = TRUE)
+  runApp(shinyApp(ui = ui, server = server), launch.browser = TRUE)
 }
 }

@@ -6,29 +6,26 @@
 Sys.setlocale("LC_TIME", "C")
 
 bs_embed_tooltip <- bsplus::bs_embed_tooltip # info windows
-boxPlus <- shinydashboardPlus::boxPlus
 
 # fluidPage UI
 fluidPage(
   title = "SmaRP: Smart Retirement Planning",
   tags$head(
+    # Support responsive embedding with iframe-resizer
     tags$script(
       type = "text/javascript",
       src = "https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.3/iframeResizer.contentWindow.min.js"
-    )
+    ),
+    # Enable tooltips
+    bsplus::use_bs_tooltip(),
+    # Pop up before leaving page
+    tags$script('window.onbeforeunload = function(event) {return "";};')
   ),
 
-  shinyWidgets::useShinydashboardPlus(),
-
-  # indirectly covered by the above (shinydashboard -> bootstrap), but should
-  # stay for clarity and cleanliness!
-  tags$head(bsplus::use_bs_tooltip()),
 
   # Style  ----
   theme = "style.css",
 
-  # Pop up before leaving page ----
-  tags$script('window.onbeforeunload = function(event) {return "";};'),
 
   # Header  ----
   fluidRow(
@@ -57,17 +54,13 @@ fluidPage(
       # Sidebar  ----
       column(
         4,
+        verticalLayout(
 
-        # Personal Info  ----
-        fluidRow(
-          boxPlus(
+          # Personal Info  ----
+          SmaRPanel(
+            id = "personal-info",
             title = "Personal Info",
-            status = "primary",
-            collapsible = TRUE,
-            width = 12,
-            closable = FALSE,
-            dropdown_icon = NULL,
-            enable_dropdown = TRUE,
+            collapsed = FALSE,
 
             # > Birthdate and gender ----
             fluidRow(
@@ -171,21 +164,13 @@ fluidPage(
 
             NULL
 
-          ) # end Personal Info boxPlus
-        ), # end  Personal Info fluidRow
+          ), # end Personal Info SmaRPanel
 
-
-        # 2nd Pillar  -------
-        fluidRow(
-          boxPlus(
+          # Pillar II  -------
+          SmaRPanel(
+            id = "pillar-ii",
             title = "Occupational Fund - Second Pillar",
-            status = "primary",
-            collapsible = TRUE,
             collapsed = TRUE,
-            width = 12,
-            closable = FALSE,
-            dropdown_icon = NULL,
-            enable_dropdown = TRUE,
             fluidRow(
               column(
                 6,
@@ -242,21 +227,14 @@ fluidPage(
                              choices = Purchase.list
                 )
               )
-            ) # end fluidRow
-          ) # end boxPlus
-        ), # end fluidRow
+            )
+          ), # end SmaRPanel
 
-        # 3rd Pillar -------
-        fluidRow(
-          boxPlus(
+          # Pillar III  -------
+          SmaRPanel(
+            id = "pillar-iii",
             title = "Private Fund - Third Pillar",
-            status = "primary",
-            collapsible = TRUE,
             collapsed = TRUE,
-            width = 12,
-            closable = FALSE,
-            dropdown_icon = NULL,
-            enable_dropdown = TRUE,
             fluidRow(
               column(
                 12,
@@ -288,11 +266,11 @@ fluidPage(
                   bs_embed_tooltip(title = IB$returnP3, placement = "right")
               )
             )
-          ) # end of 3rd Pillar boxPlus
-        ), # end of 3rd Pillar fluidRow
+          ), # end Pillar III SmaRPanel
 
-        NULL
+          NULL
 
+        ) # end VerticalLayout
       ), # end first Sidebar column
 
       # Main Panel -----
