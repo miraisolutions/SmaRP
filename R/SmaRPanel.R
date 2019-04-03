@@ -1,5 +1,29 @@
-# TODO: document, including man-roxygen/ex-SmaRPanel.R
+#' @title SmaRPanel
+#'
+#' @rdname SmaRPanel
+#'
+#' @description Custom collapsible panel for the SmaRP Shiuny app.
+#'
+#' @param id The unique id of the panel.
+#' @param ... UI elements to be displayed in the panel body.
+#' @param title The title to be displayed in the panel heading.
+#' @param collapsed Whether the panel should be created as collapsed or
+#'   expanded. If `NA` (the default), a non-collapsible panel is created.
+#'
+#' @details All elements of the panel are specified with additional classes
+#'   `"panel-smarp"`, `"panel-heading-smarp"`, `"panel-title-smarp"`,
+#'   `"panel-body-smarp"`, used for CSS customization. Similarly, the collapse
+#'   [actionButton()] is defined with no `label` nor `icon` and has a custom
+#'   class `"btn-collapse-smarp"`, to be used for CSS customization via the
+#'   `:after` pseudo-element.
+#'
+#' @return The UI definition of the panel.
+#'
+#' @example man-roxygen/ex-SmaRPanel.R
+#'
 #' @export
+#'
+#' @md
 SmaRPanel <- function(id, ..., title = NULL, collapsed = NA) {
   # we can add footer if needed
 
@@ -20,7 +44,7 @@ SmaRPanel <- function(id, ..., title = NULL, collapsed = NA) {
             bsplus::bs_attach_collapse(.with_id("body")) %>%
             # class for styling expand / collapse button
             htmltools::tagAppendAttributes(class = paste(
-              "btn-collapse",
+              .class("btn-collapse"),
               if (isTRUE(collapsed)) "collapsed")
             )
         }
