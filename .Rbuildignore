@@ -1,9 +1,10 @@
-^Meta$
+^data$
 ^doc$
+^man-roxygen$
+^Meta$
+
 ^.*\.Rproj$
 ^\.Rproj\.user$
-
-Dockerfile
-cloudbuild.yaml
-man-roxygen
-inst/application/data/taxdata
+^Dockerfile$
+^cloudbuild\.yaml$
+^inst/application/data/taxdata$
