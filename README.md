@@ -32,8 +32,9 @@ containers](https://www.docker.com/resources/what-container)) and can be
 accessed at https://mirai-solutions.ch/apps/smarp/.
 
 The (development version of) **SmaRP** can also be served locally by installing the package from GitHub
+<!-- argument build_vignettes not available anymore (r-lib/remotes#353), build_opts = "" for a full installation including vignettes  -->
 ``` r
-devtools::install_github("miraisolutions/SmaRP", build_vignettes = TRUE)
+devtools::install_github("miraisolutions/SmaRP", build_opts = "")
 ```
 and running
 ``` r

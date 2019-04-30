@@ -1,6 +1,8 @@
 # SmaRP 1.1.1-9000
 
 * launch_application() exposes the launch.browser argument to shiny::runApp (#108).
+* Updated install_github() README instructions due to un-supported build_vignettes argument (#120).
+* Automatic cleanup of data created via configure (#119).
 * Removed heavy shinydashboardPlus dependency by using custom collapsible panels (#113).
 
 # SmaRP 1.1.1
