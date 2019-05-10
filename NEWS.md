@@ -3,6 +3,7 @@
 * launch_application() exposes the launch.browser argument to shiny::runApp (#108).
 * Updated install_github() README instructions due to un-supported build_vignettes argument (#120).
 * Automatic cleanup of data created via configure (#119).
+* Background header does not re-center with increasing page width (#123).
 
 # SmaRP 1.1.1
 
