@@ -33,8 +33,7 @@ Imports:
     pander,
     reshape2,
     rmarkdown,
-    shiny,
-    shinyWidgets
+    shiny
 Suggests: testthat, roxygen2 (>= 6.1.1)
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
