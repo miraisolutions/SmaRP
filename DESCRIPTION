@@ -24,7 +24,6 @@ Imports:
     ggplot2,
     googleVis,
     htmltools,
-    kableExtra,
     knitr,
     lubridate,
     magrittr,
