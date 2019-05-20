@@ -14,8 +14,8 @@ body {
   margin-bottom: 10px;
   background-color: #009edb;
   background-image: url("illu-header-data.png");
-  background-repeat: repeat-x;
-  background-position: center center;
+  background-repeat: repeat;
+  background-position: 0 200px;
   background-size: auto 400px;
 }
 
