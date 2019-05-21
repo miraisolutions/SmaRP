@@ -40,7 +40,7 @@ The server includes: reactive variables, Mirai Solutions colors definition, plot
 
 ## Reactive variables 
 
-All inputs from the ui are then used to perform calculations, draw plots and write statements. Because these values are different for each user, the app will have to be constantly updated, thus the need for reactive statements. A simple example of a reactive statement is the one for the gender:
+All inputs from the ui are then used to perform calculations, draw plots and write statements. Because these values are different for each user, the app will have to be constantly updated, thus the need for reactive statements. A simple example of a reactive statement is the one for the gender, which can be found in the server:
 
 ```{r, eval = FALSE} 
 gender <- reactive({
