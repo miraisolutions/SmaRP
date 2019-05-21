@@ -116,7 +116,7 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 #' @param CurrentP2 Value of the current assets in the Occupational Fund.
 #' @param rate Interests rate on annual basis. Constant interest rates are assumed.
 #'
-#' @return All contributions to the Pillar II in annual basis.
+#' @return All contributions to the 2nd Pillar on an annual basis.
 #'
 #' @examples
 #' \dontrun{
@@ -197,7 +197,7 @@ calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
 #'
 #' @rdname calcBVGpurchase
 #'
-#' @description Calculate the path of purchases to the Pilar II (Occupational fund, BVG).
+#' @description Calculate the path of purchases to the second Pillar (Occupational fund, BVG).
 #'
 #' @inheritParams calcExpectedSalaryPath
 #' @inheritParams buildContributionP2Path
@@ -220,7 +220,7 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
 #'
 #' @rdname buildContributionP3path
 #'
-#' @description Build the contribution path for a standard pension fund, called Pillar III in Switzerland.
+#' @description Build the contribution path for a standard pension fund, called 3rd Pillar in Switzerland.
 #' Based on 'calcAnnuityAcumPath()'.
 #'
 #' @inheritParams buildt
@@ -228,7 +228,7 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
 #' @template P3
 #' @param CurrentP3 Value of the current assets in the Private Fund (Pillar 3).
 #'
-#' @return All contributions to the Pillar III in annual basis.
+#' @return All contributions to the 3rd Pillar on an annual basis.
 #' @examples
 #' \dontrun{
 #' buildContributionP3path(

@@ -11,7 +11,7 @@ buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
 \arguments{
 \item{birthday}{Date of birth ("YYYY-MM-DD").}
 
-\item{TypePurchase}{AnnualP2 if the purchase on the pillar II gets repeated every year until retirement.}
+\item{TypePurchase}{AnnualP2 if the purchase on the second pillar gets repeated every year until retirement.}
 
 \item{P2purchase}{Annual voluntary contribution to the Occupational Fund.}
 

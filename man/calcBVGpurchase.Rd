@@ -7,7 +7,7 @@
 calcBVGpurchase(TypePurchase, P2purchase, ncp)
 }
 \arguments{
-\item{TypePurchase}{AnnualP2 if the purchase on the pillar II gets repeated every year until retirement.}
+\item{TypePurchase}{AnnualP2 if the purchase on the second pillar gets repeated every year until retirement.}
 
 \item{P2purchase}{Annual voluntary contribution to the Occupational Fund.}
 
@@ -17,7 +17,7 @@ calcBVGpurchase(TypePurchase, P2purchase, ncp)
 BVG purchase.
 }
 \description{
-Calculate the path of purchases to the Pilar II (Occupational fund, BVG).
+Calculate the path of purchases to the second Pillar (Occupational fund, BVG).
 }
 \examples{
 \dontrun{

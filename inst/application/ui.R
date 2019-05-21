@@ -176,10 +176,10 @@ fluidPage(
         ), # end  Personal Info fluidRow
 
 
-        # Pillar II  -------
+        # 2nd Pillar  -------
         fluidRow(
           boxPlus(
-            title = "Occupational Fund - Pillar II",
+            title = "Occupational Fund - Second Pillar",
             status = "primary",
             collapsible = TRUE,
             collapsed = TRUE,
@@ -249,10 +249,10 @@ fluidPage(
           ) # end boxPlus
         ), # end fluidRow
 
-        # Pillar III  -------
+        # 3rd Pillar -------
         fluidRow(
           boxPlus(
-            title = "Private Fund - Pillar III",
+            title = "Private Fund - Third Pillar",
             status = "primary",
             collapsible = TRUE,
             collapsed = TRUE,
@@ -292,8 +292,8 @@ fluidPage(
                   bs_embed_tooltip(title = IB$returnP3, placement = "right")
               )
             )
-          ) # end Pillar III boxPlus
-        ), # end Pillar III fluidRow
+          ) # end of 3rd Pillar boxPlus
+        ), # end of 3rd Pillar fluidRow
 
         NULL
 

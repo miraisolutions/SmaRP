@@ -41,7 +41,7 @@ The following is a list describing components in the first panel. Unless otherwi
 - **Church Affiliation** only requires a yes or no answer. No specification regarding which type is requested.
 
 
-## Occupational Fund - Pillar II
+## Occupational Fund - 2nd Pillar
 
 The second panel contains all fields related to the occupational fund. 
 
@@ -58,7 +58,7 @@ The second panel contains all fields related to the occupational fund.
 - **Purchase Type** refers to previous voluntary purchases and can be made as a single or a constant, multi-year, working-life long contribution.
 
 
-## Private Fund - Pillar III
+## Private Fund - Third Pillar
 
 The third panel is the private fund. It is non-compulsory and only includes annual contributions. 
 
