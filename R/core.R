@@ -226,7 +226,7 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
 #' @inheritParams buildt
 #' @inheritParams calcExpectedSalaryPath
 #' @template P3
-#' @param CurrentP3 Value of the current assets in the Private Fund (Pillar 3).
+#' @param CurrentP3 Value of the current assets in the Private Fund (3rd Pillar).
 #'
 #' @return All contributions to the 3rd Pillar on an annual basis.
 #' @examples

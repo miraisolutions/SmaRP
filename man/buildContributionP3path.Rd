@@ -10,9 +10,9 @@ buildContributionP3path(birthday, P3purchase, CurrentP3, returnP3,
 \arguments{
 \item{birthday}{Date of birth ("YYYY-MM-DD").}
 
-\item{P3purchase}{Annual voluntary contribution to the Private Fund (Pillar 3).}
+\item{P3purchase}{Annual voluntary contribution to the Private Fund (3rd Pillar).}
 
-\item{CurrentP3}{Value of the current assets in the Private Fund (Pillar 3).}
+\item{CurrentP3}{Value of the current assets in the Private Fund (3rd Pillar).}
 
 \item{returnP3}{Annual expected return on the Private Fund.}
 

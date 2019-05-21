@@ -15,7 +15,7 @@ buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
 
 \item{P2purchase}{Annual voluntary contribution to the Occupational Fund.}
 
-\item{P3purchase}{Annual voluntary contribution to the Private Fund (Pillar 3).}
+\item{P3purchase}{Annual voluntary contribution to the Private Fund (3rd Pillar).}
 
 \item{returnP3}{Annual expected return on the Private Fund.}
 

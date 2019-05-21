@@ -508,7 +508,7 @@ pander(Road2Retirement_to_print_Summarized)
 ```{r Road2Retirement_to_print_Pillar2, echo = FALSE, eval = show_text, include = show_text}
 if (show_text){
   moncols <- c("Direct Contribution", "Total Contribution", "Return", "Occupational Fund") 
-  set.caption('Occupational Fund - Pillar 2')
+  set.caption('Occupational Fund - 2nd Pillar')
   Road2Retirement_to_print_Pillar2 <- Road2Retirement_to_print %>%
     mutate(`Direct Contribution` = P2ContributionPath + P2purchase) %>% 
     rename(`Total Contribution` = DirectP2) %>%
@@ -522,7 +522,7 @@ if (show_text){
 
 ```{r Road2Retirement_to_print_Pillar3, echo = FALSE, eval=show_text, include=show_text}
 moncols <- c("Direct Contribution", "Total Contribution", "Return", "Private Fund") 
-set.caption('Private Fund - Pillar 3')
+set.caption('Private Fund - 3rd Pillar')
 Road2Retirement_to_print_Pillar3 <- Road2Retirement_to_print %>%
   mutate(`Direct Contribution` = P3ContributionPath + P3purchase) %>% 
   rename(`Total Contribution` = DirectP3) %>%
