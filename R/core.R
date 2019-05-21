@@ -108,12 +108,12 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 #'
 #' @rdname buildContributionP2Path
 #'
-#' @description Gather all the required information to project the annual contributions to the occupational pension fund.
+#' @description Gather all the required information to project the annual contributions to the occupational fund.
 #'
 #' @inheritParams buildt
 #' @template salary
 #' @template P2
-#' @param CurrentP2 Value of the current assets in the Occupational Pension Fund.
+#' @param CurrentP2 Value of the current assets in the Occupational Fund.
 #' @param rate Interests rate on annual basis. Constant interest rates are assumed.
 #'
 #' @return All contributions to the Pillar II in annual basis.
@@ -197,7 +197,7 @@ calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
 #'
 #' @rdname calcBVGpurchase
 #'
-#' @description Calculate the path of purchases to the Pilar II (Occupational pension fund, BVG).
+#' @description Calculate the path of purchases to the Pilar II (Occupational fund, BVG).
 #'
 #' @inheritParams calcExpectedSalaryPath
 #' @inheritParams buildContributionP2Path
@@ -226,7 +226,7 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
 #' @inheritParams buildt
 #' @inheritParams calcExpectedSalaryPath
 #' @template P3
-#' @param CurrentP3 Value of the current assets in the Private Pension Fund (Pillar 3).
+#' @param CurrentP3 Value of the current assets in the Private Fund (Pillar 3).
 #'
 #' @return All contributions to the Pillar III in annual basis.
 #' @examples

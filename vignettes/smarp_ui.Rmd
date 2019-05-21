@@ -97,7 +97,7 @@ fluidRow(
 
 ## Pillar II and III
 
-Below the personal info part lies the pillars section. Pillar II is intended for the case of an occupational pension fund and Pillar III for a private one.
+Below the personal info part lies the pillars section. Pillar II is intended for the case of an occupational fund and Pillar III for a private one.
 
 ![](figures/SmaRP_Pillar_II.png "SamRP_Pillar_II")
 

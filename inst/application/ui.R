@@ -179,7 +179,7 @@ fluidPage(
         # Pillar II  -------
         fluidRow(
           boxPlus(
-            title = "Occupational Pension Fund - Pillar II",
+            title = "Occupational Fund - Pillar II",
             status = "primary",
             collapsible = TRUE,
             collapsed = TRUE,
@@ -252,7 +252,7 @@ fluidPage(
         # Pillar III  -------
         fluidRow(
           boxPlus(
-            title = "Private Pension Fund - Pillar III",
+            title = "Private Fund - Pillar III",
             status = "primary",
             collapsible = TRUE,
             collapsed = TRUE,

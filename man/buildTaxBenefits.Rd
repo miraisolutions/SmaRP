@@ -13,11 +13,11 @@ buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
 
 \item{TypePurchase}{AnnualP2 if the purchase on the pillar II gets repeated every year until retirement.}
 
-\item{P2purchase}{Annual voluntary contribution to the Occupational Pension Fund.}
+\item{P2purchase}{Annual voluntary contribution to the Occupational Fund.}
 
-\item{P3purchase}{Annual voluntary contribution to the Private Pension Fund (Pillar 3).}
+\item{P3purchase}{Annual voluntary contribution to the Private Fund (Pillar 3).}
 
-\item{returnP3}{Annual expected return on the Private Pension Fund.}
+\item{returnP3}{Annual expected return on the Private Fund.}
 
 \item{Salary}{Stipend.}
 

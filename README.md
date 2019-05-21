@@ -44,7 +44,7 @@ SmaRP::launch_application()
 
 ## Details and key features
 
-The evolution of the total retirement fund over time is computed by projecting the value of the occupational pension fund (Pillar II), the private pension fund (Pillar III) and the tax relief, thus deriving their contributions at the desired retirement age.
+The evolution of the total retirement fund over time is computed by projecting the value of the occupational fund (Pillar II), the private fund (Pillar III) and the tax relief, thus deriving their contributions at the desired retirement age.
 
 *Contributions to Pillar II* are calculated from the salary and any additional voluntary purchases.
 
@@ -66,7 +66,7 @@ The evolution of the total retirement fund over time is computed by projecting t
 - Inflation is not taken into account, although it can be proxied using the salary growth rate input.
 - The retirement plan is valid for employees only, i.e. persons whose main income is a salary. Self-employed people do not belong to this category.
 - The publicly managed pay-as-you-go system (Pillar I) is not considered.
-- All generated tax benefits are 100% reinvested as an additional fund, interpreting the same return as the private pension fund.
+- All generated tax benefits are 100% reinvested as an additional fund, interpreting the same return as the private fund.
 - In case of married couples with double income, the combined amount of all variables should be entered and a 50% income distribution is assumed.
 
 

@@ -15,9 +15,9 @@ buildContributionP2Path(birthday, Salary, SalaryGrowthRate, CurrentP2,
 
 \item{SalaryGrowthRate}{Rate at which the salary increases/decreases.}
 
-\item{CurrentP2}{Value of the current assets in the Occupational Pension Fund.}
+\item{CurrentP2}{Value of the current assets in the Occupational Fund.}
 
-\item{P2purchase}{Annual voluntary contribution to the Occupational Pension Fund.}
+\item{P2purchase}{Annual voluntary contribution to the Occupational Fund.}
 
 \item{TypePurchase}{AnnualP2 if the purchase on the pillar II gets repeated every year until retirement.}
 
@@ -31,7 +31,7 @@ buildContributionP2Path(birthday, Salary, SalaryGrowthRate, CurrentP2,
 All contributions to the Pillar II in annual basis.
 }
 \description{
-Gather all the required information to project the annual contributions to the occupational pension fund.
+Gather all the required information to project the annual contributions to the occupational fund.
 }
 \examples{
 \dontrun{
