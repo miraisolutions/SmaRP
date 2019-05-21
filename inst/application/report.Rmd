@@ -112,7 +112,7 @@ It is implemented as an [R Shiny](https://shiny.rstudio.com/) pension calculator
 
 SmaRP is based on assumptions and includes some simplifications. Thus, it is advisable to use the app to perform different "what-if" scenarios and assess their feasibility. Any outcome should consider some degree of uncertainty.
 
-The main drivers of the retirement pension fund are:
+The main drivers of the retirement fund are:
 
 - **Salary** - the higher the stipend, the higher the future pension. The salary growth rate can be used as a proxy of the inflation or a general economic growth.  
 
@@ -124,7 +124,7 @@ The main drivers of the retirement pension fund are:
 
 - **Time** - the sooner the employee will start investing, the higher the final return will be. 
 
-Note that SmaRP does not make any consideration about the usage of the retirement pension funds.
+Note that SmaRP does not make any consideration about the usage of the retirement funds.
 
 The main outcome is displayed in the "Results" section with a more detailed drill down in Appendix 2; formulas used to obtain these results are explained in Appendix 1. In addition, a list of assumptiuons and limitations is provided in a separate section as well as a brief explantation of the Swiss retirement system.
 
@@ -211,7 +211,7 @@ ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variabl
 
 <br>
 
-The graphs above display the amounts at the end of each year for the Pillar II, Pillar III and Tax Benefit fund. The corresponding formulas are in Appendix 1 of this document and a more detailed break down of the amounts can be found in Appendix 2. A comprehensive set of values calculated can de downloaded as well from the Table tab. 
+The graphs above display the amounts at the end of each year for the second, third Pillars and Tax Benefit fund. The corresponding formulas are in Appendix 1 of this document and a more detailed break down of the amounts can be found in Appendix 2. A comprehensive set of values calculated can de downloaded as well from the Table tab. 
 
 <br>
 
@@ -230,18 +230,18 @@ The results shown above are based on the following inputs set by the user on the
 SalaryGrowthRate <-  params$SalaryGrowthRate * 100
 ```
 * The current salary is **`r printCurrency(params$Salary)` CHF**, with a growth rate of `r SalaryGrowthRate`%, which is assumed constant until retirement.
-* The occupational pension fund (Pillar II) is of **`r printCurrency(params$CurrentP2)` CHF**.
+* The occupational fund (2nd Pillar) is of **`r printCurrency(params$CurrentP2)` CHF**.
 ```{r msgP2, echo = FALSE}
 if(is.null(params$P2purchase) || params$P2purchase == 0){
-  msgP2 <- "No voluntary contribution to Pillar II is made."
+  msgP2 <- "No voluntary contribution to the second Pillar is made."
 } else {
-  msgP2 <- paste0("The voluntary contribution to Pillar II is of ", params$P2purchase, " CHF and is made as a ", TypePurchase, ".")
+  msgP2 <- paste0("The voluntary contribution to the second Pillar is of ", params$P2purchase, " CHF and is made as a ", TypePurchase, ".")
 }
 ```
 * `r msgP2`
-* Pillar II has an interest rate of `r params$rate*100`%. We ensure that the amount considered in the analysis is always higher than the minimum required by law.
-* The private pension fund (Pillar III) is of `r printCurrency(params$CurrentP3)` CHF.
-* The annual contribution to Pillar III is of `r printCurrency(params$P3purchase)` CHF, with an expected return of `r params$returnP3*100`%.
+* Second Pillar has an interest rate of `r params$rate*100`%. We ensure that the amount considered in the analysis is always higher than the minimum required by law.
+* The private fund (3rd Pillar) is of `r printCurrency(params$CurrentP3)` CHF.
+* The annual contribution to the third Pillar is of `r printCurrency(params$P3purchase)` CHF, with an expected return of `r params$returnP3*100`%.
 ```{r maritallabel, echo = FALSE}
 if(params$rate_group == "A"){
   maritallabel <- "Single"
@@ -271,11 +271,11 @@ if (params$churchtax == "N"){
 
 SmaRP is valid for employees only, i.e. persons whose main income is a salary. Self-employed people do not belong to this category.
 
-SmaRP takes into account only the occupational (Pillar II) and the private (Pillar III) pension funds. The state-run pay-as-you-earn system (Pillar I) is law and salary dependent only, meaning there is no active decision-making from the employee's side. Therefore, it is not explicitly considered.
+SmaRP takes into account only the occupational (2nd Pillar) and the private (3rd Pillar) pension funds. The state-run pay-as-you-earn system (1st Pillar) is law and salary dependent only, meaning there is no active decision-making from the employee's side. Therefore, it is not explicitly considered.
 
-When calculating contributions to the Occupational Pension Fund (Pillar II) any salary above minimum threshold is taken into account to generate the retirement benefits.
+When calculating contributions to the Occupational Fund (2nd Pillar) any salary above minimum threshold is taken into account to generate the retirement benefits.
 
-SmaRP considers the tax saving generated by the voluntary retirement contributions, assuming that all generated tax benefits are 100% reinvested as an additional fund. The return from these tax benefits is set to be the same as those of the private pension fund.
+SmaRP considers the tax saving generated by the voluntary retirement contributions, assuming that all generated tax benefits are 100% reinvested as an additional fund. The return from these tax benefits is set to be the same as those of the private fund.
 
 In case of married couples with double-income, SmaRP assumes that all monetary amounts are split 50% and both members have the same age. For more information, please refer to Appendix 3.
 
@@ -289,7 +289,7 @@ A proxy of the taxable income is used to calculate tax savings.[^3] The taxable 
 * Any additional voluntary contributions.
 
 
-[^1]: SmaRP does not make any consideration about the usage of the retirement pension funds. For the Occupational pension fund, the Swiss pension law allows retirees to take the full amount as a lump sum or receive their pension in the form of a life annuity, or a mix of both. In that case, the minimum conversion rate is 6.8% (since 2017) and can vary depending on the retirement age. The Private fund, however, gets always paid as a lump sum. 
+[^1]: SmaRP does not make any consideration about the usage of the retirement funds. For the Occupational fund, the Swiss pension law allows retirees to take the full amount as a lump sum or receive their pension in the form of a life annuity, or a mix of both. In that case, the minimum conversion rate is 6.8% (since 2017) and can vary depending on the retirement age. The Private fund, however, gets always paid as a lump sum. 
 [^2]: Church taxes differ based on the type (Evangelische or Roeman-katolische Kirche) and canton of residence. SmaRP does not make such distinction and always assumes the highest of the values. Moreover, when the church-tax depends on the cantonal tax rate (instead of being a fixed factor), an approximation is made and treated as the maximum possible factor (relevant for cantons: VS, BS, BL). 
 [^3]: Taxes on assets are not considered.
 [^4]: Although most of those parameters can vary a bit depending on the canton, we use the federal values as proxy.
@@ -315,11 +315,11 @@ The Swiss social retirement system is based on a three-pillar regime.
 \vspace{12pt}
 
 
-Pillar I is a state-run pay-as-you-earn system with minimum benefits[^5]. It aims at providing a subsistence level of income to all retirees. The annuity at retirement depends on the amount of income earned and the number of years contributed. Since all parameters are law dependent, it is not explicitly considered in SmaRP.
+First Pillar is a state-run pay-as-you-earn system with minimum benefits[^5]. It aims at providing a subsistence level of income to all retirees. The annuity at retirement depends on the amount of income earned and the number of years contributed. Since all parameters are law dependent, it is not explicitly considered in SmaRP.
 
-Pillar II is a compulsory, tax-deductible company occupational pension insurance fund[^6]. Its goal is to maintain pre-retirement living standards. Voluntary additional buy-ins are regulated, but allow for benefits enhancements at retirement age while reducing the tax burden during the working career. The pensionable salary is defined as part of the AHV with a range between 7/8 and 3 times the AHV salary (between 24.675 and 84.600 as of 01-01-2018). The amount within this range is called the "Mandatory Component" and all employers are required by law to insure at least this compulsory share. However, they are free to offer coverage for the salary above the upper threshold, which the vast majority provides as this extra coverage has become a de facto "must have" to attract employees.   
+Second Pillar is a compulsory, tax-deductible company occupational pension insurance fund[^6]. Its goal is to maintain pre-retirement living standards. Voluntary additional buy-ins are regulated, but allow for benefits enhancements at retirement age while reducing the tax burden during the working career. The pensionable salary is defined as part of the AHV with a range between 7/8 and 3 times the AHV salary (between 24.675 and 84.600 as of 01-01-2018). The amount within this range is called the "Mandatory Component" and all employers are required by law to insure at least this compulsory share. However, they are free to offer coverage for the salary above the upper threshold, which the vast majority provides as this extra coverage has become a de facto "must have" to attract employees.   
 
-Pillar III is a voluntary contribution; it is a privately-run, tax-deductible insurance fund. The private pension fund is modeled as an asset of a given amount ("Current assets"), to which contributions can be added annually ("Annual contribution"). The annual expected return of this asset is given as an input and assumed constant until the retirement date.
+Third Pillar is a voluntary contribution; it is a privately-run, tax-deductible insurance fund. The private fund is modeled as an asset of a given amount ("Current assets"), to which contributions can be added annually ("Annual contribution"). The annual expected return of this asset is given as an input and assumed constant until the retirement date.
 
 Tax benefits are always a key factor towards a smart retirement project. SmaRP takes them into consideration and implements them as an additional fund.
 
@@ -348,7 +348,7 @@ Retirement age can be either explicitly provided as an input or inferred from th
 While **SmaRP** was developed under the utmost care and diligence, Mirai Solutions does not guarantee for its accuracy and correctness. In addition, **SmaRP** is based on assumptions and projections and as such computed figures should be understood as general references and do not hold any legal value.
 
 [^5]: For more information regarding the first pillar, check the official site [here](https://www.ahv-iv.ch/en)
-[^6]: All details of current legislation on Pillar II can be found in German, French or Italian [here](https://www.axa.ch/en/corporate-customers/offers/knowledge/current%20legislation-pillar-2.html)
+[^6]: All details of current legislation on the second Pillar can be found in German, French or Italian [here](https://www.axa.ch/en/corporate-customers/offers/knowledge/current%20legislation-pillar-2.html)
 
 
 \newpage
@@ -356,7 +356,7 @@ While **SmaRP** was developed under the utmost care and diligence, Mirai Solutio
 # Appendix 1: Methodology
 
 
-## Pillar II
+## 2nd Pillar
 
 The savings process for retirement benefits starts on January 1st following the year in which the person turns 24.
 
@@ -367,7 +367,7 @@ where
 - $S(t)$ is the current Salary at year $t$,
 - $S_{AHV}$ is the AHV salary[^7].
 
-Contribution rates under Pillar II are defined by law.[^8]
+Contribution rates under the second Pillar are defined by law.[^8]
 \begin{center}
 \begin{tabular}{c | c | c | c | c }
 \hline
@@ -388,20 +388,20 @@ where
 
 $$ r = 1\% $$
 
-$$ Pillar II = \sum_{t=t_0}^T(MCon + VCon) * \exp^{r*(T - t)} $$
+$$ Pillar 2 = \sum_{t=t_0}^T(MCon + VCon) * \exp^{r*(T - t)} $$
 where
 
 - $VCon$ is the Voluntary Contribution
 
-## Pillar III
+## 3rd Pillar
 
-The private pension fund ($PillarIII$) at year $t$ is calculated as:
+The private fund ($Pillar3$) at year $t$ is calculated as:
 
-$$ PillarIII (t)=  \sum_{t=t_0}^TVCon * e^{r(T - t)} $$
+$$ Pillar 3 (t)=  \sum_{t=t_0}^TVCon * e^{r(T - t)} $$
 
 where
 
-- $r$ is the interest rate applied to the private pension fund[^9],
+- $r$ is the interest rate applied to the private fund[^9],
 - $t_0$ is today's date,
 - $T$ is the retirement age.
 
@@ -433,7 +433,7 @@ $$ I(t) = \max(S(t) - \min(TotalCon, MaxConTax), 0) $$
 
 where
 
-- $TotalCon$ is the sum of the Pillar II and Pillar III purchases,
+- $TotalCon$ is the sum of the second and third Pillars purchases,
 - $MaxConTax$ is the maximum deductible amount allowed by law.[^11]
 
 
@@ -508,7 +508,7 @@ pander(Road2Retirement_to_print_Summarized)
 ```{r Road2Retirement_to_print_Pillar2, echo = FALSE, eval = show_text, include = show_text}
 if (show_text){
   moncols <- c("Direct Contribution", "Total Contribution", "Return", "Occupational Fund") 
-  set.caption('Occupational Pension Fund - Pillar 2')
+  set.caption('Occupational Fund - 2nd Pillar')
   Road2Retirement_to_print_Pillar2 <- Road2Retirement_to_print %>%
     mutate(`Direct Contribution` = P2ContributionPath + P2purchase) %>% 
     rename(`Total Contribution` = DirectP2) %>%
@@ -522,7 +522,7 @@ if (show_text){
 
 ```{r Road2Retirement_to_print_Pillar3, echo = FALSE, eval=show_text, include=show_text}
 moncols <- c("Direct Contribution", "Total Contribution", "Return", "Private Fund") 
-set.caption('Private Pension Fund - Pillar 3')
+set.caption('Private Fund - 3rd Pillar')
 Road2Retirement_to_print_Pillar3 <- Road2Retirement_to_print %>%
   mutate(`Direct Contribution` = P3ContributionPath + P3purchase) %>% 
   rename(`Total Contribution` = DirectP3) %>%

@@ -34,7 +34,7 @@ This vignette describes the UI components and their inner-workings. It is progra
 
 ## Outline
 
-The ui script is wrapped inside a `fluiPage` divided into different `fluidRow`s, one for each component: header, Personal Info, Pillar II - III and plots and table. Every component is then organized into a combination of other `fluidRow`s and `column`s. 
+The ui script is wrapped inside a `fluiPage` divided into different `fluidRow`s, one for each component: header, Personal Info, second, third Pillars and plots and table. Every component is then organized into a combination of other `fluidRow`s and `column`s. 
 
 <!-- The section gets "header" as id, we need to override the css style
 centering #header -->
@@ -102,15 +102,15 @@ fluidRow(
 ```
 
 
-## Pillar II and III
+## 2nd and 3rd Pillar
 
-Below the personal info part lies the pillars section. Pillar II is intended for the case of an occupational pension fund and Pillar III for a private one.
+Below the personal info part lies the pillars section. Second Pillar is intended for the case of an occupational fund and the third Pillar for a private one.
 
-![](figures/SmaRP_Pillar_II.png "SamRP_Pillar_II")
+![](figures/SmaRP_Pillar_II.png "SmaRP_Pillar_2")
 
-![](figures/SmaRP_Pillar_III.png "SamRP_Pillar_III")
+![](figures/SmaRP_Pillar_III.png "SmaRP_Pillar_3")
 
-They both contain `numericInput`s inside `fluidRow`s and a `radioButtons` in the case of Pillar II.
+They both contain `numericInput`s inside `fluidRow`s and a `radioButtons` in the case of the second Pillar.
 
 ## Plots and table
 

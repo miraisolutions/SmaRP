@@ -1,8 +1,8 @@
 <!--# The Swiss social security system, considered as one of the most robust, is based on a three-pillar regime.
 # The first Pillar, common to most developed countries, is a state-run pay-as-you-earn system with minimum benefits.
-# The voluntary contribution (Pillar III) is a privately-run, tax-deductible insurance fund.
-# At the heart of the Swiss system is the so-called Pillar II, a compulsory, tax-deductible company occupational pension insurance fund.
-# Voluntary additional Pillar II buy-ins are regulated but allow for benefits improvement at retirement age while reducing the tax burden during the working career.
+# The voluntary contribution (3rd Pillar) is a privately-run, tax-deductible insurance fund.
+# At the heart of the Swiss system is the so-called Second Pillar, a compulsory, tax-deductible company occupational pension insurance fund.
+# Voluntary additional second Pillar buy-ins are regulated but allow for benefits improvement at retirement age while reducing the tax burden during the working career.
 # The complexity is further increased by a municipality-dependent taxation.
 # Altogether this calls for an early-stage conscious approach towards retirement planning.
 # However, it is not straight-forward to assess effects of elements such as early retirement, moving to a different canton or applying a different voluntary pension schema.
@@ -44,11 +44,11 @@ SmaRP::launch_application()
 
 ## Details and key features
 
-The evolution of the total retirement fund over time is computed by projecting the value of the occupational pension fund (Pillar II), the private pension fund (Pillar III) and the tax relief, thus deriving their contributions at the desired retirement age.
+The evolution of the total retirement fund over time is computed by projecting the value of the occupational fund (2nd Pillar), the private fund (3rd Pillar) and the tax relief, thus deriving their contributions at the desired retirement age.
 
-*Contributions to Pillar II* are calculated from the salary and any additional voluntary purchases.
+*Contributions to the second Pillar* are calculated from the salary and any additional voluntary purchases.
 
-*Contributions to Pillar III* are fully voluntary and repeated every year until retirement.
+*Contributions to the third Pillar* are fully voluntary and repeated every year until retirement.
 
 *Tax savings* are built as an additional fund where tax relieves from a certain year are used as contributions for the next. Tax relieves are calculated using an approximation of the given gross salary and other factors including: residence, civil status, number on kids, etc. 
 
@@ -65,8 +65,8 @@ The evolution of the total retirement fund over time is computed by projecting t
 - Constant interest rates are assumed throughout the working life.
 - Inflation is not taken into account, although it can be proxied using the salary growth rate input.
 - The retirement plan is valid for employees only, i.e. persons whose main income is a salary. Self-employed people do not belong to this category.
-- The publicly managed pay-as-you-go system (Pillar I) is not considered.
-- All generated tax benefits are 100% reinvested as an additional fund, interpreting the same return as the private pension fund.
+- The publicly managed pay-as-you-go system (1st Pillar) is not considered.
+- All generated tax benefits are 100% reinvested as an additional fund, interpreting the same return as the private fund.
 - In case of married couples with double income, the combined amount of all variables should be entered and a 50% income distribution is assumed.
 
 
@@ -98,6 +98,6 @@ Legal parameters in **SmaRP** are defined in [SmaRP/inst/application/global.R](h
 
 While **SmaRP** was developed under the utmost care and diligence, Mirai Solutions does not guarantee for its accuracy and correctness. In addition, **SmaRP** is based on assumptions and projections (explained in a section above and in the PDF report) and as such computed figures should be understood as general references and do not hold any legal value.
 
-Besides standard unit tests at the functional level, results from the **SmaRP** web app have been checked against other online free sources for Pillar II and III and tax calculators.
+Besides standard unit tests at the functional level, results from the **SmaRP** web app have been checked against other online free sources for second, third Pillars and tax calculators.
 
 To keep testing and improving **SmaRP**, we encourage users to get back to us! Your feedback is always highly appreciated. You can use the issue tracker on GitHub to suggest enhancements or report problems, and reach out via email at info@mirai-solutions.com for any questions and comments.
