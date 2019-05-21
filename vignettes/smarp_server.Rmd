@@ -118,7 +118,7 @@ Sys.Date is the date the report was created
 
 ## Download button
 
-The download button is rendered using the shiny downloadHandler function. Within this function, all of the specifics of the report are specified (i.e. which Rmd file to compile, the name of the file and the format):
+The download button is rendered using the shiny downloadHandler function. Within this function, all of the specifications of the report are listed (i.e. which Rmd file to compile, the name of the file and the format):
 
 ```{r, eval = FALSE}
 output$report <- downloadHandler(
