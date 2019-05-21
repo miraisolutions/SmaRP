@@ -72,7 +72,7 @@ The ui displays two plots, one in the form of a line plot and the other in the f
 
 ![](figures/plots.png "Plots")
 
-They are both rendered using the `renderGvis` function from the googleVis package, where all specifications are made. The code creating `out$plot1` shows the example for the line plot:
+They are both rendered using the `renderGvis` function from the googleVis package, where all specifications are made. The code to render `out$plot1` is an example to render a googleVis plot:
 
 ```{r, eval = FALSE}
  output$plot1 <- renderGvis({
