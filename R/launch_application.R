@@ -1,11 +1,11 @@
 #' @title launch_application
-#' 
+#'
 #' @rdname launch_application
 #'
 #' @description Launch the SmaRP Shiny wep app.
 #'
-#' @param ... Additional arguments passed on to [runApp()]. Note that
-#'   argument `launch.browser` is always passed as `TRUE`.
+#' @inheritParams shiny::runApp
+#' @param ... Additional arguments passed on to [runApp()].
 #'
 #' @return Side-effecting function. Launches the SmaRP app.
 #'
@@ -15,10 +15,10 @@
 #' }
 #' @importFrom shiny runApp
 #' @export
-launch_application <- function(...) {
+launch_application <- function(launch.browser = interactive(), ...) {
   runApp(
     appDir = system.file("application", package = "SmaRP"),
-    launch.browser = TRUE,
+    launch.browser = launch.browser,
     ...
   )
 }

@@ -1,7 +1,5 @@
 FROM rocker/r-ver:3.5.1
 
-MAINTAINER Nicola Lambiase "nicola.lambiase@mirai-solutions.com"
-
 RUN apt-get update && apt-get install -y \
     sudo \
     pandoc \
@@ -32,11 +30,8 @@ RUN install2.r --error \
     rmarkdown \
     shiny \
     shinydashboardPlus \
-    shinyWidgets \
-    webshot
-    
-# install PhantomJS
-RUN R -e "library(webshot); webshot::install_phantomjs()"
+    shinyWidgets
+
 
 # copy the app to the image
 RUN mkdir /root/SmaRP

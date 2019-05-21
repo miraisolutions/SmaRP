@@ -5,7 +5,6 @@
 # Tooltip and validation message lists containing texts
 # Stored as data. To load, run e.g. `load("data/VM.rda")`
 
-
 # Info Box
 IB <- list(
   Birthdate = "Date of birth",
@@ -49,5 +48,3 @@ VM <- list(
 dir.create("data")
 save(IB, file = "data/IB.rda")
 save(VM, file = "data/VM.rda")
-
-# source_file("MessageData.R")

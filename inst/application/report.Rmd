@@ -162,7 +162,7 @@ tserieGraphData.long$variable <- factor(tserieGraphData.long$variable,
                                                       decreasing = TRUE))
 
 ggplot(tserieGraphData.long, aes(x = Calendar, y = value, fill = variable)) +
-  scale_fill_manual(NULL, values = c("Occupational Pension" = "#008cc3", "Private Pension" = "#FF9966", "Tax Benefits" = "#13991c")) +
+  scale_fill_manual(NULL, values = c("Occupational Fund" = "#008cc3", "Private Fund" = "#FF9966", "Tax Benefits" = "#13991c")) +
   scale_y_continuous(labels = scales::comma) +
   labs(x = "Year", y = "Return [CHF]") +
   geom_area(alpha = 0.6) +
@@ -196,11 +196,11 @@ ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variabl
   scale_x_discrete(breaks = NULL) +
   scale_y_continuous(labels = scales::percent) +
   coord_flip() +
-  scale_fill_manual(NULL, values = c("Occupational_Pension" = "#008cc3", "Private_Pension" = "#FF9966", "TaxBenefits" = "#13991c")) +
+  scale_fill_manual(NULL, values = c("Occupational Fund" = "#008cc3", "Private Fund" = "#FF9966", "Tax Benefits" = "#13991c")) +
   labs(x = NULL, y = "% Contribution of each fund at retirement") +
   theme(
     axis.text = element_text(size = 10),
-    axis.title = element_text(color="grey"),
+    axis.title = element_text(color = "grey"),
     aspect.ratio = 0.1,
     panel.background = element_rect(fill = NA),
     panel.grid.major = element_line(colour = NA),
@@ -211,7 +211,7 @@ ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variabl
 
 <br>
 
-The graphs above display the amounts at the end of each year for the Pillar I, Pillar II and Tax Benefit fund. The corresponding formulas are in Appendix 1 of this document and a more detailed break down of the amounts can be found in Appendix 2. A comprehensive set of values calculated can de downloaded as well from the Table tab. 
+The graphs above display the amounts at the end of each year for the Pillar II, Pillar III and Tax Benefit fund. The corresponding formulas are in Appendix 1 of this document and a more detailed break down of the amounts can be found in Appendix 2. A comprehensive set of values calculated can de downloaded as well from the Table tab. 
 
 <br>
 

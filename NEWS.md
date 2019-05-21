@@ -1,4 +1,23 @@
-# SmaRP 1.1.0-9000
+# SmaRP 1.1.1-9000
+
+* launch_application() exposes the launch.browser argument to shiny::runApp (#108).
+* Updated install_github() README instructions due to un-supported build_vignettes argument (#120).
+* Automatic cleanup of data created via configure (#119).
+* Background header does not re-center with increasing page width (#123).
+* DESCRIPTION file includes URL and BugReports sections (#125).
+
+# SmaRP 1.1.1
+
+### Fixes
+
+* Bar-plot missing in the PDF report (#96).
+* PDF report refers to wrong pillars (#105).
+* Checkboxes and radio buttons don't render properly in Safari browser (#102).
+
+### Maintenance
+
+* Aligned plot labels with table headers in the report.
+* Removed obsolete dependency on package webshot and PhantomJS (#97).
 
 # SmaRP 1.1.0
 
