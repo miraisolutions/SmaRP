@@ -104,7 +104,7 @@ miraiColors <- "['#008cc3', '#FF9966', '#13991c']"
 
 ## Statements and report name
 
-The total retirement value text as well as the disclaimer are created using the shiny function renderText. Within the function, the paste command is used to combine set sentences with changing values:
+The total retirement value text as well as the disclaimer are created using the shiny function renderText. Within the function, the paste command can be used to combine fixed sentences with changing values:
 
 ```{r, eval = FALSE}
 reportname <- reactive(
