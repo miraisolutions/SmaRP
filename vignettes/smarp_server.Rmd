@@ -96,7 +96,7 @@ where,
 
 TserieGraphData is the specific  plot type 
 xvar and yvar are the x and y axis
-options include all of the aesthetically features including the Mirai blue, which is defined as a particular shade:
+options include all of the aesthetic features including the Mirai color palette, which is defined via as hex codes:
 
 ```{r}
 miraiColors <- "['#008cc3', '#FF9966', '#13991c']"
