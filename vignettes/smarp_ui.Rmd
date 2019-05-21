@@ -84,7 +84,7 @@ Each component is created using a specific shiny function:
 * Kids: `numericInput` object. The user can increase/decrease the number with the arrows or enter it manually; the default is zero
 * Church affiliation: optional `checkbox` object.
 
-Even though most components are self explanatory, `bsTooltip`s were added to provide short explanations. They appear in the form of a black box when the user places the cursor on a specific object:
+Even though most components are self explanatory, `bsTooltip`s were added to provide short explanations. They appear in the form of a box when the user places the cursor on a specific object:
 
 ```{r, eval = FALSE}
 fluidRow(
