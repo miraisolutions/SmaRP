@@ -17,7 +17,7 @@ calcBVGpurchase(TypePurchase, P2purchase, ncp)
 BVG purchase.
 }
 \description{
-Calculate the path of purchases to the second Pillar (Occupational fund, BVG).
+Calculate the path of purchases to the 2nd Pillar (Occupational fund, BVG).
 }
 \examples{
 \dontrun{

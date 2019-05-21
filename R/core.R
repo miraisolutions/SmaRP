@@ -197,7 +197,7 @@ calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
 #'
 #' @rdname calcBVGpurchase
 #'
-#' @description Calculate the path of purchases to the second Pillar (Occupational fund, BVG).
+#' @description Calculate the path of purchases to the 2nd Pillar (Occupational fund, BVG).
 #'
 #' @inheritParams calcExpectedSalaryPath
 #' @inheritParams buildContributionP2Path
