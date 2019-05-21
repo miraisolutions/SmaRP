@@ -68,7 +68,7 @@ All functions used in this script can be found in the R directory.
 
 ## Plots
 
-The ui displays two plots, one in the form of a graph and the other of a bar.
+The ui displays two plots, one in the form of a line plot and the other in the form of of a bar plot.
 
 ![](figures/plots.png "Plots")
 
