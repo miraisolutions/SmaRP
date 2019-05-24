@@ -178,7 +178,7 @@ fluidPage(
           # 2nd Pillar  -------
           SmaRPanel(
             id = "pillar-ii",
-            title = "Occupational Pension Fund - Pillar II",
+            title = "Occupational Fund - Second Pillar",
             collapsed = TRUE,
             fluidRow(
               column(
@@ -244,7 +244,7 @@ fluidPage(
           # 3rd Pillar -------
           SmaRPanel(
             id = "pillar-iii",
-            title = "Private Pension Fund - Pillar III",
+            title = "Private Fund - Third Pillar",
             collapsed = TRUE,
             fluidRow(
               column(
