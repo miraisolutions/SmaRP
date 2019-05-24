@@ -175,7 +175,7 @@ fluidPage(
 
           ), # end Personal Info SmaRPanel
 
-          # Pillar II  -------
+          # 2nd Pillar  -------
           SmaRPanel(
             id = "pillar-ii",
             title = "Occupational Pension Fund - Pillar II",
@@ -241,7 +241,7 @@ fluidPage(
             )
           ), # end SmaRPanel
 
-          # Pillar III  -------
+          # 3rd Pillar -------
           SmaRPanel(
             id = "pillar-iii",
             title = "Private Pension Fund - Pillar III",
@@ -278,7 +278,7 @@ fluidPage(
                   bs_embed_tooltip_body(title = IB$returnP3, placement = "right")
               )
             )
-          ), # end Pillar III SmaRPanel
+          ), # end 3rd Pillar SmaRPanel
 
           NULL
 

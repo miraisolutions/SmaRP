@@ -52,7 +52,7 @@ function(input, output, session) {
     }
   })
 
-  # Pillar III ----
+  # 3rd Pillar ----
   # default option 0
   CurrentP3_notZero <- reactive({
     isnotAvailableReturnZero(input$CurrentP3)
@@ -156,7 +156,7 @@ function(input, output, session) {
     isnotAvailableReturnZero(input$SalaryGrowthRate / 100)
   })
 
-  # Pillar II
+  # 2nd Pillar
   CurrentP2 <- reactive({
     isnotAvailableReturnZero(input$CurrentP2)
   })
