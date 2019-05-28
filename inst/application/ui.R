@@ -295,7 +295,7 @@ fluidPage(
                 title = "Plot",
                 value = "Plot",
                 verticalLayout(
-                  verbatimTextOutput("Totals"),
+                  textOutput("Totals"),
                   htmlOutput("plot_t"),
                   htmlOutput("plot_final"),
                   br(),
