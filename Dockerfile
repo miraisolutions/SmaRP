@@ -31,6 +31,8 @@ RUN apt-get update \
     sh -s - --admin --no-path \
   && mv ~/.TinyTeX /opt/TinyTeX \
   && /opt/TinyTeX/bin/*/tlmgr path add \
+  ### LaTeX packages from rocker/verse and app-specific packages \
+  #   NOTE: it is important to install them upfront!
   && tlmgr install \
     ae inconsolata listings metafont mfware pdfcrop parskip tex \
     fancyhdr \
@@ -47,19 +49,23 @@ RUN apt-get update \
 
 ## Install major fixed R dependencies
 #  - they will be always needed and we want them in a dedicated layer,
-#    as opposed to geting them dinamically via `remotes::install_local()`
+#    as opposed to getting them dinamically via `remotes::install_local()`
 RUN install2.r --error \
   shiny \
   dplyr \
   rmarkdown
 
+
+# location of the SmaRP source package in the image
+ENV MARP=/tmp/SmaRP
+
 ## Copy the app to the image
-COPY . /tmp/SmaRP
+COPY . $MARP
 
 # Install SmaRP
 RUN install2.r --error remotes \
-  && R -e "remotes::install_local('/tmp/SmaRP')" \
-  && rm -R /tmp/SmaRP
+  && R -e "remotes::install_local('$MARP')" \
+  && rm -rf $MARP
 
 # Set host and port
 RUN echo "options(shiny.port = 80, shiny.host = '0.0.0.0')" >> /usr/local/lib/R/etc/Rprofile.site
