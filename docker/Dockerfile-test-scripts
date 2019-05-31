@@ -1,0 +1,27 @@
+# test via
+#   docker build -t install_scripts:test -f docker/Dockerfile-test-scripts .
+
+FROM rocker/r-ver:3.5.3
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    ## for install_pandoc.sh and install_tinytex.sh
+    wget \
+    ## for install_tinytex.sh
+    texinfo \
+    ## for install_tinytex.sh
+    ghostscript \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/
+
+# Pandoc
+ENV PANDOC_DEB="2.3.1/pandoc-2.3.1-1-amd64.deb"
+COPY docker/install_pandoc.sh .
+RUN sh install_pandoc.sh $PANDOC_DEB
+
+# TinyTeX
+COPY docker/install_tinytex.sh .
+RUN sh install_tinytex.sh fancyhdr
+
+# Re-installation of TinyTeX
+COPY docker/reinstall_tinytex.sh .

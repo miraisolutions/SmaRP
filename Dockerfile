@@ -1,51 +1,38 @@
 FROM rocker/r-ver:3.5.3
 
+## Install required dependencies
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    ## for R package 'curl'
+    libcurl4-gnutls-dev \
+    ## for R package 'xml2'
+    libxml2-dev \
+    ## for R package 'openssl'
+    libssl-dev \
+    ## for install_tinytex.sh and install_pandoc.sh
+    wget \
+    ## for install_tinytex.sh
+    texinfo \
+    ## for install_tinytex.sh
+    ghostscript \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/
+
 ## Install recent pandoc version, required by rmarkdown
 # - see https://github.com/rstudio/rmarkdown/blob/master/PANDOC.md
 # - https://pandoc.org/installing.html#linux
 # We should use the same version as in rocker/rstudio:<R_VER>
 #   docker run --rm rocker/rstudio:<R_VER> /usr/lib/rstudio-server/bin/pandoc/pandoc -v
 ENV PANDOC_DEB="2.3.1/pandoc-2.3.1-1-amd64.deb"
+COPY docker/install_pandoc.sh .
+RUN sh install_pandoc.sh $PANDOC_DEB && rm install_pandoc.sh
 
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
-    ## For R package 'curl'
-    libcurl4-gnutls-dev \
-    ## For R package 'xml2'
-    libxml2-dev \
-    ## For R package 'openssl'
-    libssl-dev \
-    ## For manual install of recent 'pandoc' version
-    wget \
-    ## For TinyTex
-    texinfo \
-    ## For 'pdfcrop'
-    ghostscript \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/ \
-  ## Use TinyTeX for LaTeX installation
-  && install2.r --error tinytex \
-  ## Admin-based install of TinyTeX:
-  && wget -qO- \
-    "https://github.com/yihui/tinytex/raw/master/tools/install-unx.sh" | \
-    sh -s - --admin --no-path \
-  && mv ~/.TinyTeX /opt/TinyTeX \
-  && /opt/TinyTeX/bin/*/tlmgr path add \
-  ### LaTeX packages from rocker/verse and app-specific packages \
-  #   NOTE: it is important to install them upfront!
-  && tlmgr install \
-    ae inconsolata listings metafont mfware pdfcrop parskip tex \
-    fancyhdr \
-  && tlmgr path add \
-  && Rscript -e "tinytex::r_texmf()" \
-  && chown -R root:staff /opt/TinyTeX \
-  && chown -R root:staff /usr/local/lib/R/site-library \
-  && chmod -R g+w /opt/TinyTeX \
-  && chmod -R g+wx /opt/TinyTeX/bin \
-  ## Pandoc
-  && wget -q https://github.com/jgm/pandoc/releases/download/$PANDOC_DEB \
-  && dpkg -i $(basename $PANDOC_DEB) \
-  && rm $(basename $PANDOC_DEB)
+## Install TinyTeX as LaTeX installation, including the app-specific dependencies
+# NOTE: it is important to install all required LaTeX packages when building the image!
+COPY docker/install_tinytex.sh .
+RUN sh install_tinytex.sh fancyhdr
+## Script for re-installation of TinyTeX in the running container if needed
+COPY docker/reinstall_tinytex.sh .
 
 ## Install major fixed R dependencies
 #  - they will be always needed and we want them in a dedicated layer,
@@ -56,10 +43,9 @@ RUN install2.r --error \
   rmarkdown
 
 
+## Copy the app to the image
 # location of the SmaRP source package in the image
 ENV MARP=/tmp/SmaRP
-
-## Copy the app to the image
 COPY . $MARP
 
 # Install SmaRP
