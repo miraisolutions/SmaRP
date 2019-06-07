@@ -28,27 +28,27 @@ function(input, output, session) {
   RetirementAge <- reactive({
     if (input$provideRetirementAge) {
       validate(need(input$RetirementAge, VM$RetirementAge))
-      min(70, input$RetirementAge)
+      min(value$retirement, input$RetirementAge)
     } else {
       if (gender() == "M") {
-        MRetirementAge
+        value$retirement_male
       } else {
-        FRetirementAge
+        value$retirement_female
       }
     }
   }) %>% debounce(millis = 100)
 
   observeEvent(input$RetirementAge, ignoreNULL = TRUE, {
-    if (!is.na(input$RetirementAge) && input$RetirementAge > 70) {
-      updateNumericInput(session, "RetirementAge", value = 70)
+    if (!is.na(input$RetirementAge) && input$RetirementAge > value$retirement) {
+      updateNumericInput(session, "RetirementAge", value = value$retirement)
     }
   })
 
   observeEvent(input$gender, {
     if (gender() == "F") {
-      updateNumericInput(session, "RetirementAge", value = 64)
+      updateNumericInput(session, "RetirementAge", value = value$retirement_female)
     } else {
-      updateNumericInput(session, "RetirementAge", value = 65)
+      updateNumericInput(session, "RetirementAge", value = value$retirement_male)
     }
   })
 
@@ -78,6 +78,10 @@ function(input, output, session) {
   })
 
   returnP3_notzero <- reactive({
+    val <- max(min(isnotAvailableReturnZero(input$returnP3), value$max_p3_return), 0)
+    if (!is.na(input$returnP3) && input$returnP3 != val) {
+      updateNumericInput(session, "returnP3", value = val)
+    }
     isnotAvailableReturnZero(input$returnP3 / 100)
   })
 
@@ -121,7 +125,7 @@ function(input, output, session) {
 
   # Number of kids (max = 9)
   NChildren <- reactive({
-    val <- max(min(isnotAvailableReturnZero(input$NChildren), 9), 0)
+    val <- max(min(isnotAvailableReturnZero(input$NChildren), value$max_children), 0)
     if (!is.na(input$NChildren) && input$NChildren != val) {
       updateNumericInput(session, "NChildren", value = val)
     }
@@ -145,7 +149,7 @@ function(input, output, session) {
 
   # Salary
   Salary <- reactive({
-    val <- max(min(isnotAvailableReturnZero(input$Salary), 1e+08), 0)
+    val <- max(min(isnotAvailableReturnZero(input$Salary), value$max_salary), 0)
     if (!is.na(input$Salary) && input$Salary != val) {
       updateNumericInput(session, "Salary", value = val)
     }
@@ -153,6 +157,10 @@ function(input, output, session) {
   }) %>% debounce(millis = 100)
 
   SalaryGrowthRate <- reactive({
+    val <- max(min(isnotAvailableReturnZero(input$SalaryGrowthRate), value$max_p2_interest), 0)
+    if (!is.na(input$returnP3) && input$SalaryGrowthRate != val) {
+      updateNumericInput(session, "SalaryGrowthRate", value = val)
+    }
     isnotAvailableReturnZero(input$SalaryGrowthRate / 100)
   })
 
@@ -162,11 +170,11 @@ function(input, output, session) {
   })
 
   P2interestRate <- reactive({
-    if (isnotAvailable(input$P2interestRate)) {
-      BVGMindestzinssatz
-    } else {
-      input$P2interestRate / 100
+    val <- max(min(isnotAvailableReturnZero(input$P2interestRate), value$max_p2_interest), BVGMindestzinssatz*100)
+    if (!is.na(input$P2interestRate) && input$P2interestRate != val) {
+      updateNumericInput(session, "P2interestRate", value = val)
     }
+    isnotAvailableReturnZero(input$P2interestRate / 100)
   })
 
   P2purchase <- reactive({

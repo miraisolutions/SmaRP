@@ -2,9 +2,6 @@ library(SmaRP)
 `%>%` <- magrittr::`%>%`
 
 # Global variables
-# Gender-based retirement age
-MRetirementAge <- 65
-FRetirementAge <- 64
 
 # https://www.admin.ch/opc/de/classified-compilation/19820152/index.html#a8
 MinBVG <- 24885 # Min Koordinierter Lohn (MinBVG = MaxAHV * (7 / 8))
@@ -105,3 +102,33 @@ BerufsauslagenMax <- 4000
 BerufsauslagenMin <- 2000
 NBU <- 0.0084
 maxNBU <- 1065
+
+# List of initial, max and min values
+value <- list (
+  birthday = "1980-12-30",
+  gender = "M",
+  retirement = 64,
+  min_retirement = 55,
+  max_retirement = 70,
+  plz = with(PLZGemeinden, PLZGDENAME[match(8001, PLZ)]),
+  rate = "A",
+  children = 0,
+  max_children = 9,
+  church = "A",
+  salary = 100000,
+  growth_rate = 0.5,
+  max_growth_rate = 100,
+  p2 = 100000,
+  p2_interest = 100 * BVGMindestzinssatz,
+  min_p2_interest = 100 * BVGMindestzinssatz,
+  max_p2_interest = 100,
+  p2_voluntary = 0,
+  p3 = 50000,
+  p3_annual = 5000,
+  p3_return = BVGMindestzinssatz * 100,
+  max_p3_return = 100,
+  retirement = 70,
+  retirement_female = 64,
+  retirement_male = 65,
+  max_salary = 1e+08
+)
