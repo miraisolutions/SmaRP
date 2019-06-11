@@ -434,6 +434,26 @@ need_not_zero <- function(input, inputname) {
   }
 }
 
+#' @title update_neg
+#'
+#' @rdname update_neg
+#'
+#' @description Automatically updates numericInput to zero if input is negative.
+#'
+#' @param inputId Field name.
+#' @param session Current session.
+#'
+#' @return Zero value.
+#' @export
+update_neg <- function(inputId, session) {
+  val <- 0
+  input <- session$input[[inputId]]
+  # name <- sub('.', '', unlist(strsplit(name, "input")))[2]
+  if (!is.na(input) && input < val) {
+    updateNumericInput(session, toString(inputId), value = val)
+  }
+}
+
 
 # Format Percentage ----
 
