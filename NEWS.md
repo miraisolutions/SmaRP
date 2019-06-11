@@ -9,6 +9,7 @@
 * Changed Pillars nomenclature to be consistent with official terminology (#103).
 * Annual Contribution initialized at 5000, numericInput re-set to 0 or minimum 
 value if lower number is inserted, unused maximum values erased (#129).
+* Added title page when opening app in browser (#118).
 
 
 # SmaRP 1.1.1

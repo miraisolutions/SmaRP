@@ -10,7 +10,7 @@ boxPlus <- shinydashboardPlus::boxPlus
 
 # fluidPage UI
 fluidPage(
-
+  title = "SmaRP: Smart Retirement Planning",
   tags$head(
     tags$script(
       type = "text/javascript",
