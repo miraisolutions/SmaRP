@@ -200,8 +200,7 @@ fluidPage(
                              label = "Expected Salary Growth Rate %",
                              value = value$growth_rate,
                              step = 0.1,
-                             min = 0,
-                             max = value$max_growth_rate
+                             min = 0
                 ) %>%
                   bs_embed_tooltip(title = IB$SalaryGrowthRate, placement = "right")
               ),
@@ -218,8 +217,7 @@ fluidPage(
                              label = "Interest Rate % (optional)",
                              value = value$p2_interest,
                              step = 1,
-                             min = value$min_p2_interest,
-                             max = value$max_p2_interest
+                             min = value$min_p2_interest
                 ) %>%
                   bs_embed_tooltip(title = IB$P2interestRate, placement = "right")
               )
@@ -285,8 +283,7 @@ fluidPage(
                              label = "Expected Return %",
                              value = value$p3_return,
                              step = 0.1,
-                             min = 0,
-                             max = value$max_p3_return
+                             min = 0
                 ) %>%
                   bs_embed_tooltip(title = IB$returnP3, placement = "right")
               )

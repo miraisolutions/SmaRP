@@ -434,6 +434,25 @@ need_not_zero <- function(input, inputname) {
   }
 }
 
+#' @title update_min
+#'
+#' @rdname update_min
+#'
+#' @description Automatically updates numericInput to zero if input is negative.
+#'
+#' @param input numericInput field.
+#' @param session Current session.
+#'
+#' @return Zero value.
+#' @export
+update_min <- function(input, name, session) {
+  val <- 0
+  name <- sub('.', '', unlist(strsplit(name, "input")))[2]
+  if (!is.na(input) && input < val) {
+    updateNumericInput(session, name, value = val)
+  }
+}
+
 
 # Format Percentage ----
 
