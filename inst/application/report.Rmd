@@ -145,9 +145,9 @@ Road2Retirement_to_print <- params$Road2Retirement %>%
   filter(Y %in% unique(c(Y[1], Y[!Y%%1], Y[length(Y)]))) 
 ```
 
-Based on the information inserted in the three pillars, the total retirement fund as of `r format(params$retirementdate, "%d-%m-%Y")` is calculated to be **`r printCurrency(params$retirementfund)` CHF**, `r params$percentageLastSalary` and two plots representing the time evolution of the different funds and their contribution to the total retirement fund are generated.[^1]
+Based on the information inserted in the three pillars, the total retirement fund as of `r format(params$retirementdate, "%d-%m-%Y")` is calculated to be **`r printCurrency(params$retirementfund)` CHF**, `r params$percentageLastSalary`.[^1]
 
-
+The two plots below represent the time evolution of the different funds and their contribution to the total retirement fund at retirement, respectively. 
 
 ```{r timeSeriesPlot, echo = FALSE}
 tserieGraphData.columns <- setdiff(names(params$TserieGraphData), "Calendar")
