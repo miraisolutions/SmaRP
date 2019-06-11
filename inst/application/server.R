@@ -249,11 +249,11 @@ function(input, output, session) {
   TserieGraphData <- reactive({
     Road2Retirement() %>%
       mutate(`Tax Benefits` = TotalTax) %>%
-      mutate(`Occupational Fund` = DirectP2 + ReturnP2) %>%
-      mutate(`Private Fund` = DirectP3 + ReturnP3) %>%
+      mutate(`2nd Pillar` = DirectP2 + ReturnP2) %>%
+      mutate(`3rd Pillar` = DirectP3 + ReturnP3) %>%
       select(Calendar,
-             `Occupational Fund`,
-             `Private Fund`,
+             `2nd Pillar`,
+             `3rd Pillar`,
              `Tax Benefits`) %>%
       .[, colSums(. != 0, na.rm = TRUE) > 0]
   })
@@ -277,9 +277,9 @@ function(input, output, session) {
   FotoFinish <- reactive({
     Road2Retirement() %>%
       mutate(`Tax Benefits` = TotalTax) %>%
-      mutate(`Occupational Fund` = DirectP2 + ReturnP2) %>%
-      mutate(`Private Fund` = DirectP3 + ReturnP3) %>%
-      select(`Occupational Fund`, `Private Fund`, `Tax Benefits`) %>%
+      mutate(`2nd Pillar` = DirectP2 + ReturnP2) %>%
+      mutate(`3rd Pillar` = DirectP3 + ReturnP3) %>%
+      select(`2nd Pillar`, `3rd Pillar`, `Tax Benefits`) %>%
       tail(1) %>%
       prop.table() %>%
       select_if(function(x)

@@ -36,7 +36,7 @@ buildTaxBenefits(birthday, TypePurchase, P2purchase, P3purchase, returnP3,
 \item{RetirementAge}{Age of retirement.}
 }
 \value{
-data.frame tax benefit path.
+data.frame tax benefits path.
 }
 \description{
 All inputs are scalars. Builds a data frame as long as the years to retirement.

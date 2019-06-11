@@ -108,7 +108,7 @@ Smart Retirement Planning (**SmaRP**) is a [Mirai Solutions](https://mirai-solut
 
 It is implemented as an [R Shiny](https://shiny.rstudio.com/) pension calculator web app, in the form of an R package. The source code is available on [GitHub](https://github.com/miraisolutions/SmaRP.git) and the app itself online at http://mirai-solutions.ch/apps/smarp/.
 
-**SmaRP** is based on the [three pillars pension system](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland) and reflects the complexity of its legal framework. The bulk of the retirement income are the second and third pillar, which employees can actively manage and make decisions impacting their total pension fund at retirement. The first pillar is not considered as it is a pay-as-you-go universal system whose benefits depend on the income earned during the working life and the number of years contributed. In addition, since non-mandatory contributions are tax favored, SmaRP incorporates an additional fund -the Tax benefits fund- to outline the effects of those tax reliefs on the long run.
+**SmaRP** is based on the [three pillars pension system](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland) and reflects the complexity of its legal framework. The bulk of the retirement income are the second and third pillar, which employees can actively manage and make decisions impacting their total pension fund at retirement. The first pillar is not considered as it is a pay-as-you-go universal system whose benefits depend on the income earned during the working life and the number of years contributed. In addition, since non-mandatory contributions are tax favored, SmaRP incorporates an additional fund -the Tax benefits- to outline the effects of those tax reliefs on the long run.
 
 SmaRP is based on assumptions and includes some simplifications. Thus, it is advisable to use the app to perform different "what-if" scenarios and assess their feasibility. Any outcome should consider some degree of uncertainty.
 
@@ -126,7 +126,7 @@ The main drivers of the retirement fund are:
 
 Note that SmaRP does not make any consideration about the usage of the retirement funds.
 
-The main outcome is displayed in the "Results" section with a more detailed drill down in Appendix 2; formulas used to obtain these results are explained in Appendix 1. In addition, a list of assumptiuons and limitations is provided in a separate section as well as a brief explantation of the Swiss retirement system.
+The main outcome is displayed in the "Results" section with a more detailed drill down in Appendix 2; formulas used to obtain these results are explained in Appendix 1. In addition, a list of assumptions and limitations is provided in a separate section as well as a brief explanation of the Swiss retirement system.
 
 <br>
 \newpage
@@ -145,9 +145,7 @@ Road2Retirement_to_print <- params$Road2Retirement %>%
   filter(Y %in% unique(c(Y[1], Y[!Y%%1], Y[length(Y)]))) 
 ```
 
-Based on the information inserted in the three pillars, the total retirement fund as of `r format(params$retirementdate, "%d-%m-%Y")` is calculated to be **`r printCurrency(params$retirementfund)` CHF**, `r params$percentageLastSalary`.[^1]
-
-The two plots below represent the time evolution of the different funds and their contribution to the total retirement fund at retirement, respectively. 
+Based on the information inserted in the three pillars, the total retirement fund as of `r format(params$retirementdate, "%d-%m-%Y")` is calculated to be **`r printCurrency(params$retirementfund)` CHF**, `r params$percentageLastSalary` and two plots representing the time evolution of the different funds and their contribution to the total retirement fund are generated.[^1]
 
 
 
@@ -162,7 +160,7 @@ tserieGraphData.long$variable <- factor(tserieGraphData.long$variable,
                                                       decreasing = TRUE))
 
 ggplot(tserieGraphData.long, aes(x = Calendar, y = value, fill = variable)) +
-  scale_fill_manual(NULL, values = c("Occupational Fund" = "#008cc3", "Private Fund" = "#FF9966", "Tax Benefits" = "#13991c")) +
+  scale_fill_manual(NULL, values = c("2nd Pillar" = "#008cc3", "3rd Pillar" = "#FF9966", "Tax Benefits" = "#13991c")) +
   scale_y_continuous(labels = scales::comma) +
   labs(x = "Year", y = "Return [CHF]") +
   geom_area(alpha = 0.6) +
@@ -196,7 +194,7 @@ ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variabl
   scale_x_discrete(breaks = NULL) +
   scale_y_continuous(labels = scales::percent) +
   coord_flip() +
-  scale_fill_manual(NULL, values = c("Occupational Fund" = "#008cc3", "Private Fund" = "#FF9966", "Tax Benefits" = "#13991c")) +
+  scale_fill_manual(NULL, values = c("2nd Pillar" = "#008cc3", "3rd Pillar" = "#FF9966", "Tax Benefits" = "#13991c")) +
   labs(x = NULL, y = "% Contribution of each fund at retirement") +
   theme(
     axis.text = element_text(size = 10),
@@ -211,7 +209,7 @@ ggplot(data = barGraphData.long, aes(x = contribution, y = value, fill = variabl
 
 <br>
 
-The graphs above display the amounts at the end of each year for the second, third Pillars and Tax Benefit fund. The corresponding formulas are in Appendix 1 of this document and a more detailed break down of the amounts can be found in Appendix 2. A comprehensive set of values calculated can de downloaded as well from the Table tab. 
+Corresponding formulas are in Appendix 1 of this document and a more detailed break down of the amounts can be found in Appendix 2. A comprehensive set of values calculated can de downloaded as well from the Table tab. 
 
 <br>
 
@@ -271,7 +269,7 @@ if (params$churchtax == "N"){
 
 SmaRP is valid for employees only, i.e. persons whose main income is a salary. Self-employed people do not belong to this category.
 
-SmaRP takes into account only the occupational (2nd Pillar) and the private (3rd Pillar) pension funds. The state-run pay-as-you-earn system (1st Pillar) is law and salary dependent only, meaning there is no active decision-making from the employee's side. Therefore, it is not explicitly considered.
+SmaRP takes into account only the occupational (2nd Pillar) and the private (3rd Pillar) funds. The state-run pay-as-you-earn system (1st Pillar) is law and salary dependent only, meaning there is no active decision-making from the employee's side. Therefore, it is not explicitly considered.
 
 When calculating contributions to the Occupational Fund (2nd Pillar) any salary above minimum threshold is taken into account to generate the retirement benefits.
 
@@ -388,16 +386,16 @@ where
 
 $$ r = 1\% $$
 
-$$ Pillar 2 = \sum_{t=t_0}^T(MCon + VCon) * \exp^{r*(T - t)} $$
+$$ P_2 = \sum_{t=t_0}^T(MCon + VCon) * \exp^{r*(T - t)} $$
 where
 
 - $VCon$ is the Voluntary Contribution
 
 ## 3rd Pillar
 
-The private fund ($Pillar3$) at year $t$ is calculated as:
+The private fund ($P_3$) at year $t$ is calculated as:
 
-$$ Pillar 3 (t)=  \sum_{t=t_0}^TVCon * e^{r(T - t)} $$
+$$ P_3 (t)=  \sum_{t=t_0}^TVCon * e^{r(T - t)} $$
 
 where
 
@@ -407,7 +405,7 @@ where
 
 ## Tax Benefit
 
-Granted that the marginal tax rate is provided as an input, the tax benefit ($TBe$) at year $t$ is calculated as:
+Granted that the marginal tax rate is provided as an input, the tax benefits ($TBe$) at year $t$ is calculated as:
 
 $$ TBe(t) = \sum_{t=t_0}^TVCon(t) *  TR(t) * e^{r(T - t)} $$
 
@@ -425,7 +423,7 @@ where
 
 - $Tax_{S}(t)$ is the tax bill based on the gross salary at each $t$,
 - $Tax_{inc}(t)$ is the tax bill based on the Taxable income at each $t$,
-- $TBe(t)$ is the Tax Benefit generated by the difference of the tow.
+- $TBe(t)$ is the Tax Benefits generated by the difference of the tow.
 
 Taxable income ($I$) at time $t$ is computed as:
 
@@ -535,7 +533,7 @@ pander(Road2Retirement_to_print_Pillar3)
 
 ```{r Road2Retirement_to_print_TaxBenefit, echo = FALSE, eval=show_tax, include=show_tax}
 moncols <- c("Direct Tax", "Return Tax", "Total Tax") 
-set.caption('Tax Benefit Fund')
+set.caption('Tax Benefits')
 Road2Retirement_to_print_TaxBenefit <- Road2Retirement_to_print %>%
   rename(`Direct Tax` = DirectTax) %>%
   rename(`Return Tax` = ReturnTax) %>%
@@ -552,7 +550,7 @@ pander(Road2Retirement_to_print_TaxBenefit)
 In case of married couples with double income, the following considerations should be taken into account.
 Pension funds are individual (not familiar). However, the tax rates are familiar, i.e. number of children and marital status are considered. That implies that the user can perform two calculations, both with some level of inaccuracy.
 
-1. The user can simply enter all the information individually, without taking into account his partner. It that case, most likely, the tax rate will be underestimated and as a consequence the tax benefit generated.
+1. The user can simply enter all the information individually, without taking into account his partner. It that case, most likely, the tax rate will be underestimated and as a consequence the tax benefits generated.
 
 2. The user can enter the combined amount of all variables (salary, current assets and purchases). In this case, however, note that two simplifications have been taken into account.
 
