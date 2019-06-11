@@ -1,16 +1,23 @@
-# SmaRP 1.1.1-9000
+# SmaRP 1.2.0
 
-* launch_application() exposes the launch.browser argument to shiny::runApp (#108).
-* Updated install_github() README instructions due to un-supported build_vignettes argument (#120).
-* Automatic cleanup of data created via configure (#119).
-* Background header does not re-center with increasing page width (#123).
-* DESCRIPTION file includes URL and BugReports sections (#125).
-* Made a few syntax changes in vignettes (#101).
-* Changed Pillars nomenclature to be consistent with official terminology (#103).
-* Annual Contribution initialized at 5000, numericInput re-set to 0 or minimum 
-value if lower number is inserted, unused maximum values erased (#129).
-* Fixed missing page title (#118).
+### Changes
 
+* The naming of pension funds was reviewed and aligned, and now reflects the official terminology (#103).
+* The 3rd Pillar annual contribution in the app is now initialized with a non-zero value (#129).
+* Negative input values are now re-set to zero, and maximum allowed values were consolidated (#129).
+* `launch_application()` exposes the `launch.browser` argument of `shiny::runApp()` (#108).
+* Minor updates to package vignettes (#101).
+
+### Fixes
+
+* Missing page title in the app (#118).
+* Missing automatic cleanup of data created via configure (#119).
+* App header background image re-centering upon page resize (#123).
+
+### Maintenance
+
+* Included `URL` and `BugReports` in DESCRIPTION file (#125).
+* Updated `install_github()` README instructions due to un-supported `build_vignettes` argument (#120).
 
 # SmaRP 1.1.1
 
