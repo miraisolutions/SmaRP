@@ -7,9 +7,8 @@
 * DESCRIPTION file includes URL and BugReports sections (#125).
 * Made a few syntax changes in vignettes (#101).
 * Changed Pillars nomenclature to be consistent with official terminology (#103).
-* Set parameters initialized in global, Annual Contribution initialized at 5000, 
-numericInput re-set to 0 or minimum value if lower number is inserted, unused maximum values erased,
-updated roxygen (#129).
+* Annual Contribution initialized at 5000, numericInput re-set to 0 or minimum 
+value if lower number is inserted, unused maximum values erased (#129).
 
 fixes #129  (#129).
 

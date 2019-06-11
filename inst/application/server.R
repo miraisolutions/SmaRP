@@ -34,7 +34,7 @@ function(input, output, session) {
 
     if (input$provideRetirementAge) {
       validate(need(input$RetirementAge, VM$RetirementAge))
-      min(value$retirement, input$RetirementAge)
+      min(value$max_retirement, input$RetirementAge)
     } else {
       if (gender() == "M") {
         value$retirement_male
@@ -59,7 +59,7 @@ function(input, output, session) {
   })
 
   CurrentP3 <- reactive({
-    update_min(input$CurrentP3, "input$CurrentP3", session)
+    update_neg("CurrentP3", session)
 
     if (P3purchase() == 0 &
         Salary() == 0 & CurrentP2() == 0 & P2purchase() == 0) {
@@ -76,7 +76,7 @@ function(input, output, session) {
   })
 
   P3purchase <- reactive({
-    update_min(input$P3purchase, "input$P3purchase", session)
+    update_neg("P3purchase", session)
     isnotAvailableReturnZero(input$P3purchase)
   })
 
@@ -85,7 +85,7 @@ function(input, output, session) {
   })
 
   returnP3 <- reactive({
-    update_min(input$returnP3, "input$returnP3", session)
+    update_neg("returnP3", session)
 
     if (CurrentP3() == 0 &
         P3purchase() == 0 &
@@ -158,13 +158,13 @@ function(input, output, session) {
   }) %>% debounce(millis = 100)
 
   SalaryGrowthRate <- reactive({
-    update_min(input$SalaryGrowthRate, "input$SalaryGrowthRate", session)
+    update_neg("SalaryGrowthRate", session)
     isnotAvailableReturnZero(input$SalaryGrowthRate / 100)
   })
 
   # 2nd Pillar
   CurrentP2 <- reactive({
-    update_min(input$CurrentP2, "input$CurrentP2", session)
+    update_neg("CurrentP2", session)
     isnotAvailableReturnZero(input$CurrentP2)
   })
 
@@ -177,7 +177,7 @@ function(input, output, session) {
   })
 
   P2purchase <- reactive({
-    update_min(input$P2purchase, "input$P2purchase", session)
+    update_neg("P2purchase", session)
     isnotAvailableReturnZero(input$P2purchase)
   })
 

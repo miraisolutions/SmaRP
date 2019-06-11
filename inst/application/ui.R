@@ -110,7 +110,7 @@ fluidPage(
                   numericInput(
                     "RetirementAge",
                     label = NULL, # "Desired Retirement Age",
-                    value = value$retirement,
+                    value = value$max_retirement,
                     step = 1,
                     min = value$min_retirement,
                     max = value$max_retirement
@@ -148,7 +148,7 @@ fluidPage(
                 6,
                 numericInput("NChildren",
                              label = "# Children",
-                             value = value$children,
+                             value = value$min_children,
                              min = 0,
                              max = value$max_children
                 ) %>%
@@ -215,7 +215,7 @@ fluidPage(
                   bs_embed_tooltip(title = IB$CurrentP2, placement = "right"),
                 numericInput("P2interestRate",
                              label = "Interest Rate % (optional)",
-                             value = value$p2_interest,
+                             value = value$min_p2_interest,
                              step = 1,
                              min = value$min_p2_interest
                 ) %>%
