@@ -7,7 +7,7 @@ Sys.setlocale("LC_TIME", "C")
 
 # info tooltips
 bs_embed_tooltip_body <- function(..., container = "body") {
-  # Specify container = "body", which is particularly useful to get widr tootips
+  # Specify container = "body", which is particularly useful to get wider tooltips
   # in the document flow, which is the same as specified in the AdminLTE JS code
   # formerly loaded via shinyWidgets::useShinydashboardPlus().
   # See https://getbootstrap.com/docs/3.3/javascript/#tooltips-options,
