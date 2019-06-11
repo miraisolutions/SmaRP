@@ -178,7 +178,7 @@ lookupTaxAmount <- function(Income, Tabelle, CivilStatus) {
 #'
 #' @import dplyr
 #'
-#' @return data.frame tax benefit path.
+#' @return data.frame tax benefits path.
 #' @examples
 #' \dontrun{buildTaxBenefits(
 #'  birthday,
@@ -236,7 +236,7 @@ buildTaxBenefits <- function(birthday,
 #'
 #' @rdname calcTaxBenefitSwiss
 #'
-#' @description Calculates the tax benefit as a difference of the taxes paid with and without retirement contributions.
+#' @description Calculates the tax benefits as a difference of the taxes paid with and without retirement contributions.
 #' Calls 'getTaxAmount()', therefore, it assumes objects in the global environment.
 #' @seealso [getTaxAmount()]
 #' @seealso swisstax
@@ -245,7 +245,7 @@ buildTaxBenefits <- function(birthday,
 #' @param TaxableIncome Vector of annual taxable income until retirement.
 #' @inheritParams getTaxAmount
 #'
-#' @return Single tax benefit (tax relief) of one contribution.
+#' @return Single tax benefits (tax relief) of one contribution.
 #' @examples
 #' \dontrun{
 #'   calcTaxBenefitSwiss(ExpectedSalaryPath = seq(90000, 100000, 1000),
