@@ -10,7 +10,6 @@
 * Annual Contribution initialized at 5000, numericInput re-set to 0 or minimum 
 value if lower number is inserted, unused maximum values erased (#129).
 
-fixes #129  (#129).
 
 # SmaRP 1.1.1
 
