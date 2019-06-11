@@ -448,9 +448,8 @@ need_not_zero <- function(input, inputname) {
 update_neg <- function(inputId, session) {
   val <- 0
   input <- session$input[[inputId]]
-  # name <- sub('.', '', unlist(strsplit(name, "input")))[2]
   if (!is.na(input) && input < val) {
-    updateNumericInput(session, toString(inputId), value = val)
+    shiny::updateNumericInput(session, toString(inputId), value = val)
   }
 }
 
