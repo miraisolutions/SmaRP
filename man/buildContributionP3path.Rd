@@ -10,21 +10,21 @@ buildContributionP3path(birthday, P3purchase, CurrentP3, returnP3,
 \arguments{
 \item{birthday}{Date of birth ("YYYY-MM-DD").}
 
-\item{P3purchase}{Annual voluntary contribution to the Private Pension Fund (Pillar 3).}
+\item{P3purchase}{Annual voluntary contribution to the Private Fund (3rd Pillar).}
 
-\item{CurrentP3}{Value of the current assets in the Private Pension Fund (Pillar 3).}
+\item{CurrentP3}{Value of the current assets in the Private Fund (3rd Pillar).}
 
-\item{returnP3}{Annual expected return on the Private Pension Fund.}
+\item{returnP3}{Annual expected return on the Private Fund.}
 
 \item{givenday}{Date at which the age is computed ("YYYY-MM-DD").}
 
 \item{RetirementAge}{Age of retirement.}
 }
 \value{
-All contributions to the Pillar III in annual basis.
+All contributions to the 3rd Pillar on an annual basis.
 }
 \description{
-Build the contribution path for a standard pension fund, called Pillar III in Switzerland.
+Build the contribution path for a standard pension fund, called 3rd Pillar in Switzerland.
 Based on 'calcAnnuityAcumPath()'.
 }
 \examples{

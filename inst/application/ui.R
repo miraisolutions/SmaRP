@@ -10,7 +10,7 @@ boxPlus <- shinydashboardPlus::boxPlus
 
 # fluidPage UI
 fluidPage(
-
+  title = "SmaRP: Smart Retirement Planning",
   tags$head(
     tags$script(
       type = "text/javascript",
@@ -75,7 +75,7 @@ fluidPage(
                 6,
                 dateInput("Birthdate",
                           label = "Birthdate",
-                          value = "1980-12-30",
+                          value = value$birthday,
                           format = "dd-mm-yyyy"
                 ) %>%
                   bs_embed_tooltip(title = IB$Birthdate, placement = "right")
@@ -86,7 +86,7 @@ fluidPage(
                              label = "Gender Affiliation",
                              inline = TRUE,
                              choices = list("Male" = "M", "Female" = "F"),
-                             selected = "M"
+                             selected = value$gender
                 )
               )
             ),
@@ -110,11 +110,10 @@ fluidPage(
                   numericInput(
                     "RetirementAge",
                     label = NULL, # "Desired Retirement Age",
-                    value = 64,
+                    value = value$max_retirement,
                     step = 1,
-                    min = 55,
-                    max = 70 # note this doesn't prevent or warn users entering
-                    # larger numbers manually (see e.g. https://github.com/rstudio/shiny/issues/1022#issuecomment-282305308)
+                    min = value$min_retirement,
+                    max = value$max_retirement
                   ) %>%
                     bs_embed_tooltip(title = IB$RetirementAge, placement = "right")
                 )
@@ -128,7 +127,7 @@ fluidPage(
                 selectInput("plzgemeinden",
                             label = h5("Postal Code / Municipality"),
                             choices = PLZGemeinden$PLZGDENAME,
-                            selected = with(PLZGemeinden, PLZGDENAME[match(8001, PLZ)])
+                            selected = value$plz
                 )
               )
             ),
@@ -142,16 +141,16 @@ fluidPage(
                                bs_embed_tooltip(title = IB$rate_group, placement = "right"),
                              inline = TRUE,
                              choices = Rate_group.list,
-                             selected = "A"
+                             selected = value$rate
                 )
               ),
               column(
                 6,
                 numericInput("NChildren",
                              label = "# Children",
-                             value = 0,
+                             value = value$min_children,
                              min = 0,
-                             max = 9
+                             max = value$max_children
                 ) %>%
                   bs_embed_tooltip(title = IB$NChildren, placement = "right")
               )
@@ -165,7 +164,7 @@ fluidPage(
                              label = "Church Affiliation",
                              inline = TRUE,
                              choices = church_tax.list,
-                             selected = "A"
+                             selected = value$church
                 )
               )
             ),
@@ -176,10 +175,10 @@ fluidPage(
         ), # end  Personal Info fluidRow
 
 
-        # Pillar II  -------
+        # 2nd Pillar  -------
         fluidRow(
           boxPlus(
-            title = "Occupational Pension Fund - Pillar II",
+            title = "Occupational Fund - Second Pillar",
             status = "primary",
             collapsible = TRUE,
             collapsed = TRUE,
@@ -192,17 +191,16 @@ fluidPage(
                 6,
                 numericInput("Salary",
                              label = "Current Annual Salary",
-                             value = 100000,
+                             value = value$salary,
                              step = 1000,
                              min = 0
                 ) %>%
                   bs_embed_tooltip(title = IB$Salary, placement = "right"),
                 numericInput("SalaryGrowthRate",
                              label = "Expected Salary Growth Rate %",
-                             value = 0.5,
+                             value = value$growth_rate,
                              step = 0.1,
-                             min = 0,
-                             max = 100
+                             min = 0
                 ) %>%
                   bs_embed_tooltip(title = IB$SalaryGrowthRate, placement = "right")
               ),
@@ -210,17 +208,16 @@ fluidPage(
                 6,
                 numericInput("CurrentP2",
                              label = "Current BVG Assets",
-                             value = 100000,
+                             value = value$p2,
                              step = 1000,
                              min = 0
                 ) %>%
                   bs_embed_tooltip(title = IB$CurrentP2, placement = "right"),
                 numericInput("P2interestRate",
                              label = "Interest Rate % (optional)",
-                             value = 100 * BVGMindestzinssatz,
+                             value = value$min_p2_interest,
                              step = 1,
-                             min = 100 * BVGMindestzinssatz,
-                             max = 100
+                             min = value$min_p2_interest
                 ) %>%
                   bs_embed_tooltip(title = IB$P2interestRate, placement = "right")
               )
@@ -230,7 +227,7 @@ fluidPage(
                 6,
                 numericInput("P2purchase",
                              label = "Voluntary Purchases",
-                             value = 0,
+                             value = value$p2_voluntary,
                              step = 500,
                              min = 0
                 ) %>%
@@ -249,10 +246,10 @@ fluidPage(
           ) # end boxPlus
         ), # end fluidRow
 
-        # Pillar III  -------
+        # 3rd Pillar -------
         fluidRow(
           boxPlus(
-            title = "Private Pension Fund - Pillar III",
+            title = "Private Fund - Third Pillar",
             status = "primary",
             collapsible = TRUE,
             collapsed = TRUE,
@@ -265,7 +262,7 @@ fluidPage(
                 12,
                 numericInput("CurrentP3",
                              label = "Current Assets",
-                             value = 50000,
+                             value = value$p3,
                              step = 1000,
                              min = 0
                 ) %>%
@@ -277,23 +274,22 @@ fluidPage(
                 12,
                 numericInput("P3purchase",
                              label = "Annual Contribution",
-                             value = 0,
+                             value = value$p3_annual,
                              step = 500,
                              min = 0
                 ) %>%
                   bs_embed_tooltip(title = IB$P3purchase, placement = "right"),
                 numericInput("returnP3",
                              label = "Expected Return %",
-                             value = BVGMindestzinssatz * 100,
+                             value = value$p3_return,
                              step = 0.1,
-                             min = 0,
-                             max = 100
+                             min = 0
                 ) %>%
                   bs_embed_tooltip(title = IB$returnP3, placement = "right")
               )
             )
-          ) # end Pillar III boxPlus
-        ), # end Pillar III fluidRow
+          ) # end of 3rd Pillar boxPlus
+        ), # end of 3rd Pillar fluidRow
 
         NULL
 

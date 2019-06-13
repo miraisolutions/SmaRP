@@ -108,15 +108,15 @@ getRetirementCalendar <- function(birthday, givenday = today("UTC"), RetirementA
 #'
 #' @rdname buildContributionP2Path
 #'
-#' @description Gather all the required information to project the annual contributions to the occupational pension fund.
+#' @description Gather all the required information to project the annual contributions to the occupational fund.
 #'
 #' @inheritParams buildt
 #' @template salary
 #' @template P2
-#' @param CurrentP2 Value of the current assets in the Occupational Pension Fund.
+#' @param CurrentP2 Value of the current assets in the Occupational Fund.
 #' @param rate Interests rate on annual basis. Constant interest rates are assumed.
 #'
-#' @return All contributions to the Pillar II in annual basis.
+#' @return All contributions to the 2nd Pillar on an annual basis.
 #'
 #' @examples
 #' \dontrun{
@@ -197,7 +197,7 @@ calcExpectedSalaryPath <- function(Salary, SalaryGrowthRate, ncp) {
 #'
 #' @rdname calcBVGpurchase
 #'
-#' @description Calculate the path of purchases to the Pilar II (Occupational pension fund, BVG).
+#' @description Calculate the path of purchases to the 2nd Pillar (Occupational fund, BVG).
 #'
 #' @inheritParams calcExpectedSalaryPath
 #' @inheritParams buildContributionP2Path
@@ -220,15 +220,15 @@ calcBVGpurchase <- function(TypePurchase, P2purchase, ncp) {
 #'
 #' @rdname buildContributionP3path
 #'
-#' @description Build the contribution path for a standard pension fund, called Pillar III in Switzerland.
+#' @description Build the contribution path for a standard pension fund, called 3rd Pillar in Switzerland.
 #' Based on 'calcAnnuityAcumPath()'.
 #'
 #' @inheritParams buildt
 #' @inheritParams calcExpectedSalaryPath
 #' @template P3
-#' @param CurrentP3 Value of the current assets in the Private Pension Fund (Pillar 3).
+#' @param CurrentP3 Value of the current assets in the Private Fund (3rd Pillar).
 #'
-#' @return All contributions to the Pillar III in annual basis.
+#' @return All contributions to the 3rd Pillar on an annual basis.
 #' @examples
 #' \dontrun{
 #' buildContributionP3path(
@@ -431,6 +431,25 @@ need_not_zero <- function(input, inputname) {
     paste0(VM$need_not_zero_base, inputname)
   } else {
     NULL
+  }
+}
+
+#' @title update_neg
+#'
+#' @rdname update_neg
+#'
+#' @description Automatically updates numericInput to zero if input is negative.
+#'
+#' @param inputId Field name.
+#' @param session Current session.
+#'
+#' @return Zero value.
+#' @export
+update_neg <- function(inputId, session) {
+  val <- 0
+  input <- session$input[[inputId]]
+  if (!is.na(input) && input < val) {
+    shiny::updateNumericInput(session, toString(inputId), value = val)
   }
 }
 
