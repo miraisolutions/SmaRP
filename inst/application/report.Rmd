@@ -9,6 +9,7 @@ output:
       latex_engine: xelatex
       includes:
         in_header: header.tex
+classoption: a4paper
 params:
       Salary: NA
       birthday: NA
