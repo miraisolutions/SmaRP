@@ -1,5 +1,5 @@
-# test via
-#   docker build -t install_scripts:test -f docker/Dockerfile-test-scripts .
+# test e.g. via
+#   docker build --pull -t mirai/smarp_install_scripts:test -f docker/Dockerfile-test-scripts .
 
 FROM rocker/r-ver:3.5.3
 
@@ -25,3 +25,4 @@ RUN sh install_tinytex.sh fancyhdr
 
 # Re-installation of TinyTeX
 COPY docker/reinstall_tinytex.sh .
+RUN sh reinstall_tinytex.sh

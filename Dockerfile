@@ -32,19 +32,19 @@ RUN sh install_pandoc.sh $PANDOC_DEB && rm install_pandoc.sh
 COPY docker/install_tinytex.sh .
 RUN sh install_tinytex.sh fancyhdr
 ## Script for re-installation of TinyTeX in the running container if needed
+#  - this also (re-)executes (and therefore depends on) install_tinytex.sh
 COPY docker/reinstall_tinytex.sh .
 
 ## Install major fixed R dependencies
-#  - they will be always needed and we want them in a dedicated layer,
-#    as opposed to getting them dinamically via `remotes::install_local()`
+#  - they will always be needed and we want them in a dedicated layer,
+#    as opposed to getting them dynamically via `remotes::install_local()`
 RUN install2.r --error \
   shiny \
   dplyr \
   rmarkdown
 
-
 ## Copy the app to the image
-# location of the SmaRP source package in the image
+# temporary location of the SmaRP source package in the image
 ENV MARP=/tmp/SmaRP
 COPY . $MARP
 
