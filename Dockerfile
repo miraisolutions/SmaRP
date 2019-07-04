@@ -31,7 +31,8 @@ RUN sh install_pandoc.sh $PANDOC_DEB && rm install_pandoc.sh
 # NOTE: it is important to install all required LaTeX packages when building the image!
 COPY docker/install_tinytex.sh .
 RUN sh install_tinytex.sh fancyhdr
-## Script for re-installation of TinyTeX in the running container if needed
+## Script for re-installation of TinyTeX in the running container
+#  - needed if at a certain point the "Remote repository is newer than local"
 #  - this also (re-)executes (and therefore depends on) install_tinytex.sh
 COPY docker/reinstall_tinytex.sh .
 
