@@ -1,8 +1,8 @@
 # test e.g. via
-#   docker build --pull -t install_scripts:test -f docker/Dockerfile-test-scripts .
-#   docker run --rm install_scripts:test bash -c 'pandoc -v'
-#   docker run --rm install_scripts:test R -e 'tinytex::tlmgr_install("beamer")'
-#   docker run --rm install_scripts:test bash /reinstall_tinytex.sh
+#   docker build --pull -t install_scripts:smarp-test -f docker/Dockerfile-test-scripts .
+#   docker run --rm install_scripts:smarp-test bash -c 'pandoc -v'
+#   docker run --rm install_scripts:smarp-test R -e 'tinytex::tlmgr_install("beamer")'
+#   docker run --rm install_scripts:smarp-test bash /reinstall_tinytex.sh
 FROM rocker/r-ver:3.5.3
 
 RUN apt-get update \
