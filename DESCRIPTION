@@ -1,6 +1,6 @@
 Package: SmaRP
 Title: SmaRP: Smart Retirement Planning
-Version: 1.1.1-9000
+Version: 1.2.0-9000
 Authors@R: c(person("Gabriel", "Foix", role = c("aut", "cre"),
                     email = "gabriel.foix@mirai-solutions.com"),
              person("Francesca", "Vitalini", role = c("aut"),
@@ -14,6 +14,9 @@ Authors@R: c(person("Gabriel", "Foix", role = c("aut", "cre"),
 Description: Shiny App to calculate total pension fund.
 Depends: R (>= 3.5.0)
 License: GPL-3
+URL: https://mirai-solutions.ch,
+    https://github.com/miraisolutions/SmaRP#readme
+BugReports: https://github.com/miraisolutions/SmaRP/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
