@@ -3,6 +3,9 @@ kind: BackendConfig
 metadata:
   name: smarp-backendconfig
 spec:
+  # Shiny uses WebSockets, for which the default
+  # max time a connection can live is only 30s,
+  # not suitable to interactive apps
   timeoutSec: 10800 # 3h
   sessionAffinity:
     affinityType: "CLIENT_IP"
