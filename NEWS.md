@@ -1,6 +1,7 @@
 # SmaRP 1.2.0-9000
 
-* Upgrade deployed app to R 3.5.3 (from R 3.5.1), improve Docker image with refactored Dockerfle (#91).
+* Add directory with GKE instructions and manifests.
+* Upgrade deployed app to R 3.5.3 (from R 3.5.1), improve Docker image with refactored Dockerfile (#91).
 
 # SmaRP 1.2.0
 

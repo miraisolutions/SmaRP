@@ -8,4 +8,5 @@
 ^Dockerfile$
 ^docker$
 ^cloudbuild\.yaml$
+^gke$
 ^inst/application/data/taxdata$
