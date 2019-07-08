@@ -7,4 +7,5 @@
 ^\.Rproj\.user$
 ^Dockerfile$
 ^cloudbuild\.yaml$
+^gke$
 ^inst/application/data/taxdata$
