@@ -1,0 +1,8 @@
+apiVersion: cloud.google.com/v1beta1
+kind: BackendConfig
+metadata:
+  name: smarp-backendconfig
+spec:
+  timeoutSec: 10800 # 3h
+  sessionAffinity:
+    affinityType: "CLIENT_IP"
