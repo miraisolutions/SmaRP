@@ -1,5 +1,7 @@
 # SmaRP 1.2.0-9000
 
+* Add directory with GKE instructions and manifests.
+
 # SmaRP 1.2.0
 
 ### Changes
