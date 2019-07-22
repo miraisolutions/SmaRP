@@ -174,7 +174,7 @@ fluidPage(
 
           ), # end Personal Info SmaRPanel
 
-          # Pillar II  -------
+          # 2nd Pillar  -------
           SmaRPanel(
             id = "pillar-ii",
             title = "Occupational Fund - Second Pillar",
@@ -238,7 +238,7 @@ fluidPage(
             )
           ), # end SmaRPanel
 
-          # Pillar III  -------
+          # 3rd Pillar  -------
           SmaRPanel(
             id = "pillar-iii",
             title = "Private Fund - Third Pillar",

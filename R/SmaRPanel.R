@@ -2,7 +2,7 @@
 #'
 #' @rdname SmaRPanel
 #'
-#' @description Custom collapsible panel for the SmaRP Shiuny app.
+#' @description Custom collapsible panel for the SmaRP Shiny app.
 #'
 #' @param id The unique id of the panel.
 #' @param ... UI elements to be displayed in the panel body.
@@ -27,16 +27,18 @@
 SmaRPanel <- function(id, ..., title = NULL, collapsed = NA) {
   # we can add footer if needed
 
+  tags <- htmltools::tags
+
   # append -smarp to the first class
   .class <- function(x) paste(x, sub("^([^ ]+).*$", "\\1-smarp", x), sep = " ")
   # specific ids within the panel id
   .with_id <- function(x) paste(id, x, sep = "-")
 
   heading <- if (!is.null(title) || !is.na(collapsed)) {
-    htmltools::tags$div(
+    tags$div(
       id = .with_id("heading"),
       class = .class("panel-heading"),
-      htmltools::tags$div(
+      tags$div(
         class = .class("panel-title"),
         title,
         if (!is.na(collapsed)) {
@@ -52,21 +54,20 @@ SmaRPanel <- function(id, ..., title = NULL, collapsed = NA) {
     )
   }
 
-  body <-
+  body <- tags$div(
     # div wrapper similar to bsplus::bs_collapse()
-    htmltools::tags$div(
-      id = .with_id("body"),
-      class = paste(
-        if (!is.na(collapsed)) "collapse",
-        if (isTRUE(!collapsed)) "in"
-      ),
-      htmltools::tags$div(
-        class = .class("panel-body"),
-        ...
-      )
+    id = .with_id("body"),
+    class = paste(
+      if (!is.na(collapsed)) "collapse",
+      if (isTRUE(!collapsed)) "in"
+    ),
+    tags$div(
+      class = .class("panel-body"),
+      ...
     )
+  )
 
-  htmltools::tags$div(
+  tags$div(
     id = id,
     class = .class("panel panel-default"),
     heading,
