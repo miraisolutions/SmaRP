@@ -26,29 +26,29 @@ function(input, output, session) {
 
   # Retirement Age
   RetirementAge <- reactive({
+
+    val <- max(min(isnotAvailableReturnZero(input$RetirementAge), value$max_retirement), value$min_retirement)
+    if (!is.na(input$RetirementAge) && input$RetirementAge != val) {
+      updateNumericInput(session, "RetirementAge", value = val)
+    }
+
     if (input$provideRetirementAge) {
       validate(need(input$RetirementAge, VM$RetirementAge))
-      min(70, input$RetirementAge)
+      min(value$max_retirement, input$RetirementAge)
     } else {
       if (gender() == "M") {
-        MRetirementAge
+        value$retirement_male
       } else {
-        FRetirementAge
+        value$retirement_female
       }
     }
   }) %>% debounce(millis = 100)
 
-  observeEvent(input$RetirementAge, ignoreNULL = TRUE, {
-    if (!is.na(input$RetirementAge) && input$RetirementAge > 70) {
-      updateNumericInput(session, "RetirementAge", value = 70)
-    }
-  })
-
   observeEvent(input$gender, {
     if (gender() == "F") {
-      updateNumericInput(session, "RetirementAge", value = 64)
+      updateNumericInput(session, "RetirementAge", value = value$retirement_female)
     } else {
-      updateNumericInput(session, "RetirementAge", value = 65)
+      updateNumericInput(session, "RetirementAge", value = value$retirement_male)
     }
   })
 
@@ -59,6 +59,8 @@ function(input, output, session) {
   })
 
   CurrentP3 <- reactive({
+    update_neg("CurrentP3", session)
+
     if (P3purchase() == 0 &
         Salary() == 0 & CurrentP2() == 0 & P2purchase() == 0) {
       validate(
@@ -74,6 +76,7 @@ function(input, output, session) {
   })
 
   P3purchase <- reactive({
+    update_neg("P3purchase", session)
     isnotAvailableReturnZero(input$P3purchase)
   })
 
@@ -82,6 +85,8 @@ function(input, output, session) {
   })
 
   returnP3 <- reactive({
+    update_neg("returnP3", session)
+
     if (CurrentP3() == 0 &
         P3purchase() == 0 &
         Salary() == 0 & CurrentP2() == 0 & P2purchase() == 0) {
@@ -121,7 +126,7 @@ function(input, output, session) {
 
   # Number of kids (max = 9)
   NChildren <- reactive({
-    val <- max(min(isnotAvailableReturnZero(input$NChildren), 9), 0)
+    val <- max(min(isnotAvailableReturnZero(input$NChildren), value$max_children), 0)
     if (!is.na(input$NChildren) && input$NChildren != val) {
       updateNumericInput(session, "NChildren", value = val)
     }
@@ -145,7 +150,7 @@ function(input, output, session) {
 
   # Salary
   Salary <- reactive({
-    val <- max(min(isnotAvailableReturnZero(input$Salary), 1e+08), 0)
+    val <- max(min(isnotAvailableReturnZero(input$Salary), value$max_salary), 0)
     if (!is.na(input$Salary) && input$Salary != val) {
       updateNumericInput(session, "Salary", value = val)
     }
@@ -153,23 +158,26 @@ function(input, output, session) {
   }) %>% debounce(millis = 100)
 
   SalaryGrowthRate <- reactive({
+    update_neg("SalaryGrowthRate", session)
     isnotAvailableReturnZero(input$SalaryGrowthRate / 100)
   })
 
   # 2nd Pillar
   CurrentP2 <- reactive({
+    update_neg("CurrentP2", session)
     isnotAvailableReturnZero(input$CurrentP2)
   })
 
   P2interestRate <- reactive({
-    if (isnotAvailable(input$P2interestRate)) {
-      BVGMindestzinssatz
-    } else {
-      input$P2interestRate / 100
+    val <- value$min_p2_interest
+    if (!is.na(input$P2interestRate) && input$P2interestRate < val) {
+      updateNumericInput(session, "P2interestRate", value = val)
     }
+    isnotAvailableReturnZero(input$P2interestRate / 100)
   })
 
   P2purchase <- reactive({
+    update_neg("P2purchase", session)
     isnotAvailableReturnZero(input$P2purchase)
   })
 
@@ -241,11 +249,11 @@ function(input, output, session) {
   TserieGraphData <- reactive({
     Road2Retirement() %>%
       mutate(`Tax Benefits` = TotalTax) %>%
-      mutate(`Occupational Fund` = DirectP2 + ReturnP2) %>%
-      mutate(`Private Fund` = DirectP3 + ReturnP3) %>%
+      mutate(`2nd Pillar` = DirectP2 + ReturnP2) %>%
+      mutate(`3rd Pillar` = DirectP3 + ReturnP3) %>%
       select(Calendar,
-             `Occupational Fund`,
-             `Private Fund`,
+             `2nd Pillar`,
+             `3rd Pillar`,
              `Tax Benefits`) %>%
       .[, colSums(. != 0, na.rm = TRUE) > 0]
   })
@@ -269,9 +277,9 @@ function(input, output, session) {
   FotoFinish <- reactive({
     Road2Retirement() %>%
       mutate(`Tax Benefits` = TotalTax) %>%
-      mutate(`Occupational Fund` = DirectP2 + ReturnP2) %>%
-      mutate(`Private Fund` = DirectP3 + ReturnP3) %>%
-      select(`Occupational Fund`, `Private Fund`, `Tax Benefits`) %>%
+      mutate(`2nd Pillar` = DirectP2 + ReturnP2) %>%
+      mutate(`3rd Pillar` = DirectP3 + ReturnP3) %>%
+      select(`2nd Pillar`, `3rd Pillar`, `Tax Benefits`) %>%
       tail(1) %>%
       prop.table() %>%
       select_if(function(x)

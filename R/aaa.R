@@ -6,6 +6,6 @@ utils::globalVariables(
   "Kirchensteuer", "MaxBVG", "MaxContrTax", "MinBVG", "NBU", "NetSalary",
   "P3ContributionPath", "PLZ", "PLZGemeinden", "TaxBenefits", "TaxableIncome",
   "TotalContr", "TotalP3", "TotalTax", "VM", "Verheiratet", "Versicherung",
-  "VersicherungsK", "VersicherungsL", "VersicherungsV", "Calendar", "h4", "icon", "maxALV",
-  "maxNBU", "modalDialog", "removeModal", "showModal", "taxburden.list")
+  "VersicherungsK", "VersicherungsL", "VersicherungsV", "Calendar", "maxALV",
+  "maxNBU", "taxburden.list")
 )

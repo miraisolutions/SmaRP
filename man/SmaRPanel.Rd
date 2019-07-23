@@ -20,7 +20,7 @@ expanded. If \code{NA} (the default), a non-collapsible panel is created.}
 The UI definition of the panel.
 }
 \description{
-Custom collapsible panel for the SmaRP Shiuny app.
+Custom collapsible panel for the SmaRP Shiny app.
 }
 \details{
 All elements of the panel are specified with additional classes

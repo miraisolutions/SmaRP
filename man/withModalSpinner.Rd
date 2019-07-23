@@ -4,7 +4,7 @@
 \alias{withModalSpinner}
 \title{withModalSpinner}
 \usage{
-withModalSpinner(expr, info, spinner = icon("spinner", "fa-spin"),
+withModalSpinner(expr, info, spinner = shiny::icon("spinner", "fa-spin"),
   size = "m")
 }
 \arguments{

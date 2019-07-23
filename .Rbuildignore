@@ -6,5 +6,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^Dockerfile$
+^docker$
 ^cloudbuild\.yaml$
+^gke$
 ^inst/application/data/taxdata$

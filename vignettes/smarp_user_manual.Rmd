@@ -73,13 +73,13 @@ The third panel is the private fund. It is non-compulsory and only includes annu
 
 The text box above the plots summarizes the total pension fund the user will get at the end of his working life.[^5]
 
-The total pension fund can be divided in three components: Occupational fund, Private fund and tax benefits fund.
+The total pension fund can be divided in three components: Occupational fund, Private fund and tax benefits.
 
-**The tax benefits fund** cannot be directly capitalized as the other two, but is generated indirectly through tax relieves coming from contributions to the other funds.
+**The tax benefits** cannot be directly capitalized as the other two, but is generated indirectly through tax relieves coming from contributions to the other funds.
 
-There are some important notes to consider about the tax benefits fund.
+There are some important notes to consider about the tax benefits.
 
-- Contributions are calculated as the tax relief is generated and therefore are related to the marginal tax rate of each individual. The higher the tax rate, the higher the tax relief and thus the tax benefits fund.
+- Contributions are calculated as the tax relief is generated and therefore are related to the marginal tax rate of each individual. The higher the tax rate, the higher the tax relief and thus the tax benefits.
 
 - The cap on the tax relief is defined by the Swiss federal government.
 

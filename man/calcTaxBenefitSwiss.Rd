@@ -23,10 +23,10 @@ calcTaxBenefitSwiss(ExpectedSalaryPath, TaxableIncome, rate_group, Age,
 \item{churchtax}{Y/N \code{Character} Y/N}
 }
 \value{
-Single tax benefit (tax relief) of one contribution.
+Single tax benefits (tax relief) of one contribution.
 }
 \description{
-Calculates the tax benefit as a difference of the taxes paid with and without retirement contributions.
+Calculates the tax benefits as a difference of the taxes paid with and without retirement contributions.
 Calls 'getTaxAmount()', therefore, it assumes objects in the global environment.
 }
 \examples{
