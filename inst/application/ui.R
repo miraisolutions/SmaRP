@@ -236,7 +236,7 @@ fluidPage(
                 )
               )
             )
-          ), # end SmaRPanel
+          ), # end 2nd Pillar SmaRPanel
 
           # 3rd Pillar  -------
           SmaRPanel(
