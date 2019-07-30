@@ -1,6 +1,6 @@
 #' @title withModalSpinner
-#' 
-#' @rdname withModalSpinner 
+#'
+#' @rdname withModalSpinner
 #'
 #' @description Display a modal window with a spinning wheel and an information message
 #' while a (time-consuming) expression is evaluated.
@@ -16,15 +16,15 @@
 #'
 #' @md
 withModalSpinner <- function(expr, info,
-                             spinner = icon("spinner", "fa-spin"),
+                             spinner = shiny::icon("spinner", "fa-spin"),
                              size = "m") {
-  showModal(
-    modalDialog(
-      h4(spinner, info),
+  shiny::showModal(
+    shiny::modalDialog(
+      htmltools::h4(spinner, info),
       footer = NULL,
       size = size
     )
   )
   force(expr)
-  removeModal()
+  shiny::removeModal()
 }
