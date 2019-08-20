@@ -209,7 +209,7 @@ fluidPage(
                 numericInput("P2interestRate",
                              label = "Interest Rate % (optional)",
                              value = value$min_p2_interest,
-                             step = 1,
+                             step = 0.1,
                              min = value$min_p2_interest
                 ) %>%
                   bs_embed_tooltip_body(title = IB$P2interestRate, placement = "right")
