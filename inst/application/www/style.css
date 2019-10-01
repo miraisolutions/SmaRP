@@ -80,15 +80,20 @@ h4 {
   margin-top: 25px;
 }
 
-#Totals {
+/* define style only when non-empty, similar to .pre, so that no empty box is
+shown before the textOutput is populated */
+#Totals:not(:empty) {
   font-family: inherit;
   color: #008cc3;
   font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #f5f5f5;
   text-align: center;
-  margin-left: 3%;
-  margin-right: 10%;
-  margin-top: 2%;
-  margin-bottom: 0.5%;
+  padding: 9.5px; /* same as .pre */
+  /* same size as the plots */
+  width: 800px;
+  max-width: 100%;
 }
 
 #table {
@@ -189,6 +194,8 @@ input[type=checkbox], input[type=radio] {
 */
 }
 .tab-content {
+  padding: 10px;
+  padding-top: 15px;
 /*
   padding: 6px 12px;
   border: 1px solid #008cc3;
