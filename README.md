@@ -50,6 +50,9 @@ SmaRP::launch_application()
 Since **SmaRP** is developed using a [GitFlow](git-flow#readme) approach, the `master` branch always reflects the _latest_ [release](https://github.com/miraisolutions/SmaRP/releases) of the live app, whereas branch `develop` collects the latest delivered developments for the _next_ releases, which can be installed locally via
 ``` r
 devtools::install_github("miraisolutions/SmaRP", "develop", build_opts = "")
+```
+
+Note that **SmaRP** is deployed using [version-stable](https://github.com/rocker-org/rocker-versioned#readme) images from the [Rocker project](https://www.rocker-project.org/). The target environment of live app is currently bound to R 3.5.3. Therefore, the app is developed and tested with the corresponding version of R and packages, as opposed to the latest available versions.
 
 
 ## Details and key features
