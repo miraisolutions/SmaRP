@@ -59,11 +59,11 @@ Note that **SmaRP** is deployed using [version-stable](https://github.com/rocker
 
 The evolution of the total retirement fund over time is computed by projecting the value of the occupational fund (2nd Pillar), the private fund (3rd Pillar) and the tax relief, thus deriving their contributions at the desired retirement age.
 
-*Contributions to the second Pillar* are calculated from the salary and any additional voluntary purchases.
+- _Contributions to the second Pillar_ are calculated from the salary and any additional voluntary purchases.
 
-*Contributions to the third Pillar* are fully voluntary and repeated every year until retirement.
+- _Contributions to the third Pillar_ are fully voluntary and repeated every year until retirement.
 
-*Tax savings* are built as an additional fund where tax relieves from a certain year are used as contributions for the next. Tax relieves are calculated using an approximation of the given gross salary and other factors including: residence, civil status, number on kids, etc. 
+- _Tax savings_ are built as an additional fund where tax relieves from a certain year are used as contributions for the next. Tax relieves are calculated using an approximation of the given gross salary and other factors including: residence, civil status, number on kids, etc. 
 
 **Results** of the calculation are available in **SmaRP** in 3 different ways:
 
@@ -85,16 +85,16 @@ The evolution of the total retirement fund over time is computed by projecting t
 
 ### Source code
 
-Core calculations behind this Shiny app have been implemented via several functions, collected in the main source files [SmaRP/R/core.R](https://github.com/miraisolutions/SmaRP/blob/master/R/core.R) and [SmaRP/R/TaxBenefits.R](https://github.com/miraisolutions/SmaRP/blob/master/R/TaxBenefit.R).
+Core calculations behind this Shiny app have been implemented via several functions, collected in the main source files [SmaRP/R/core.R](R/core.R) and [SmaRP/R/TaxBenefits.R](R/TaxBenefit.R).
 
 Documentation for the relevant exported functions used in the app is also provided and can be browsed via
 ``` r
 help(package = "SmaRP")
 ```
-On a functional level, the code is covered by extensive [unit tests](https://github.com/miraisolutions/SmaRP/tree/master/tests/testthat).
+On a functional level, the code is covered by extensive [unit tests](tests/testthat).
 
 
-The source code for the app itself is available under  [SmaRP/inst/application](https://github.com/miraisolutions/SmaRP/blob/master/inst/application).
+The source code for the app itself is available under  [SmaRP/inst/application](inst/application).
 
 
 ### Data sources and references
@@ -104,7 +104,7 @@ An overview of these components can be found at e.g. https://en.wikipedia.org/wi
 A more detailed explanation is available on the Swiss [Federal Social Insurance Office](https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ueberblick.html) website (in German).
 
 
-Legal parameters in **SmaRP** are defined in [SmaRP/inst/application/global.R](https://github.com/miraisolutions/SmaRP/blob/master/inst/application/global.R), whereas data is stored under  [SmaRP/inst/application/data](https://github.com/miraisolutions/SmaRP/blob/master/inst/application/data).
+Legal parameters in **SmaRP** are defined in [SmaRP/inst/application/global.R](inst/application/global.R), whereas data is stored under [SmaRP/inst/application/data](inst/application/data).
 
 
 ### Accuracy
