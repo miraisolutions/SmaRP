@@ -1,3 +1,13 @@
+<!--# The Swiss social security system, considered as one of the most robust, is based on a three-pillar regime.
+# The first Pillar, common to most developed countries, is a state-run pay-as-you-earn system with minimum benefits.
+# The voluntary contribution (3rd Pillar) is a privately-run, tax-deductible insurance fund.
+# At the heart of the Swiss system is the so-called Second Pillar, a compulsory, tax-deductible company occupational pension insurance fund.
+# Voluntary additional second Pillar buy-ins are regulated but allow for benefits improvement at retirement age while reducing the tax burden during the working career.
+# The complexity is further increased by a municipality-dependent taxation.
+# Altogether this calls for an early-stage conscious approach towards retirement planning.
+# However, it is not straight-forward to assess effects of elements such as early retirement, moving to a different canton or applying a different voluntary pension schema.
+# SmaRP, Smart Retirement Planning, supports the users in an educated decision-making process.
+-->
 
 <img src="inst/application/www/SmaRPSticker.png" align="right" width="15%" height="15%"/>
 
