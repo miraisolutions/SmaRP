@@ -3,6 +3,7 @@
 * Add directory with GKE instructions and manifests.
 * Upgrade deployed app to R 3.5.3 (from R 3.5.1), improve Docker image with refactored Dockerfile (#91).
 * Removed heavy shinydashboardPlus dependency by using custom collapsible panels (#113).
+* Updated links to the live app and README based on website integration, including GitFlow and release details (#143).
 
 # SmaRP 1.2.0
 
