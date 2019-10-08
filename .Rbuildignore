@@ -2,11 +2,12 @@
 ^doc$
 ^man-roxygen$
 ^Meta$
+^\.Rproj\.user$
 
 ^.*\.Rproj$
-^\.Rproj\.user$
 ^Dockerfile$
 ^docker$
 ^cloudbuild\.yaml$
 ^gke$
+^git-flow$
 ^inst/application/data/taxdata$

@@ -38,15 +38,18 @@ docker run --rm eu.gcr.io/mirai-sbb/smarp
 ```
 -->
 
-The (development version of) **SmaRP** can also be served locally by installing the package from GitHub
+The R package **SmaRP** can be installed from GitHub with
 <!-- argument build_vignettes not available anymore (r-lib/remotes#353), build_opts = "" for a full installation including vignettes  -->
 ``` r
 devtools::install_github("miraisolutions/SmaRP", build_opts = "")
 ```
-and running
+and used to serve the app locally from R via
 ``` r
 SmaRP::launch_application()
 ```
+Since **SmaRP** is developed using a [GitFlow](git-flow#readme) approach, the `master` branch always reflects the _latest_ [release](https://github.com/miraisolutions/SmaRP/releases) of the live app, whereas branch `develop` collects the latest delivered developments for the _next_ releases, which can be installed locally via
+``` r
+devtools::install_github("miraisolutions/SmaRP", "develop", build_opts = "")
 
 
 ## Details and key features
