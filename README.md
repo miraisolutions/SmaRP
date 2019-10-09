@@ -37,7 +37,7 @@ and used to serve the app locally from R via
 ``` r
 SmaRP::launch_application()
 ```
-Since **SmaRP** is developed using a [GitFlow](git-flow#readme) approach, the `master` branch always reflects the _latest_ [release](https://github.com/miraisolutions/SmaRP/releases) of the live app, whereas branch `develop` collects the latest delivered developments for the _next_ releases, which can be installed locally via
+**SmaRP** is developed using a [GitFlow](git-flow#readme) approach, hence the `master` branch always reflects the _latest_ [release](https://github.com/miraisolutions/SmaRP/releases) of the live app, whereas branch `develop` collects the latest delivered developments for the _next_ releases, which can be installed locally via
 ``` r
 devtools::install_github("miraisolutions/SmaRP", "develop", build_opts = "")
 ```

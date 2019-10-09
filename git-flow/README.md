@@ -5,14 +5,14 @@
 
 We use a [**GitFlow**](https://nvie.com/posts/a-successful-git-branching-model/) branching model, where the repository holds two main **branches** with an infinite lifetime:
 
-- [**`master`**](https://github.com/miraisolutions/SmaRP/tree/master): reflects the [**latest release**](https://github.com/miraisolutions/SmaRP/releases/latest) to production, i.e. the current version of the [live app](https://mirai-solutions.ch/gallery/smarp).
-- [**`develop`**](https://github.com/miraisolutions/SmaRP/tree/develop): collects all completed developments for the [**next release**](#release).
+- [**`master`**](https://github.com/miraisolutions/SmaRP/tree/master) reflects the [**latest release**](https://github.com/miraisolutions/SmaRP/releases/latest) to production, i.e. the current version of the [live app](https://mirai-solutions.ch/gallery/smarp).
+- [**`develop`**](https://github.com/miraisolutions/SmaRP/tree/develop) collects all completed developments for the [**next release**](#release).
 
 The overall GitFlow branching system is described as follows
 
 - No work is committed and pushed directly to `master`, which is updated only as part of a [**release**](#release).
 - Small (maintenance) work can be done directly in `develop`, however meaningful pieces should be developed in a dedicated **_feature_ branch** created from `develop` and associated to a GitHub issue. By convention, the branch name is of the form `feature/<ID>-short-title`.
-    - Once completed, the feature branch is merged back into `develop` via a pull request.
+    - Once completed, the branch is merged back into `develop` via a pull request.
     - Each significant development must be mentioned as a bullet point in the top-section of [**`NEWS.md`**](../NEWS.md) before being pushed to or merged into `develop`, to serve as a change log for the next release.
 - **Hot-fixes** that need to be brought in asap, independently of any other pending development, are carried out in a dedicated branch (of the form `hotfix/<ID>-short-title`) created from `master`. The branch is merged directly back to `master` as a new **patch release**, and must be also merged into `develop` (or possibly an open _release_ branch).
 
