@@ -192,7 +192,7 @@ fluidPage(
                 numericInput("SalaryGrowthRate",
                              label = "Expected Salary Growth Rate %",
                              value = value$growth_rate,
-                             step = 0.1,
+                             step = value$perc_step,
                              min = 0
                 ) %>%
                   bs_embed_tooltip_body(title = IB$SalaryGrowthRate, placement = "right")
@@ -209,7 +209,7 @@ fluidPage(
                 numericInput("P2interestRate",
                              label = "Interest Rate % (optional)",
                              value = value$min_p2_interest,
-                             step = 1,
+                             step = value$perc_step,
                              min = value$min_p2_interest
                 ) %>%
                   bs_embed_tooltip_body(title = IB$P2interestRate, placement = "right")
@@ -268,7 +268,7 @@ fluidPage(
                 numericInput("returnP3",
                              label = "Expected Return %",
                              value = value$p3_return,
-                             step = 0.1,
+                             step = value$perc_step,
                              min = 0
                 ) %>%
                   bs_embed_tooltip_body(title = IB$returnP3, placement = "right")
