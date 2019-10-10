@@ -339,17 +339,16 @@ function(input, output, session) {
     if (lastSalary() != 0) {
       numTimes <- retirementfund() / lastSalary()
       numTimes %<>% formatC(format = "f", digits = 2)
-      paste0("which is ", numTimes, " times the last salary")
+      paste(numTimes, "times the last salary")
     } else {
       ""
     }
   })
 
   output$Totals <- renderText({
-    paste(
-      "Total retirement fund as of",
-      format(retirementdate(), "%d-%m-%Y"),
-      "is",
+    paste0(
+      "Total retirement fund as of ",
+      format(retirementdate(), "%d-%m-%Y"), ": ",
       formatC(
         retirementfund() / 1000,
         format = "f",
@@ -357,9 +356,8 @@ function(input, output, session) {
         digits = 0,
         decimal.mark = "."
       ),
-      "k,",
-      percentageLastSalary(),
-      sep = " "
+      "k ",
+      "(", percentageLastSalary(), ")"
     )
   })
 

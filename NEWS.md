@@ -5,6 +5,7 @@
 * Removed heavy shinydashboardPlus dependency by using custom collapsible panels (#113).
 * The PDF report now uses A4 as pages size (#131).
 * Aligned input increment step to 0.1% for the second pillar interest rate (#142).
+* Improved total retirement fund text in the app (#114).
 
 # SmaRP 1.2.0
 
