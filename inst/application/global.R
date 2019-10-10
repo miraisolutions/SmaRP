@@ -124,5 +124,6 @@ value <- list (
   p2_voluntary = 0,
   p3 = 50000,
   p3_annual = 5000,
-  p3_return = 100 * BVGMindestzinssatz
+  p3_return = 100 * BVGMindestzinssatz,
+  perc_step = 0.1
 )
