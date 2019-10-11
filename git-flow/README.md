@@ -11,15 +11,16 @@ We use a [**GitFlow**](https://nvie.com/posts/a-successful-git-branching-model/)
 The overall GitFlow branching system is described as follows
 
 - No work is committed and pushed directly to `master`, which is updated only as part of a [**release**](#release).
-- Small (maintenance) work can be done directly in `develop`, however meaningful pieces should be developed in a dedicated **_feature_ branch** created from `develop` and associated to a GitHub issue. By convention, the branch name is of the form `feature/<ID>-short-title`.
+- Small (maintenance) work can be done directly in `develop`, however meaningful pieces should be developed in a dedicated **_feature_ branch** created from `develop` and associated to a GitHub issue.
+    - By convention, the branch name is of the form `feature/<ID>-short-lowercase-title`. This also applies to bug-fixes (see however below for hot-fixes), where a separate naming like  `fix/<ID>-xyz` should be avoided (see [nvie/gitflow#24](https://github.com/nvie/gitflow/issues/24)), possibly using something like `feature/<ID>-fix-xyz` instead, e.g. `feature/142-fix-p2-interest-rate-step` for [#142](https://github.com/miraisolutions/SmaRP/issues/142). 
     - Once completed, the branch is merged back into `develop` via a pull request.
     - Each significant development must be mentioned as a bullet point in the top-section of [**`NEWS.md`**](../NEWS.md) before being pushed to or merged into `develop`, to serve as a change log for the next release.
-- **Hot-fixes** that need to be brought in asap, independently of any other pending development, are carried out in a dedicated branch (of the form `hotfix/<ID>-short-title`) created from `master`. The branch is merged directly back to `master` as a new **patch release**, and must be also merged into `develop` (or possibly an open _release_ branch).
+- **Hot-fixes** that need to be brought in asap, independently of any other pending development, are carried out in a dedicated branch (of the form `hotfix/<ID>-short-lowercase-title`) created from `master`. The branch is merged directly back to `master` as a new **_patch_ release**, and must be also merged into `develop` (or possibly an open _release_ branch).
 
 
 ## Versioning and Releases {#release}
 
-**SmaRP** uses a [**semantic versioning**](https://semver.org/) scheme bound to the version of the underlying R package. The basic versioning scheme `major.minor.patch` (e.g. `1.1.2`) is reserved for release tagging and the `master` branch (which reflects the most recent release). On the other hand, a fourth _development_ component `-9000` is added for the not-yet-released development happening in the `develop` and _feature_ branches. The package version is updated for the next release (see below) just before the merge into `master` (from `develop` or a _release_ branch). Afterwards, `-9000` is added again to the new version for the future development.
+**SmaRP** uses a [**semantic versioning**](https://semver.org/) scheme bound to the version of the underlying R package. The basic versioning scheme _`major.minor.patch`_ (e.g. `1.1.2`) is reserved for release tagging and the `master` branch (which reflects the most recent release). On the other hand, a fourth _development_ component `-9000` is added for the not-yet-released development happening in the `develop` and _feature_ branches. The package version is updated for the next release (see below) just before the merge into `master` (from `develop` or a _release_ branch). Afterwards, `-9000` is added again to the new version for the future development.
 
 Here we assume that the most recent release is `1.0.0`, hence the version on `develop` is `1.0.0-9000`.
 Releases should only happen from a **stable `develop`**, possibly creating a **_release_ branch** for the release preparation, with a name of the form `release/v<next-release-version>`, e.g. `release/v1.1.0` for a new _minor_ release.
@@ -33,7 +34,7 @@ Releases should only happen from a **stable `develop`**, possibly creating a **_
         - For _major_ changes: `1.0.0-9000` -> `2.0.0`
     - Change version number in `NEWS.md` and `DESCRIPTION` files.
 
-(Note: for the remaining steps, a minor release with  `1.1.0` will be used as an example)
+(Note: for the remaining steps, a _minor_ release with  `1.1.0` will be used as an example)
 
 2. **Commit and push** all changes with the comment: `1.1.0 release preps` and `closes` lines for all issues mentioned in the `NEWS.md`, e.g.
 
