@@ -67,8 +67,6 @@ Releases should only happen from a **stable `develop`**, possibly creating a **_
 
 ## References
 
-* [GitFlow for GitHub](https://datasift.github.io/gitflow) by DataSift.
-* [Git and GitHub](http://r-pkgs.had.co.nz/git.html) from Hadley Wickham's [R packages](http://r-pkgs.had.co.nz/).
-* [Package versioning](http://r-pkgs.had.co.nz/description.html#version) from Hadley Wickham's [R packages](http://r-pkgs.had.co.nz/).
-* [Releasing a package](http://r-pkgs.had.co.nz/release.html) from Hadley Wickham's [R packages](http://r-pkgs.had.co.nz/).
+- DataSift: [GitFlow for GitHub](https://datasift.github.io/gitflow).
+- [R packages](http://r-pkgs.had.co.nz/) by Hadley Wickham: [Git and GitHub](http://r-pkgs.had.co.nz/git.html), [Package versioning](http://r-pkgs.had.co.nz/description.html#version), [Releasing a package](http://r-pkgs.had.co.nz/release.html).
 
