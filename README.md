@@ -20,13 +20,6 @@ Unlike other pension calculators, this makes results transparent, comparable, an
 The **SmaRP** Shiny app is [deployed](gke#readme) to Google Cloud Platform
 (using [Docker containers](https://www.docker.com/resources/what-container)) and
 can be accessed at https://mirai-solutions.ch/gallery/smarp.
-<!-- TODO: CONSIDER MAKING THE IMAGES PUBLIC
-The corresponding Docker image can also be used to run **SmaRP** in a local
-container
-``` bash
-docker run --rm eu.gcr.io/mirai-sbb/smarp
-```
--->
 
 The R package **SmaRP** can be installed from GitHub with
 <!-- argument build_vignettes not available anymore (r-lib/remotes#353), build_opts = "" for a full installation including vignettes  -->
