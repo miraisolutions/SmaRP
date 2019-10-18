@@ -6,19 +6,19 @@
 We use a [**GitFlow**](https://nvie.com/posts/a-successful-git-branching-model/) branching model, where the repository holds two main **branches** with an infinite lifetime:
 
 - [**`master`**](https://github.com/miraisolutions/SmaRP/tree/master) reflects the [**latest release**](https://github.com/miraisolutions/SmaRP/releases/latest) to production, i.e. the current version of the [live app](https://mirai-solutions.ch/gallery/smarp).
-- [**`develop`**](https://github.com/miraisolutions/SmaRP/tree/develop) collects all completed developments for the [**next release**](#release).
+- [**`develop`**](https://github.com/miraisolutions/SmaRP/tree/develop) collects all completed developments for the [**next release**](#versioning-and-releases).
 
 The overall GitFlow branching system is described as follows
 
-- No work is committed and pushed directly to `master`, which is updated only as part of a [**release**](#release).
+- No work is committed and pushed directly to `master`, which is updated only as part of a [**release**](#versioning-and-releases).
 - Small (maintenance) work can be done directly in `develop`, however meaningful pieces should be developed in a dedicated **_feature_ branch** created from `develop` and associated to a GitHub issue (`<ID>`).
     - By convention, the branch name is of the form `feature/<ID>-short-lowercase-title`. This also applies to bug-fixes, where a separate naming like `fix/<ID>-xyz` should be avoided (see [nvie/gitflow#24](https://github.com/nvie/gitflow/issues/24)), possibly using something like `feature/<ID>-fix-xyz` instead, e.g. `feature/142-fix-p2-interest-rate-step` for [#142](https://github.com/miraisolutions/SmaRP/issues/142). Note however that hot-fixes are treated differently, as explaiend below.
     - Once completed, the branch is merged back into `develop` via a pull request.
     - Each significant development must be mentioned as a bullet point in the top-section of [**`NEWS.md`**](../NEWS.md) before being pushed to or merged into `develop`, to serve as a change log for the next release.
 - **Hot-fixes** that need to be brought in asap, independently of any other pending development, are carried out in a dedicated branch (of the form `hotfix/<ID>-short-lowercase-title`) created from `master`. The branch is merged directly back to `master` as a new **_patch_ release**, and must be also merged into `develop` (or possibly an open _release_ branch).
 
-
-## Versioning and Releases {#release}
+<!-- NOTE: we reference this section as #versioning-and-releases, which should be adapted if the title changes -->
+## Versioning and Releases
 
 **SmaRP** uses a [**semantic versioning**](https://semver.org/) scheme bound to the version of the underlying R package. The basic versioning scheme _`major.minor.patch`_ (e.g. `1.1.2`) is reserved for release tagging and the `master` branch (which reflects the most recent release). On the other hand, a fourth _development_ component `-9000` is added for the not-yet-released development happening in the `develop` and _feature_ branches. The package version is updated for the next release (see below) just before the merge into `master` (from `develop` or a _release_ branch). Afterwards, `-9000` is added again to the new version for the future development.
 
