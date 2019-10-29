@@ -22,7 +22,7 @@ fluidPage(
     # Support responsive embedding with iframe-resizer
     tags$script(
       type = "text/javascript",
-      src = "https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.3/iframeResizer.contentWindow.min.js"
+      src = "https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.1/iframeResizer.contentWindow.min.js"
     ),
     # Enable tooltips
     bsplus::use_bs_tooltip(),

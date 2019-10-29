@@ -7,6 +7,7 @@
 * Aligned input increment step to 0.1% for the second pillar interest rate (#142).
 * Improved total retirement fund text in the app (#114).
 * Updated links to the live app and README based on website integration, including GitFlow and release details (#143).
+* Upgrade iframe-resizer to version 4.2.1 (#144). 
 
 # SmaRP 1.2.0
 
