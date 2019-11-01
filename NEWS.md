@@ -3,7 +3,7 @@
 ### Changes
 
 * The app now uses custom collapsible panels, removing the dependency on shinydashboardPlus (#113).
-* The Dockerfile for the deployed app was improved, and is now based on R 3.5.3 (#91).
+* The Dockerfile for the deployed app was improved, and is now based on R 3.5.3 (#91, #152).
 * The total retirement fund text in the app was improved (#114).
 * The PDF report now uses A4 as pages size (#131).
 * The increment of interest rates in the app is now aligned to 0.1% (#142).
