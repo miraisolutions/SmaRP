@@ -5,6 +5,12 @@
 # - texinfo (for TinyTeX)
 # - ghostscript (for pdfcrop)
 
+## Install TinyTeX from date-locked CTAN tlnet archive. This is inspired by
+## rocker/r-ver, and the TZ is probably still fine in this context
+[ -z "$CTAN_DATE" ] && CTAN_DATE=$(TZ="America/Los_Angeles" date +%Y/%m/%d) || true \
+&& CTAN_REPO=https://www.texlive.info/tlnet-archive/${CTAN_DATE}/tlnet \
+&& export CTAN_REPO
+
 ## Admin-based install of TinyTeX:
 install2.r --error --skipinstalled tinytex \
 && wget -qO- \

@@ -27,9 +27,11 @@ ENV PANDOC_DEB="2.3.1/pandoc-2.3.1-1-amd64.deb"
 COPY docker/install_pandoc.sh .
 RUN sh install_pandoc.sh $PANDOC_DEB && rm install_pandoc.sh
 
-## Install TinyTeX as LaTeX installation, including the app-specific dependencies
-# NOTE: it is important to install all required LaTeX packages when building the image!
+## Install TinyTeX as LaTeX installation
+# - use a version-stable tlnet archive CTAN date: frozen 2018 TeXLive snapshot
+# - it is important to also install all required LaTeX packages when building the image
 COPY docker/install_tinytex.sh .
+ENV CTAN_DATE=2019/02/27
 RUN sh install_tinytex.sh fancyhdr
 ## Script for re-installation of TinyTeX in the running container
 #  - needed if at a certain point the "Remote repository is newer than local"
