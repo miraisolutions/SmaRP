@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: smarp-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: smarp-ip
+    networking.gke.io/managed-certificates: smarp-certificate
+    kubernetes.io/ingress.allow-http: "false"
+spec:
+  backend:
+    serviceName: smarp-backend
+    servicePort: 80

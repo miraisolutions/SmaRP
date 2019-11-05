@@ -6,14 +6,6 @@ body {
   color: black;
 }
 
-/*
-Un-set the html height, set to 100% in AdminLTE.min.css via shinyWidgets::useShinydashboardPlus(),
-which messes up with iframeResizer.contentWindow.min.js
-*/
-html {
-  height: unset;
-}
-
 #header {
   padding-top: 5px;
   padding-bottom: 5px;
@@ -88,15 +80,20 @@ h4 {
   margin-top: 25px;
 }
 
-#Totals {
+/* define style only when non-empty, similar to .pre, so that no empty box is
+shown before the textOutput is populated */
+#Totals:not(:empty) {
   font-family: inherit;
   color: #008cc3;
   font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #f5f5f5;
   text-align: center;
-  margin-left: 3%;
-  margin-right: 10%;
-  margin-top: 2%;
-  margin-bottom: 0.5%;
+  padding: 9.5px; /* same as .pre */
+  /* same size as the plots */
+  width: 800px;
+  max-width: 100%;
 }
 
 #table {
@@ -174,39 +171,7 @@ input[type=checkbox], input[type=radio] {
 }
 
 
-/* boxPlus (collapsible) panels */
-.box {
-/*
-  padding: 0;
-  border: 1px solid;
-  border-radius: 3px;
-  border-top: 3px solid;
-  box-shadow: 0 1px 1px rgba(0,0,0,.1);
-*/
-}
-.box.box-primary {
-  border-color: #FF9966;
-/*
-  border-color: #008cc3;
-*/
-}
-.box-header, .box-body {
-/*
-  padding: 8px 15px;
-*/
-}
-.box-header .box-title {
-  color: black;
-  font-size: 13px;
-  font-weight: bold;
-}
-.box-header > .box-tools {
-  /* collapse icons vertical position */
-  top: 3px;
-}
-
-
-/* button style same as box panels */
+/* button style same as panels */
 /*
 .btn-smarp {
   font-size: 13px;
@@ -229,6 +194,8 @@ input[type=checkbox], input[type=radio] {
 */
 }
 .tab-content {
+  padding: 10px;
+  padding-top: 15px;
 /*
   padding: 6px 12px;
   border: 1px solid #008cc3;
@@ -328,3 +295,71 @@ Plots
 }
 
 
+/* Custom collapsible SmaRPanel */
+
+div.panel-smarp {
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  border-top: 3px solid;
+  box-shadow: 0 1px 1px rgba(0,0,0,.1);
+  border-color: #FF9966;
+}
+
+div.panel-heading-smarp {
+  padding: 10px;
+  background-color: white !important;
+  border: 0;
+  min-height: 35px;
+}
+
+div.panel-title-smarp {
+  position: relative;
+  padding-right: 20px; /* leave space for the collapse icons */
+  color: black;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+div.panel-body-smarp {
+  padding: 10px;
+  margin: 0;
+}
+
+/* Shiny inputs in panels should span full width as in shinydashboard. */
+div.panel-body-smarp .shiny-input-container {
+  width: auto;
+}
+
+
+/* Collapse / expand button */
+
+.btn-collapse-smarp {
+  font-size: 12px;
+  /* top-right position within relative .panel-title-smarp */
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 5px;
+  /* remove button border and bg, use !important to apply to pseudo-classes */
+  border: 0 !important;
+  background-color: transparent !important;
+  /* same as boxPlus */
+  color: #97a0b3 !important;
+}
+
+.btn-collapse-smarp:hover,
+.btn-collapse-smarp:active {
+  /* same as boxPlus, but not for focus */
+  color: #606c84 !important;
+}
+
+/* collapse icon */
+.btn-collapse-smarp:after {
+  font-family: "Font Awesome 5 Free"; font-weight: 900;
+  content: "\f068"; /* fa-minus */
+}
+/* expand icon */
+.btn-collapse-smarp.collapsed:after {
+  content: "\f067"; /* fa-plus */
+}

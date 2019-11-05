@@ -1,3 +1,20 @@
+# SmaRP 1.3.0
+
+### Changes
+
+* The app now uses custom collapsible panels, removing the dependency on shinydashboardPlus (#113).
+* The Dockerfile for the deployed app was improved, and is now based on R 3.5.3 (#91, #152).
+* The total retirement fund text in the app was improved (#114).
+* The PDF report now uses A4 as pages size (#131).
+* The increment of interest rates in the app is now aligned to 0.1% (#142).
+* The iframe-resizer version was upgraded to 4.2.1 (#144). 
+
+### Maintenance
+
+* Instructions and manifests for the GKE deployment are now included in the `gke` directory (#141).
+* GitFlow and release details are now included in the `git-flow` directory (#143).
+* The README was updated based on the new website integration of the deployed app (#143).
+
 # SmaRP 1.2.0
 
 ### Changes

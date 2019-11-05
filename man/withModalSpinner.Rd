@@ -4,7 +4,7 @@
 \alias{withModalSpinner}
 \title{withModalSpinner}
 \usage{
-withModalSpinner(expr, info, spinner = icon("spinner", "fa-spin"),
+withModalSpinner(expr, info, spinner = shiny::icon("spinner", "fa-spin"),
   size = "m")
 }
 \arguments{
@@ -54,6 +54,6 @@ if (interactive()) {
     })
   }
   # Run the application
-  shiny::runApp(shiny::shinyApp(ui = ui, server = server), launch.browser = TRUE)
+  runApp(shinyApp(ui = ui, server = server), launch.browser = TRUE)
 }
 }
