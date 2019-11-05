@@ -1,0 +1,8 @@
+# Exclude hidden files/dirs to cover items related to git checkout, R project
+# and R session, which would be present in local builds and affect caching
+.*
+# .Rbuildignore however is relevant for the package build and must be kept
+!.Rbuildignore
+
+# Exclude the Dockerfile so that it does not affect caching either
+Dockerfile

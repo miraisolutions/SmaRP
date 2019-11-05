@@ -23,8 +23,11 @@ RUN sh install_pandoc.sh $PANDOC_DEB
 
 # TinyTeX
 COPY docker/install_tinytex.sh .
+# Use the frozen TeXLive 2018 snapshot as version-stable tlnet CTAN archive
+ENV CTAN_REPO=http://www.texlive.info/tlnet-archive/2019/02/27/tlnet
 RUN sh install_tinytex.sh fancyhdr
 
 # Re-installation of TinyTeX, to be used inside a running container in case the
-# TeXLive local repo becomes obsolete (Remote repository is newer than local)
+# TeXLive local repo becomes obsolete (Remote repository is newer than local),
+# in case of non-version-stable TinyTeX installs
 COPY docker/reinstall_tinytex.sh .

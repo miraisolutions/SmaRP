@@ -27,12 +27,18 @@ ENV PANDOC_DEB="2.3.1/pandoc-2.3.1-1-amd64.deb"
 COPY docker/install_pandoc.sh .
 RUN sh install_pandoc.sh $PANDOC_DEB && rm install_pandoc.sh
 
-## Install TinyTeX as LaTeX installation, including the app-specific dependencies
-# NOTE: it is important to install all required LaTeX packages when building the image!
+## Install TinyTeX as LaTeX installation
 COPY docker/install_tinytex.sh .
+# - Use a version-stable tlnet archive CTAN repo from texlive.info
+#   - here we consider the frozen TeXLive 2016 snapshot, corresponding to the TeXLive release
+#     shipped as texlive-* in Debian stretch (base image for the rocker/verse currently used)
+#   - note that https was not supported in TeXLive 2016 for the CTAN repository
+ENV CTAN_REPO=http://www.texlive.info/tlnet-archive/2017/04/13/tlnet
+# - It is important to also install all required LaTeX packages when building the image
 RUN sh install_tinytex.sh fancyhdr
 ## Script for re-installation of TinyTeX in the running container
-#  - needed if at a certain point the "Remote repository is newer than local"
+#  - needed if at a certain point the "Remote repository is newer than local",
+#    for non-version-stable TinyTeX installations
 #  - this also (re-)executes (and therefore depends on) install_tinytex.sh
 COPY docker/reinstall_tinytex.sh .
 
