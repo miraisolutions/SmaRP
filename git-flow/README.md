@@ -6,7 +6,7 @@
 We use a [**GitFlow**](https://nvie.com/posts/a-successful-git-branching-model/) branching model, where the repository holds two main **branches** with an infinite lifetime:
 
 - [**`master`**](https://github.com/miraisolutions/SmaRP/tree/master) reflects the [**latest release**](https://github.com/miraisolutions/SmaRP/releases/latest) to production, i.e. the current version of the [live app](https://mirai-solutions.ch/gallery/smarp).
-- [**`develop`**](https://github.com/miraisolutions/SmaRP/tree/develop) is set as the default branch and collects all completed developments for the [**next release**](#versioning-and-releases).
+- [**`develop`**](https://github.com/miraisolutions/SmaRP/tree/develop) collects all completed developments for the [**next release**](#versioning-and-releases) and is set as the default branch.
 
 The overall GitFlow branching system is described as follows:
 
