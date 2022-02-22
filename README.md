@@ -21,21 +21,24 @@ The **SmaRP** Shiny app is [deployed](gke#readme) to Google Cloud Platform
 (using [Docker containers](https://www.docker.com/resources/what-container)) and
 can be accessed at https://mirai-solutions.ch/gallery/smarp.
 
-The R package **SmaRP** can be installed from GitHub with
+**SmaRP** is developed using a [GitFlow](git-flow#readme) approach, where the `master` branch always reflects the _latest_ [release](https://github.com/miraisolutions/SmaRP/releases) of the live app, whereas branch `develop` collects the latest delivered developments for the _next_ releases.
+
+The R package **SmaRP** for the latest release can be installed from GitHub with
 <!-- argument build_vignettes not available anymore (r-lib/remotes#353), build_opts = "" for a full installation including vignettes  -->
 ``` r
-remotes::install_github("miraisolutions/SmaRP", build_opts = "")
+remotes::install_github("miraisolutions/SmaRP@master", build_opts = "")
 ```
-and used to serve the app locally from R via
+whereas the development version can be installed via
+``` r
+remotes::install_github("miraisolutions/SmaRP@develop", build_opts = "")
+```
+
+Then, the installed package can be used to serve the app locally from R via
 ``` r
 SmaRP::launch_application()
 ```
-**SmaRP** is developed using a [GitFlow](git-flow#readme) approach, hence the `master` branch always reflects the _latest_ [release](https://github.com/miraisolutions/SmaRP/releases) of the live app, whereas branch `develop` collects the latest delivered developments for the _next_ releases, which can be installed locally via
-``` r
-remotes::install_github("miraisolutions/SmaRP", "develop", build_opts = "")
-```
 
-Note that **SmaRP** is deployed using [version-stable](https://github.com/rocker-org/rocker-versioned#readme) images from the [Rocker project](https://www.rocker-project.org/). The target environment of the live app is currently bound to R 3.5.3. Therefore, the app is developed and tested with the corresponding version of R and packages, as opposed to the latest available versions.
+Note that **SmaRP** is deployed using [version-stable](https://github.com/rocker-org/rocker-versioned#readme) images from the [Rocker project](https://www.rocker-project.org/). The target environment of the live app is currently bound to R 3.5.3. Therefore, the app is developed and tested with the corresponding version of R and packages, as opposed to the latest available versions. This is made easy by the containerized approach to align version-stable development and deployment environments described in our [techguides](https://mirai-solutions.ch/techguides/align-local-development-and-deployment-environments.html#align-local-development-and-deployment-environments).
 
 
 ## Details and key features
