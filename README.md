@@ -38,7 +38,7 @@ Then, the installed package can be used to serve the app locally from R via
 SmaRP::launch_application()
 ```
 
-Note that **SmaRP** is deployed using [version-stable](https://github.com/rocker-org/rocker-versioned#readme) images from the [Rocker project](https://www.rocker-project.org/). The target environment of the live app is currently bound to R 3.5.3. Therefore, the app is developed and tested with the corresponding version of R and packages, as opposed to the latest available versions. This is made easy by the containerized approach to align version-stable development and deployment environments described in our [techguides](https://mirai-solutions.ch/techguides/align-local-development-and-deployment-environments.html#align-local-development-and-deployment-environments).
+Note that **SmaRP** is deployed using [version-stable](https://github.com/rocker-org/rocker-versioned#readme) images from the [Rocker project](https://www.rocker-project.org/). The target environment of the live app is currently bound to R 3.5.3. Therefore, the app is developed and tested with the corresponding version of R and packages, as opposed to the latest available versions. This is made easy by the containerized approach to align version-stable development and deployment environments described in our [techguides](https://mirai-solutions.ch/techguides/align-local-development-and-deployment-environments.html).
 
 
 ## Details and key features
