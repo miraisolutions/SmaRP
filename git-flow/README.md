@@ -6,12 +6,12 @@
 We use a [**GitFlow**](https://nvie.com/posts/a-successful-git-branching-model/) branching model, where the repository holds two main **branches** with an infinite lifetime:
 
 - [**`master`**](https://github.com/miraisolutions/SmaRP/tree/master) reflects the [**latest release**](https://github.com/miraisolutions/SmaRP/releases/latest) to production, i.e. the current version of the [live app](https://mirai-solutions.ch/gallery/smarp).
-- [**`develop`**](https://github.com/miraisolutions/SmaRP/tree/develop) collects all completed developments for the [**next release**](#versioning-and-releases).
+- [**`develop`**](https://github.com/miraisolutions/SmaRP/tree/develop) collects all completed developments for the [**next release**](#versioning-and-releases) and is set as the default branch.
 
-The overall GitFlow branching system is described as follows
+The overall GitFlow branching system is described as follows:
 
 - No work is committed and pushed directly to `master`, which is updated only as part of a [**release**](#versioning-and-releases).
-- Small (maintenance) work can be done directly in `develop`, however meaningful pieces should be developed in a dedicated **_feature_ branch** created from `develop` and associated to a GitHub issue (`<ID>`).
+- Only small maintenance work, including [release preparation](#versioning-and-releases), can be done directly in `develop`. Meaningful pieces should be developed in a dedicated **_feature_ branch** created from `develop` and associated to a GitHub issue (`<ID>`).
     - By convention, the branch name is of the form `feature/<ID>-short-lowercase-title`. This also applies to bug-fixes, where a separate naming like `fix/<ID>-xyz` should be avoided (see [nvie/gitflow#24](https://github.com/nvie/gitflow/issues/24)), possibly using something like `feature/<ID>-fix-xyz` instead, e.g. `feature/142-fix-p2-interest-rate-step` for [#142](https://github.com/miraisolutions/SmaRP/issues/142). Note however that hot-fixes are treated differently, as explained below.
     - Once completed, the branch is merged back into `develop` via a pull request.
     - Each significant development must be mentioned as a bullet point in the top-section of [**`NEWS.md`**](../NEWS.md) before being pushed to or merged into `develop`, to serve as a change log for the next release.
