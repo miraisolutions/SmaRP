@@ -42,7 +42,7 @@ COPY docker/install_tinytex.sh .
 #     shipped as texlive-* in Debian stretch (base image for the rocker/verse currently used)
 #   - note that https was not supported in TeXLive 2016 for the CTAN repository
 # jammy: 2021.20220204-1: all
-ENV CTAN_REPO=https://texlive.info/tlnet-archive/2022/02/04/tlnet
+ENV CTAN_REPO=http://www.texlive.info/tlnet-archive/2022/02/04/tlnet
 # - It is important to also install all required LaTeX packages when building the image
 RUN sh install_tinytex.sh fancyhdr
 ## Script for re-installation of TinyTeX in the running container
