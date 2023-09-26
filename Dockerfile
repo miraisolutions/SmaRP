@@ -1,5 +1,13 @@
-FROM rocker/r-ver:3.5.3
+FROM rocker/r-ver:4.2.3
+## Ubuntu 22.04 jammy
+# -> don't use latest R release, since that will keep getting linked with later build-dates and RStudio packagemanager
+# -> sets repository to RStudio packagemanager for specific build date of R version, being 2023-04-20 for R 4.2.3
+# (see https://github.com/rocker-org/rocker-versioned2/blob/master/dockerfiles/r-ver_4.2.3.Dockerfile for reference)
+# -> installs R to /usr/local/lib/R
 
+# libnode-dev ?
+# graphics Cairo: libcairo2-dev libxt-dev
+# apt-utils
 ## Install required dependencies
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
