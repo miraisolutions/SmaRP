@@ -5,7 +5,7 @@
 # - texinfo (for TinyTeX)
 # - ghostscript (for pdfcrop)
 
-## Admin-based install of TinyTeX: (raw or tree below?)
+## Admin-based install of TinyTeX:
 install2.r --error --skipinstalled tinytex
 
 wget -qO- \
@@ -13,6 +13,7 @@ wget -qO- \
   sh -s - --admin --no-path \
 && mv ~/.TinyTeX /opt/TinyTeX \
 && /opt/TinyTeX/bin/*/tlmgr path add
+
 ## LaTeX packages from rocker/verse and app-specific packages passed as arguments
 tlmgr install \
   ae inconsolata listings metafont mfware pdfcrop parskip tex \

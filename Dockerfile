@@ -31,6 +31,7 @@ RUN apt-get update \
 # - https://pandoc.org/installing.html#linux
 # We should use the same version as in rocker/rstudio:<R_VER>
 #   docker run --rm rocker/rstudio:<R_VER> /usr/lib/rstudio-server/bin/pandoc/pandoc -v
+# RSc: TODO: need to check and update pandoc version here
 ENV PANDOC_DEB="2.3.1/pandoc-2.3.1-1-amd64.deb"
 COPY docker/install_pandoc.sh .
 RUN sh install_pandoc.sh $PANDOC_DEB && rm install_pandoc.sh
@@ -38,15 +39,16 @@ RUN sh install_pandoc.sh $PANDOC_DEB && rm install_pandoc.sh
 ## Install TinyTeX as LaTeX installation
 COPY docker/install_tinytex.sh .
 # - Use a version-stable tlnet archive CTAN repo from texlive.info
-#   - here we consider the frozen TeXLive 2016 snapshot, corresponding to the TeXLive release
-#     shipped as texlive-* in Debian stretch (base image for the rocker/verse currently used)
-#   - note that https was not supported in TeXLive 2016 for the CTAN repository
-# jammy: 2021.20220204-1: all
+#   - here we consider a frozen TeXLive snapshot, corresponding to the TeXLive
+#     release shipped as texlive-* in Ubuntu 22.04 jammy (2021.20220204-1: all)
 ENV CTAN_REPO=https://www.texlive.info/tlnet-archive/2022/02/04/tlnet
-#ENV CTAN_REPO=https://www.texlive.info/tlnet-archive/2023/04/20/tlnet
-#ENV PATH=$PATH:/usr/local/texlive/bin/linux
+# rocker/verse:4.2.3 would pick texlive rather than tinytex, with the following vars:
+#   ENV CTAN_REPO=https://www.texlive.info/tlnet-archive/2023/04/20/tlnet
+#   ENV PATH=$PATH:/usr/local/texlive/bin/linux
+
 # - It is important to also install all required LaTeX packages when building the image
 RUN sh install_tinytex.sh fancyhdr
+
 ## Script for re-installation of TinyTeX in the running container
 #  - needed if at a certain point the "Remote repository is newer than local",
 #    for non-version-stable TinyTeX installations
