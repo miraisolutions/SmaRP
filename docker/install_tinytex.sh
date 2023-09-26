@@ -6,9 +6,10 @@
 # - ghostscript (for pdfcrop)
 
 ## Admin-based install of TinyTeX: (raw or tree below?)
-install2.r --error --skipinstalled tinytex \
-&& wget -qO- \
-  "https://github.com/rstudio/tinytex/tree/main/tools/install-unx.sh" | \
+install2.r --error --skipinstalled tinytex
+
+wget -qO- \
+  "https://github.com/rstudio/tinytex/raw/main/tools/install-unx.sh" | \
   sh -s - --admin --no-path \
 && mv ~/.TinyTeX /opt/TinyTeX \
 && /opt/TinyTeX/bin/*/tlmgr path add
