@@ -31,4 +31,4 @@ vignettes/*.pdf
 *.knit.md
 .Rproj.user
 # data files created through `configure`
-data/*.rda
+# data/*.rda
