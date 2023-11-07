@@ -31,7 +31,8 @@ RUN apt-get update \
 # - https://pandoc.org/installing.html#linux
 # We should use the same version as in rocker/rstudio:<R_VER>
 #   docker run --rm rocker/rstudio:<R_VER> /usr/lib/rstudio-server/bin/pandoc/pandoc -v
-# RSc: TODO: need to check and update pandoc version here
+#   docker run --rm rocker/rstudio:4.2.3 /usr/lib/rstudio-server/bin/quarto/bin/tools/pandoc -v
+#   --> pandoc 2.19.2
 ENV PANDOC_DEB="2.3.1/pandoc-2.3.1-1-amd64.deb"
 COPY docker/install_pandoc.sh .
 RUN sh install_pandoc.sh $PANDOC_DEB && rm install_pandoc.sh
