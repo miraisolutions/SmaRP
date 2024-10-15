@@ -31,4 +31,8 @@ vignettes/*.pdf
 *.knit.md
 .Rproj.user
 # data files created through `configure`
-data/*.rda
+# data/*.rda
+# keep it here, this strategy got broken in Spring 2021, see e.g.:
+# https://stackoverflow.com/questions/66860659/lazydata-is-specified-without-a-data-directory-error-when-submitting-r-packa
+# note: at the same time, it has also become necessary to NOT exclude the data directory in .Rbuildignore.
+# https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-exts.html#Checking-and-building-packages
