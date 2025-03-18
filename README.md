@@ -3,10 +3,10 @@
 
 # SmaRP: Smart Retirement Planning
 
-Smart Retirement Planning (**SmaRP**) is a [Mirai Solutions](https://mirai-solutions.ch/) initiative designed to guide people working in Switzerland towards a strategic decision-making process for their retirement.
+Smart Retirement Planning (**SmaRP**) is a [Mirai Solutions](https://mirai-solutions.ch/){target="_blank"} initiative designed to guide people working in Switzerland towards a strategic decision-making process for their retirement.
 
-**SmaRP** is based on the [Swiss pension system](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland) and reflects the complexity of its legal framework.
-It is implemented as an [R Shiny](https://shiny.rstudio.com/) pension calculator web app, in the form of an R package.
+**SmaRP** is based on the [Swiss pension system](https://en.wikipedia.org/wiki/Pension_system_in_Switzerland){target="_blank"} and reflects the complexity of its legal framework.
+It is implemented as an [R Shiny](https://shiny.rstudio.com/){target="_blank"} pension calculator web app, in the form of an R package.
 The app features a flexible yet intuitive user interface with detailed personalization parameters and options.
 This allows to interactively compute and display the evolution of the retirement funds over time, split into their contributing components.
 A report including details regarding calculation methodology and approximations can be generated and downloaded.
@@ -18,7 +18,7 @@ Unlike other pension calculators, this makes results transparent, comparable, an
 ## Using SmaRP
 
 The **SmaRP** Shiny app is [deployed](gke#readme) to Google Cloud Platform
-(using [Docker containers](https://www.docker.com/resources/what-container)) and
+(using [Docker containers](https://www.docker.com/resources/what-container){target="_blank"}) and
 can be accessed at https://mirai-solutions.ch/gallery/smarp.
 
 **SmaRP** is developed using a [GitFlow](git-flow#readme) approach, where the `master` branch always reflects the _latest_ [release](https://github.com/miraisolutions/SmaRP/releases) of the live app, whereas branch `develop` collects the latest delivered developments for the _next_ releases.
@@ -38,7 +38,8 @@ Then, the installed package can be used to serve the app locally from R via
 SmaRP::launch_application()
 ```
 
-Note that **SmaRP** is deployed using [version-stable](https://github.com/rocker-org/rocker-versioned#readme) images from the [Rocker project](https://www.rocker-project.org/). The target environment of the live app is currently bound to R 3.5.3. Therefore, the app is developed and tested with the corresponding version of R and packages, as opposed to the latest available versions. This is made easy by the containerized approach to align version-stable development and deployment environments described in our [techguides](https://mirai-solutions.ch/techguides/align-local-development-and-deployment-environments.html).
+Note that **SmaRP** is deployed using [version-stable](https://github.com/rocker-org/rocker-versioned#readme){target="_blank"} images from the [Rocker project](https://www.rocker-project.org/){target="_blank"}. 
+The target environment of the live app is currently bound to R 4.2.3. Therefore, the app is developed and tested with the corresponding version of R and packages, as opposed to the latest available versions. This is made easy by the containerized approach to align version-stable development and deployment environments described in our [R techguides](https://mirai-solutions.ch/r-techguides/align-local-development-and-deployment-environments.html){target="_blank"}.
 
 
 ## Details and key features
@@ -60,7 +61,7 @@ The evolution of the total retirement fund over time is computed by projecting t
 
 ### Assumptions and limitations
 
-- Projected funds are computed using [continuously compounded returns](https://en.wikipedia.org/wiki/Compound_interest#Continuous_compounding) on annual basis.
+- Projected funds are computed using [continuously compounded returns](https://en.wikipedia.org/wiki/Compound_interest#Continuous_compounding){target="_blank"} on annual basis.
 - Constant interest rates are assumed throughout the working life.
 - Inflation is not taken into account, although it can be proxied using the salary growth rate input.
 - The retirement plan is valid for employees only, i.e. persons whose main income is a salary. Self-employed people do not belong to this category.
@@ -87,7 +88,7 @@ The source code for the app itself is available under  [SmaRP/inst/application](
 
 **SmaRP** reflects the Swiss pension system and uses corresponding legal parameters and data.
 An overview of these components can be found at e.g. https://en.wikipedia.org/wiki/Pension_system_in_Switzerland.
-A more detailed explanation is available on the Swiss [Federal Social Insurance Office](https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ueberblick.html) website (in German).
+A more detailed explanation is available on the Swiss [Federal Social Insurance Office](https://www.bsv.admin.ch/bsv/en/home/social-insurance/ueberblick.html) website.
 
 
 Legal parameters in **SmaRP** are defined in [SmaRP/inst/application/global.R](inst/application/global.R), whereas data is stored under [SmaRP/inst/application/data](inst/application/data).
