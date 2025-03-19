@@ -10,9 +10,11 @@ install2.r --error --skipinstalled tinytex
 
 wget -qO- \
   "https://github.com/rstudio/tinytex/raw/main/tools/install-unx.sh" | \
-  sh -s - --admin --no-path \
-&& mv ~/.TinyTeX /opt/TinyTeX \
-&& /opt/TinyTeX/bin/*/tlmgr path add
+  sh -s - --admin --no-path
+
+mv ~/.TinyTeX /opt/TinyTeX
+
+/opt/TinyTeX/bin/*/tlmgr path add
 
 ## LaTeX packages from rocker/verse and app-specific packages passed as arguments
 tlmgr install \

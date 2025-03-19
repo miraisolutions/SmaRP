@@ -38,7 +38,8 @@ Then, the installed package can be used to serve the app locally from R via
 SmaRP::launch_application()
 ```
 
-Note that **SmaRP** is deployed using [version-stable](https://github.com/rocker-org/rocker-versioned#readme) images from the [Rocker project](https://www.rocker-project.org/). The target environment of the live app is currently bound to R 3.5.3. Therefore, the app is developed and tested with the corresponding version of R and packages, as opposed to the latest available versions. This is made easy by the containerized approach to align version-stable development and deployment environments described in our [techguides](https://mirai-solutions.ch/techguides/align-local-development-and-deployment-environments.html).
+Note that **SmaRP** is deployed using [version-stable](https://github.com/rocker-org/rocker-versioned#readme) images from the [Rocker project](https://www.rocker-project.org/). 
+The target environment of the live app is currently bound to R 4.2.3. Therefore, the app is developed and tested with the corresponding version of R and packages, as opposed to the latest available versions. This is made easy by the containerized approach to align version-stable development and deployment environments described in our [R techguides](https://mirai-solutions.ch/r-techguides/align-local-development-and-deployment-environments.html).
 
 
 ## Details and key features
@@ -87,7 +88,7 @@ The source code for the app itself is available under  [SmaRP/inst/application](
 
 **SmaRP** reflects the Swiss pension system and uses corresponding legal parameters and data.
 An overview of these components can be found at e.g. https://en.wikipedia.org/wiki/Pension_system_in_Switzerland.
-A more detailed explanation is available on the Swiss [Federal Social Insurance Office](https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ueberblick.html) website (in German).
+A more detailed explanation is available on the Swiss [Federal Social Insurance Office](https://www.bsv.admin.ch/bsv/en/home/social-insurance/ueberblick.html) website.
 
 
 Legal parameters in **SmaRP** are defined in [SmaRP/inst/application/global.R](inst/application/global.R), whereas data is stored under [SmaRP/inst/application/data](inst/application/data).
