@@ -10,8 +10,7 @@ resources:
 - repo: self
 
 variables:
-  # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '6284f62b-b5ab-43fb-a236-b29ffaaada8e'
+  dockerRegistryServiceConnection: 'svc_miraiappregistry'
   imageRepository: 'smarp'
   containerRegistry: 'miraiappregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
